@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2014-12-04T14:37:55Z" product-name="mautic">
+		<header/>
+		<body>
+		    <trans-unit id="settings">
+                <source>Settings</source>
+            </trans-unit>
+            <trans-unit id="url">
+                <source>Mautic URL</source>
+            </trans-unit>
+		</body>
+	</file>
+</xliff>
