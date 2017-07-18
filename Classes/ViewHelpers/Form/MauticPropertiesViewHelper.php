@@ -25,7 +25,7 @@ class MauticPropertiesViewHelper extends SelectViewHelper
     /**
      * MauticPropertiesViewHelper constructor.
      */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->mauticService = new MauticService();

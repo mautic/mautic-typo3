@@ -1,7 +1,6 @@
 <?php
 declare(strict_types = 1);
 
-
 /*
  * @copyright   2017 Mautic Contributors. All rights reserved
  * @author      Mautic
@@ -24,7 +23,7 @@ class MauticFinisher extends AbstractFinisher
     /**
      * MauticFinisher constructor.
      */
-    function __construct()
+    public function __construct()
     {
         $this->mauticService = new MauticService();
     }
