@@ -1,4 +1,4 @@
-<?php
+gitgit <?php
 
 /*
  * @copyright   2017 Mautic Contributors. All rights reserved
@@ -21,7 +21,7 @@ class MauticContactFinisher extends AbstractFinisher
     private $mauticService;
 
     /**
-     * MauticContactFinisher constructor.
+     * MauticContactFinisher constructor
      */
     public function __construct()
     {
