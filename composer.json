@@ -8,6 +8,12 @@
         "php": ">=7.0.0",
         "mautic/api-library": "^2.6"
     },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^1.12"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
     "autoload": {
         "psr-4": {
             "Mautic\\MauticTypo3\\": "Classes"
