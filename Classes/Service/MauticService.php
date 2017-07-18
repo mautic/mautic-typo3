@@ -10,7 +10,7 @@ declare (strict_types = 1);
  * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  */
 
-namespace Mautic\Typo3\Service;
+namespace Mautic\MauticTypo3\Service;
 
 use Mautic\Auth\ApiAuth;
 use Mautic\MauticApi;

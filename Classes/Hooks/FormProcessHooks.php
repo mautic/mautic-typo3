@@ -10,13 +10,13 @@ declare(strict_types = 1);
  * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  */
 
-namespace Mautic\Typo3\Hooks;
+namespace Mautic\MauticTypo3\Hooks;
 
 use TYPO3\CMS\Core\Configuration\Loader\YamlFileLoader;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Form\Mvc\Persistence\FormPersistenceManager;
-use Mautic\Typo3\Service\MauticService;
+use Mautic\MauticTypo3\Service\MauticService;
 
 
 class FormProcessHooks
@@ -27,7 +27,7 @@ class FormProcessHooks
     /**
      * FormProcessHooks constructor.
      */
-    function __construct()
+    public function __construct()
     {
         $this->mauticService = new MauticService();
     }
@@ -336,7 +336,7 @@ class FormProcessHooks
             // Instantiate a class that can turn YAML files into a PHP array
             $fileLoader = GeneralUtility::makeInstance(YamlFileLoader::class);
             // Load the FieldTypes.yaml
-            $yaml = $fileLoader->load('EXT:mautic/Configuration/Yaml/FieldTypes.yaml');
+            $yaml = $fileLoader->load('EXT:mautic-typo3-typo3/Configuration/Yaml/FieldTypes.yaml');
         }
 
         return $yaml;

@@ -1,5 +1,5 @@
 {
-  "name": "mautic/typo3",
+  "name": "mautic/mautic-typo3",
     "type": "typo3-cms-extension",
     "description": "An extension to sync forms between TYPO3 and Mautic",
     "license": ["GPL3"],
@@ -9,7 +9,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Mautic\\Typo3\\": "Classes"
+            "Mautic\\MauticTypo3\\": "Classes"
         }
     }
 }
