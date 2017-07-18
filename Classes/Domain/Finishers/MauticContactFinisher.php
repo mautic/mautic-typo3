@@ -12,6 +12,7 @@
 namespace Mautic\MauticTypo3\Domain\Finishers;
 
 use Mautic\MauticTypo3\Service\MauticService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 use TYPO3\CMS\Form\Domain\Model\FormDefinition;
@@ -32,6 +33,12 @@ class MauticContactFinisher extends AbstractFinisher
 
     protected function executeInternal()
     {
+        if (!$this->mauticService->checkConfigPresent()) {
+            if (GeneralUtility::getApplicationContext()->isDevelopment()) {
+                throw new \InvalidArgumentException('Mautic Username, url and/or Password not set.', 1499940156);
+            }
+            return;
+        }
 
         $contactApi = $this->mauticService->createMauticApi('contacts');
 
