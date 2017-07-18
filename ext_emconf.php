@@ -11,7 +11,7 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Mautic',
-    'description' => 'An extension to sync forms between TYPO3 and Mautic',
+    'description' => 'An extension to integrate Mautic into TYPO3',
     'category' => 'be',
     'version' => '1.0.0',
     'state' => 'beta',

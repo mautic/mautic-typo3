@@ -7,3 +7,5 @@ mauticUsername =
 # cat=basic/enable; type=string; label=Mautic password
 mauticPassword =
 
+#cat=basic/enable; type=boolean; label=Enable Mautic tracking
+tracking = 0
