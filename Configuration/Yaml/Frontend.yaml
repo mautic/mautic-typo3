@@ -1,0 +1,33 @@
+TYPO3:
+  CMS:
+    Form:
+      persistenceManager:
+        allowedExtensionPaths:
+          mautic: EXT:mautic/Resources/Private/Forms/
+
+      prototypes:
+        # add a new prototype
+        # and extend it from the 'standard' prototype
+        mautic_finisher_standalone_prototype:
+          __inheritances:
+            10: 'TYPO3.CMS.Form.prototypes.standard'
+
+          finishersDefinition:
+            # Register your own email finisher.
+            MauticFinisher:
+              # use some mixins from ext:form because iam lazy
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
+              implementationClassName: 'BeechIt\Mautic\Domain\Finishers\MauticFinisher'
+
+        mautic_finisher_campaign_prototype:
+          __inheritances:
+            10: 'TYPO3.CMS.Form.prototypes.standard'
+
+          finishersDefinition:
+            # Register your own email finisher.
+            MauticFinisher:
+              # use some mixins from ext:form because iam lazy
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
+              implementationClassName: 'BeechIt\Mautic\Domain\Finishers\MauticFinisher'

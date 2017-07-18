@@ -1,0 +1,12 @@
+type: Form
+identifier: mautic
+label: Mautic Form
+prototypeName: mautic_finisher_standalone_prototype
+finishers:
+  -
+    identifier: MauticFinisher
+renderables:
+  -
+    type: Page
+    identifier: page-1
+    label: Page

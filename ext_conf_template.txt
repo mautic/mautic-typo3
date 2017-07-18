@@ -1,0 +1,9 @@
+# cat=basic/enable; type=string; label=Mautic installation URL
+mauticUrl =
+
+# cat=basic/enable; type=string; label=Mautic username
+mauticUsername =
+
+# cat=basic/enable; type=string; label=Mautic password
+mauticPassword =
+
