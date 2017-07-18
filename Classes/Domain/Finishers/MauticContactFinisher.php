@@ -12,9 +12,11 @@
 namespace Mautic\MauticTypo3\Domain\Finishers;
 
 use Mautic\MauticTypo3\Service\MauticService;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 
 
-class MauticContactFinisher
+class MauticContactFinisher extends AbstractFinisher
 {
 
     private $mauticService;
@@ -31,6 +33,10 @@ class MauticContactFinisher
     {
         // TODO
         $contactApi = $this->mauticService->createMauticApi('contacts');
+
+        $formDefinition = $this->finisherContext->getFormRuntime()->getFormDefinition();
+
+        DebuggerUtility::var_dump($formDefinition);
 
     }
 
