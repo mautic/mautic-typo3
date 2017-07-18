@@ -2,4 +2,18 @@
 
 #EXT:mautic_typo3
 
-For those reading this now. This extension will go through a complete renewal phase soon. This will mean full compatibility with TYPO3 8 LTS.
+Welcome to the official TYPO3 extension for Mautic!
+
+Version: 1.0.0
+
+State: Beta.
+
+Features:
+*Create forms in TYPO3 and automatically sync them with your Mautic installation (supports create, duplicate, edit and delete)
+*Send form data directly to Mautic
+*Create a contact in Mautic from data collected in TYPO3 forms
+
+Coming soon:
+*Integration of the Mautic tracking script
+
+Don't forget to head into the extension configuration to set up TYPO3 with the details of your Mautic installation.
