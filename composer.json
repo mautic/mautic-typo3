@@ -2,8 +2,7 @@
   "name": "beechit/mautic",
     "type": "typo3-cms-extension",
     "description": "An extension to sync forms between TYPO3 and Mautic",
-    "homepage": "http://www.beech.it/",
-    "license": ["MIT"],
+    "license": ["GPL3"],
     "require": {
         "php": ">=7.0.0",
         "typo3/cms-core": "^8.7.0",
