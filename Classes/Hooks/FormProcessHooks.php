@@ -336,7 +336,7 @@ class FormProcessHooks
             // Instantiate a class that can turn YAML files into a PHP array
             $fileLoader = GeneralUtility::makeInstance(YamlFileLoader::class);
             // Load the FieldTypes.yaml
-            $yaml = $fileLoader->load('EXT:mautic-typo3-typo3/Configuration/Yaml/FieldTypes.yaml');
+            $yaml = $fileLoader->load('EXT:mautic_typo3/Configuration/Yaml/FieldTypes.yaml');
         }
 
         return $yaml;

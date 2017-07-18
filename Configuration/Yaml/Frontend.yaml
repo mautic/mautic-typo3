@@ -3,7 +3,7 @@ TYPO3:
     Form:
       persistenceManager:
         allowedExtensionPaths:
-          mautic: EXT:mautic-typo3/Resources/Private/Forms/
+          mautic: EXT:mautic_typo3/Resources/Private/Forms/
 
       prototypes:
         # add a new prototype

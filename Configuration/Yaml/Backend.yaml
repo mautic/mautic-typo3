@@ -5,7 +5,7 @@ TYPO3:
         allowSaveToExtensionPaths: true
         allowDeleteFromExtensionPaths: true
         allowedExtensionPaths:
-          mautic: EXT:mautic-typo3/Resources/Private/Forms/
+          mautic: EXT:mautic_typo3/Resources/Private/Forms/
 
       formManager:
         selectablePrototypesConfiguration:
@@ -32,12 +32,12 @@ TYPO3:
             dynamicRequireJsModules:
               # load custom javascript code
               additionalViewModelModules:
-                - 'TYPO3/CMS/Mautic/Backend/FormEditor/ViewModel'
+                - 'TYPO3/CMS/MauticTypo3/Backend/FormEditor/ViewModel'
             formEditorFluidConfiguration:
               partialRootPaths:
-                100: 'EXT:mautic-typo3/Resources/Private/Backend/Partials/FormEditor/'
+                100: 'EXT:mautic_typo3/Resources/Private/Backend/Partials/FormEditor/'
               layoutRootPaths:
-                100: 'EXT:mautic-typo3/Resources/Private/Backend/Layouts/FormEditor/'
+                100: 'EXT:mautic_typo3/Resources/Private/Backend/Layouts/FormEditor/'
 
             formEditorPartials:
               # custom select list for Mautic properties
@@ -48,7 +48,7 @@ TYPO3:
               renderingOptions:
                 # additional fluid search paths.
                 partialRootPaths:
-                    1486978514: 'EXT:mautic-typo3/Resources/Private/Frontend/Partials'
+                    1486978514: 'EXT:mautic_typo3/Resources/Private/Frontend/Partials'
               formEditor:
                 editors:
                   900:
@@ -132,9 +132,9 @@ TYPO3:
                 - 'TYPO3/CMS/Mautic/Backend/FormEditor/ViewModel'
             formEditorFluidConfiguration:
               partialRootPaths:
-                100: 'EXT:mautic-typo3/Resources/Private/Backend/Partials/FormEditor/'
+                100: 'EXT:mautic_typo3/Resources/Private/Backend/Partials/FormEditor/'
               layoutRootPaths:
-                100: 'EXT:mautic-typo3/Resources/Private/Backend/Layouts/FormEditor/'
+                100: 'EXT:mautic_typo3/Resources/Private/Backend/Layouts/FormEditor/'
 
             formEditorPartials:
               # custom select list for Mautic properties
@@ -145,7 +145,7 @@ TYPO3:
               renderingOptions:
                 # additional fluid search paths.
                 partialRootPaths:
-                    1486978514: 'EXT:mautic-typo3/Resources/Private/Frontend/Partials'
+                    1486978514: 'EXT:mautic_typo3/Resources/Private/Frontend/Partials'
               formEditor:
                 editors:
                   900:

@@ -1,14 +1,14 @@
 module.tx_form {
     settings {
         yamlConfigurations {
-            mautic = EXT:mautic-typo3/Configuration/Yaml/Backend.yaml
+            mautic = EXT:mautic_typo3/Configuration/Yaml/Backend.yaml
         }
     }
 }
 plugin.tx_form {
     settings {
         yamlConfigurations {
-            mautic = EXT:mautic-typo3/Configuration/Yaml/Frontend.yaml
+            mautic = EXT:mautic_typo3/Configuration/Yaml/Frontend.yaml
         }
     }
 }
