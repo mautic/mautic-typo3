@@ -9,7 +9,6 @@ TYPO3:
 
       formManager:
         selectablePrototypesConfiguration:
-          # add the prototype 'mautic_finisher_prototype' to the FormManager select list
           1484232130:
             __inheritances:
               10: 'TYPO3.CMS.Form.formManager.selectablePrototypesConfiguration.100'
@@ -22,15 +21,11 @@ TYPO3:
             label: 'Mautic Form (campaign form)'
 
       prototypes:
-        # add a new prototype called 'mautic_finisher_standalone_prototype'
-        # and extend it from the 'standard' prototype
-        mautic_finisher_standalone_prototype:
-          __inheritances:
-            10: 'TYPO3.CMS.Form.prototypes.standard'
 
+        ########### EXTEND STANDARD PROTOTYPE ###########
+        standard:
           formEditor:
             dynamicRequireJsModules:
-              # load custom javascript code
               additionalViewModelModules:
                 - 'TYPO3/CMS/MauticTypo3/Backend/FormEditor/ViewModel'
             formEditorFluidConfiguration:
@@ -40,179 +35,86 @@ TYPO3:
                 100: 'EXT:mautic_typo3/Resources/Private/Backend/Layouts/FormEditor/'
 
             formEditorPartials:
-              # custom select list for Mautic properties
               Inspector-MauticPropertySelectEditor: 'Inspector/MauticPropertySelectEditor'
 
           formElementsDefinition:
             Form:
               renderingOptions:
-                # additional fluid search paths.
                 partialRootPaths:
                     1486978514: 'EXT:mautic_typo3/Resources/Private/Frontend/Partials'
               formEditor:
                 editors:
                   900:
                     selectOptions:
-                        # add the MauticFinisher finisher to the finishers select list
                       1000:
-                        value: 'MauticFinisher'
-                        label: 'Send to Mautic'
+                        value: 'MauticContactFinisher'
+                        label: 'Create Mautic Contact'
 
                 propertyCollections:
                   finishers:
-                    # Add the MauticFinisher finisher editor configurations.
-                    1000:
+                    1100:
                       __inheritances:
-                        10: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFinisherMixin'
-                      identifier: 'MauticFinisher'
+                        10: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticContactFinisherMixin'
+                      identifier: 'MauticContactFinisher'
             Text:
-              # add the Mautic properties to Text elements
               __inheritances:
                 100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
             Password:
-              # add the Mautic properties to Password elements
               __inheritances:
                 100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
             AdvancedPassword:
-              # add the Mautic properties to AdvancedPassword elements
               __inheritances:
                 100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
             Textarea:
-              # add the Mautic properties to Textarea elements
               __inheritances:
                 100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
             Checkbox:
-              # add the Mautic properties to Checkbox elements
               __inheritances:
                 100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
             MultiCheckbox:
-              # add the Mautic properties to MultiCheckbox elements
               __inheritances:
                 100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
             MultiSelect:
-              # add the Mautic properties to MultiSelect elements
               __inheritances:
                 100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
             RadioButton:
-              # add the Mautic properties to RadioButton elements
               __inheritances:
                 100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
             SingleSelect:
-              # add the Mautic properties to SingleSelect elements
               __inheritances:
                 100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
             DatePicker:
-              # add the Mautic properties to DatePicker elements
               __inheritances:
                 100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
-            # enable hidden elements within the editor
             Hidden:
-              # add the Mautic properties to Hidden elements
               __inheritances:
                 100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
 
           finishersDefinition:
-            MauticFinisher:
-              # we need 'implementationClassName' in the backend because of the form editor preview mode
-              implementationClassName: 'Mautic\MauticTypo3\Domain\Finishers\MauticFinisher'
-              # tell the form editor some finisher configurations
+            MauticContactFinisher:
+              implementationClassName: 'Mautic\MauticTypo3\Domain\Finishers\MauticContactFinisher'
               formEditor:
                 iconIdentifier: 't3-form-icon-finisher'
 
-        # add a new prototype called 'mautic_finisher_campaign_prototype'
-        # and extend it from the 'standard' prototype
+        ########### MAUTIC STANDALONE FORMS ###########
+        mautic_finisher_standalone_prototype:
+          __inheritances:
+            10: 'TYPO3.CMS.Form.prototypes.standard'
+
+          finishersDefinition:
+            MauticFinisher:
+              implementationClassName: 'Mautic\MauticTypo3\Domain\Finishers\MauticFinisher'
+              formEditor:
+                iconIdentifier: 't3-form-icon-finisher'
+
+        ########### MAUTIC CAMPAIGN FORMS ###########
         mautic_finisher_campaign_prototype:
           __inheritances:
             10: 'TYPO3.CMS.Form.prototypes.standard'
 
-          formEditor:
-            dynamicRequireJsModules:
-              # load custom javascript code
-              additionalViewModelModules:
-                - 'TYPO3/CMS/Mautic/Backend/FormEditor/ViewModel'
-            formEditorFluidConfiguration:
-              partialRootPaths:
-                100: 'EXT:mautic_typo3/Resources/Private/Backend/Partials/FormEditor/'
-              layoutRootPaths:
-                100: 'EXT:mautic_typo3/Resources/Private/Backend/Layouts/FormEditor/'
-
-            formEditorPartials:
-              # custom select list for Mautic properties
-              Inspector-MauticPropertySelectEditor: 'Inspector/MauticPropertySelectEditor'
-
-          formElementsDefinition:
-            Form:
-              renderingOptions:
-                # additional fluid search paths.
-                partialRootPaths:
-                    1486978514: 'EXT:mautic_typo3/Resources/Private/Frontend/Partials'
-              formEditor:
-                editors:
-                  900:
-                    selectOptions:
-                        # add the MauticFinisher finisher to the finishers select list
-                      1000:
-                        value: 'MauticFinisher'
-                        label: 'Send to Mautic'
-
-                propertyCollections:
-                  finishers:
-                    # Add the MauticFinisher finisher editor configurations.
-                    1000:
-                      __inheritances:
-                        10: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFinisherMixin'
-                      identifier: 'MauticFinisher'
-            Text:
-              # add the Mautic properties to Text elements
-              __inheritances:
-                100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
-            Password:
-              # add the Mautic properties to Password elements
-              __inheritances:
-                100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
-            AdvancedPassword:
-              # add the Mautic properties to AdvancedPassword elements
-              __inheritances:
-                100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
-            Textarea:
-              # add the Mautic properties to Textarea elements
-              __inheritances:
-                100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
-            Checkbox:
-              # add the Mautic properties to Checkbox elements
-              __inheritances:
-                100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
-            MultiCheckbox:
-              # add the Mautic properties to MultiCheckbox elements
-              __inheritances:
-                100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
-            MultiSelect:
-              # add the Mautic properties to MultiSelect elements
-              __inheritances:
-                100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
-            RadioButton:
-              # add the Mautic properties to RadioButton elements
-              __inheritances:
-                100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
-            SingleSelect:
-              # add the Mautic properties to SingleSelect elements
-              __inheritances:
-                100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
-            DatePicker:
-              # add the Mautic properties to DatePicker elements
-              __inheritances:
-                100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
-            # enable hidden elements within the editor
-            Hidden:
-              # add the Mautic properties to Hidden elements
-              __inheritances:
-                100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
-
           finishersDefinition:
             MauticFinisher:
-              # we need 'implementationClassName' in the backend because of the form editor preview mode
               implementationClassName: 'Mautic\MauticTypo3\Domain\Finishers\MauticFinisher'
-              # tell the form editor some finisher configurations
               formEditor:
                 iconIdentifier: 't3-form-icon-finisher'
 
@@ -234,10 +136,15 @@ TYPO3:
                   propertyPath: 'properties.mauticTable'
 
           mauticFinisherMixin:
-            # add some editable finisher settings
             editors:
-              # use some ext:form mixins because iam lazy
               __inheritances:
                 10: 'TYPO3.CMS.Form.mixins.formElementMixins.BaseCollectionEditorsMixin'
               100:
                 label: 'Send to Mautic'
+
+          mauticContactFinisherMixin:
+            editors:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.formElementMixins.BaseCollectionEditorsMixin'
+              100:
+                label: 'Create Mautic Contact'

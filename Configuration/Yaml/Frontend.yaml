@@ -6,16 +6,19 @@ TYPO3:
           mautic: EXT:mautic_typo3/Resources/Private/Forms/
 
       prototypes:
-        # add a new prototype
-        # and extend it from the 'standard' prototype
+        standard:
+          finishersDefinition:
+            MauticContactFinisher:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
+              implementationClassName: 'Mautic\MauticTypo3\Domain\Finishers\MauticContactFinisher'
+
         mautic_finisher_standalone_prototype:
           __inheritances:
             10: 'TYPO3.CMS.Form.prototypes.standard'
 
           finishersDefinition:
-            # Register your own email finisher.
             MauticFinisher:
-              # use some mixins from ext:form because iam lazy
               __inheritances:
                 10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
               implementationClassName: 'Mautic\MauticTypo3\Domain\Finishers\MauticFinisher'
@@ -25,9 +28,7 @@ TYPO3:
             10: 'TYPO3.CMS.Form.prototypes.standard'
 
           finishersDefinition:
-            # Register your own email finisher.
             MauticFinisher:
-              # use some mixins from ext:form because iam lazy
               __inheritances:
                 10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
               implementationClassName: 'Mautic\MauticTypo3\Domain\Finishers\MauticFinisher'
