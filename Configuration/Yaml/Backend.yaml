@@ -114,7 +114,7 @@ TYPO3:
           finishersDefinition:
             MauticFinisher:
               # we need 'implementationClassName' in the backend because of the form editor preview mode
-              implementationClassName: 'BeechIt\Mautic\Domain\Finishers\MauticFinisher'
+              implementationClassName: 'Mautic\Typo3\Domain\Finishers\MauticFinisher'
               # tell the form editor some finisher configurations
               formEditor:
                 iconIdentifier: 't3-form-icon-finisher'
@@ -211,7 +211,7 @@ TYPO3:
           finishersDefinition:
             MauticFinisher:
               # we need 'implementationClassName' in the backend because of the form editor preview mode
-              implementationClassName: 'BeechIt\Mautic\Domain\Finishers\MauticFinisher'
+              implementationClassName: 'Mautic\Typo3\Domain\Finishers\MauticFinisher'
               # tell the form editor some finisher configurations
               formEditor:
                 iconIdentifier: 't3-form-icon-finisher'

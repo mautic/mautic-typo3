@@ -1,8 +1,6 @@
 <?php
 declare (strict_types = 1);
 
-namespace BeechIt\Mautic\Service;
-
 /*
  * @copyright   2017 Mautic Contributors. All rights reserved
  * @author      Mautic
@@ -11,6 +9,8 @@ namespace BeechIt\Mautic\Service;
  *
  * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  */
+
+namespace Mautic\Typo3\Service;
 
 use Mautic\Auth\ApiAuth;
 use Mautic\MauticApi;

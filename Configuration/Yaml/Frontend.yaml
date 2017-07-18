@@ -18,7 +18,7 @@ TYPO3:
               # use some mixins from ext:form because iam lazy
               __inheritances:
                 10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
-              implementationClassName: 'BeechIt\Mautic\Domain\Finishers\MauticFinisher'
+              implementationClassName: 'Mautic\Typo3\Domain\Finishers\MauticFinisher'
 
         mautic_finisher_campaign_prototype:
           __inheritances:
@@ -30,4 +30,4 @@ TYPO3:
               # use some mixins from ext:form because iam lazy
               __inheritances:
                 10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
-              implementationClassName: 'BeechIt\Mautic\Domain\Finishers\MauticFinisher'
+              implementationClassName: 'Mautic\Typo3\Domain\Finishers\MauticFinisher'

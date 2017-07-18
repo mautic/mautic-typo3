@@ -11,9 +11,9 @@ declare(strict_types = 1);
  * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  */
 
-namespace BeechIt\Mautic\Domain\Finishers;
+namespace Mautic\Typo3\Domain\Finishers;
 
-use BeechIt\Mautic\Service\MauticService;
+use Mautic\Typo3\Service\MauticService;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 
 

@@ -1,6 +1,5 @@
 <?php
 declare(strict_types = 1);
-namespace BeechIt\Mautic\Hooks;
 
 /*
  * @copyright   2017 Mautic Contributors. All rights reserved
@@ -11,11 +10,13 @@ namespace BeechIt\Mautic\Hooks;
  * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  */
 
+namespace Mautic\Typo3\Hooks;
+
 use TYPO3\CMS\Core\Configuration\Loader\YamlFileLoader;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Form\Mvc\Persistence\FormPersistenceManager;
-use BeechIt\Mautic\Service\MauticService;
+use Mautic\Typo3\Service\MauticService;
 
 
 class FormProcessHooks

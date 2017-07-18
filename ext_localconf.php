@@ -13,14 +13,14 @@ defined('TYPO3_MODE') or die();
 // Assign the hooks for pushing newly created and edited forms to Mautic
 if (TYPO3_MODE === 'BE') {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['beforeFormCreate'][1489959059]
-        = \BeechIt\Mautic\Hooks\FormProcessHooks::class;
+        = \Mautic\Typo3\Hooks\FormProcessHooks::class;
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['beforeFormDuplicate'][1489959059]
-        = \BeechIt\Mautic\Hooks\FormProcessHooks::class;
+        = \Mautic\Typo3\Hooks\FormProcessHooks::class;
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['beforeFormDelete'][1489959059]
-        = \BeechIt\Mautic\Hooks\FormProcessHooks::class;
+        = \Mautic\Typo3\Hooks\FormProcessHooks::class;
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['beforeFormSave'][1489959059]
-        = \BeechIt\Mautic\Hooks\FormProcessHooks::class;
+        = \Mautic\Typo3\Hooks\FormProcessHooks::class;
 }

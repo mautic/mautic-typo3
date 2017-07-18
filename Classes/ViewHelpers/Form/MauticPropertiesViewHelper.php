@@ -1,8 +1,6 @@
 <?php
 declare (strict_types = 1);
 
-namespace BeechIt\Mautic\ViewHelpers\Form;
-
 /*
  * @copyright   2017 Mautic Contributors. All rights reserved
  * @author      Mautic
@@ -12,8 +10,10 @@ namespace BeechIt\Mautic\ViewHelpers\Form;
  * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  */
 
+namespace Mautic\Typo3\ViewHelpers\Form;
+
 use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
-use BeechIt\Mautic\Service\MauticService;
+use Mautic\Typo3\Service\MauticService;
 
 /**
  * Class MauticPropertiesViewHelper
