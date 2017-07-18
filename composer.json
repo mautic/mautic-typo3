@@ -1,7 +1,7 @@
 {
   "name": "mautic/mautic-typo3",
     "type": "typo3-cms-extension",
-    "description": "An extension to sync forms between TYPO3 and Mautic",
+    "description": "An extension to integrate Mautic into TYPO3",
     "version": "1.0.0",
     "license": ["GPL3"],
     "require": {
