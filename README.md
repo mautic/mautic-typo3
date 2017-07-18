@@ -1,4 +1,4 @@
-EXT:mautic_typo3
+EXT:mautic_typo3 ![Travis](https://travis-ci.org/mautic/mautic-typo3.svg?branch=master "Travis build")
 ===========
 ![Mautic](http://i.imgur.com/g56p37X.jpg "Mautic Open Source Marketing Automation together with the CMS power of TYPO3")
 
