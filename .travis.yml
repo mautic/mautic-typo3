@@ -4,27 +4,17 @@ php:
   - 7.0
   - 7.1
 
-env:
-  - TYPO3_VERSION="8.7.3"
-  
-sudo: false
-
-addons:
-  apt:
-    packages:
-      - parallel
-
 cache:
   directories:
     - $HOME/.composer/cache
     
 before_install:
-  - phpenv config-rm xdebug.ini
   - composer self-update
   - composer --version
+  # install PHPSTAN for PHP 7+
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} != "5.6" ]]; then composer global require phpstan/phpstan-shim; fi
 
-before_script:
-  - composer require typo3/cms="$TYPO3_VERSION"
-  # Restore composer.json
-  - git checkout composer.json
-  - export TYPO3_PATH_WEB=$PWD/.Build/Web
+script:
+  # Check if the code standards weren't broken.
+  # Run it only on PHP 7.1 which should be the fastest. No need to run it for all PHP versions
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then bin/php-cs-fixer fix -v --dry-run --diff; fi
