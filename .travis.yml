@@ -13,6 +13,9 @@ before_install:
   - composer --version
   # install PHPSTAN for PHP 7+
   - if [[ ${TRAVIS_PHP_VERSION:0:3} != "5.6" ]]; then composer global require phpstan/phpstan-shim; fi
+  
+install:
+  - composer install
 
 script:
   # Check if the code standards weren't broken.
