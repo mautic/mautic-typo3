@@ -14,6 +14,7 @@ namespace Mautic\MauticTypo3\Domain\Finishers;
 use Mautic\MauticTypo3\Service\MauticService;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
+use TYPO3\CMS\Form\Domain\Model\FormDefinition;
 
 
 class MauticContactFinisher extends AbstractFinisher
@@ -31,13 +32,46 @@ class MauticContactFinisher extends AbstractFinisher
 
     protected function executeInternal()
     {
-        // TODO
+
         $contactApi = $this->mauticService->createMauticApi('contacts');
 
         $formDefinition = $this->finisherContext->getFormRuntime()->getFormDefinition();
 
-        DebuggerUtility::var_dump($formDefinition);
+        $formValues = $this->finisherContext->getFormValues();
 
+        $mauticArray = [];
+
+        foreach ($formValues as $key => $value) {
+
+            $mauticType = $this->getMauticType($key, $formDefinition);
+
+            if (!empty($mauticType)) {
+                $mauticArray[$mauticType] = $value;
+            }
+        }
+
+        if (count($mauticArray) > 0) {
+            $mauticArray['ipAddress'] = $_SERVER['REMOTE_ADDR'];
+            $contactApi->create($mauticArray);
+        }
+
+    }
+
+    /**
+     * @param string $field
+     * @param FormDefinition $formDefinition
+     * @return string
+     */
+    private function getMauticType(string $field, FormDefinition $formDefinition): string
+    {
+        $properties = $formDefinition->getElementByIdentifier($field)->getProperties();
+        if (!empty($properties['mauticTable'])) {
+            $mauticType = $properties['mauticTable'];
+        } else {
+            $mauticType = '';
+        }
+
+        return $mauticType;
     }
 
 }
