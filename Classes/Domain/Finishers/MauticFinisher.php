@@ -56,7 +56,7 @@ class MauticFinisher extends AbstractFinisher
      * @param  string $ip IP address of the lead
      * @return boolean
      */
-    function pushMauticForm($formStructure, $mauticUrl, $formId, $ip = null)
+    private function pushMauticForm($formStructure, $mauticUrl, $formId, $ip = null)
     {
         // Get IP from $_SERVER
         if (!$ip) {
