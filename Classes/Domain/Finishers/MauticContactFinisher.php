@@ -13,14 +13,11 @@ namespace Mautic\MauticTypo3\Domain\Finishers;
 
 use Mautic\MauticTypo3\Service\MauticService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 use TYPO3\CMS\Form\Domain\Model\FormDefinition;
 
-
 class MauticContactFinisher extends AbstractFinisher
 {
-
     private $mauticService;
 
     /**
@@ -37,6 +34,7 @@ class MauticContactFinisher extends AbstractFinisher
             if (GeneralUtility::getApplicationContext()->isDevelopment()) {
                 throw new \InvalidArgumentException('Mautic Username, url and/or Password not set.', 1499940156);
             }
+
             return;
         }
 
@@ -49,7 +47,6 @@ class MauticContactFinisher extends AbstractFinisher
         $mauticArray = [];
 
         foreach ($formValues as $key => $value) {
-
             $mauticType = $this->getMauticType($key, $formDefinition);
 
             if (!empty($mauticType)) {
@@ -61,12 +58,12 @@ class MauticContactFinisher extends AbstractFinisher
             $mauticArray['ipAddress'] = $_SERVER['REMOTE_ADDR'];
             $contactApi->create($mauticArray);
         }
-
     }
 
     /**
-     * @param string $field
+     * @param string         $field
      * @param FormDefinition $formDefinition
+     *
      * @return string
      */
     private function getMauticType(string $field, FormDefinition $formDefinition): string
@@ -80,5 +77,4 @@ class MauticContactFinisher extends AbstractFinisher
 
         return $mauticType;
     }
-
 }

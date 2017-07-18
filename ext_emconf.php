@@ -10,21 +10,21 @@
  */
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'Mautic',
-    'description' => 'An extension to sync forms between TYPO3 and Mautic',
-    'category' => 'be',
-    'version' => '1.0.0',
-    'state' => 'beta',
+    'title'            => 'Mautic',
+    'description'      => 'An extension to sync forms between TYPO3 and Mautic',
+    'category'         => 'be',
+    'version'          => '1.0.0',
+    'state'            => 'beta',
     'clearcacheonload' => 0,
-    'author' => 'Woeler',
-    'author_email' => 'woeler@esoleaderboards.com',
-    'author_company' => 'Mautic',
-    'constraints' => [
+    'author'           => 'Woeler',
+    'author_email'     => 'woeler@esoleaderboards.com',
+    'author_company'   => 'Mautic',
+    'constraints'      => [
         'depends' => [
             'typo3' => '8.7.0-8.7.99',
         ],
         'conflicts' => [],
-        'suggests' => [],
+        'suggests'  => [],
     ],
     'suggests' => [],
 ];

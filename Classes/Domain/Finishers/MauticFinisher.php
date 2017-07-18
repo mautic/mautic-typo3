@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 /*
  * @copyright   2017 Mautic Contributors. All rights reserved
@@ -16,7 +17,6 @@ use Mautic\MauticTypo3\Service\MauticService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 
-
 class MauticFinisher extends AbstractFinisher
 {
     private $mauticService;
@@ -29,9 +29,6 @@ class MauticFinisher extends AbstractFinisher
         $this->mauticService = new MauticService();
     }
 
-    /**
-     * @return void
-     */
     protected function executeInternal()
     {
         $formDefinition = $this->finisherContext->getFormRuntime()->getFormDefinition()->getRenderingOptions();
@@ -40,6 +37,7 @@ class MauticFinisher extends AbstractFinisher
             if (GeneralUtility::getApplicationContext()->isDevelopment()) {
                 throw new \InvalidArgumentException('Mautic Username, url and/or Password not set.', 1499940156);
             }
+
             return;
         }
 
@@ -49,34 +47,34 @@ class MauticFinisher extends AbstractFinisher
             $formValues = $this->transformFormStructure($this->finisherContext->getFormValues());
 
             $this->pushMauticForm($formValues, $this->mauticService->getConfigurationData('mauticUrl'), $formDefinition['mauticId']);
-
         } else {
             \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump('not meeting requirements for finisher mautic', 'ExecuteInternal');
         }
     }
 
     /**
-     * Push data to a Mautic form
+     * Push data to a Mautic form.
      *
-     * @param  array $formStructure The data submitted by your form
-     * @param  string $mauticUrl URL of the mautic installation
-     * @param  integer $formId Mautic Form ID
-     * @param  string $ip IP address of the lead
-     * @return boolean
+     * @param array  $formStructure The data submitted by your form
+     * @param string $mauticUrl     URL of the mautic installation
+     * @param int    $formId        Mautic Form ID
+     * @param string $ip            IP address of the lead
+     *
+     * @return bool
      */
     private function pushMauticForm($formStructure, $mauticUrl, $formId, $ip = null)
     {
         // Get IP from $_SERVER
         if (!$ip) {
-            $ipHolders = array(
+            $ipHolders = [
                 'HTTP_CLIENT_IP',
                 'HTTP_X_FORWARDED_FOR',
                 'HTTP_X_FORWARDED',
                 'HTTP_X_CLUSTER_CLIENT_IP',
                 'HTTP_FORWARDED_FOR',
                 'HTTP_FORWARDED',
-                'REMOTE_ADDR'
-            );
+                'REMOTE_ADDR',
+            ];
             foreach ($ipHolders as $key) {
                 if (!empty($_SERVER[$key])) {
                     $ip = $_SERVER[$key];
@@ -100,22 +98,23 @@ class MauticFinisher extends AbstractFinisher
         }
 
         // Build and initiate the POST
-        $formStructurePost = array('mauticform' => $formStructure);
-        $formUrl = $mauticUrl . '/form/submit?formId=' . $formId;
-        $ch = curl_init();
+        $formStructurePost = ['mauticform' => $formStructure];
+        $formUrl           = $mauticUrl.'/form/submit?formId='.$formId;
+        $ch                = curl_init();
         curl_setopt($ch, CURLOPT_URL, $formUrl);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($formStructurePost));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Forwarded-For: $ip"));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["X-Forwarded-For: $ip"]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
         curl_close($ch);
+
         return $response;
     }
 
-
     /**
      * @param array $formStructure
+     *
      * @return array
      */
     private function transformFormStructure(array $formStructure): array
@@ -142,5 +141,4 @@ class MauticFinisher extends AbstractFinisher
 
         return $toReturn;
     }
-
 }

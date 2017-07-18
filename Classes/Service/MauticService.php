@@ -1,5 +1,6 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 /*
  * @copyright   2017 Mautic Contributors. All rights reserved
@@ -15,10 +16,8 @@ namespace Mautic\MauticTypo3\Service;
 use Mautic\Auth\ApiAuth;
 use Mautic\MauticApi;
 
-
 class MauticService
 {
-
     /**
      * @return \Mautic\Auth\AuthInterface
      */
@@ -30,22 +29,22 @@ class MauticService
         $mauticPassword = $this->getConfigurationData('mauticPassword');
 
         // Create the authorization array
-        $settings = array(
+        $settings = [
             'userName' => $mauticUsername,
             'password' => $mauticPassword,
-        );
+        ];
 
         // Initiate the auth object specifying to use BasicAuth
         $initAuth = new ApiAuth();
-        $auth = $initAuth->newAuth($settings, 'BasicAuth');
+        $auth     = $initAuth->newAuth($settings, 'BasicAuth');
 
         // Return the authorization object
         return $auth;
     }
 
-
     /**
      * @param string $apiType
+     *
      * @return \Mautic\Api\Api
      */
     public function createMauticApi(string $apiType): \Mautic\Api\Api
@@ -58,6 +57,7 @@ class MauticService
 
         // Instantiate the api object
         $api = new MauticApi();
+
         return $api->newApi($apiType, $auth, $apiUrl);
     }
 
@@ -75,12 +75,13 @@ class MauticService
 
     /**
      * @param string $type
+     *
      * @return string
      */
     public function getConfigurationData(string $type): string
     {
         $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mautic_typo3'] ?? '');
+
         return $extensionConfiguration[$type] ?? '';
     }
-
 }

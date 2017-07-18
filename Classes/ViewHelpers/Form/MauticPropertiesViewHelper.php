@@ -1,5 +1,6 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 /*
  * @copyright   2017 Mautic Contributors. All rights reserved
@@ -12,11 +13,11 @@ declare (strict_types = 1);
 
 namespace Mautic\MauticTypo3\ViewHelpers\Form;
 
-use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
 use Mautic\MauticTypo3\Service\MauticService;
+use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
 
 /**
- * Class MauticPropertiesViewHelper
+ * Class MauticPropertiesViewHelper.
  */
 class MauticPropertiesViewHelper extends SelectViewHelper
 {
@@ -36,7 +37,7 @@ class MauticPropertiesViewHelper extends SelectViewHelper
      */
     protected function getOptions()
     {
-        $options = parent::getOptions();
+        $options     = parent::getOptions();
         $options[''] = 'None';
 
         $api = $this->mauticService->createMauticApi('contactFields');
@@ -44,9 +45,7 @@ class MauticPropertiesViewHelper extends SelectViewHelper
         $personFields = $api->getList();
 
         foreach ($personFields['fields'] as $field) {
-
             $options[$field['alias']] = $field['label'];
-
         }
 
         return $options;
