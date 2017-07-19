@@ -37,10 +37,11 @@ class MauticPropertiesViewHelper extends SelectViewHelper
      */
     protected function getOptions()
     {
-        $options     = parent::getOptions();
+        $options = parent::getOptions();
 
         if (!$this->mauticService->checkConfigPresent()) {
             $options[''] = 'Extension configuration is incomplete';
+            
             return $options;
         }
 
