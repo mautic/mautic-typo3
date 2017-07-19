@@ -38,6 +38,12 @@ class MauticPropertiesViewHelper extends SelectViewHelper
     protected function getOptions()
     {
         $options     = parent::getOptions();
+
+        if (!$this->mauticService->checkConfigPresent()) {
+            $options[''] = 'Extension configuration is incomplete';
+            return $options;
+        }
+
         $options[''] = 'None';
 
         $api = $this->mauticService->createMauticApi('contactFields');
