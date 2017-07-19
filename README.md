@@ -42,7 +42,7 @@ Run the following command
 Go into the TYPO3 backend to the Extensions module and enable the 'Mautic' extension
 
 ### A thank you to
-* [Beech.it](https://beech.it) for helping in getting started and tackling qustions about TYPO3
+* [Beech.it](https://beech.it) for helping in getting started and tackling questions about TYPO3
 * [John Linhart](http://johnlinhart.com) (escopecz) for helping me get started with the Mautic development environment
 * [TYPO3 Community](https://typo3.org) for help, tips and feature requests
 * [Mautic Community](https://mautic.org) for help, tips and feature requests
