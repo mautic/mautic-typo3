@@ -18,11 +18,11 @@ State: Beta.
 * Create forms in TYPO3 and automatically sync them with your Mautic installation (supports create, duplicate, edit and delete)
 * Send form data directly to Mautic
 * Create a contact in Mautic from data collected in TYPO3 forms
-
-### Coming soon
 * Integration of the Mautic tracking script
 
 Don't forget to head into the extension configuration to set up TYPO3 with the details of your Mautic installation.
+
+Tracking is also disabled by default. Head to the extension configuration to turn it on.
 
 ### Installation (via Composer)
 Add the following to the composer.json of your TYPO3 installation
