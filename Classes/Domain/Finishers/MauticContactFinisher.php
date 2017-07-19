@@ -1,4 +1,4 @@
-gitgit <?php
+<?php
 
 /*
  * @copyright   2017 Mautic Contributors. All rights reserved
