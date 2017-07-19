@@ -21,7 +21,7 @@ class MauticContactFinisher extends AbstractFinisher
     private $mauticService;
 
     /**
-     * MauticContactFinisher constructor
+     * MauticContactFinisher constructor.
      */
     public function __construct()
     {
