@@ -41,7 +41,7 @@ class MauticPropertiesViewHelper extends SelectViewHelper
 
         if (!$this->mauticService->checkConfigPresent()) {
             $options[''] = 'Extension configuration is incomplete';
-            
+
             return $options;
         }
 
