@@ -37,7 +37,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Mautic\\MauticTypo3\\": "Classes"
+            "Mautic\\Mautic\\": "Classes"
         }
     }
 }
