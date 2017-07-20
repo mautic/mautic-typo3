@@ -55,6 +55,9 @@ Go into the TYPO3 backend to the Extensions module and enable the 'Mautic' exten
 * Create a pull request to this repository
 * Note that the travis build should succeed before requests are approved
 
+### Need help with integration?
+* Contact support@beech.it
+
 ### Got questions?
 * Create an issue in this repository
 * Find us on the [Mautic Slack](https://mautic.slack.com)
