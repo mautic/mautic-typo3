@@ -57,7 +57,7 @@ class MauticPropertiesViewHelper extends SelectViewHelper
 
         $personFields = $api->getList();
 
-        if(!is_array($personFields['fields'])){
+        if (!is_array($personFields['fields'])) {
             $options[''] = 'Extension configuration is incorrect';
 
             return $options;
