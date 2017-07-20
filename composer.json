@@ -1,9 +1,30 @@
 {
-  "name": "mautic/mautic-typo3",
+    "name": "mautic/mautic-typo3",
     "type": "typo3-cms-extension",
     "description": "An extension to sync forms between TYPO3 and Mautic",
+    "homepage": "https://github.com/mautic/mautic-typo3",
     "version": "1.1.0",
     "license": ["GPL3"],
+    "authors": [
+      {
+        "name": "Woeler",
+        "email": "woeler@esoleaderboards.com"
+      },
+      {
+        "name": "Team Beech.it",
+        "email": "support@beech.it",
+        "homepage": "https://beech.it"
+      }
+    ],
+    "keywords": [
+      "TYPO3",
+      "CMS",
+      "Mautic"
+    ],
+    "replace": {
+      "mautic": "self.version",
+      "typo3-ter/mautic": "self.version"
+    },
     "require": {
         "php": ">=7.0.0",
         "mautic/api-library": "^2.6"
