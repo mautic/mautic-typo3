@@ -92,7 +92,7 @@ TYPO3:
 
           finishersDefinition:
             MauticContactFinisher:
-              implementationClassName: 'Mautic\MauticTypo3\Domain\Finishers\MauticContactFinisher'
+              implementationClassName: 'Mautic\Mautic\Domain\Finishers\MauticContactFinisher'
               formEditor:
                 iconIdentifier: 't3-form-icon-finisher'
 
@@ -103,7 +103,7 @@ TYPO3:
 
           finishersDefinition:
             MauticFinisher:
-              implementationClassName: 'Mautic\MauticTypo3\Domain\Finishers\MauticFinisher'
+              implementationClassName: 'Mautic\Mautic\Domain\Finishers\MauticFinisher'
               formEditor:
                 iconIdentifier: 't3-form-icon-finisher'
 
@@ -114,7 +114,7 @@ TYPO3:
 
           finishersDefinition:
             MauticFinisher:
-              implementationClassName: 'Mautic\MauticTypo3\Domain\Finishers\MauticFinisher'
+              implementationClassName: 'Mautic\Mautic\Domain\Finishers\MauticFinisher'
               formEditor:
                 iconIdentifier: 't3-form-icon-finisher'
 

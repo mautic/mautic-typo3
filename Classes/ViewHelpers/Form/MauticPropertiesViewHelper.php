@@ -17,9 +17,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace Mautic\MauticTypo3\ViewHelpers\Form;
+namespace Mautic\Mautic\ViewHelpers\Form;
 
-use Mautic\MauticTypo3\Service\MauticService;
+use Mautic\Mautic\Service\MauticService;
 use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
 
 /**

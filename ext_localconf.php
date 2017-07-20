@@ -20,16 +20,16 @@ defined('TYPO3_MODE') or die();
 // Assign the hooks for pushing newly created and edited forms to Mautic
 if (TYPO3_MODE === 'BE') {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['beforeFormCreate'][1489959059]
-        = \Mautic\MauticTypo3\Hooks\FormProcessHooks::class;
+        = \Mautic\Mautic\Hooks\FormProcessHooks::class;
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['beforeFormDuplicate'][1489959059]
-        = \Mautic\MauticTypo3\Hooks\FormProcessHooks::class;
+        = \Mautic\Mautic\Hooks\FormProcessHooks::class;
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['beforeFormDelete'][1489959059]
-        = \Mautic\MauticTypo3\Hooks\FormProcessHooks::class;
+        = \Mautic\Mautic\Hooks\FormProcessHooks::class;
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['beforeFormSave'][1489959059]
-        = \Mautic\MauticTypo3\Hooks\FormProcessHooks::class;
+        = \Mautic\Mautic\Hooks\FormProcessHooks::class;
 }
 if (TYPO3_MODE === 'FE') {
     $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mautic_typo3'] ?? '');

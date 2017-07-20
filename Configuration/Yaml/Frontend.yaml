@@ -11,7 +11,7 @@ TYPO3:
             MauticContactFinisher:
               __inheritances:
                 10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
-              implementationClassName: 'Mautic\MauticTypo3\Domain\Finishers\MauticContactFinisher'
+              implementationClassName: 'Mautic\Mautic\Domain\Finishers\MauticContactFinisher'
 
         mautic_finisher_standalone_prototype:
           __inheritances:
@@ -21,7 +21,7 @@ TYPO3:
             MauticFinisher:
               __inheritances:
                 10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
-              implementationClassName: 'Mautic\MauticTypo3\Domain\Finishers\MauticFinisher'
+              implementationClassName: 'Mautic\Mautic\Domain\Finishers\MauticFinisher'
 
         mautic_finisher_campaign_prototype:
           __inheritances:
@@ -31,4 +31,4 @@ TYPO3:
             MauticFinisher:
               __inheritances:
                 10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
-              implementationClassName: 'Mautic\MauticTypo3\Domain\Finishers\MauticFinisher'
+              implementationClassName: 'Mautic\Mautic\Domain\Finishers\MauticFinisher'

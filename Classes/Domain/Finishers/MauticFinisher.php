@@ -17,9 +17,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace Mautic\MauticTypo3\Domain\Finishers;
+namespace Mautic\Mautic\Domain\Finishers;
 
-use Mautic\MauticTypo3\Service\MauticService;
+use Mautic\Mautic\Service\MauticService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 
