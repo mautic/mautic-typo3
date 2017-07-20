@@ -32,7 +32,7 @@ if (TYPO3_MODE === 'BE') {
         = \Mautic\Mautic\Hooks\FormProcessHooks::class;
 }
 if (TYPO3_MODE === 'FE') {
-    $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mautic_typo3'] ?? '');
+    $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mautic'] ?? '');
 
     $mauticUrl = $extensionConfiguration['mauticUrl'];
     if (!empty($mauticUrl) && $extensionConfiguration['tracking']) {

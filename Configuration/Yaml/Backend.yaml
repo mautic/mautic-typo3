@@ -5,7 +5,7 @@ TYPO3:
         allowSaveToExtensionPaths: true
         allowDeleteFromExtensionPaths: true
         allowedExtensionPaths:
-          mautic: EXT:mautic_typo3/Resources/Private/Forms/
+          mautic: EXT:mautic/Resources/Private/Forms/
 
       formManager:
         selectablePrototypesConfiguration:
@@ -30,9 +30,9 @@ TYPO3:
                 - 'TYPO3/CMS/MauticTypo3/Backend/FormEditor/ViewModel'
             formEditorFluidConfiguration:
               partialRootPaths:
-                100: 'EXT:mautic_typo3/Resources/Private/Backend/Partials/FormEditor/'
+                100: 'EXT:mautic/Resources/Private/Backend/Partials/FormEditor/'
               layoutRootPaths:
-                100: 'EXT:mautic_typo3/Resources/Private/Backend/Layouts/FormEditor/'
+                100: 'EXT:mautic/Resources/Private/Backend/Layouts/FormEditor/'
 
             formEditorPartials:
               Inspector-MauticPropertySelectEditor: 'Inspector/MauticPropertySelectEditor'
@@ -41,7 +41,7 @@ TYPO3:
             Form:
               renderingOptions:
                 partialRootPaths:
-                    1486978514: 'EXT:mautic_typo3/Resources/Private/Frontend/Partials'
+                    1486978514: 'EXT:mautic/Resources/Private/Frontend/Partials'
               formEditor:
                 editors:
                   900:

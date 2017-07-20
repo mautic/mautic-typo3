@@ -86,7 +86,7 @@ class MauticService
      */
     public function getConfigurationData(string $type): string
     {
-        $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mautic_typo3'] ?? '');
+        $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mautic'] ?? '');
 
         return $extensionConfiguration[$type] ?? '';
     }
