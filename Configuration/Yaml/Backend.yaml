@@ -132,6 +132,13 @@ TYPO3:
                         value: 'MauticFinisher'
                         label: 'Send to Mautic Form'
 
+                propertyCollections:
+                  finishers:
+                    1101:
+                      __inheritances:
+                        10: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFinisherMixin'
+                      identifier: 'MauticFinisher'
+
           finishersDefinition:
             MauticFinisher:
               implementationClassName: 'Mautic\Mautic\Domain\Finishers\MauticFinisher'
@@ -159,8 +166,8 @@ TYPO3:
             editors:
               __inheritances:
                 10: 'TYPO3.CMS.Form.mixins.formElementMixins.BaseCollectionEditorsMixin'
-              101:
-                label: 'Send to Mautic'
+              100:
+                label: 'Send to Mautic Form'
 
           mauticContactFinisherMixin:
             editors:
