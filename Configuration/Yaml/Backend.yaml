@@ -101,6 +101,16 @@ TYPO3:
           __inheritances:
             10: 'TYPO3.CMS.Form.prototypes.standard'
 
+          formElementsDefinition:
+            Form:
+              formEditor:
+                editors:
+                  900:
+                    selectOptions:
+                      1010:
+                        value: 'MauticFinisher'
+                        label: 'Send to Mautic Form'
+
           finishersDefinition:
             MauticFinisher:
               implementationClassName: 'Mautic\Mautic\Domain\Finishers\MauticFinisher'
@@ -111,6 +121,16 @@ TYPO3:
         mautic_finisher_campaign_prototype:
           __inheritances:
             10: 'TYPO3.CMS.Form.prototypes.standard'
+
+          formElementsDefinition:
+            Form:
+              formEditor:
+                editors:
+                  900:
+                    selectOptions:
+                      1010:
+                        value: 'MauticFinisher'
+                        label: 'Send to Mautic Form'
 
           finishersDefinition:
             MauticFinisher:
@@ -139,7 +159,7 @@ TYPO3:
             editors:
               __inheritances:
                 10: 'TYPO3.CMS.Form.mixins.formElementMixins.BaseCollectionEditorsMixin'
-              100:
+              101:
                 label: 'Send to Mautic'
 
           mauticContactFinisherMixin:
