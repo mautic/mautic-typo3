@@ -88,6 +88,10 @@ class MauticService
     {
         $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mautic'] ?? '');
 
+        if ($type === 'mauticUrl') {
+            return rtrim($extensionConfiguration[$type], '/');
+        }
+
         return $extensionConfiguration[$type] ?? '';
     }
 }
