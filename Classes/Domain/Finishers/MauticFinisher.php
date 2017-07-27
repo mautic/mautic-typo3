@@ -52,70 +52,10 @@ class MauticFinisher extends AbstractFinisher
             // Get the values that were posted in the form and transform them to a format for Mautic
             $formValues = $this->transformFormStructure($this->finisherContext->getFormValues());
 
-            $this->pushMauticForm($formValues, $this->mauticService->getConfigurationData('mauticUrl'), $formDefinition['mauticId']);
+            $this->mauticService->pushForm($formValues, $this->mauticService->getConfigurationData('mauticUrl'), $formDefinition['mauticId']);
         } else {
             \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump('not meeting requirements for finisher mautic', 'ExecuteInternal');
         }
-    }
-
-    /**
-     * Push data to a Mautic form.
-     *
-     * @param array  $formStructure The data submitted by your form
-     * @param string $mauticUrl     URL of the mautic installation
-     * @param int    $formId        Mautic Form ID
-     * @param string $ip            IP address of the lead
-     *
-     * @return bool
-     */
-    private function pushMauticForm($formStructure, $mauticUrl, $formId, $ip = null)
-    {
-        // Get IP from $_SERVER
-        if (!$ip) {
-            $ipHolders = [
-                'HTTP_CLIENT_IP',
-                'HTTP_X_FORWARDED_FOR',
-                'HTTP_X_FORWARDED',
-                'HTTP_X_CLUSTER_CLIENT_IP',
-                'HTTP_FORWARDED_FOR',
-                'HTTP_FORWARDED',
-                'REMOTE_ADDR',
-            ];
-            foreach ($ipHolders as $key) {
-                if (!empty($_SERVER[$key])) {
-                    $ip = $_SERVER[$key];
-                    if (strpos($ip, ',') !== false) {
-                        // Multiple IPs are present so use the last IP which should be the most reliable IP that last connected to the proxy
-                        $ips = explode(',', $ip);
-                        array_walk($ips, create_function('&$val', '$val = trim($val);'));
-                        $ip = end($ips);
-                    }
-                    $ip = trim($ip);
-                    break;
-                }
-            }
-        }
-
-        $formStructure['formId'] = $formId;
-
-        // return has to be part of the form data array
-        if (!isset($formStructure['return'])) {
-            $formStructure['return'] = $_SERVER['HTTP_HOST'];
-        }
-
-        // Build and initiate the POST
-        $formStructurePost = ['mauticform' => $formStructure];
-        $formUrl           = $mauticUrl.'/form/submit?formId='.$formId;
-        $ch                = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $formUrl);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($formStructurePost));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ["X-Forwarded-For: $ip"]);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        return $response;
     }
 
     /**
