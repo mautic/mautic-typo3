@@ -75,7 +75,7 @@ class MauticService
      * @param int    $formId        Mautic Form ID
      * @param string $ip            IP address of the lead
      *
-     * @return bool
+     * @return mixed
      */
     public function pushForm($formStructure, $mauticUrl, $formId, $ip = null)
     {
