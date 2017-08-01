@@ -4,7 +4,7 @@ EXT:mautic ![Travis](https://travis-ci.org/mautic/mautic-typo3.svg?branch=master
 
 Welcome to the official TYPO3 extension for Mautic!
 
-Version: 1.1.0
+Version: 1.2.1
 
 State: Beta.
 
@@ -12,6 +12,7 @@ State: Beta.
 * PHP 7.0^
 * TYPO3 8.7^
 * Mautic API Library 2.6^
+* Escopecz\MauticFormSubmit 1.1^
 * Composer
 
 ### Features
