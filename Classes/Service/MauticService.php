@@ -44,10 +44,8 @@ class MauticService
 
         // Initiate the auth object specifying to use BasicAuth
         $initAuth = new ApiAuth();
-        $auth = $initAuth->newAuth($settings, 'BasicAuth');
 
-        // Return the authorization object
-        return $auth;
+        return $initAuth->newAuth($settings, 'BasicAuth');
     }
 
     /**
@@ -72,9 +70,9 @@ class MauticService
     /**
      * Push data to a Mautic form.
      *
-     * @param array $formValues The data submitted by your form
+     * @param array  $formValues The data submitted by your form
      * @param string $mauticUrl URL of the mautic installation
-     * @param int $formId Mautic Form ID
+     * @param int    $formId Mautic Form ID
      *
      * @return mixed
      */
