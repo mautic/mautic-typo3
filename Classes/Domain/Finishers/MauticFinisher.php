@@ -39,6 +39,12 @@ class MauticFinisher extends AbstractFinisher
     {
         $formDefinition = $this->finisherContext->getFormRuntime()->getFormDefinition()->getRenderingOptions();
 
+        if (empty($finisherSettings = $this->parseOption('mauticId'))) {
+            $mauticId = $formDefinition['mauticId'];
+        } else {
+            $mauticId = $finisherSettings = $this->parseOption('mauticId');
+        }
+
         if (!$this->mauticService->checkConfigPresent()) {
             if (GeneralUtility::getApplicationContext()->isDevelopment()) {
                 throw new \InvalidArgumentException('Mautic Username, url and/or Password not set.', 1499940156);
@@ -47,12 +53,12 @@ class MauticFinisher extends AbstractFinisher
             return;
         }
 
-        if (!empty($formDefinition['mauticId'])) {
+        if (!empty($mauticId)) {
 
             // Get the values that were posted in the form and transform them to a format for Mautic
             $formValues = $this->transformFormStructure($this->finisherContext->getFormValues());
 
-            $this->mauticService->pushForm($formValues, $this->mauticService->getConfigurationData('mauticUrl'), $formDefinition['mauticId']);
+            $this->mauticService->pushForm($formValues, $this->mauticService->getConfigurationData('mauticUrl'), $mauticId);
         } else {
             \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump('not meeting requirements for finisher mautic', 'ExecuteInternal');
         }

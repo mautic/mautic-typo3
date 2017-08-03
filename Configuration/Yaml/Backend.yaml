@@ -49,6 +49,10 @@ TYPO3:
                       1000:
                         value: 'MauticContactFinisher'
                         label: 'Create Mautic Contact'
+                      1010:
+                        value: 'MauticFinisher'
+                        label: 'Send to Mautic Form'
+
 
                 propertyCollections:
                   finishers:
@@ -56,6 +60,10 @@ TYPO3:
                       __inheritances:
                         10: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticContactFinisherMixin'
                       identifier: 'MauticContactFinisher'
+                    1101:
+                      __inheritances:
+                        10: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFinisherMixin'
+                      identifier: 'MauticFinisher'
             Text:
               __inheritances:
                 100: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFormElementMixin'
@@ -95,63 +103,31 @@ TYPO3:
               implementationClassName: 'Mautic\Mautic\Domain\Finishers\MauticContactFinisher'
               formEditor:
                 iconIdentifier: 't3-form-icon-finisher'
+            MauticFinisher:
+              implementationClassName: 'Mautic\Mautic\Domain\Finishers\MauticFinisher'
+              formEditor:
+                iconIdentifier: 't3-form-icon-finisher'
+                predefinedDefaults:
+                  options:
+                    mauticId: ''
+              FormEngine:
+                label: 'Mautic Finisher'
+                elements:
+                  mauticId:
+                    label: 'Mautic Form ID override'
+                    config:
+                      type: 'input'
+                      eval: 'required'
 
         ########### MAUTIC STANDALONE FORMS ###########
         mautic_finisher_standalone_prototype:
           __inheritances:
             10: 'TYPO3.CMS.Form.prototypes.standard'
 
-          formElementsDefinition:
-            Form:
-              formEditor:
-                editors:
-                  900:
-                    selectOptions:
-                      1010:
-                        value: 'MauticFinisher'
-                        label: 'Send to Mautic Form'
-
-                propertyCollections:
-                  finishers:
-                    1101:
-                      __inheritances:
-                        10: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFinisherMixin'
-                      identifier: 'MauticFinisher'
-
-          finishersDefinition:
-            MauticFinisher:
-              implementationClassName: 'Mautic\Mautic\Domain\Finishers\MauticFinisher'
-              formEditor:
-                iconIdentifier: 't3-form-icon-finisher'
-
         ########### MAUTIC CAMPAIGN FORMS ###########
         mautic_finisher_campaign_prototype:
           __inheritances:
             10: 'TYPO3.CMS.Form.prototypes.standard'
-
-          formElementsDefinition:
-            Form:
-              formEditor:
-                editors:
-                  900:
-                    selectOptions:
-                      1010:
-                        value: 'MauticFinisher'
-                        label: 'Send to Mautic Form'
-
-                propertyCollections:
-                  finishers:
-                    1101:
-                      __inheritances:
-                        10: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFinisherMixin'
-                      identifier: 'MauticFinisher'
-
-          finishersDefinition:
-            MauticFinisher:
-              implementationClassName: 'Mautic\Mautic\Domain\Finishers\MauticFinisher'
-              formEditor:
-                iconIdentifier: 't3-form-icon-finisher'
-
 
       ########### MIXINS ###########
       mixins:
@@ -175,6 +151,11 @@ TYPO3:
                 10: 'TYPO3.CMS.Form.mixins.formElementMixins.BaseCollectionEditorsMixin'
               100:
                 label: 'Send to Mautic Form'
+              200:
+                identifier: 'mauticId'
+                templateName: 'Inspector-TextEditor'
+                label: 'Mautic Form ID override'
+                propertyPath: 'options.mauticId'
 
           mauticContactFinisherMixin:
             editors:
