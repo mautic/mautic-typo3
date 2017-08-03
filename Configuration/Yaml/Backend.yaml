@@ -144,6 +144,11 @@ TYPO3:
                   templateName: 'Inspector-MauticPropertySelectEditor'
                   label: 'Mautic Property Type'
                   propertyPath: 'properties.mauticTable'
+                260:
+                  identifier: 'mauticAlias'
+                  templateName: 'Inspector-TextEditor'
+                  label: 'Mautic form field alias'
+                  propertyPath: 'properties.mauticAlias'
 
           mauticFinisherMixin:
             editors:
