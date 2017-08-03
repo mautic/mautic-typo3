@@ -39,10 +39,10 @@ class MauticFinisher extends AbstractFinisher
     {
         $formDefinition = $this->finisherContext->getFormRuntime()->getFormDefinition()->getRenderingOptions();
 
-        if (empty($finisherSettings = $this->parseOption('mauticId'))) {
-            $mauticId = $formDefinition['mauticId'];
+        if (empty($this->parseOption('mauticId'))) {
+            $mauticId = (int) $formDefinition['mauticId'];
         } else {
-            $mauticId = $finisherSettings = $this->parseOption('mauticId');
+            $mauticId = (int) $this->parseOption('mauticId');
         }
 
         if (!$this->mauticService->checkConfigPresent()) {
@@ -53,7 +53,7 @@ class MauticFinisher extends AbstractFinisher
             return;
         }
 
-        if (!empty($mauticId) && is_numeric($mauticId)) {
+        if (!empty($mauticId)) {
 
             // Get the values that were posted in the form and transform them to a format for Mautic
             $formValues = $this->transformFormStructure($this->finisherContext->getFormValues());
