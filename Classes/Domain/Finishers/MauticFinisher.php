@@ -53,7 +53,7 @@ class MauticFinisher extends AbstractFinisher
             return;
         }
 
-        if (!empty($mauticId) && is_numeric($mauticId)) {
+        if (!empty($mauticId)) {
 
             // Get the values that were posted in the form and transform them to a format for Mautic
             $formValues = $this->transformFormStructure($this->finisherContext->getFormValues());
