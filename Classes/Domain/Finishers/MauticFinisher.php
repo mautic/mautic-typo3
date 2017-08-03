@@ -39,10 +39,10 @@ class MauticFinisher extends AbstractFinisher
     {
         $formDefinition = $this->finisherContext->getFormRuntime()->getFormDefinition()->getRenderingOptions();
 
-        if (empty($finisherSettings = $this->parseOption('mauticId'))) {
-            $mauticId = $formDefinition['mauticId'];
+        if (empty($this->parseOption('mauticId'))) {
+            $mauticId = (int)$formDefinition['mauticId'];
         } else {
-            $mauticId = $finisherSettings = $this->parseOption('mauticId');
+            $mauticId = (int)$this->parseOption('mauticId');
         }
 
         if (!$this->mauticService->checkConfigPresent()) {
