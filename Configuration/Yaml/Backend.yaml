@@ -56,11 +56,11 @@ TYPO3:
 
                 propertyCollections:
                   finishers:
-                    1100:
+                    1000:
                       __inheritances:
                         10: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticContactFinisherMixin'
                       identifier: 'MauticContactFinisher'
-                    1101:
+                    1010:
                       __inheritances:
                         10: 'TYPO3.CMS.Form.mixins.formElementMixins.mauticFinisherMixin'
                       identifier: 'MauticFinisher'
