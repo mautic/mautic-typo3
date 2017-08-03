@@ -53,14 +53,18 @@ class MauticFinisher extends AbstractFinisher
             return;
         }
 
-        if (!empty($mauticId)) {
+        if (!empty($mauticId) && is_numeric($mauticId)) {
 
             // Get the values that were posted in the form and transform them to a format for Mautic
             $formValues = $this->transformFormStructure($this->finisherContext->getFormValues());
 
             $this->mauticService->pushForm($formValues, $this->mauticService->getConfigurationData('mauticUrl'), $mauticId);
         } else {
-            \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump('not meeting requirements for finisher mautic', 'ExecuteInternal');
+            if (GeneralUtility::getApplicationContext()->isDevelopment()) {
+                throw new \InvalidArgumentException('Your YAML does not appear to contain a valid Mautic Form ID.', 1499940157);
+            }
+
+            return;
         }
     }
 
