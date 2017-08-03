@@ -22,7 +22,6 @@ namespace Mautic\Mautic\Service;
 use Escopecz\MauticFormSubmit\Mautic;
 use Mautic\Auth\ApiAuth;
 use Mautic\MauticApi;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class MauticService
 {
@@ -81,8 +80,6 @@ class MauticService
         $mautic = new Mautic($mauticUrl);
 
         $form = $mautic->getForm($formId);
-
-        DebuggerUtility::var_dump($formValues);
 
         return $form->submit($formValues);
     }
