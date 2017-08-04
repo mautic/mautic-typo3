@@ -24,7 +24,6 @@ TYPO3:
                     label: 'Mautic Form ID'
                     config:
                       type: 'input'
-                      eval: 'required'
 
         mautic_finisher_standalone_prototype:
           __inheritances:
