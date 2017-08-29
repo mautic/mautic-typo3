@@ -185,8 +185,16 @@ class FormProcessHooks
                 if ($formElement['type'] === 'Fieldset' || $formElement['type'] === 'GridRow') {
                     // Check for form fields in the container element
                     foreach ((array) $formElement['renderables'] as $containerElement) {
-                        // Add the form field to the form page so that we can process it normally
-                        array_push($formPage['renderables'], $containerElement);
+                        // Fieldset can contain GridRow and other way round
+                        if ($containerElement['type'] === 'Fieldset' || $containerElement['type'] === 'GridRow') {
+                            foreach ((array) $containerElement['renderables'] as $containerElementInner) {
+                                // Add the form field to the form page so that we can process it normally
+                                array_push($formPage['renderables'], $containerElementInner);
+                            }
+                        } else {
+                            // Add the form field to the form page so that we can process it normally
+                            array_push($formPage['renderables'], $containerElement);
+                        }
                     }
                 }
             }
@@ -381,7 +389,23 @@ class FormProcessHooks
                     // Check if element is a container element
                     if ($typoFormField['type'] === 'Fieldset' || $typoFormField['type'] === 'GridRow') {
                         // For each form field in the container
-                        foreach ($typoFormField['renderables'] as $listFormFieldKey => $listFormField) {
+                        foreach ((array) $typoFormField['renderables'] as $listFormFieldKey => $listFormField) {
+                            // Fieldset can contain Gridrow and other way round
+                            if ($listFormField['type'] === 'Fieldset' || $listFormField['type'] === 'GridRow') {
+                                foreach ($listFormField['renderables'] as $listFormFieldInnerKey => $listFormFieldInner) {
+                                    if ($listFormFieldInner['label'] == $mauticFormField['label']) {
+                                        // Set the Mautic Alias for the field
+                                        $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['renderables'][$listFormFieldInnerKey]['properties']['mauticAlias'] = $mauticFormField['alias'];
+                                        // Set the Mautic id for the field
+                                        $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['renderables'][$listFormFieldInnerKey]['properties']['mauticFieldId'] = $mauticFormField['id'];
+                                    } else {
+                                        // Set the Mautic Alias for the field
+                                        $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['properties']['mauticAlias'] = $mauticFormField['alias'];
+                                        // Set the Mautic id for the field
+                                        $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['properties']['mauticFieldId'] = $mauticFormField['id'];
+                                    }
+                                }
+                            }
                             // If exists in Mautic then save the needed properties
                             if ($listFormField['label'] == $mauticFormField['label']) {
                                 // Set the Mautic Alias for the field
