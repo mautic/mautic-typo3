@@ -187,7 +187,7 @@ class FormProcessHooks
                     foreach ((array) $formElement['renderables'] as $containerElement) {
                         // Fieldset can contain GridRow and other way round
                         if ($containerElement['type'] === 'Fieldset' || $containerElement['type'] === 'GridRow') {
-                            foreach ((array)$containerElement['renderables'] as $containerElementInner) {
+                            foreach ((array) $containerElement['renderables'] as $containerElementInner) {
                                 // Add the form field to the form page so that we can process it normally
                                 array_push($formPage['renderables'], $containerElementInner);
                             }
