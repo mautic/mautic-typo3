@@ -4,7 +4,7 @@ EXT:mautic ![Travis](https://travis-ci.org/mautic/mautic-typo3.svg?branch=master
 
 Welcome to the official TYPO3 extension for Mautic!
 
-Version: 1.3.3
+Version: 1.3.5
 
 State: Beta.
 
