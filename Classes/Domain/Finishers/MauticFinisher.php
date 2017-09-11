@@ -25,18 +25,10 @@ use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 
 class MauticFinisher extends AbstractFinisher
 {
-    private $mauticService;
-
-    /**
-     * MauticFinisher constructor.
-     */
-    public function __construct()
-    {
-        $this->mauticService = new MauticService();
-    }
 
     protected function executeInternal()
     {
+        $mauticService = GeneralUtility::makeInstance(MauticService::class);
         $formDefinition = $this->finisherContext->getFormRuntime()->getFormDefinition()->getRenderingOptions();
 
         $mauticId = (int) $this->parseOption('mauticId');
@@ -45,7 +37,7 @@ class MauticFinisher extends AbstractFinisher
             $mauticId = (int) $formDefinition['mauticId'];
         }
 
-        if (!$this->mauticService->checkConfigPresent()) {
+        if (!$mauticService->checkConfigPresent()) {
             if (GeneralUtility::getApplicationContext()->isDevelopment()) {
                 throw new \InvalidArgumentException('Mautic Username, url and/or Password not set.', 1499940156);
             }
@@ -58,7 +50,7 @@ class MauticFinisher extends AbstractFinisher
             // Get the values that were posted in the form and transform them to a format for Mautic
             $formValues = $this->transformFormStructure($this->finisherContext->getFormValues());
 
-            $this->mauticService->pushForm($formValues, $this->mauticService->getConfigurationData('mauticUrl'), $mauticId);
+            $mauticService->pushForm($formValues, $mauticService->getConfigurationData('mauticUrl'), $mauticId);
         } else {
             if (GeneralUtility::getApplicationContext()->isDevelopment()) {
                 throw new \InvalidArgumentException('Your YAML does not appear to contain a valid Mautic Form ID.', 1499940157);
