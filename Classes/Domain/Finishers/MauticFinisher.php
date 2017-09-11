@@ -30,8 +30,9 @@ class MauticFinisher extends AbstractFinisher
     /**
      * MauticFinisher constructor.
      */
-    public function __construct()
+    public function __construct(string $finisherIdentifier = '')
     {
+        parent::__construct($finisherIdentifier);
         $this->mauticService = new MauticService();
     }
 
