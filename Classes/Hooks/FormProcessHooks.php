@@ -206,7 +206,7 @@ class FormProcessHooks
                     $formField = [];
                     // Set the label of the form field
                     $formField['label'] = $formElement['label'];
-                    $formField['alias'] = $formElement['identifier'];
+                    $formField['alias'] = str_replace('-', '_', $formElement['identifier']);
 
                     // Save formField ID if present
                     if (!empty($formElement['properties']['mauticFieldId'])) {
@@ -383,8 +383,6 @@ class FormProcessHooks
         // Match the TYPO3 fields with the Mautic fields and save the Mautic alias
         foreach ((array) $mauticForm['form']['fields'] as $mauticFormField) {
 
-            $mauticEscapedAlias = str_replace('-', '_', $mauticFormField['alias']);
-
             // For each page in the TYPO3 form
             foreach ((array) $typoForm['renderables'] as $typoFormPageKey => $typoFormPage) {
                 // For each element on the TYPO3 form page
@@ -398,12 +396,12 @@ class FormProcessHooks
                                 foreach ($listFormField['renderables'] as $listFormFieldInnerKey => $listFormFieldInner) {
                                     if ($listFormFieldInner['label'] == $mauticFormField['label']) {
                                         // Set the Mautic Alias for the field
-                                        $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['renderables'][$listFormFieldInnerKey]['properties']['mauticAlias'] = $mauticEscapedAlias;
+                                        $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['renderables'][$listFormFieldInnerKey]['properties']['mauticAlias'] = $mauticFormField['alias'];
                                         // Set the Mautic id for the field
                                         $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['renderables'][$listFormFieldInnerKey]['properties']['mauticFieldId'] = $mauticFormField['id'];
                                     } else {
                                         // Set the Mautic Alias for the field
-                                        $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['properties']['mauticAlias'] = $mauticEscapedAlias;
+                                        $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['properties']['mauticAlias'] = $mauticFormField['alias'];
                                         // Set the Mautic id for the field
                                         $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['properties']['mauticFieldId'] = $mauticFormField['id'];
                                     }
@@ -412,7 +410,7 @@ class FormProcessHooks
                             // If exists in Mautic then save the needed properties
                             if ($listFormField['label'] == $mauticFormField['label']) {
                                 // Set the Mautic Alias for the field
-                                $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['properties']['mauticAlias'] = $mauticEscapedAlias;
+                                $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['properties']['mauticAlias'] = $mauticFormField['alias'];
                                 // Set the Mautic id for the field
                                 $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['properties']['mauticFieldId'] = $mauticFormField['id'];
                             }
@@ -420,7 +418,7 @@ class FormProcessHooks
                         // If not a container element check if it exists in Mautic, then save the needed properties
                     } elseif ($typoFormField['label'] == $mauticFormField['label']) {
                         // Set the Mautic Alias for the field
-                        $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['properties']['mauticAlias'] = $mauticEscapedAlias;
+                        $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['properties']['mauticAlias'] = $mauticFormField['alias'];
                         // Set the Mautic id for the field
                         $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['properties']['mauticFieldId'] = $mauticFormField['id'];
                     }
