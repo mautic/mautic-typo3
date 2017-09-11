@@ -206,7 +206,7 @@ class FormProcessHooks
                     $formField = [];
                     // Set the label of the form field
                     $formField['label'] = $formElement['label'];
-                    $formField['alias'] = $formElement['identifier'];
+                    $formField['alias'] = str_replace('-', '_', $formElement['identifier']);
 
                     // Save formField ID if present
                     if (!empty($formElement['properties']['mauticFieldId'])) {
@@ -382,13 +382,14 @@ class FormProcessHooks
     {
         // Match the TYPO3 fields with the Mautic fields and save the Mautic alias
         foreach ((array) $mauticForm['form']['fields'] as $mauticFormField) {
+
             // For each page in the TYPO3 form
             foreach ((array) $typoForm['renderables'] as $typoFormPageKey => $typoFormPage) {
                 // For each element on the TYPO3 form page
                 foreach ((array) $typoFormPage['renderables'] as $typoFormFieldKey => $typoFormField) {
                     // Check if element is a container element
                     if ($typoFormField['type'] === 'Fieldset' || $typoFormField['type'] === 'GridRow') {
-                        // For each form field in the container
+                        // For each form field in the container'
                         foreach ((array) $typoFormField['renderables'] as $listFormFieldKey => $listFormField) {
                             // Fieldset can contain Gridrow and other way round
                             if ($listFormField['type'] === 'Fieldset' || $listFormField['type'] === 'GridRow') {
