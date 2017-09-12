@@ -397,7 +397,6 @@ class FormProcessHooks
                             // Fieldset can contain Gridrow and other way round
                             if ($listFormField['type'] === 'Fieldset' || $listFormField['type'] === 'GridRow') {
                                 foreach ($listFormField['renderables'] as $listFormFieldInnerKey => $listFormFieldInner) {
-
                                     $label = $this->getFieldIden($listFormFieldInner);
 
                                     if ($label == $mauticFormField['label']) {
