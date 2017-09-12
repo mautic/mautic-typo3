@@ -39,5 +39,8 @@
         "psr-4": {
             "Mautic\\Mautic\\": "Classes"
         }
+    },
+    "scripts": {
+        "package": "cd Resources/Private/ && composer install && cd ../../ && zip -9 -r --exclude=*.git* mautic.zip ."
     }
 }

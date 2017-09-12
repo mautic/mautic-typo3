@@ -4,7 +4,7 @@ EXT:mautic ![Travis](https://travis-ci.org/mautic/mautic-typo3.svg?branch=master
 
 Welcome to the official TYPO3 extension for Mautic!
 
-Version: 1.3.5
+Version: 1.3.6
 
 State: Beta.
 
@@ -25,7 +25,7 @@ Don't forget to head into the extension configuration to set up TYPO3 with the d
 
 Tracking is also disabled by default. Head to the extension configuration to turn it on.
 
-### Installation (via Composer)
+### Installation (via Composer) (recommended)
 Add the following to the composer.json of your TYPO3 installation
 ```
 "repositories": [
@@ -41,6 +41,17 @@ Run the following command
     $ composer install
     
 Go into the TYPO3 backend to the Extensions module and enable the 'Mautic' extension
+
+### Installation (without composer)
+
+When retrieving the file from TER you can install this file using the extension manager.
+
+If you want to build the latest master you need to create the extension zip file:
+
+* Clone package
+* Run `composer run-script package`
+* A mautic.zip is created, this file can be imported by your extension manager
+
 
 ### A thank you to
 * [Beech.it](https://beech.it) for helping in getting started and tackling questions about TYPO3
@@ -63,3 +74,8 @@ Go into the TYPO3 backend to the Extensions module and enable the 'Mautic' exten
 * Create an issue in this repository
 * Find us on the [Mautic Slack](https://mautic.slack.com)
 * Find us on the [TYPO3 Slack](https://typo3.slack.com), channel #typo3-mautic
+
+
+### Development
+
+* When updating/changing composer requirements don't forget to update the composer.json in the private directory. (Only for non TYPO3 composer packages, TYPO3 packages should be installed by extension manager)

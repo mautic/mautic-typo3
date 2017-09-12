@@ -24,19 +24,10 @@ use TYPO3\CMS\Form\Domain\Model\FormDefinition;
 
 class MauticContactFinisher extends AbstractFinisher
 {
-    private $mauticService;
-
-    /**
-     * MauticContactFinisher constructor.
-     */
-    public function __construct()
-    {
-        $this->mauticService = new MauticService();
-    }
-
     protected function executeInternal()
     {
-        if (!$this->mauticService->checkConfigPresent()) {
+        $mauticService = GeneralUtility::makeInstance(MauticService::class);
+        if (!$mauticService->checkConfigPresent()) {
             if (GeneralUtility::getApplicationContext()->isDevelopment()) {
                 throw new \InvalidArgumentException('Mautic Username, url and/or Password not set.', 1499940156);
             }
@@ -44,7 +35,7 @@ class MauticContactFinisher extends AbstractFinisher
             return;
         }
 
-        $contactApi = $this->mauticService->createMauticApi('contacts');
+        $contactApi = $mauticService->createMauticApi('contacts');
 
         $formDefinition = $this->finisherContext->getFormRuntime()->getFormDefinition();
 
