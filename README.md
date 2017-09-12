@@ -49,7 +49,7 @@ When retrieving the file from TER you can install this file using the extension 
 If you want to build the latest master you need to create the extension zip file:
 
 * Clone package
-* Run composer run-script package
+* Run `composer run-script package`
 * A mautic.zip is created, this file can be imported by your extension manager
 
 
