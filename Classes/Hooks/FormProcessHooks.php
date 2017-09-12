@@ -205,7 +205,14 @@ class FormProcessHooks
                     // Instantiate an array for this particular for field
                     $formField = [];
                     // Set the label of the form field
-                    $formField['label'] = $formElement['label'];
+                    $label = trim($formElement['label']);
+                    if (empty($label)) {
+                        $label = trim($formElement['properties']['fluidAdditionalAttributes']['placeholder']);
+                    }
+                    if (empty($label)) {
+                        $label = str_replace('-', '_', $formElement['identifier']);
+                    }
+                    $formField['label'] = $label;
                     $formField['alias'] = str_replace('-', '_', $formElement['identifier']);
 
                     // Save formField ID if present
