@@ -166,7 +166,7 @@ class FormProcessHooks
         // Instantiate the array for the form
         $returnFormStructure = [];
         // Set the form name and alias
-        $returnFormStructure['name']        = $formDefinition['label']
+        $returnFormStructure['name']        = $formDefinition['label'];
         $returnFormStructure['alias']       = $formDefinition['identifier'];
         $returnFormStructure['isPublished'] = true;
         // Set the form type accroding to the prototype name
