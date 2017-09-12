@@ -47,3 +47,10 @@ if (TYPO3_MODE === 'FE') {
             mt('send', 'pageview');");
     }
 }
+
+if (!\TYPO3\CMS\Core\Core\Bootstrap::usesComposerClassLoading()) {
+    $composerAutoloadFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY)
+        . 'Resources/Private/PHP/autoload.php';
+
+    require_once($composerAutoloadFile);
+}
