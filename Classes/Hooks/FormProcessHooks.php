@@ -442,7 +442,7 @@ class FormProcessHooks
     {
         if (!empty($typoField['label'])) {
             $label = $typoField['label'];
-        } elseif (!empty($formDefinition['properties']['fluidAdditionalAttributes']['placeholder'])) {
+        } elseif (!empty($typoField['properties']['fluidAdditionalAttributes']['placeholder'])) {
             $label = $typoField['properties']['fluidAdditionalAttributes']['placeholder'];
         } else {
             $label = $typoField['identifier'];
