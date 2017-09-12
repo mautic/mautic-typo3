@@ -387,9 +387,6 @@ class FormProcessHooks
             foreach ((array) $typoForm['renderables'] as $typoFormPageKey => $typoFormPage) {
                 // For each element on the TYPO3 form page
                 foreach ((array) $typoFormPage['renderables'] as $typoFormFieldKey => $typoFormField) {
-
-                    $label = $this->getFieldIden($typoFormField);
-
                     // Check if element is a container element
                     if ($typoFormField['type'] === 'Fieldset' || $typoFormField['type'] === 'GridRow') {
                         // For each form field in the container'
