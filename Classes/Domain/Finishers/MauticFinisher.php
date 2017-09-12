@@ -25,10 +25,9 @@ use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 
 class MauticFinisher extends AbstractFinisher
 {
-
     protected function executeInternal()
     {
-        $mauticService = GeneralUtility::makeInstance(MauticService::class);
+        $mauticService  = GeneralUtility::makeInstance(MauticService::class);
         $formDefinition = $this->finisherContext->getFormRuntime()->getFormDefinition()->getRenderingOptions();
 
         $mauticId = (int) $this->parseOption('mauticId');

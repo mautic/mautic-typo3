@@ -24,7 +24,6 @@ use TYPO3\CMS\Form\Domain\Model\FormDefinition;
 
 class MauticContactFinisher extends AbstractFinisher
 {
-    
     protected function executeInternal()
     {
         $mauticService = GeneralUtility::makeInstance(MauticService::class);
