@@ -205,7 +205,7 @@ class FormProcessHooks
                     // Instantiate an array for this particular for field
                     $formField = [];
                     // Set the label of the form field
-                    $formField['label'] = $this->getFieldIden($formElement['label']);
+                    $formField['label'] = $this->getFieldIden($formElement);
                     $formField['alias'] = str_replace('-', '_', $formElement['identifier']);
 
                     // Save formField ID if present
