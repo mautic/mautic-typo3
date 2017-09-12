@@ -387,7 +387,6 @@ class FormProcessHooks
             foreach ((array) $typoForm['renderables'] as $typoFormPageKey => $typoFormPage) {
                 // For each element on the TYPO3 form page
                 foreach ((array) $typoFormPage['renderables'] as $typoFormFieldKey => $typoFormField) {
-
                     $label = $this->getFieldIden($typoFormField);
 
                     // Check if element is a container element
@@ -438,9 +437,10 @@ class FormProcessHooks
     }
 
     /**
-     * get Field labelIdentifier
+     * get Field labelIdentifier.
      *
      * @param array $typoField
+     *
      * @return string
      */
     private function getFieldIden(array $typoField) : string
