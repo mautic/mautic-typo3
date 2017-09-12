@@ -425,7 +425,7 @@ class FormProcessHooks
                             }
                         }
                         // If not a container element check if it exists in Mautic, then save the needed properties
-                    } elseif ($typoFormField['label'] == $mauticFormField['label']) {
+                    } elseif ($label == $mauticFormField['label']) {
                         // Set the Mautic Alias for the field
                         $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['properties']['mauticAlias'] = $mauticFormField['alias'];
                         // Set the Mautic id for the field
@@ -438,6 +438,12 @@ class FormProcessHooks
         return $typoForm;
     }
 
+    /**
+     * get Field labelIdentifier
+     *
+     * @param array $typoField
+     * @return string
+     */
     private function getFieldIden(array $typoField) : string
     {
         if (!empty($typoField['label'])) {
