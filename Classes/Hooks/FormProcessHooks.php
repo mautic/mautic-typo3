@@ -205,7 +205,7 @@ class FormProcessHooks
                     // Instantiate an array for this particular for field
                     $formField = [];
                     // Set the label of the form field
-                    $formField['label'] = $formElement['label'];
+                    $formField['label'] = $this->getFieldIden($formElement);
                     $formField['alias'] = str_replace('-', '_', $formElement['identifier']);
 
                     // Save formField ID if present
@@ -387,6 +387,8 @@ class FormProcessHooks
             foreach ((array) $typoForm['renderables'] as $typoFormPageKey => $typoFormPage) {
                 // For each element on the TYPO3 form page
                 foreach ((array) $typoFormPage['renderables'] as $typoFormFieldKey => $typoFormField) {
+                    $label = $this->getFieldIden($typoFormField);
+
                     // Check if element is a container element
                     if ($typoFormField['type'] === 'Fieldset' || $typoFormField['type'] === 'GridRow') {
                         // For each form field in the container'
@@ -394,7 +396,9 @@ class FormProcessHooks
                             // Fieldset can contain Gridrow and other way round
                             if ($listFormField['type'] === 'Fieldset' || $listFormField['type'] === 'GridRow') {
                                 foreach ($listFormField['renderables'] as $listFormFieldInnerKey => $listFormFieldInner) {
-                                    if ($listFormFieldInner['label'] == $mauticFormField['label']) {
+                                    $label = $this->getFieldIden($listFormFieldInner);
+
+                                    if ($label == $mauticFormField['label']) {
                                         // Set the Mautic Alias for the field
                                         $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['renderables'][$listFormFieldInnerKey]['properties']['mauticAlias'] = $mauticFormField['alias'];
                                         // Set the Mautic id for the field
@@ -407,8 +411,11 @@ class FormProcessHooks
                                     }
                                 }
                             }
+
+                            $label = $this->getFieldIden($listFormField);
+
                             // If exists in Mautic then save the needed properties
-                            if ($listFormField['label'] == $mauticFormField['label']) {
+                            if ($label == $mauticFormField['label']) {
                                 // Set the Mautic Alias for the field
                                 $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['renderables'][$listFormFieldKey]['properties']['mauticAlias'] = $mauticFormField['alias'];
                                 // Set the Mautic id for the field
@@ -416,7 +423,7 @@ class FormProcessHooks
                             }
                         }
                         // If not a container element check if it exists in Mautic, then save the needed properties
-                    } elseif ($typoFormField['label'] == $mauticFormField['label']) {
+                    } elseif ($label == $mauticFormField['label']) {
                         // Set the Mautic Alias for the field
                         $typoForm['renderables'][$typoFormPageKey]['renderables'][$typoFormFieldKey]['properties']['mauticAlias'] = $mauticFormField['alias'];
                         // Set the Mautic id for the field
@@ -427,5 +434,25 @@ class FormProcessHooks
         }
         // Return the array
         return $typoForm;
+    }
+
+    /**
+     * get Field labelIdentifier.
+     *
+     * @param array $typoField
+     *
+     * @return string
+     */
+    private function getFieldIden(array $typoField) : string
+    {
+        if (!empty($typoField['label'])) {
+            $label = $typoField['label'];
+        } elseif (!empty($typoField['properties']['fluidAdditionalAttributes']['placeholder'])) {
+            $label = $typoField['properties']['fluidAdditionalAttributes']['placeholder'];
+        } else {
+            $label = $typoField['identifier'];
+        }
+
+        return $label;
     }
 }
