@@ -169,6 +169,7 @@ class FormProcessHooks
         $returnFormStructure['name']        = $formDefinition['label'];
         $returnFormStructure['alias']       = $formDefinition['identifier'];
         $returnFormStructure['isPublished'] = true;
+        $returnFormStructure['postAction']  = 'return';
         // Set the form type accroding to the prototype name
         $returnFormStructure['formType'] = $this->getMauticFormType($formDefinition['prototypeName']);
         // Instantiate the array of fields
@@ -210,7 +211,7 @@ class FormProcessHooks
 
                     // Save formField ID if present
                     if (!empty($formElement['properties']['mauticFieldId'])) {
-                        $formField['id'] = $formElement['properties']['mauticId'];
+                        $formField['id'] = $formElement['properties']['mauticFieldId'];
                     }
                     // Save formField alias if present
                     if (!empty($formElement['properties']['mauticAlias'])) {
