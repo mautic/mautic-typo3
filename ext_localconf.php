@@ -57,3 +57,7 @@ if (!\TYPO3\CMS\Core\Core\Bootstrap::usesComposerClassLoading()) {
 
 // Add Content Elements to newContentElement Wizard
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:'.$_EXTKEY.'/Configuration/PageTS/Mod/Wizards/newContentElement.txt">');
+
+// Register for hook to show preview of tt_content element of CType="dynamic_content" in page module
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem']['dynamic_content'] =
+    \Mautic\Mautic\Hooks\PageLayoutView\DynamicContentPreviewRenderer::class;
