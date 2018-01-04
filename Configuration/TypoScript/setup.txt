@@ -1,0 +1,12 @@
+lib.contentElement {
+    templateRootPaths {
+        200 = EXT:mautic/Resources/Private/Templates/
+    }
+}
+
+tt_content {
+    dynamic_content =< lib.contentElement
+    dynamic_content {
+        templateName = DynamicContent.html
+    }
+}
