@@ -50,7 +50,10 @@ if (TYPO3_MODE === 'FE') {
 
 if (!\TYPO3\CMS\Core\Core\Bootstrap::usesComposerClassLoading()) {
     $composerAutoloadFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY)
-        . 'Resources/Private/PHP/autoload.php';
+        .'Resources/Private/PHP/autoload.php';
 
-    require_once($composerAutoloadFile);
+    require_once $composerAutoloadFile;
 }
+
+// Add Content Elements to newContentElement Wizard
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:'.$_EXTKEY.'/Configuration/PageTS/Mod/Wizards/newContentElement.txt">');
