@@ -20,6 +20,7 @@ State: Beta.
 * Send form data directly to Mautic
 * Create a contact in Mautic from data collected in TYPO3 forms
 * Integration of the Mautic tracking script
+* Load dynamic content into your TYPO3 content
 
 Don't forget to head into the extension configuration to set up TYPO3 with the details of your Mautic installation.
 
