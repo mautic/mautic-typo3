@@ -8,14 +8,14 @@
                 <source>Mautic</source>
             </trans-unit>
 
-            <trans-unit id="content_element.dynamic_content">
+            <trans-unit id="content_element.mautic_dynamic_content">
                 <source>Dynamic Content</source>
             </trans-unit>
-            <trans-unit id="content_element.dynamic_content.description">
+            <trans-unit id="content_element.mautic_dynamic_content.description">
                 <source>Insert dynamic content div, controlled by Mautic.</source>
             </trans-unit>
 
-            <trans-unit id="dynamic_content.slot_name">
+            <trans-unit id="mautic_dynamic_content.slot_name">
                 <source>Requested Slot Name</source>
             </trans-unit>
 

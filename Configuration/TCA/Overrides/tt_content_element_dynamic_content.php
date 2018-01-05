@@ -5,13 +5,13 @@ defined('TYPO3_MODE') || die();
 /***************
  * Add Content Element
  */
-$GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['dynamic_content'] = 'content-special-div';
+$GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['mautic_dynamic_content'] = 'content-special-div';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',
     [
-        'LLL:EXT:mautic/Resources/Private/Language/Backend.xlf:content_element.dynamic_content',
-        'dynamic_content',
+        'LLL:EXT:mautic/Resources/Private/Language/Backend.xlf:content_element.mautic_dynamic_content',
+        'mautic_dynamic_content',
         'content-special-div',
     ],
     '--div--',
@@ -21,17 +21,17 @@ $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['dynamic_content'] = '
 /***************
  * Configure element type
  */
-if (!is_array($GLOBALS['TCA']['tt_content']['types']['dynamic_content'])) {
-    $GLOBALS['TCA']['tt_content']['types']['dynamic_content'] = [];
+if (!is_array($GLOBALS['TCA']['tt_content']['types']['mautic_dynamic_content'])) {
+    $GLOBALS['TCA']['tt_content']['types']['mautic_dynamic_content'] = [];
 }
-$GLOBALS['TCA']['tt_content']['types']['dynamic_content'] = array_replace_recursive(
-    $GLOBALS['TCA']['tt_content']['types']['dynamic_content'],
+$GLOBALS['TCA']['tt_content']['types']['mautic_dynamic_content'] = array_replace_recursive(
+    $GLOBALS['TCA']['tt_content']['types']['mautic_dynamic_content'],
     [
         'showitem' => '
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                 --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.general;general,
                 --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.headers;headers,
-                dynamic_content_slot_name;LLL:EXT:mautic/Resources/Private/Language/Backend.xlf:dynamic_content.slot_name,
+                mautic_dynamic_content_slot_name;LLL:EXT:mautic/Resources/Private/Language/Backend.xlf:mautic_dynamic_content.slot_name,
                 bodytext;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:bodytext_formlabel,
             --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
                 --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
@@ -64,8 +64,8 @@ $GLOBALS['TCA']['tt_content']['types']['dynamic_content'] = array_replace_recurs
 $GLOBALS['TCA']['tt_content']['columns'] = array_replace_recursive(
     $GLOBALS['TCA']['tt_content']['columns'],
     [
-        'dynamic_content_slot_name' => [
-            'label'  => 'LLL:EXT:mautic/Resources/Private/Language/Backend.xlf:dynamic_content.slot_name',
+        'mautic_dynamic_content_slot_name' => [
+            'label'  => 'LLL:EXT:mautic/Resources/Private/Language/Backend.xlf:mautic_dynamic_content.slot_name',
             'config' => [
                 'type' => 'input',
                 'eval' => 'required',

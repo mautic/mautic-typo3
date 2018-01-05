@@ -5,8 +5,8 @@ lib.contentElement {
 }
 
 tt_content {
-    dynamic_content =< lib.contentElement
-    dynamic_content {
+    mautic_dynamic_content =< lib.contentElement
+    mautic_dynamic_content {
         templateName = DynamicContent.html
     }
 }

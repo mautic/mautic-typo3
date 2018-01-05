@@ -41,8 +41,8 @@ class DynamicContentPreviewRenderer implements PageLayoutViewDrawItemHookInterfa
         &$itemContent,
         array &$row
     ) {
-        if ($row['CType'] === 'dynamic_content') {
-            $itemContent .= '<p>[Slot = '.$row['dynamic_content_slot_name'].']</p>';
+        if ($row['CType'] === 'mautic_dynamic_content') {
+            $itemContent .= '<p>[Slot = '.$row['mautic_dynamic_content_slot_name'].']</p>';
             if ($row['bodytext']) {
                 $itemContent .= $row['bodytext'];
             }
