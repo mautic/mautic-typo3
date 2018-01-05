@@ -1,0 +1,17 @@
+################
+#### Mautic ####
+################
+mod.wizards.newContentElement.wizardItems {
+    mautic.header = LLL:EXT:mautic/Resources/Private/Language/Backend.xlf:content_group.mautic
+    mautic.elements {
+        mautic_dynamic_content {
+            iconIdentifier = content-special-div
+            title = LLL:EXT:mautic/Resources/Private/Language/Backend.xlf:content_element.mautic_dynamic_content
+            description = LLL:EXT:mautic/Resources/Private/Language/Backend.xlf:content_element.mautic_dynamic_content.description
+            tt_content_defValues {
+                CType = mautic_dynamic_content
+            }
+        }
+    }
+    mautic.show := addToList(mautic_dynamic_content)
+}

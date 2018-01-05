@@ -50,7 +50,14 @@ if (TYPO3_MODE === 'FE') {
 
 if (!\TYPO3\CMS\Core\Core\Bootstrap::usesComposerClassLoading()) {
     $composerAutoloadFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY)
-        . 'Resources/Private/PHP/autoload.php';
+        .'Resources/Private/PHP/autoload.php';
 
-    require_once($composerAutoloadFile);
+    require_once $composerAutoloadFile;
 }
+
+// Add Content Elements to newContentElement Wizard
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:'.$_EXTKEY.'/Configuration/PageTS/Mod/Wizards/newContentElement.txt">');
+
+// Register for hook to show preview of tt_content element of CType="mautic_dynamic_content" in page module
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem']['mautic_dynamic_content'] =
+    \Mautic\Mautic\Hooks\PageLayoutView\DynamicContentPreviewRenderer::class;
