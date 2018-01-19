@@ -46,6 +46,5 @@ class MauticFormPreviewRenderer implements PageLayoutViewDrawItemHookInterface
 
             $drawItem = false;
         }
-
     }
 }
