@@ -9,4 +9,11 @@ tt_content {
     mautic_dynamic_content {
         templateName = DynamicContent.html
     }
+    mautic_form =< lib.contentElement
+    mautic_form {
+        templateName = Form.html
+        dataProcessing {
+            1 = Mautic\Mautic\DataProcessing\MauticFormProcessor
+        }
+    }
 }
