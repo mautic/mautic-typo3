@@ -112,6 +112,10 @@ class MauticService
         return $extensionConfiguration[$type] ?? '';
     }
 
+    /**
+     * @param string $tag
+     * @param string $contactEmail
+     */
     public function addTagToContact(string $tag, string $contactEmail)
     {
         $contactApi = $this->createMauticApi('contacts');
