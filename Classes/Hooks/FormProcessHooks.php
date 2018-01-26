@@ -135,6 +135,7 @@ class FormProcessHooks
 
     /**
      * @param string $formPersistenceIdentifier
+     * @return string
      */
     public function beforeFormDelete(string $formPersistenceIdentifier): string
     {
@@ -170,7 +171,7 @@ class FormProcessHooks
         $returnFormStructure['alias']       = $formDefinition['identifier'];
         $returnFormStructure['isPublished'] = true;
         $returnFormStructure['postAction']  = 'return';
-        // Set the form type accroding to the prototype name
+        // Set the form type according to the prototype name
         $returnFormStructure['formType'] = $this->getMauticFormType($formDefinition['prototypeName']);
         // Instantiate the array of fields
         $returnFormStructure['fields'] = [];
@@ -190,11 +191,11 @@ class FormProcessHooks
                         if ($containerElement['type'] === 'Fieldset' || $containerElement['type'] === 'GridRow') {
                             foreach ((array) $containerElement['renderables'] as $containerElementInner) {
                                 // Add the form field to the form page so that we can process it normally
-                                array_push($formPage['renderables'], $containerElementInner);
+                                $formPage['renderables'][] = $containerElementInner;
                             }
                         } else {
                             // Add the form field to the form page so that we can process it normally
-                            array_push($formPage['renderables'], $containerElement);
+                            $formPage['renderables'][] = $containerElement;
                         }
                     }
                 }
@@ -329,9 +330,9 @@ class FormProcessHooks
             if ($fieldTypeNames['TYPO3'] === $formFieldType) {
                 if ($fieldTypeNames['HasMultipleAnswers'] == 'true') {
                     return true;
-                } else {
-                    return false;
                 }
+
+                return false;
             }
         }
 
@@ -340,6 +341,7 @@ class FormProcessHooks
 
     /**
      * @return array
+     * @throws \InvalidArgumentException
      */
     private function getFormFieldConfig(): array
     {
