@@ -4,7 +4,7 @@ EXT:mautic ![Travis](https://travis-ci.org/mautic/mautic-typo3.svg?branch=master
 
 Welcome to the official TYPO3 extension for Mautic!
 
-Version: 1.4.0
+Version: 1.5.1
 
 State: Beta.
 
@@ -29,11 +29,8 @@ Tracking is also disabled by default. Head to the extension configuration to tur
 ### Installation (via Composer) (recommended)
 Add the following to the composer.json of your TYPO3 installation
 ```
-"repositories": [
-    { "type": "vcs", "url": "git@github.com:mautic/mautic-typo3.git" }
-	],
 require {
-    "mautic/mautic-typo3": "^1.3"
+    "mautic/mautic-typo3": "^1.5"
 }
 ```
 
