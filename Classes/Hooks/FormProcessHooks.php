@@ -135,6 +135,7 @@ class FormProcessHooks
 
     /**
      * @param string $formPersistenceIdentifier
+     *
      * @return string
      */
     public function beforeFormDelete(string $formPersistenceIdentifier): string
@@ -341,6 +342,7 @@ class FormProcessHooks
 
     /**
      * @return array
+     *
      * @throws \InvalidArgumentException
      */
     private function getFormFieldConfig(): array
