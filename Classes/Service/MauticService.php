@@ -42,25 +42,25 @@ class MauticService
      */
     public function mauticAuthorization(): \Mautic\Auth\AuthInterface
     {
-        if (!$this->checkSessionActive()){
+        if (!$this->checkSessionActive()) {
             session_start();
         }
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
 
         $settings = [];
 
-        if ($this->isOAuthEnabled()){
-            $settings['baseUrl'] = $this->getConfigurationData('mauticUrl');
-            $settings['clientKey'] = $this->getConfigurationData('mauticPublicKey');
-            $settings['clientSecret'] = $this->getConfigurationData('mauticSecretKey');
-            $settings['accessToken'] = $this->registry->get('tx_mautic', 'accessToken', '');
+        if ($this->isOAuthEnabled()) {
+            $settings['baseUrl']           = $this->getConfigurationData('mauticUrl');
+            $settings['clientKey']         = $this->getConfigurationData('mauticPublicKey');
+            $settings['clientSecret']      = $this->getConfigurationData('mauticSecretKey');
+            $settings['accessToken']       = $this->registry->get('tx_mautic', 'accessToken', '');
             $settings['accessTokenSecret'] = $this->registry->get('tx_mautic', 'accessTokenSecret', '');
-            $settings['version'] = 'OAuth1a';
-            $apiType = 'OAuth';
+            $settings['version']           = 'OAuth1a';
+            $apiType                       = 'OAuth';
         } else {
             $settings['userName'] = $this->getConfigurationData('mauticUsername');
             $settings['password'] = $this->getConfigurationData('mauticPassword');
-            $apiType = 'BasicAuth';
+            $apiType              = 'BasicAuth';
         }
 
         // Initiate the auth object specifying to use BasicAuth
@@ -72,12 +72,11 @@ class MauticService
 //                if ($auth->accessTokenUpdated()) {
 //                    $accessTokenData = $auth->getAccessTokenData();
 //                    $registry = GeneralUtility::makeInstance('TYPO3\CMS\Core\Registry');
-//
+
 //                    $registry->set('tx_mautic', 'accessToken', $accessTokenData['access_token']);
 //                    $registry->set('tx_mautic', 'accessTokenSecret', $accessTokenData['access_token_secret']);
 //                }
 //            }
-
 
             return $auth;
         } else {
@@ -89,6 +88,7 @@ class MauticService
      * @param string $apiType
      *
      * @return \Mautic\Api\Api
+     *
      * @throws \Mautic\Exception\ContextNotFoundException
      */
     public function createMauticApi(string $apiType): \Mautic\Api\Api
@@ -108,9 +108,9 @@ class MauticService
     /**
      * Push data to a Mautic form.
      *
-     * @param array $formValues The data submitted by your form
-     * @param string $mauticUrl URL of the mautic installation
-     * @param int $formId Mautic Form ID
+     * @param array  $formValues The data submitted by your form
+     * @param string $mauticUrl  URL of the mautic installation
+     * @param int    $formId     Mautic Form ID
      *
      * @return mixed
      */
@@ -155,6 +155,7 @@ class MauticService
     /**
      * @param string $tag
      * @param string $contactEmail
+     *
      * @throws \Mautic\Exception\ContextNotFoundException
      */
     public function addTagToContact(string $tag, string $contactEmail)
@@ -163,7 +164,7 @@ class MauticService
 
         $data = [
             'email' => $contactEmail,
-            'tags' => $tag,
+            'tags'  => $tag,
         ];
 
         $contactApi->create($data);
@@ -194,13 +195,13 @@ class MauticService
             // Instantiate the api object
             $api = new MauticApi();
 
-            $api = $api->newApi('contacts', $customAuth ?? $auth, $apiUrl);
+            $api      = $api->newApi('contacts', $customAuth ?? $auth, $apiUrl);
             $response = $api->getList('', 0, 1);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return null;
         }
 
-        if (empty($api->getMauticVersion())){
+        if (empty($api->getMauticVersion())) {
             return null;
         }
 
@@ -208,9 +209,9 @@ class MauticService
         // Get the version number from the response header:
         $arr['version'] = $api->getMauticVersion();
 
-        if ($auth instanceof BasicAuth){
+        if ($auth instanceof BasicAuth) {
             $arr['auth_version'] = 'Basic Auth';
-        } elseif ($auth instanceof OAuth){
+        } elseif ($auth instanceof OAuth) {
             $arr['auth_version'] = 'OAuth';
         }
 

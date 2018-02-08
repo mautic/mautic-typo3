@@ -19,12 +19,10 @@ declare(strict_types=1);
 
 namespace Mautic\Mautic\Hooks;
 
-use Mautic\Exception\ContextNotFoundException;
 use Mautic\Mautic\Service\MauticService;
 use TYPO3\CMS\Core\Configuration\Loader\YamlFileLoader;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Form\Mvc\Persistence\Exception\PersistenceManagerException;
 use TYPO3\CMS\Form\Mvc\Persistence\FormPersistenceManager;
 
 class FormProcessHooks
@@ -74,7 +72,7 @@ class FormProcessHooks
 
     /**
      * @param string $formPersistenceIdentifier
-     * @param array $formDefinition
+     * @param array  $formDefinition
      *
      * @return array
      */
@@ -107,7 +105,7 @@ class FormProcessHooks
 
     /**
      * @param string $formPersistenceIdentifier
-     * @param array $formDefinition
+     * @param array  $formDefinition
      *
      * @return array
      */

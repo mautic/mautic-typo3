@@ -30,7 +30,6 @@ if (TYPO3_MODE === 'BE') {
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['beforeFormSave'][1489959059]
         = \Mautic\Mautic\Hooks\FormProcessHooks::class;
-
 }
 if (TYPO3_MODE === 'FE') {
     $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mautic'] ?? '');
