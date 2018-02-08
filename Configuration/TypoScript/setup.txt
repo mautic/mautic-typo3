@@ -17,3 +17,18 @@ tt_content {
         }
     }
 }
+
+module.tx_mautic {
+     view {
+         templateRootPaths = EXT:mautic/Resources/Private/Templates/Backend/
+         partialRootPaths = EXT:mautic/Resources/Private/Partials/Backend/
+         layoutRootPaths = EXT:mautic/Resources/Private/Layouts/Backend/
+     }
+}
+plugin.tx_mautic {
+    view {
+        templateRootPaths = EXT:mautic/Resources/Private/Templates/Backend/
+        partialRootPaths = EXT:mautic/Resources/Private/Partials/Backend/
+        layoutRootPaths = EXT:mautic/Resources/Private/Layouts/Backend/
+    }
+}

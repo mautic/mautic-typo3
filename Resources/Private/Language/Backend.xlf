@@ -28,6 +28,10 @@
                 <source>Mautic Form ID</source>
             </trans-unit>
 
+            <trans-unit id="tx_mautic_domain_model_mautic">
+                <source>Mautic</source>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

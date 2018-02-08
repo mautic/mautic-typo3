@@ -10,7 +10,7 @@ $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['mautic_dynamic_conten
     'tt_content',
     'CType',
     [
-        'LLL:EXT:mautic/Resources/Private/Language/Backend.xlf:content_element.mautic_dynamic_content',
+        'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/Backend.xlf:content_element.mautic_dynamic_content',
         'mautic_dynamic_content',
         'content-special-div',
     ],
@@ -65,7 +65,7 @@ $GLOBALS['TCA']['tt_content']['columns'] = array_replace_recursive(
     $GLOBALS['TCA']['tt_content']['columns'],
     [
         'mautic_dynamic_content_slot_name' => [
-            'label'  => 'LLL:EXT:mautic/Resources/Private/Language/Backend.xlf:mautic_dynamic_content.slot_name',
+            'label'  => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/Backend.xlf:mautic_dynamic_content.slot_name',
             'config' => [
                 'type' => 'input',
                 'eval' => 'required',

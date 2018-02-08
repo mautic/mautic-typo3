@@ -1,11 +1,17 @@
-# cat=basic/enable; type=string; label=Mautic installation URL
+#cat=General/enable; type=string; label=Mautic Installation Url
 mauticUrl =
 
-# cat=basic/enable; type=string; label=Mautic username
+#cat=General/enable; type=boolean; label=Enable Mautic tracking
+tracking = 0
+
+# cat=Oauth/enable; type=string; label=Mautic Oauth1a Public Key
+mauticPublicKey =
+
+# cat=Oauth/enable; type=string; label=Mautic Oauth1a Secret Key
+mauticSecretKey =
+
+# cat=BasicAuth/enable; type=string; label=Mautic username
 mauticUsername =
 
-# cat=basic/enable; type=string; label=Mautic password
+# cat=BasicAuth/enable; type=string; label=Mautic password
 mauticPassword =
-
-#cat=basic/enable; type=boolean; label=Enable Mautic tracking
-tracking = 0

@@ -9,7 +9,7 @@ defined('TYPO3_MODE') || die();
     'tt_content',
     'CType',
     [
-        'LLL:EXT:mautic/Resources/Private/Language/Backend.xlf:content_group.mautic',
+        'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/Backend.xlf:content_group.mautic',
         '--div--',
     ],
     '--div--',
