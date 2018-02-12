@@ -15,10 +15,6 @@ if (TYPO3_MODE === 'BE') {
         'mauticauth',
         '',                        // Position
         [
-            'Authorisation' => 'list, authFacebook, authoriseLinkedIn',
-
-        ],
-        [
             'access' => 'user,group',
             'icon'   => 'EXT:'.$_EXTKEY.'/Resources/Public/Icons/Extension.png',
             'labels' => 'LLL:EXT:'.$_EXTKEY.'/Resources/Private/Language/Backend.xlf:tx_mautic_domain_model_mautic',
