@@ -57,7 +57,7 @@ class AuthorisationController extends ActionController
                 'baseUrl'      => $service->getConfigurationData('mauticUrl'),
                 'clientKey'    => $service->getConfigurationData('mauticPublicKey'),
                 'clientSecret' => $service->getConfigurationData('mauticSecretKey'),
-                'callback'     => 'http://sitetemplate.woeler.beech.it'.$uriBuilder->buildUriFromRoute('MauticOAuth'),
+                'callback'     => $GLOBALS['TSFE']->tmpl->setup['config.']['baseURL'].$uriBuilder->buildUriFromRoute('MauticOAuth'),
                 'version'      => 'OAuth1a',
             ];
 
@@ -118,7 +118,7 @@ class AuthorisationController extends ActionController
             'baseUrl'      => $service->getConfigurationData('mauticUrl'),
             'clientKey'    => $service->getConfigurationData('mauticPublicKey'),
             'clientSecret' => $service->getConfigurationData('mauticSecretKey'),
-            'callback'     => 'http://sitetemplate.woeler.beech.it'.$uriBuilder->buildUriFromRoute('MauticOAuth'),
+            'callback'     => $GLOBALS['TSFE']->tmpl->setup['config.']['baseURL'].$uriBuilder->buildUriFromRoute('MauticOAuth'),
             'version'      => 'OAuth1a',
         ];
 
