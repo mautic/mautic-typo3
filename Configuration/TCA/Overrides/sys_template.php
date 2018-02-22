@@ -3,7 +3,7 @@
 defined('TYPO3_MODE') || die();
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-    'mautic',
+    $_EXTKEY,
     'Configuration/TypoScript',
     'Mautic'
 );

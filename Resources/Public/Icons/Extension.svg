@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns#">
+<head>
+  <meta charset="UTF-8"><script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,t,n){function r(n){if(!t[n]){var o=t[n]={exports:{}};e[n][0].call(o.exports,function(t){var o=e[n][1][t];return r(o||t)},o,o.exports)}return t[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({1:[function(e,t,n){function r(){}function o(e,t,n){return function(){return i(e,[f.now()].concat(u(arguments)),t?null:this,n),t?void 0:this}}var i=e("handle"),a=e(2),u=e(3),c=e("ee").get("tracer"),f=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,t){s[t]=o(d+t,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),t.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,t){var n={},r=this,o="function"==typeof t;return i(l+"tracer",[f.now(),e,n],r),function(){if(c.emit((o?"":"no-")+"fn-start",[f.now(),r,o],n),o)try{return t.apply(this,arguments)}catch(e){throw c.emit("fn-err",[arguments,this,e],n),e}finally{c.emit("fn-end",[f.now()],n)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,t){m[t]=o(l+t)}),newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),i("err",[e,f.now()])}},{}],2:[function(e,t,n){function r(e,t){var n=[],r="",i=0;for(r in e)o.call(e,r)&&(n[i]=t(r,e[r]),i+=1);return n}var o=Object.prototype.hasOwnProperty;t.exports=r},{}],3:[function(e,t,n){function r(e,t,n){t||(t=0),"undefined"==typeof n&&(n=e?e.length:0);for(var r=-1,o=n-t||0,i=Array(o<0?0:o);++r<o;)i[r]=e[t+r];return i}t.exports=r},{}],4:[function(e,t,n){t.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,t,n){function r(){}function o(e){function t(e){return e&&e instanceof r?e:e?c(e,u,i):i()}function n(n,r,o,i){if(!d.aborted||i){e&&e(n,r,o);for(var a=t(o),u=m(n),c=u.length,f=0;f<c;f++)u[f].apply(a,r);var p=s[y[n]];return p&&p.push([b,n,r,a]),a}}function l(e,t){v[e]=m(e).concat(t)}function m(e){return v[e]||[]}function w(e){return p[e]=p[e]||o(n)}function g(e,t){f(e,function(e,n){t=t||"feature",y[n]=t,t in s||(s[t]=[])})}var v={},y={},b={on:l,emit:n,get:w,listeners:m,context:t,buffer:g,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",c=e("gos"),f=e(2),s={},p={},d=t.exports=o();d.backlog=s},{}],gos:[function(e,t,n){function r(e,t,n){if(o.call(e,t))return e[t];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,t,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[t]=r,r}var o=Object.prototype.hasOwnProperty;t.exports=r},{}],handle:[function(e,t,n){function r(e,t,n,r){o.buffer([e],r),o.emit(e,t,n)}var o=e("ee").get("handle");t.exports=r,r.ee=o},{}],id:[function(e,t,n){function r(e){var t=typeof e;return!e||"object"!==t&&"function"!==t?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");t.exports=r},{}],loader:[function(e,t,n){function r(){if(!x++){var e=h.info=NREUM.info,t=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&t))return s.abort();f(y,function(t,n){e[t]||(e[t]=n)}),c("mark",["onload",a()+h.offset],null,"api");var n=d.createElement("script");n.src="https://"+e.agent,t.parentNode.insertBefore(n,t)}}function o(){"complete"===d.readyState&&i()}function i(){c("mark",["domContent",a()+h.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-h.offset}var u=(new Date).getTime(),c=e("handle"),f=e(2),s=e("ee"),p=window,d=p.document,l="addEventListener",m="attachEvent",w=p.XMLHttpRequest,g=w&&w.prototype;NREUM.o={ST:setTimeout,SI:p.setImmediate,CT:clearTimeout,XHR:w,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1071.min.js"},b=w&&g&&g[l]&&!/CriOS/.test(navigator.userAgent),h=t.exports={offset:u,now:a,origin:v,features:{},xhrWrappable:b};e(1),d[l]?(d[l]("DOMContentLoaded",i,!1),p[l]("load",r,!1)):(d[m]("onreadystatechange",o),p[m]("onload",r)),c("mark",["firstbyte",u],null,"api");var x=0,E=e(4)},{}]},{},["loader"]);</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="profile" href="http://gmpg.org/xfn/11">
+  <link rel="pingback" href="https://www.mautic.org/xmlrpc.php">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <title>Page not found - Mautic Community</title>
+<script>document.documentElement.className = document.documentElement.className.replace("no-js","js");</script>
+
+<!-- This site is optimized with the Yoast SEO plugin v5.9.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="robots" content="noindex,follow"/>
+<link rel="publisher" href="https://plus.google.com/+MauticOrg"/>
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="object" />
+<meta property="og:title" content="Page not found - Mautic Community" />
+<meta property="og:site_name" content="Mautic Community" />
+<meta property="og:image" content="https://www.mautic.org/wp-content/uploads/2014/08/fb_message.png" />
+<meta property="og:image:secure_url" content="https://www.mautic.org/wp-content/uploads/2014/08/fb_message.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Page not found - Mautic Community" />
+<meta name="twitter:site" content="@mautic" />
+<meta name="twitter:image" content="https://www.mautic.org/wp-content/uploads/2014/08/fb_message.png" />
+<script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"WebSite","@id":"#website","url":"https:\/\/www.mautic.org\/","name":"Open Source Marketing Automation","alternateName":"Mautic","potentialAction":{"@type":"SearchAction","target":"https:\/\/www.mautic.org\/?s={search_term_string}","query-input":"required name=search_term_string"}}</script>
+<script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"Organization","url":false,"sameAs":["http:\/\/facebook.com\/trymautic","http:\/\/instagram.com\/mautic","https:\/\/www.linkedin.com\/groups\/Mautic-8221750","https:\/\/plus.google.com\/+MauticOrg","https:\/\/www.youtube.com\/channel\/UCcc9_x7_gNICPkrbG2NU9Xw","https:\/\/twitter.com\/mautic"],"@id":"#organization","name":"Mautic","logo":"https:\/\/www.mautic.org\/wp-content\/uploads\/2014\/08\/iTunesArtwork.png"}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Mautic Community &raquo; Feed" href="https://www.mautic.org/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Mautic Community &raquo; Comments Feed" href="https://www.mautic.org/comments/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.mautic.org\/wp-includes\/js\/wp-emoji-release.min.js?ver=e1e7aeb6b233b3fcdfa7f793151217ee"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56794,8205,9794,65039],[55358,56794,8203,9794,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='bbp-default-css'  href='https://www.mautic.org/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.14-6684' type='text/css' media='screen' />
+<link rel='stylesheet' id='bp-legacy-css-css'  href='https://www.mautic.org/wp-content/plugins/buddypress/bp-templates/bp-legacy/css/buddypress.min.css?ver=2.9.2' type='text/css' media='screen' />
+<link rel='stylesheet' id='wpdm-bootstrap-css'  href='https://www.mautic.org/wp-content/plugins/download-manager/assets/bootstrap/css/bootstrap.css?ver=e1e7aeb6b233b3fcdfa7f793151217ee' type='text/css' media='all' />
+<link rel='stylesheet' id='wpdm-front-css'  href='https://www.mautic.org/wp-content/plugins/download-manager/assets/css/front.css?ver=e1e7aeb6b233b3fcdfa7f793151217ee' type='text/css' media='all' />
+<link rel='stylesheet' id='events-manager-css'  href='https://www.mautic.org/wp-content/plugins/events-manager/includes/css/events_manager.css?ver=5.8' type='text/css' media='all' />
+<link rel='stylesheet' id='responsive-lightbox-swipebox-css'  href='https://www.mautic.org/wp-content/plugins/responsive-lightbox/assets/swipebox/css/swipebox.min.css?ver=1.6.9' type='text/css' media='all' />
+<link rel='stylesheet' id='wpdm-bootstrap-select-css'  href='https://www.mautic.org/wp-content/plugins/download-manager/assets/css/bootstrap-select.min.css?ver=e1e7aeb6b233b3fcdfa7f793151217ee' type='text/css' media='all' />
+<link rel='stylesheet' id='hueman-main-style-css'  href='https://www.mautic.org/wp-content/themes/hueman/assets/front/css/main.min.css?ver=1.0' type='text/css' media='all' />
+<style id='hueman-main-style-inline-css' type='text/css'>
+body { font-size:1.00rem; }@media only screen and (min-width: 720px) {
+        .nav > li { font-size:1.00rem; }
+      }.container-inner { max-width: 1120px; }::selection { background-color: #4e5e9e; }
+::-moz-selection { background-color: #4e5e9e; }a,.themeform label .required,#flexslider-featured .flex-direction-nav .flex-next:hover,#flexslider-featured .flex-direction-nav .flex-prev:hover,.post-hover:hover .post-title a,.post-title a:hover,.sidebar.s1 .post-nav li a:hover i,.content .post-nav li a:hover i,.post-related a:hover,.sidebar.s1 .widget_rss ul li a,#footer .widget_rss ul li a,.sidebar.s1 .widget_calendar a,#footer .widget_calendar a,.sidebar.s1 .alx-tab .tab-item-category a,.sidebar.s1 .alx-posts .post-item-category a,.sidebar.s1 .alx-tab li:hover .tab-item-title a,.sidebar.s1 .alx-tab li:hover .tab-item-comment a,.sidebar.s1 .alx-posts li:hover .post-item-title a,#footer .alx-tab .tab-item-category a,#footer .alx-posts .post-item-category a,#footer .alx-tab li:hover .tab-item-title a,#footer .alx-tab li:hover .tab-item-comment a,#footer .alx-posts li:hover .post-item-title a,.comment-tabs li.active a,.comment-awaiting-moderation,.child-menu a:hover,.child-menu .current_page_item > a,.wp-pagenavi a{ color: #4e5e9e; }.themeform input[type="submit"],.themeform button[type="submit"],.sidebar.s1 .sidebar-top,.sidebar.s1 .sidebar-toggle,#flexslider-featured .flex-control-nav li a.flex-active,.post-tags a:hover,.sidebar.s1 .widget_calendar caption,#footer .widget_calendar caption,.author-bio .bio-avatar:after,.commentlist li.bypostauthor > .comment-body:after,.commentlist li.comment-author-admin > .comment-body:after{ background-color: #4e5e9e; }.post-format .format-container { border-color: #4e5e9e; }.sidebar.s1 .alx-tabs-nav li.active a,#footer .alx-tabs-nav li.active a,.comment-tabs li.active a,.wp-pagenavi a:hover,.wp-pagenavi a:active,.wp-pagenavi span.current{ border-bottom-color: #4e5e9e!important; }.sidebar.s2 .post-nav li a:hover i,
+.sidebar.s2 .widget_rss ul li a,
+.sidebar.s2 .widget_calendar a,
+.sidebar.s2 .alx-tab .tab-item-category a,
+.sidebar.s2 .alx-posts .post-item-category a,
+.sidebar.s2 .alx-tab li:hover .tab-item-title a,
+.sidebar.s2 .alx-tab li:hover .tab-item-comment a,
+.sidebar.s2 .alx-posts li:hover .post-item-title a { color: #35b5b9; }
+.sidebar.s2 .sidebar-top,.sidebar.s2 .sidebar-toggle,.post-comments,.jp-play-bar,.jp-volume-bar-value,.sidebar.s2 .widget_calendar caption{ background-color: #35b5b9; }.sidebar.s2 .alx-tabs-nav li.active a { border-bottom-color: #35b5b9; }
+.post-comments span:before { border-right-color: #35b5b9; }
+      .search-expand,
+              #nav-topbar.nav-container { background-color: #425090}@media only screen and (min-width: 720px) {
+                #nav-topbar .nav ul { background-color: #425090; }
+              }.is-scrolled #header .nav-container.desktop-sticky,
+              .is-scrolled #header .search-expand { background-color: #425090; background-color: rgba(66,80,144,0.90) }.is-scrolled .topbar-transparent #nav-topbar.desktop-sticky .nav ul { background-color: #425090; background-color: rgba(66,80,144,0.95) }#header { background-color: #4e5e9e; }
+@media only screen and (min-width: 720px) {
+  #nav-header .nav ul { background-color: #4e5e9e; }
+}
+        .is-scrolled #header #nav-mobile { background-color: #454e5c; background-color: rgba(69,78,92,0.90) }#nav-header.nav-container, #main-header-search .search-expand { background-color: ; }
+@media only screen and (min-width: 720px) {
+  #nav-header .nav ul { background-color: ; }
+}
+        
+</style>
+<link rel='stylesheet' id='theme-stylesheet-css'  href='https://www.mautic.org/wp-content/themes/hueman-child/style.css?ver=1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='hueman-font-awesome-css'  href='https://www.mautic.org/wp-content/themes/hueman/assets/front/css/font-awesome.min.css?ver=1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='https://www.mautic.org/wp-content/plugins/jetpack/css/jetpack.css?ver=5.6' type='text/css' media='all' />
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var BP_Confirm = {"are_you_sure":"Are you sure?"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/buddypress/bp-core/js/confirm.min.js?ver=2.9.2'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/buddypress/bp-core/js/widget-members.min.js?ver=2.9.2'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/buddypress/bp-core/js/jquery-query.min.js?ver=2.9.2'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/buddypress/bp-core/js/vendor/jquery-cookie.min.js?ver=2.9.2'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/buddypress/bp-core/js/vendor/jquery-scroll-to.min.js?ver=2.9.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var BP_DTheme = {"accepted":"Accepted","close":"Close","comments":"comments","leave_group_confirm":"Are you sure you want to leave this group?","mark_as_fav":"Favorite","my_favs":"My Favorites","rejected":"Rejected","remove_fav":"Remove Favorite","show_all":"Show all","show_all_comments":"Show all comments for this thread","show_x_comments":"Show all comments (%d)","unsaved_changes":"Your profile has unsaved changes. If you leave the page, the changes will be lost.","view":"View"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/buddypress/bp-templates/bp-legacy/js/buddypress.min.js?ver=2.9.2'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/download-manager/assets/js/jquery.cookie.js?ver=e1e7aeb6b233b3fcdfa7f793151217ee'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/download-manager/assets/js/front.js?ver=e1e7aeb6b233b3fcdfa7f793151217ee'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/download-manager/assets/js/chosen.jquery.min.js?ver=e1e7aeb6b233b3fcdfa7f793151217ee'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/ui/position.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/ui/mouse.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/ui/sortable.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.11.4'></script>
+<script type='text/javascript'>
+jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","currentText":"Today","monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nextText":"Next","prevText":"Previous","dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dayNamesMin":["S","M","T","W","T","F","S"],"dateFormat":"MM d, yy","firstDay":1,"isRTL":false});});
+</script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/ui/menu.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/wp-a11y.min.js?ver=e1e7aeb6b233b3fcdfa7f793151217ee'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var uiAutocompleteL10n = {"noResults":"No results found.","oneResult":"1 result found. Use up and down arrow keys to navigate.","manyResults":"%d results found. Use up and down arrow keys to navigate.","itemSelected":"Item selected."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/ui/autocomplete.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/ui/resizable.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/ui/draggable.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/ui/button.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/ui/dialog.min.js?ver=1.11.4'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var EM = {"ajaxurl":"https:\/\/www.mautic.org\/wp-admin\/admin-ajax.php","locationajaxurl":"https:\/\/www.mautic.org\/wp-admin\/admin-ajax.php?action=locations_search","firstDay":"1","locale":"en","dateFormat":"dd\/mm\/yy","ui_css":"https:\/\/www.mautic.org\/wp-content\/plugins\/events-manager\/includes\/css\/jquery-ui.min.css","show24hours":"","is_ssl":"1","bookingInProgress":"Please wait while the booking is being submitted.","tickets_save":"Save Ticket","bookingajaxurl":"https:\/\/www.mautic.org\/wp-admin\/admin-ajax.php","bookings_export_save":"Export Bookings","bookings_settings_save":"Save Settings","booking_delete":"Are you sure you want to delete?","booking_offset":"30","bb_full":"Sold Out","bb_book":"Book Now","bb_booking":"Booking...","bb_booked":"Booking Submitted","bb_error":"Booking Error. Try again?","bb_cancel":"Cancel","bb_canceling":"Canceling...","bb_cancelled":"Cancelled","bb_cancel_error":"Cancellation Error. Try again?","txt_search":"Search","txt_searching":"Searching...","txt_loading":"Loading..."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/events-manager/includes/js/events-manager.js?ver=5.8'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/responsive-lightbox/assets/swipebox/js/jquery.swipebox.min.js?ver=1.6.9'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var rlArgs = {"script":"swipebox","selector":"lightbox","customEvents":"","activeGalleries":"1","animation":"1","hideCloseButtonOnMobile":"0","removeBarsOnMobile":"0","hideBars":"1","hideBarsDelay":"5000","videoMaxWidth":"1080","useSVG":"1","loopAtEnd":"0"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/responsive-lightbox/js/front.js?ver=1.6.9'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/download-manager/assets/js/jquery.validate.min.js?ver=e1e7aeb6b233b3fcdfa7f793151217ee'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/wpdm-premium-packages/js/wpdmpp.js?ver=e1e7aeb6b233b3fcdfa7f793151217ee'></script>
+<meta name="generator" content="WordPress Download Manager 4.5.0" />
+<link rel='https://api.w.org/' href='https://www.mautic.org/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.mautic.org/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.mautic.org/wp-includes/wlwmanifest.xml" /> 
+
+	<script type="text/javascript">var ajaxurl = 'https://www.mautic.org/wp-admin/admin-ajax.php';</script>
+
+
+        <script>
+            var wpdm_site_url = 'https://www.mautic.org/';
+            var ajax_url = 'https://www.mautic.org/wp-admin/admin-ajax.php';
+        </script>
+
+
+        <style type="text/css">
+    .w3eden .bootstrap-select span.filter-option{ background: transparent !important; }
+    div.w3eden .wpdm-all-categories div.cat-div{
+        margin-bottom: 10px;
+    }
+    div.w3eden .wpdm-all-categories a.wpdm-pcat{
+        font-weight: 800;
+    }
+    div.w3eden .wpdm-all-categories a.wpdm-scat{
+        font-weight: 400;
+        font-size: 9pt;
+        margin-right: 10px;
+        opacity: 0.6;
+    }
+    div.w3eden .wpdm-categories ul li,
+    div.w3eden .wpdm-downloads ul li{
+        list-style: none !important;
+        list-style-type: none !important;
+    }
+
+    div.w3eden .wpdm-categories ul{
+        list-style: none!important;
+        padding: 0px !important;
+        margin: 0px !important;
+    }
+
+    .dropdown-menu li,
+    .w3eden .wpdm-downloads-ul li,
+    .w3eden .wpdm-all-categories ul{
+        padding: 0px !important;
+        margin: 0px !important;
+    }
+    .w3eden .wpdm-categories ul.row li.col-md-4{
+        margin-bottom: 5px !important;
+        margin-left: 0 !important;
+        padding: 4px;
+
+    }
+    .w3eden .btn-group.ap-btn > a:first-child:not(.btn-block){
+        width: 82%;;
+    }
+    .wpdm-categories .dropdown-menu{
+        width: 98%;
+        left: 1%;
+        box-shadow: 0 0px 4px rgba(0,0,0,0.2);
+        font-size: 9pt;
+
+    }
+    .w3eden .wpdm-categories  .dropdown-menu > li > a{
+        padding: 10px 20px !important;
+        border-bottom: 1px solid rgba(0,0,0,0.07) !important;
+        color: #333333;
+    }
+    .w3eden .wpdm-categories  .dropdown-menu > li:last-child > a{
+        border-bottom: 0 !important;
+    }
+
+    .wpdm-count{
+        font-size:12px;
+        color:#888;
+    }
+    #wpdm-downloads *{
+        font-size: 10pt;
+    }
+
+    .w3eden #src{
+        box-shadow: none;
+        padding-left: 35px;
+        background: url("data:image/png;base64,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") 7px 5px no-repeat;
+        background-size: 20px;
+    }
+
+
+    .w3eden .btn-ddm{
+        position: absolute;right: 4px;border:0 !important;
+        -webkit-border-top-left-radius: 0px !important;-webkit-border-bottom-left-radius: 0px !important;-moz-border-radius-topleft: 0px !important;-moz-border-radius-bottomleft: 0px !important;border-top-left-radius: 0px !important;border-bottom-left-radius: 0px !important;
+        background:rgba(0,0,0,0.2) !important; color: #ffffff !important;
+    }
+
+    .w3eden .panel-footer img{
+        max-height: 30px;
+    }
+
+    .dropdown-submenu{position:relative;}
+    .dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
+    .dropdown-submenu:hover>.dropdown-menu{display:block;}
+    .dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
+    .dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
+    .dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
+    .dropdown-menu li a{ padding: 7px 20px !important; }
+</style>
+
+<script language="JavaScript">
+
+    function htmlEncode(value){
+        return jQuery('<div/>').text(value).html();
+    }
+
+    jQuery(function(){
+
+        jQuery('body').on('click', '.pagination a',function(e){
+            e.preventDefault();
+            jQuery('#wpdm-downloads').load(this.href);
+        });
+
+        jQuery('.wpdm-cat-link').click(function(e){
+            e.preventDefault();
+            jQuery('.wpdm-cat-link').removeClass('active');
+            jQuery(this).addClass('active');
+
+            var cat_id = jQuery(this).attr('rel');
+            jQuery.ajax({
+                type : "post",
+                dataType : "json",
+                url : 'https://www.mautic.org/wp-admin/admin-ajax.php',
+                data : {action: "wpdm_change_cat_parent", cat_id : cat_id},
+                success: function(response) {
+                    console.log(response);
+                    if(response.type == "success") {
+                        jQuery('#inp').html(response.parent);
+                    }
+                }
+            });
+
+            jQuery('#wpdm-downloads').load('https://www.mautic.org/?wpdmtask=get_downloads&pg=&category='+this.rel + '&order_by=' + jQuery('#order_by').val() +'&order=' + jQuery('#order').val());
+
+        });
+
+        jQuery('#wpdm-cats-compact').on('change',function(e){
+
+            var cat_id = jQuery(this).val();
+            if(cat_id == -1) cat_id = 0;
+            jQuery('#initc').val(cat_id);
+            jQuery.ajax({
+                type : "post",
+                dataType : "json",
+                url : 'https://www.mautic.org/wp-admin/admin-ajax.php',
+                data : {action: "wpdm_change_cat_parent", cat_id : cat_id},
+                success: function(response) {
+                    console.log(response);
+                    if(response.type == "success") {
+                        jQuery('#inp').html(response.parent);
+                    }
+                }
+            });
+
+            jQuery('#wpdm-downloads').load('https://www.mautic.org/?wpdmtask=get_downloads&pg=&category='+cat_id + '&order_by=' + jQuery('#order_by').val() +'&order=' + jQuery('#order').val());
+
+        });
+
+        jQuery('body').on('click', '.wpdm-cat-link2', function(e){
+
+            e.preventDefault();
+            jQuery('.wpdm-cat-link').removeClass('active');
+            var new_rel = jQuery(this).attr('test_rel');
+            if( new_rel !== 'undefined') {
+                jQuery('a[rel=' + new_rel + ']').addClass('active');
+            }
+
+            var cat_id = jQuery(this).attr('rel');
+            jQuery.ajax({
+                type : "post",
+                dataType : "json",
+                url : 'https://www.mautic.org/wp-admin/admin-ajax.php',
+                data : {action: "wpdm_change_cat_parent", cat_id : cat_id},
+                success: function(response) {
+                    console.log(response);
+                    if(response.type == "success") {
+                        jQuery('#inp').html(response.parent)
+                    }
+                }
+            });
+
+
+            jQuery('#wpdm-downloads').load('https://www.mautic.org/?wpdmtask=get_downloads&pg=&category='+this.rel + '&order_by=' + jQuery('#order_by').val() +'&order=' + jQuery('#order').val());
+
+        });
+
+        jQuery('#order_by, #order').on('change',function(){
+            jQuery('#wpdm-downloads').load('https://www.mautic.org/?wpdmtask=get_downloads&pg=&category='+jQuery('#initc').val() + '&search=' + encodeURIComponent(jQuery('#src').val() ) + '&order_by=' + jQuery('#order_by').val() +'&order=' + jQuery('#order').val());
+        });
+
+
+        jQuery('#srcp').submit(function(e){
+            e.preventDefault();
+            jQuery('.wpdm-cat-link').removeClass('active');
+
+            jQuery('#inp').html('Search Result For <b>'+htmlEncode(jQuery('#src').val())+'</b>');
+            jQuery('#wpdm-downloads').load('https://www.mautic.org/?wpdmtask=get_downloads&pg=&search='+encodeURIComponent(jQuery('#src').val() )+'&category='+jQuery('#initc').val() + '&order_by=' + jQuery('#order_by').val() +'&order=' + jQuery('#order').val() );
+
+        });
+        jQuery('#wpdmap-home').click(function(e){
+            e.preventDefault();
+            jQuery('.wpdm-cat-link').removeClass('active');
+            jQuery('#inp').html('All Mixins');
+            jQuery('#wpdm-downloads').load('https://www.mautic.org/?wpdmtask=get_downloads&pg=&search='+encodeURIComponent(jQuery('#src').val()) +'&category='+jQuery('#initc').val() + '&order_by=' + jQuery('#order_by').val() +'&order=' + jQuery('#order').val());
+        });
+        jQuery('#wpdm-downloads').load('https://www.mautic.org/?wpdmtask=get_downloads&pg=&category='+encodeURIComponent(jQuery('#initc').val()));
+
+
+
+    });
+
+</script>
+
+    <script language="JavaScript">
+        <!--
+        var wpdmpp_base_url = 'https://www.mautic.org/wp-content/plugins/wpdm-premium-packages/';
+        jQuery(function () {
+            //jQuery('.wpmp-thumbnails a').lightBox({fixedNavigation:true});
+        });
+        //-->
+    </script>
+
+    
+<link rel='dns-prefetch' href='//v0.wordpress.com'/>
+<link rel='dns-prefetch' href='//i0.wp.com'/>
+<link rel='dns-prefetch' href='//i1.wp.com'/>
+<link rel='dns-prefetch' href='//i2.wp.com'/>
+<style type='text/css'>img#wpstats{display:none}</style><!--[if lt IE 9]>
+<script src="https://www.mautic.org/wp-content/themes/hueman/assets/front/js/ie/html5shiv-printshiv.min.js"></script>
+<script src="https://www.mautic.org/wp-content/themes/hueman/assets/front/js/ie/selectivizr.js"></script>
+<![endif]-->
+<link rel="icon" href="https://i2.wp.com/www.mautic.org/wp-content/uploads/2014/09/Mautic_Logo_LB.png?fit=32%2C32&#038;ssl=1" sizes="32x32" />
+<link rel="icon" href="https://i2.wp.com/www.mautic.org/wp-content/uploads/2014/09/Mautic_Logo_LB.png?fit=192%2C192&#038;ssl=1" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" href="https://i2.wp.com/www.mautic.org/wp-content/uploads/2014/09/Mautic_Logo_LB.png?fit=180%2C180&#038;ssl=1" />
+<meta name="msapplication-TileImage" content="https://i2.wp.com/www.mautic.org/wp-content/uploads/2014/09/Mautic_Logo_LB.png?fit=270%2C270&#038;ssl=1" />
+<!-- BEGIN GADWP v5.1.2.5 Universal Analytics - https://deconf.com/google-analytics-dashboard-wordpress/ -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-55195964-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- END GADWP Universal Analytics -->
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+
+<body class="bp-legacy error404 col-1c full-width topbar-enabled header-desktop-sticky header-mobile-sticky gecko no-js">
+
+<div id="wrapper">
+
+  
+  <header id="header" class="top-menu-mobile-on one-mobile-menu top_menu   topbar-transparent has-header-img">
+        <nav class="nav-container group mobile-menu mobile-sticky " id="nav-mobile" data-menu-id="header-1">
+  <div class="mobile-title-logo-in-header"></div>
+        
+                    <!-- <div class="ham__navbar-toggler collapsed" aria-expanded="false">
+          <div class="ham__navbar-span-wrapper">
+            <span class="ham-toggler-menu__span"></span>
+          </div>
+        </div> -->
+        <div class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+          <div class="ham__navbar-span-wrapper">
+            <span class="line line-1"></span>
+            <span class="line line-2"></span>
+            <span class="line line-3"></span>
+          </div>
+        </div>
+            
+      <div class="nav-text"></div>
+      <div class="nav-wrap container">
+                  <ul class="nav container-inner group mobile-search">
+                            <li>
+                  <form method="get" class="searchform themeform" action="https://www.mautic.org/">
+	<div>
+		<input type="text" class="search" name="s" onblur="if(this.value=='')this.value='To search type and hit enter';" onfocus="if(this.value=='To search type and hit enter')this.value='';" value="To search type and hit enter" />
+	</div>
+</form>                </li>
+                      </ul>
+                <ul id="menu-main-menu" class="nav container-inner group"><li id="menu-item-3419" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3419"><a href="https://www.mautic.org/community/">Community</a></li>
+<li id="menu-item-450" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-450"><a href="https://www.mautic.org/docs">Documentation</a></li>
+<li id="menu-item-3423" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3423"><a href="https://www.mautic.org/support/">Support</a></li>
+<li id="menu-item-278" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-278"><a href="https://www.mautic.org/blog/">Blog</a></li>
+<li id="menu-item-244" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-244"><a href="https://www.mautic.org/download/">Download</a></li>
+<li id="menu-item-257" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-257"><a href="https://www.mautic.org/demo/">Demo</a></li>
+<li id="menu-item-102152" class="btn btn-gold user menu-item menu-item-type-custom menu-item-object-custom menu-item-102152"><a href="https://www.mautic.org/wp-login.php">Log In</a></li>
+<li id="menu-item-102153" class="btn btn-teal user menu-item menu-item-type-custom menu-item-object-custom menu-item-102153"><a href="https://www.mautic.org/register/">Register</a></li>
+</ul>      </div>
+</nav><!--/#nav-topbar-->  
+        <nav class="nav-container group desktop-menu desktop-sticky " id="nav-topbar" data-menu-id="header-2">
+    <div class="nav-text"></div>
+  <div class="topbar-toggle-down">
+    <i class="fa fa-angle-double-down" aria-hidden="true" data-toggle="down" title="Expand menu"></i>
+    <i class="fa fa-angle-double-up" aria-hidden="true" data-toggle="up" title="Collapse menu"></i>
+  </div>
+  <div class="nav-wrap container">
+	  <div class="container-inner">
+		  <a class="mautic-brand" href="https://www.mautic.org">
+			<!-- logo figure -->
+			<svg version="1.1" class="mautic-logo-figure" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 128 128" enable-background="new 0 0 128 128" xml:space="preserve">
+				<path class="circle" d="M64,119.843c-30.937,0-56.108-25.17-56.108-56.108C7.893,32.799,33.063,7.629,64,7.629
+				c7.474,0,14.734,1.446,21.578,4.301c1.936,0.807,2.85,3.03,2.041,4.964c-0.805,1.937-3.029,2.849-4.963,2.043
+				C76.742,16.472,70.465,15.221,64,15.221c-26.751,0-48.514,21.763-48.514,48.514c0,26.752,21.763,48.516,48.514,48.516
+				c26.751,0,48.513-21.764,48.513-48.516c0-5.735-0.988-11.345-2.939-16.677c-0.723-1.968,0.289-4.149,2.258-4.869
+				c1.971-0.721,4.15,0.291,4.871,2.259c2.258,6.171,3.404,12.661,3.404,19.287C120.107,94.673,94.938,119.843,64,119.843"></path>
+				<polygon class="m" points="88.545,57.987 79.807,67.055 84.664,87.332 95.621,87.332 "></polygon>
+				<polygon class="m-arrow" points="84.982,31.157 88.004,34.176 63.933,59.605 43.446,38.475 31.664,87.332 42.621,87.332
+				49.122,60.198 63.933,76.399 95.699,41.815 98.738,44.875 101.75,27.784 "></polygon>
+			</svg>
+			<!--/ logo figure -->
+			<!-- logo text -->
+			<svg version="1.1" class="mautic-logo-text mnl-3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 260 65" enable-background="new 0 0 260 65" xml:space="preserve">
+				<g>
+					<path class="m" d="M39.336,57.983V37.951c0-4.932-2.58-9.409-7.664-9.409
+					c-5.008,0-7.967,4.477-7.967,9.409v20.032h-9.258V20.498h8.575l0.683,4.553c1.972-3.794,6.298-5.16,9.864-5.16
+					c4.477,0,8.955,1.822,11.079,6.981c3.339-5.311,7.664-6.829,12.521-6.829c10.623,0,15.859,6.526,15.859,17.756v20.185H63.77V37.799
+					c0-4.932-2.049-9.106-7.057-9.106s-8.119,4.326-8.119,9.258v20.032H39.336z"></path>
+					<path class="a" d="M109.031,20.574h8.879v37.41h-8.728l-0.456-5.464
+					c-2.124,4.402-7.967,6.527-12.14,6.604c-11.079,0.074-19.275-6.754-19.275-19.883c0-12.898,8.575-19.652,19.502-19.577
+					c5.01,0,9.789,2.352,11.913,6.07L109.031,20.574z M86.569,39.24c0,7.134,4.934,11.384,11.079,11.384
+					c14.569,0,14.569-22.689,0-22.689C91.503,27.935,86.569,32.108,86.569,39.24"></path>
+					<path class="u" d="M133.101,20.574v19.578c0,5.69,3.11,10.016,9.03,10.016
+					c5.69,0,9.561-4.781,9.561-10.471V20.574h9.181v37.486h-8.27l-0.607-5.084c-3.871,3.794-7.437,5.614-12.672,5.614
+					c-8.954,0-15.48-6.754-15.48-18.363V20.574H133.101z"></path>
+					<path class="t" d="M182.123,10.026V20.65h10.319v7.967h-10.396V44.78
+					c0,3.567,1.973,5.313,4.855,5.313c1.443,0,3.112-0.455,4.479-1.14l2.58,7.893c-2.656,1.062-4.857,1.518-7.664,1.594
+					c-8.12,0.303-13.432-4.326-13.432-13.659V28.617h-6.98V20.65h6.98v-9.637L182.123,10.026z"></path>
+					<path class="i" d="M209.441,10.026c0,7.209-10.929,7.209-10.929,0 C198.513,2.818,209.441,2.818,209.441,10.026 M199.348,57.984h9.259V20.422h-9.259V57.984z"></path>
+					<path class="c" d="M247.803,53.203c-4.326,4.249-8.879,5.92-14.418,5.92
+					c-10.853,0-19.881-6.526-19.881-19.807c0-13.279,9.028-19.805,19.881-19.805c5.312,0,9.409,1.518,13.507,5.54l-5.843,6.146
+					c-2.2-1.973-4.934-2.959-7.514-2.959c-6.221,0-10.773,4.553-10.773,11.078c0,7.133,4.855,10.927,10.623,10.927
+					c2.959,0,5.919-0.834,8.194-3.11L247.803,53.203z"></path>
+				</g>
+			</svg>
+			<!--/ logo text -->
+		</a>
+    <ul id="menu-main-menu-1" class="nav group"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3419"><a href="https://www.mautic.org/community/">Community</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-450"><a href="https://www.mautic.org/docs">Documentation</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3423"><a href="https://www.mautic.org/support/">Support</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-278"><a href="https://www.mautic.org/blog/">Blog</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-244"><a href="https://www.mautic.org/download/">Download</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-257"><a href="https://www.mautic.org/demo/">Demo</a></li>
+<li class="btn btn-gold user menu-item menu-item-type-custom menu-item-object-custom menu-item-102152"><a href="https://www.mautic.org/wp-login.php">Log In</a></li>
+<li class="btn btn-teal user menu-item menu-item-type-custom menu-item-object-custom menu-item-102153"><a href="https://www.mautic.org/register/">Register</a></li>
+</ul>  </div>
+	</div>
+      <div id="topbar-header-search" class="container">
+      <div class="container-inner">
+        <div class="toggle-search"><i class="fa fa-search"></i></div>
+        <div class="search-expand">
+          <div class="search-expand-inner"><form method="get" class="searchform themeform" action="https://www.mautic.org/">
+	<div>
+		<input type="text" class="search" name="s" onblur="if(this.value=='')this.value='To search type and hit enter';" onfocus="if(this.value=='To search type and hit enter')this.value='';" value="To search type and hit enter" />
+	</div>
+</form></div>
+        </div>
+      </div><!--/.container-inner-->
+    </div><!--/.container-->
+  
+</nav><!--/#nav-topbar-->  
+  <div class="group hero">
+    
+                <div id="header-image-wrap">
+              <div class="group pad central-header-zone">
+                                                  </div>
+
+              <a href="https://www.mautic.org/" rel="home"><img class="site-image" src="https://www.mautic.org/wp-content/uploads/2017/12/cropped-hero_homepage-1-3.jpg" alt="Mautic Community"></a>          </div>
+      
+                <nav class="nav-container group desktop-menu " id="nav-header" data-menu-id="header-3">
+    <div class="nav-text"><!-- put your mobile menu text here --></div>
+
+  <div class="nav-wrap container">
+          </div>
+</nav><!--/#nav-header-->      
+    
+</header><!--/#header-->
+  
+  <div class="container" id="page">
+    <div class="container-inner">
+            <div class="main">
+        <div class="main-inner group">
+          
+              <section class="content">
+          	    <div class="page-title pad group">
+
+    
+	    		<h1><i class="fa fa-exclamation-circle"></i>Error 404. <span>Page not found! </span></h1>
+    	
+    </div><!--/.page-title-->
+          <div class="pad group">
+            <div class="notebox">
+  <form method="get" class="searchform themeform" action="https://www.mautic.org/">
+	<div>
+		<input type="text" class="search" name="s" onblur="if(this.value=='')this.value='To search type and hit enter';" onfocus="if(this.value=='To search type and hit enter')this.value='';" value="To search type and hit enter" />
+	</div>
+</form></div>
+
+<div class="entry">
+  <p>The page you are trying to reach does not exist, or has been moved. Please use the menus or the search box to find what you are looking for.</p>
+</div>          </div><!--/.pad-->
+        </section><!--/.content-->
+          
+
+        </div><!--/.main-inner-->
+      </div><!--/.main-->
+    </div><!--/.container-inner-->
+  </div><!--/.container-->
+    <footer id="footer">
+
+    
+    
+        <section class="container" id="footer-widgets">
+          <div class="container-inner">
+
+            <div class="pad group">
+
+              				                  <div class="footer-widget-1 grid one-fourth ">
+                    <div id="nav_menu-7" class="widget widget_nav_menu"><h3 class="widget-title">Help</h3><div class="menu-footer-menu-container"><ul id="menu-footer-menu" class="menu"><li id="menu-item-3007" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3007"><a href="https://www.mautic.org/getting-started/">Getting Started</a></li>
+<li id="menu-item-505" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-505"><a href="https://www.mautic.org/about/">About</a></li>
+<li id="menu-item-101991" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-101991"><a href="https://www.mautic.org/support/">Support</a></li>
+<li id="menu-item-101992" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-101992"><a href="https://www.mautic.org/marketplace/">Marketplace</a></li>
+</ul></div></div>                  </div>
+              				                  <div class="footer-widget-2 grid one-half ">
+                    		<div id="recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">Recent Articles</h3>		<ul>
+											<li>
+					<a href="https://www.mautic.org/community-blog/community-team-changes/">Community Team Changes</a>
+									</li>
+											<li>
+					<a href="https://www.mautic.org/community-blog/announcing-mautic-org-2-0/">Announcing Mautic.org 2.0</a>
+									</li>
+											<li>
+					<a href="https://www.mautic.org/community-blog/upcoming-mautic-ama/">Upcoming Mautic AMA</a>
+									</li>
+											<li>
+					<a href="https://www.mautic.org/blog/developer/recognizing-mautic-code-contributors/">Recognizing Mautic Code Contributors</a>
+									</li>
+					</ul>
+		</div>                  </div>
+              				                  <div class="footer-widget-3 grid one-fourth last">
+                    <div id="nav_menu-2" class="widget widget_nav_menu"><h3 class="widget-title">Links</h3><div class="menu-quick-menu-container"><ul id="menu-quick-menu" class="menu"><li id="menu-item-101955" class="menu-item menu-item-type-post_type_archive menu-item-object-forum menu-item-101955"><a href="https://www.mautic.org/forums/">Community Forums</a></li>
+<li id="menu-item-101956" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-101956"><a href="/mauticamps">MautiCamps</a></li>
+<li id="menu-item-363" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-363"><a href="https://www.mautic.org/partners/">Sponsors</a></li>
+<li id="menu-item-102459" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-102459"><a title="DB Hurley, Mautic Founder Blog" href="http://dbhurley.com">DB Hurley, Mautic Founder</a></li>
+</ul></div></div>                  </div>
+              
+            </div><!--/.pad-->
+
+          </div><!--/.container-inner-->
+        </section><!--/.container-->
+
+    
+          <nav class="nav-container group" id="nav-footer" data-menu-id="footer-4" data-menu-scrollable="false">
+                      <!-- <div class="ham__navbar-toggler collapsed" aria-expanded="false">
+          <div class="ham__navbar-span-wrapper">
+            <span class="ham-toggler-menu__span"></span>
+          </div>
+        </div> -->
+        <div class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+          <div class="ham__navbar-span-wrapper">
+            <span class="line line-1"></span>
+            <span class="line line-2"></span>
+            <span class="line line-3"></span>
+          </div>
+        </div>
+                    <div class="nav-text"></div>
+        <div class="nav-wrap">
+                  </div>
+      </nav><!--/#nav-footer-->
+    
+    <section id="footer-bottom">
+      <div class="container-inner">
+
+        <a id="back-to-top" href="#"><i class="fa fa-angle-up"></i></a>
+
+        <div class="pad group">
+
+          <div class="grid one-half">
+                        
+            <div id="copyright">
+                              <p>Mautic Community &copy; 2018. All Rights Reserved.</p>
+                          </div><!--/#copyright-->
+
+            
+          </div>
+
+          <div class="grid one-half last">
+                          <ul class="social-links"><li><a rel="nofollow" class="social-tooltip"  title="Twitter" href="http://twitter.com/MauticCommunity" target="_blank"  style="color:"><i class="fa fa-twitter-square"></i></a></li><li><a rel="nofollow" class="social-tooltip"  title="Facebook" href="http://facebook.com/MauticCommunity" target="_blank"  style="color:"><i class="fa fa-facebook-square"></i></a></li><li><a rel="nofollow" class="social-tooltip"  title="LinkedIn" href="https://www.linkedin.com/groups/8221750" target="_blank"  style="color:"><i class="fa fa-linkedin-square"></i></a></li><li><a rel="nofollow" class="social-tooltip"  title="Youtube" href="https://www.youtube.com/channel/UCcc9_x7_gNICPkrbG2NU9Xw" target="_blank"  style="color:"><i class="fa fa-youtube-square"></i></a></li><li><a rel="nofollow" class="social-tooltip"  title="Google Plus" href="https://plus.google.com/+MauticOrg" target="_blank"  style="color:"><i class="fa fa-google-plus-square"></i></a></li></ul>                      </div>
+
+        </div><!--/.pad-->
+
+      </div><!--/.container-inner-->
+    </section><!--/.container-->
+
+  </footer><!--/#footer-->
+
+</div><!--/#wrapper-->
+
+
+    <audio controls style='width: 100%;display: none' id='wpdm-audio-player'></audio>
+
+    <script type="text/javascript">
+	jQuery(document).ready(function(){
+		if (jQuery(".sharrre-container").length) {
+			var shareContainer = jQuery(".sharrre-container"),
+			header = jQuery('#header, #header-home'),
+			postEntry = jQuery('.entry'),
+			$window = jQuery(window),
+			distanceFromTop = 50,
+			startSharePosition = shareContainer.offset(),
+			contentBottom = postEntry.offset().top + postEntry.outerHeight(),
+			options
+			topOfTemplate = header.offset().top;
+			getTopSpacing();
+			console.log(shareContainer);
+			var shareScroll = function(){
+					if($window.width() > 719){        
+							var scrollTop = $window.scrollTop() + topOfTemplate,
+							stopLocation = contentBottom - (shareContainer.outerHeight() + topSpacing);
+							if(scrollTop > stopLocation){
+									shareContainer.offset({top: contentBottom - shareContainer.outerHeight(),left: startSharePosition.left});
+							}
+							else if(scrollTop >= postEntry.offset().top-topSpacing){
+									shareContainer.offset({top: scrollTop + topSpacing, left: startSharePosition.left});
+							}else if(scrollTop < startSharePosition.top+(topSpacing-1)){
+									shareContainer.offset({top: startSharePosition.top,left:startSharePosition.left});
+							}
+					}
+			},
+	
+			shareMove = function(){
+					startSharePosition = shareContainer.offset();
+					contentBottom = postEntry.offset().top + postEntry.outerHeight();
+					topOfTemplate = header.offset().top;
+					getTopSpacing();
+			};
+	
+			/* As new images load the page content body gets longer. The bottom of the content area needs to be adjusted in case images are still loading. */
+			setTimeout(function() {
+					contentBottom = postEntry.offset().top + postEntry.outerHeight();
+			}, 2000);
+	
+			if (window.addEventListener) {
+					window.addEventListener('scroll', shareScroll, false);
+					window.addEventListener('resize', shareMove, false);
+			} else if (window.attachEvent) {
+					window.attachEvent('onscroll', shareScroll);
+					window.attachEvent('onresize', shareMove);
+			}
+	
+			function getTopSpacing(){
+					if($window.width() > 1024)
+							topSpacing = distanceFromTop + jQuery('.nav-wrap').outerHeight();
+					else
+							topSpacing = distanceFromTop;
+			}
+		}
+	});
+</script>
+	<div style="display:none">
+	</div>
+<style>.pgm-hide{display:none !important;}</style><script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/jetpack/modules/photon/photon.js?ver=20130122'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/plugins/bbpress/templates/default/js/editor.js?ver=2.5.14-6684'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/jquery.form.min.js?ver=4.2.1'></script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201805'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/jquery/ui/accordion.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/underscore.min.js?ver=1.8.3'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var HUParams = {"_disabled":[],"SmoothScroll":{"Enabled":true,"Options":{"touchpadSupport":false}},"centerAllImg":"1","timerOnScrollAllBrowsers":"1","extLinksStyle":"","extLinksTargetExt":"","extLinksSkipSelectors":{"classes":["btn","button"],"ids":[]},"imgSmartLoadEnabled":"","imgSmartLoadOpts":{"parentSelectors":[".container .content",".container .sidebar","#footer","#header-widgets"],"opts":{"excludeImg":[".tc-holder-img"],"fadeIn_options":100}},"goldenRatio":"1.618","gridGoldenRatioLimit":"350","sbStickyUserSettings":{"desktop":false,"mobile":false},"isWPMobile":"","menuStickyUserSettings":{"desktop":"stick_always","mobile":"stick_always"},"isDevMode":"","ajaxUrl":"https:\/\/www.mautic.org\/?huajax=1","frontNonce":{"id":"HuFrontNonce","handle":"09f9c6b135"},"userStarted":{"with":"with|3.3.25","on":{"date":"2017-12-07 16:22:09.000000","timezone_type":3,"timezone":"UTC"}},"isWelcomeNoteOn":"","welcomeContent":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.mautic.org/wp-content/themes/hueman/assets/front/js/scripts.min.js?ver=1.0'></script>
+<script type='text/javascript' src='https://www.mautic.org/wp-includes/js/wp-embed.min.js?ver=e1e7aeb6b233b3fcdfa7f793151217ee'></script>
+<!--[if lt IE 9]>
+<script src="https://www.mautic.org/wp-content/themes/hueman/assets/front/js/ie/respond.js"></script>
+<![endif]-->
+<script type='text/javascript' src='https://stats.wp.com/e-201805.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:5.6',blog:'95390971',post:'0',tz:'-5',srv:'www.mautic.org'} ]);
+	_stq.push([ 'clickTrackerInit', '95390971', '0' ]);
+</script>
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"dff2df6742","applicationID":"76980181","transactionName":"Zl0EZ0FWDRJUURIKC18XJ1BHXgwPGgZWVw==","queueTime":0,"applicationTime":728,"atts":"ShoHEQlMHhw=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>

@@ -10,7 +10,7 @@ $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['mautic_form'] = 'cont
     'tt_content',
     'CType',
     [
-        'LLL:EXT:mautic/Resources/Private/Language/Backend.xlf:content_element.mautic_form',
+        'LLL:EXT:'.$_EXTKEY.'/Resources/Private/Language/Backend.xlf:content_element.mautic_form',
         'mautic_form',
         'content-form',
     ],
@@ -56,7 +56,7 @@ $GLOBALS['TCA']['tt_content']['columns'] = array_replace_recursive(
     $GLOBALS['TCA']['tt_content']['columns'],
     [
         'mautic_form_id' => [
-            'label'  => 'LLL:EXT:mautic/Resources/Private/Language/Backend.xlf:mautic_form.id',
+            'label'  => 'LLL:EXT:'.$_EXTKEY.'/Resources/Private/Language/Backend.xlf:mautic_form.id',
             'config' => [
                 'type'    => 'input',
                 'eval'    => 'required,int',
