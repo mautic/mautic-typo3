@@ -1,3 +1,5 @@
+NOTE: We are currently working on a 2.0 version. With more features and a lot of improvements. The 2.0 version will bring a lot of BC breaks with the 1.x version. Stay tuned for V2.0, expected end of 2018.
+
 EXT:mautic ![Travis](https://travis-ci.org/mautic/mautic-typo3.svg?branch=master "Travis build")
 ===========
 ![Mautic](http://i.imgur.com/g56p37X.jpg "Mautic Open Source Marketing Automation together with the CMS power of TYPO3")
