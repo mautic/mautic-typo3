@@ -42,6 +42,11 @@ class FormRepository implements SingletonInterface
     {
         return $this->formsApi->get($identifier);
     }
+    
+    public function getAllForms(): array
+    {
+        return $this->formsApi->getList('', 0, 999)['forms'] ?? [];
+    }
 
     public function createForm(array $parameters): array
     {
