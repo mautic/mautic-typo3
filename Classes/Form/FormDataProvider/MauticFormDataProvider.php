@@ -2,10 +2,10 @@
 declare(strict_types = 1);
 namespace Bitmotion\Mautic\Form\FormDataProvider;
 
+use Bitmotion\Mautic\Domain\Repository\FormRepository;
 use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Form\Mvc\Persistence\FormPersistenceManagerInterface;
 
 /**
  * @todo
@@ -13,17 +13,17 @@ use TYPO3\CMS\Form\Mvc\Persistence\FormPersistenceManagerInterface;
 class MauticFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var FormPersistenceManagerInterface
+     * @var FormRepository
      */
-    protected $formPersistenceManager;
+    protected $formRepository;
 
-    public function __construct(FormPersistenceManagerInterface $formPersistenceManager = null)
+    public function __construct(FormRepository $formRepository = null)
     {
-        if ($formPersistenceManager === null) {
-            $formPersistenceManager = GeneralUtility::makeInstance(ObjectManager::class)->get(FormPersistenceManagerInterface::class);
+        if ($formRepository === null) {
+            $formRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(FormRepository::class);
         }
 
-        $this->formPersistenceManager = $formPersistenceManager;
+        $this->formRepository = $formRepository;
     }
 
     public function addData(array $result): array
@@ -32,24 +32,14 @@ class MauticFormDataProvider implements FormDataProviderInterface
             return $result;
         }
 
-        foreach ($this->formPersistenceManager->listForms() as $formConfiguration) {
-            $invalidFormDefinition = $formConfiguration['invalid'] ?? false;
-            $hasDeprecatedFileExtension = $formConfiguration['deprecatedFileExtension'] ?? false;
-
-            if ($invalidFormDefinition || $hasDeprecatedFileExtension) {
-                continue;
-            }
-
-            $form = $this->formPersistenceManager->load($formConfiguration['persistenceIdentifier']);
-            if (!empty($form['renderingOptions']['mauticId'])) {
-                $result['processedTca']['columns']['mautic_form_id']['config']['items'][] = [
-                    $formConfiguration['name'] . ' (' . $formConfiguration['persistenceIdentifier'] . ')',
-                    $form['renderingOptions']['mauticId'],
-                    'content-form',
-                ];
-            }
+        foreach ($this->formRepository->getAllForms() as $mauticForm) {
+            $result['processedTca']['columns']['mautic_form_id']['config']['items'][] = [
+                $mauticForm['name'],
+                $mauticForm['id'],
+                'content-form',
+            ];
         }
-
+        
         return $result;
     }
 }
