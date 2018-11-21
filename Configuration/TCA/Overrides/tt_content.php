@@ -54,7 +54,7 @@ $GLOBALS['TCA']['tt_content']['columns'] = array_replace_recursive(
     $GLOBALS['TCA']['tt_content']['columns'],
     [
         'mautic_form_id' => [
-            'label' => 'LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:mautic_form.id',
+            'label' => 'LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:content_element.mautic_form',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
