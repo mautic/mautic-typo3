@@ -1,0 +1,46 @@
+{
+    "name": "mautic/mautic-typo3",
+    "description": "Add-on TYPO3 extension that enhances the \"EXT:marketing_automation\" TYPO3 extension by connecting it to the Mautic Marketing Automation platform: Determine \"Persona\" from Mautic segments. Also provides additional services e.g. language synchronisation between Mautic and TYPO3.",
+    "type": "typo3-cms-extension",
+    "keywords": [
+        "TYPO3 CMS",
+        "Marketing",
+        "Automation",
+        "Mautic"
+    ],
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.bitmotion.de",
+    "support": {
+        "issues": "https://github.com/mautic/mautic-typo3/issues"
+    },
+    "require": {
+        "typo3/cms-core": "^8.7",
+        "bitmotion/marketing-automation": "^1.0.0",
+        "mautic/api-library": "^2.14.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bitmotion\\Mautic\\": "Classes/"
+        }
+    },
+    "replace": {
+        "mautic": "self.version",
+        "typo3-ter/mautic": "self.version"
+    },
+    "suggest": {
+        "sjbr/static-info-tables": "Extended language configuration for preferred locale for Mautic contacts",
+        "ext-intl": "For sorting arrays"
+    },
+    "config": {
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "mautic",
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "app-dir": ".Build",
+            "web-dir": ".Build/public"
+        }
+    }
+}

@@ -1,0 +1,84 @@
+renderingOptions:
+  mauticFormType: mautic_finisher_standalone_prototype
+
+identifier: ext-form-simple-contact-form-example
+label: 'Simple Contact Form'
+type: Form
+prototypeName: mautic
+
+finishers:
+-
+  options:
+    mauticId: ''
+  identifier: MauticFinisher
+
+renderables:
+-
+  identifier: page-1
+  label: 'Contact Form'
+  type: Page
+
+  renderables:
+  -
+    identifier: firstname
+    label: 'First name'
+    type: Text
+    properties:
+      mauticTable: firstname
+      fluidAdditionalAttributes:
+        placeholder: 'Name'
+    defaultValue: ''
+    validators:
+    -
+      identifier: NotEmpty
+  -
+    identifier: lastname
+    label: 'Last Name'
+    type: Text
+    properties:
+      mauticTable: lastname
+      fluidAdditionalAttributes:
+        placeholder: 'Name'
+    defaultValue: ''
+    validators:
+    -
+      identifier: NotEmpty
+  -
+    identifier: email
+    label: 'Email'
+    type: Text
+    properties:
+      mauticTable: email
+      fluidAdditionalAttributes:
+        placeholder: 'Email address'
+    defaultValue: ''
+    validators:
+    - identifier: NotEmpty
+    - identifier: EmailAddress
+  -
+    identifier: subject
+    label: 'Subject'
+    type: Text
+    properties:
+      fluidAdditionalAttributes:
+        placeholder: 'Subject'
+    defaultValue: ''
+    validators:
+    -
+      identifier: NotEmpty
+  -
+    identifier: message
+    label: 'Message'
+    type: Textarea
+    properties:
+      fluidAdditionalAttributes:
+        placeholder: ''
+    defaultValue: ''
+    validators:
+    -
+      identifier: NotEmpty
+
+-
+  identifier: summarypage
+  label: 'Summary page'
+  type: SummaryPage

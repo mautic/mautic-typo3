@@ -1,0 +1,268 @@
+TYPO3:
+  CMS:
+    Form:
+      ########### FORM MANAGER CONFIGURATION ###########
+      formManager:
+        selectablePrototypesConfiguration:
+          1484232130:
+            __inheritances:
+              10: 'TYPO3.CMS.Form.formManager.selectablePrototypesConfiguration.100'
+            identifier: 'mautic'
+            label: 'Mautic Form'
+            newFormTemplates:
+              # Override simple contact form default
+              200:
+                templatePath: 'EXT:mautic/Resources/Private/Backend/Templates/FormEditor/Yaml/NewForms/SimpleContactFormMautic.yaml'
+                label: formManager.selectablePrototypesConfiguration.standard.newFormTemplates.simpleContactForm.label
+
+      prototypes:
+        mautic:
+          ########### FORMEDITOR CONFIGURATION ###########
+          formEditor:
+            dynamicRequireJsModules:
+              additionalViewModelModules:
+              - 'TYPO3/CMS/Mautic/Backend/FormEditor/ViewModel'
+
+            formEditorFluidConfiguration:
+              partialRootPaths:
+                100: 'EXT:mautic/Resources/Private/Backend/Partials/FormEditor/'
+
+            formEditorPartials:
+              Inspector-MauticPropertySelectEditor: 'Inspector/MauticPropertySelectEditor'
+              Inspector-MauticHiddenFieldEditor: 'Inspector/MauticHiddenFieldEditor'
+              FormElement-Email: 'Stage/SimpleTemplate'
+              FormElement-CountryList: 'Stage/SelectTemplate'
+
+            formElementGroups:
+              mautic:
+                label: 'Mautic Elements'
+
+          ########### MAUTIC FORM ELEMENT DEFINITIONS ###########
+          formElementsDefinition:
+            Form:
+              formEditor:
+                predefinedDefaults:
+                  renderingOptions:
+                    mauticFormType: 'mautic_finisher_standalone_prototype'
+
+                editors:
+                  900:
+                    selectOptions:
+                      1539066097:
+                        value: 'MauticContactFinisher'
+                        label: 'Create Mautic Contact'
+                      1539066105:
+                        value: 'MauticFinisher'
+                        label: 'Send to Mautic Form'
+#                      TODO: Support companies
+#                      1539066112:
+#                        value: 'MauticCompanyFinisher'
+#                        label: 'Create Mautic Company'
+#                      TODO: Points should be handled be Mautic
+#                      1539066120:
+#                        value: 'MauticPointsFinisher'
+#                        label: 'Modify Mautic Contact Points'
+                  1534325664:
+                    identifier: 'mauticId'
+                    templateName: 'Inspector-MauticHiddenFieldEditor'
+                    label: 'Mautic Form ID'
+                    propertyPath: 'renderingOptions.mauticId'
+
+                  1534323706:
+                    identifier: 'mauticFormType'
+                    templateName: 'Inspector-SingleSelectEditor'
+                    label: 'Mautic Form Type'
+                    config:
+                      eval: 'required'
+                    propertyPath: 'renderingOptions.mauticFormType'
+                    selectOptions:
+                      10:
+                        value: 'mautic_finisher_standalone_prototype'
+                        label: 'Standalone'
+                      20:
+                        value: 'mautic_finisher_campaign_prototype'
+                        label: 'Campaign'
+
+                propertyCollections:
+                  finishers:
+                    1539066097:
+                      __inheritances:
+                        10: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.ContactFinisherMixin'
+                      identifier: 'MauticContactFinisher'
+                    1539066105:
+                      __inheritances:
+                        10: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.FinisherMixin'
+                      identifier: 'MauticFinisher'
+#                    TODO: Support companies
+#                    1539066112:
+#                      __inheritances:
+#                        10: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.CompanyFinisherMixin'
+#                      identifier: 'MauticCompanyFinisher'
+#                    TODO: Points should be handled be Mautic
+#                    1539066120:
+#                      __inheritances:
+#                        10: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.PointsFinisherMixin'
+#                      identifier: 'MauticPointsFinisher'
+
+            ### FORM ELEMENTS: INPUT ###
+            Text:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.FormElementMixin'
+
+            Password: null
+            AdvancedPassword: null
+
+            Textarea:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.FormElementMixin'
+
+            Hidden:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.FormElementMixin'
+
+            ### FORM ELEMENTS: SELECT ###
+            Checkbox:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.FormElementMixin'
+
+            MultiCheckbox:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.FormElementMixin'
+
+            MultiSelect:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.FormElementMixin'
+
+            RadioButton:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.FormElementMixin'
+
+            SingleSelect:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.FormElementMixin'
+
+            ### FORM ELEMENTS: CUSTOM ###
+            DatePicker: null
+
+            StaticText:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.prototypes.standard.formElementsDefinition.StaticText'
+
+            ContentElement:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.prototypes.standard.formElementsDefinition.ContentElement'
+
+            ### FORM ELEMENTS: UPLOADS ###
+            FileUpload: null
+            ImageUpload: null
+
+            ### FORM ELEMENTS: MAUTIC ###
+            Email:
+              __inheritances:
+                100: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.FormElementMixin'
+              formEditor:
+                label: 'Email'
+                group: mautic
+                groupSorting: 100
+                iconIdentifier: 't3-form-icon-text'
+
+            CountryList:
+              __inheritances:
+                100: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.FormElementMixin'
+              formEditor:
+                label: 'Country List'
+                group: mautic
+                groupSorting: 200
+                iconIdentifier: 'apps-pagetree-page-domain'
+
+
+          ########### FINISHER DEFINITIONS ###########
+          finishersDefinition:
+            MauticContactFinisher:
+              formEditor:
+                iconIdentifier: 't3-form-icon-finisher'
+
+#            TODO: Support companies
+#            MauticCompanyFinisher:
+#              formEditor:
+#                iconIdentifier: 't3-form-icon-finisher'
+
+            MauticFinisher:
+              formEditor:
+                iconIdentifier: 't3-form-icon-finisher'
+                predefinedDefaults:
+                  options:
+                    mauticId: ''
+
+#            TODO: Points should be handled be Mautic
+#            MauticPointsFinisher:
+#              formEditor:
+#                iconIdentifier: 't3-form-icon-finisher'
+#                predefinedDefaults:
+#                  options:
+#                    mauticPointsModifier: 0
+#                    mauticEventName: ''
+
+
+      ########### MIXINS ###########
+      mixins:
+        ########### FORM ELEMENT MIXINS ###########
+        formElementMixins:
+          mautic:
+            FormElementMixin:
+              formEditor:
+                predefinedDefaults:
+                  properties:
+                    mauticTable: ''
+                editors:
+                  1534323014:
+                    identifier: 'mauticTable'
+                    templateName: 'Inspector-MauticPropertySelectEditor'
+                    label: 'Mautic Property Type'
+                    propertyPath: 'properties.mauticTable'
+
+            FinisherMixin:
+              editors:
+                __inheritances:
+                  10: 'TYPO3.CMS.Form.mixins.formElementMixins.BaseCollectionEditorsMixin'
+                100:
+                  label: 'Send to Mautic Form'
+                200:
+                  identifier: 'mauticId'
+                  templateName: 'Inspector-TextEditor'
+                  label: 'Mautic Form ID override'
+                  propertyPath: 'options.mauticId'
+
+            ContactFinisherMixin:
+              editors:
+                __inheritances:
+                  10: 'TYPO3.CMS.Form.mixins.formElementMixins.BaseCollectionEditorsMixin'
+                100:
+                  label: 'Create Mautic Contact'
+
+#            TODO: Support companies
+#            CompanyFinisherMixin:
+#              editors:
+#                __inheritances:
+#                  10: 'TYPO3.CMS.Form.mixins.formElementMixins.BaseCollectionEditorsMixin'
+#                100:
+#                  label: 'Create Mautic Company'
+
+#            TODO: Points should be handled be Mautic
+#            PointsFinisherMixin:
+#              editors:
+#                __inheritances:
+#                  10: 'TYPO3.CMS.Form.mixins.formElementMixins.BaseCollectionEditorsMixin'
+#                100:
+#                  label: 'Modify Mautic Contact Points'
+#                200:
+#                  identifier: 'mauticPointsModifier'
+#                  templateName: 'Inspector-TextEditor'
+#                  label: 'Modify contacts points by'
+#                  propertyPath: 'options.mauticPointsModifier'
+#                300:
+#                  identifier: 'mauticEventName'
+#                  templateName: 'Inspector-TextEditor'
+#                  label: 'Mautic event name'
+#                  propertyPath: 'options.mauticEventName'
+#                  doNotSetIfPropertyValueIsEmpty: true

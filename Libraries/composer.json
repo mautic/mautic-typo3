@@ -1,0 +1,11 @@
+{
+    "config": {
+        "platform": {
+            "php": "7.0.0"
+        },
+        "classmap-authoritative": true
+    },
+    "require": {
+        "mautic/api-library": "^2.14.2"
+    }
+}

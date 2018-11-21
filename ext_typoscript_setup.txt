@@ -1,0 +1,28 @@
+# frontend configuration
+plugin.tx_form.settings.yamlConfigurations {
+    1539066837 = EXT:mautic/Configuration/Yaml/BaseSetup.yml
+    1539066863 = EXT:mautic/Configuration/Yaml/FormEngineSetup.yml
+}
+
+# backend configuration
+module.tx_form.settings.yamlConfigurations {
+    1539066837 = EXT:mautic/Configuration/Yaml/BaseSetup.yml
+    1539066863 = EXT:mautic/Configuration/Yaml/FormEngineSetup.yml
+    1539066879 = EXT:mautic/Configuration/Yaml/FormEditorSetup.yml
+}
+
+lib.contentElement {
+    templateRootPaths {
+        200 = EXT:mautic/Resources/Private/Templates/
+    }
+}
+
+tt_content {
+    mautic_form =< lib.contentElement
+    mautic_form {
+        templateName = Form.html
+        dataProcessing {
+            1 = Bitmotion\Mautic\DataProcessing\MauticFormProcessor
+        }
+    }
+}
