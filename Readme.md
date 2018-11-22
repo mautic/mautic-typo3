@@ -1,6 +1,6 @@
 The Mautic extension for TYPO3
 ===========
-![Mautic](http://i.imgur.com/g56p37X.jpg "Mautic Open Source Marketing Automation together with the CMS power of TYPO3")
+![Mautic](https://i.imgur.com/dfbouP1.png "Mautic Open Source Marketing Automation together with the CMS power of TYPO3")
 
 Welcome to the official TYPO3 extension for Mautic!
 
