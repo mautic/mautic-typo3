@@ -13,8 +13,8 @@ Ever wanted to serve different content to different users based on their Mautic 
 ### Form Synchronization
 With the Mautic extension for TYPO3 you can create your forms in the TYPO3 backend, and have all data collected in Mautic too! You no longer need to maintain two forms, the extension will automatically sync all forms you have marked as 'Mautic forms' with Mautic. You can then easily post form results to Mautic, while your form will always stay up-to-date with your TYPO3 edits.
 
-### Form Contact Creation
-Immediately create contacts through forms by assigning lead fields to form fields directly from the TYPO3 form engine!
+### Mautic Form Actions
+Create contacts or modify the points of a contact straight from a TYPO3 Form.
 
 ### Mautic Form Content Element
 If you wish to use Mautic forms directly, you can now add them with the Mautic Form content element that comes shipped with this extension.
