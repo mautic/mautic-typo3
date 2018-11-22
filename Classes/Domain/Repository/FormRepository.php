@@ -40,9 +40,19 @@ class FormRepository implements SingletonInterface
 
     public function getForm(int $identifier): array
     {
-        return $this->formsApi->get($identifier);
+        $form = $this->formsApi->get($identifier);
+
+        if (isset($form['errors'])) {
+            foreach ($form['errors'] as $error) {
+                $this->logger->error(sprintf('%s: %s', $error['code'], $error['message']));
+            }
+
+            return [];
+        }
+
+        return $form['form'];
     }
-    
+
     public function getAllForms(): array
     {
         return $this->formsApi->getList('', 0, 999)['forms'] ?: [];
