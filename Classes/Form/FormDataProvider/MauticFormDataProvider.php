@@ -7,9 +7,6 @@ use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
-/**
- * @todo
- */
 class MauticFormDataProvider implements FormDataProviderInterface
 {
     /**
@@ -39,7 +36,7 @@ class MauticFormDataProvider implements FormDataProviderInterface
                 'content-form',
             ];
         }
-        
+
         return $result;
     }
 }

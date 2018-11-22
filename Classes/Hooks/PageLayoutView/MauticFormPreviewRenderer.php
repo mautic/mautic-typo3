@@ -5,9 +5,6 @@ namespace Bitmotion\Mautic\Hooks\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
 
-/**
- * @todo
- */
 class MauticFormPreviewRenderer implements PageLayoutViewDrawItemHookInterface
 {
     /**
