@@ -39,15 +39,6 @@ call_user_func(function () {
         'synchronizeSegments'
     );
 
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-    $iconRegistry->registerIcon(
-        'tx_mautic-mautic-icon',
-        \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
-        [
-            'source' => 'EXT:mautic/Resources/Public/Icons/mautic.png',
-        ]
-    );
-
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['configArrayPostProc']['mautic'] =
         \Bitmotion\Mautic\Hooks\MauticTrackingHook::class . '->addTrackingCode';
 
@@ -56,6 +47,41 @@ call_user_func(function () {
         \Bitmotion\Mautic\Hooks\PageLayoutView\MauticFormPreviewRenderer::class;
 
 
+    ###################
+    #      PLUGIN     #
+    ###################
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'Bitmotion.mautic',
+        'Form',
+        ['Frontend' => 'form'],
+        ['Frontend' => 'form'],
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+    );
+
+
+    ###################
+    #      ICONS      #
+    ###################
+    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+    $iconRegistry->registerIcon(
+        'tx_mautic-mautic-icon',
+        \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+        [
+            'source' => 'EXT:mautic/Resources/Public/Icons/mautic.png',
+        ]
+    );
+    $iconRegistry->registerIcon(
+        'tx_mautic-mautic-blue-icon',
+        \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+        [
+            'source' => 'EXT:mautic/Resources/Public/Icons/mautic-with-background.png',
+        ]
+    );
+
+
+    ###################
+    #     EXTCONF     #
+    ###################
     if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic'])) {
         $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic'] = [
             'transformation' => [
@@ -65,11 +91,17 @@ call_user_func(function () {
         ];
     }
 
-    // Register form transformation classes
+
+    #######################
+    # FORM TRANSFORMATION #
+    #######################
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['form']['mautic_finisher_campaign_prototype'] = \Bitmotion\Mautic\Transformation\Form\CampaignFormTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['form']['mautic_finisher_standalone_prototype'] = \Bitmotion\Mautic\Transformation\Form\StandaloneFormTransformation::class;
 
-    // Register field transformation classes
+
+    ########################
+    # FIELD TRANSFORMATION #
+    ########################
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Checkbox'] = \Bitmotion\Mautic\Transformation\FormField\CheckboxTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['ContentElement'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['GridRow'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
@@ -89,6 +121,9 @@ call_user_func(function () {
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['CountryList'] = \Bitmotion\Mautic\Transformation\FormField\CountryListTransformation::class;
 
 
+    ###################
+    #     LOGGING     #
+    ###################
     // Turn logging off by default
     $GLOBALS['TYPO3_CONF_VARS']['LOG']['Bitmotion']['Mautic'] = [
         'writerConfiguration' => [

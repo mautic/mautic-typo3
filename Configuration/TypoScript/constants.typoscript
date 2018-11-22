@@ -1,0 +1,5 @@
+plugin.tx_mautic.settings {
+    form {
+        templatePath = EXT:mautic/Resources/Private/Templates/Form.html
+    }
+}

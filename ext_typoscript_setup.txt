@@ -20,9 +20,13 @@ lib.contentElement {
 tt_content {
     mautic_form =< lib.contentElement
     mautic_form {
-        templateName = Form.html
-        dataProcessing {
-            1 = Bitmotion\Mautic\DataProcessing\MauticFormProcessor
+        20 = USER
+        20 {
+            vendorName = Bitmotion
+            extensionName = Mautic
+            pluginName = Form
+            userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+
         }
     }
 }

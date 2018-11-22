@@ -70,3 +70,11 @@ $GLOBALS['TCA']['tt_content']['columns'] = array_replace_recursive(
         ],
     ]
 );
+
+// Register the plugin
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+    'Bitmotion.mautic',
+    'Form',
+    'LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:content_element.mautic_form',
+    'tx_mautic-mautic-blue-icon'
+);
