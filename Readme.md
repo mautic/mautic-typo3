@@ -2,7 +2,7 @@ The Mautic extension for TYPO3
 ===========
 ![Mautic](https://i.imgur.com/dfbouP1.png "Mautic Open Source Marketing Automation together with the CMS power of TYPO3")
 
-Welcome to the official TYPO3 extension for Mautic!
+Welcome to the official Mautic extension for TYPO3!
 
 ## Features
 The Mautic TYPO3 extension has many features that allow you to integrate your marketing automation workflow in TYPO3.
