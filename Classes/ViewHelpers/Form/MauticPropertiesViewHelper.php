@@ -1,72 +1,63 @@
 <?php
+declare(strict_types = 1);
+namespace Bitmotion\Mautic\ViewHelpers\Form;
 
-declare(strict_types=1);
-
-/*
- * This extension was developed by Beech.it
- *
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 3
- * of the License, or any later version.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
- */
-
-namespace Mautic\Mautic\ViewHelpers\Form;
-
-use Mautic\Mautic\Service\MauticService;
+use Bitmotion\Mautic\Domain\Repository\FieldRepository;
 use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
+use TYPO3\CMS\Lang\LanguageService;
 
-/**
- * Class MauticPropertiesViewHelper.
- */
 class MauticPropertiesViewHelper extends SelectViewHelper
 {
-    private $mauticService;
+    /**
+     * @const Value if no Mautic property has been selected
+     */
+    const NONE = '__NONE__';
 
     /**
-     * MauticPropertiesViewHelper constructor.
+     * @var FieldRepository
      */
-    public function __construct()
+    protected $fieldRepository;
+
+    public function __construct(FieldRepository $fieldRepository)
     {
         parent::__construct();
-        $this->mauticService = new MauticService();
+
+        $this->fieldRepository = $fieldRepository;
     }
 
     /**
-     * @return array
+     * Fills the form engine dropdown with all known Mautic contact and company field types
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         $options = parent::getOptions();
 
-        if (!$this->mauticService->checkConfigPresent()) {
-            $options[''] = 'Extension configuration is incomplete';
+        $contactFields = $this->fieldRepository->getContactFields();
 
-            return $options;
+//        TODO: Support companies
+//        $companyFields = $this->companyRepository->findCompanyFields();
+
+        $languageService = $this->getLanguageService();
+        $contactsLang = $languageService->sL('LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:mautic.contact');
+//        TODO: Support companies
+//        $companiesLang = $languageService->sL('LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:mautic.company');
+
+        foreach ($contactFields as $field) {
+            $options[$field['alias']] = $contactsLang . ': ' . $field['label'];
         }
 
-        $options[''] = 'None';
+        asort($options);
 
-        $api = $this->mauticService->createMauticApi('contactFields');
-
-        $personFields = $api->getList();
-
-        if (!is_array($personFields['fields'])) {
-            $options[''] = 'Extension configuration is incorrect';
-
-            return $options;
-        }
-
-        foreach ($personFields['fields'] as $field) {
-            $options[$field['alias']] = $field['label'];
-        }
+//        TODO: Support companies
+//        foreach ($companyFields as $field) {
+//            $options[$field['alias']] = $companiesLang . ': ' . $field['label'];
+//        }
 
         return $options;
+    }
+
+    protected function getLanguageService(): LanguageService
+    {
+        return $GLOBALS['LANG'];
     }
 }

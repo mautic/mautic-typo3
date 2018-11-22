@@ -1,50 +1,46 @@
 {
     "name": "mautic/mautic-typo3",
+    "description": "Add-on TYPO3 extension that enhances the \"EXT:marketing_automation\" TYPO3 extension by connecting it to the Mautic Marketing Automation platform: Determine \"Persona\" from Mautic segments. Also provides additional services e.g. language synchronisation between Mautic and TYPO3.",
     "type": "typo3-cms-extension",
-    "description": "An extension to sync forms between TYPO3 and Mautic",
-    "homepage": "https://github.com/mautic/mautic-typo3",
-    "license": ["GPL-3.0-or-later"],
-    "authors": [
-      {
-        "name": "Woeler",
-        "email": "woeler@esoleaderboards.com"
-      },
-      {
-        "name": "Team Beech.it",
-        "email": "support@beech.it",
-        "homepage": "https://beech.it"
-      },
-      {
-        "name": "Josua Vogel",
-        "email": "josua.vogel@telekom.de"
-      }
-    ],
     "keywords": [
-      "TYPO3",
-      "CMS",
-      "Mautic"
+        "TYPO3 CMS",
+        "Marketing",
+        "Automation",
+        "Mautic"
     ],
-    "replace": {
-      "mautic": "self.version",
-      "typo3-ter/mautic": "self.version"
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.bitmotion.de",
+    "support": {
+        "issues": "https://github.com/mautic/mautic-typo3/issues"
     },
     "require": {
-        "php": ">=7.0.0",
-        "mautic/api-library": "^2.6",
-        "escopecz/mautic-form-submit": "^1.1"
-    },
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "^1.12"
-    },
-    "config": {
-        "bin-dir": "bin"
+        "typo3/cms-core": "^8.7",
+        "bitmotion/marketing-automation": "^1.0.0",
+        "mautic/api-library": "^2.14.2"
     },
     "autoload": {
         "psr-4": {
-            "Mautic\\Mautic\\": "Classes"
+            "Bitmotion\\Mautic\\": "Classes/"
         }
     },
-    "scripts": {
-        "package": "cd Resources/Private/ && composer install && cd ../../ && zip -9 -r --exclude=*.git* mautic.zip ."
+    "replace": {
+        "mautic": "self.version",
+        "typo3-ter/mautic": "self.version"
+    },
+    "suggest": {
+        "sjbr/static-info-tables": "Extended language configuration for preferred locale for Mautic contacts",
+        "ext-intl": "For sorting arrays"
+    },
+    "config": {
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "mautic",
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "app-dir": ".Build",
+            "web-dir": ".Build/public"
+        }
     }
 }

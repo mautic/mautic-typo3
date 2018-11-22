@@ -131,8 +131,14 @@ define(['jquery',
              * @subscribe view/stage/abstract/render/template/perform
              */
             getPublisherSubscriber().subscribe('view/stage/abstract/render/template/perform', function(topic, args) {
-                if (args[0].get('type') === 'HiddenDate') {
-                    StageComponent.renderSimpleTemplate(args[0], args[1]);
+                switch (args[0].get('type')) {
+                    case  'HiddenDate':
+                        StageComponent.renderSimpleTemplate(args[0], args[1]);
+                        break;
+                    case 'Email':
+                    case 'CountryList':
+                        getFormEditorApp().getViewModel().getStage().renderSimpleTemplateWithValidators(args[0], args[1]);
+                        break;
                 }
             });
         };

@@ -1,77 +1,67 @@
 <?php
+declare(strict_types = 1);
+namespace Bitmotion\Mautic\Domain\Finishers;
 
-/*
- * This extension was developed by Beech.it
- *
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 3
- * of the License, or any later version.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
- */
-
-namespace Mautic\Mautic\Domain\Finishers;
-
-use Mautic\Mautic\Service\MauticService;
+use Bitmotion\Mautic\Domain\Repository\ContactRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
-use TYPO3\CMS\Form\Domain\Model\FormDefinition;
+use TYPO3\CMS\Form\Domain\Model\FormElements\GenericFormElement;
 
 class MauticContactFinisher extends AbstractFinisher
 {
-    protected function executeInternal()
+    /**
+     * @var ContactRepository
+     */
+    protected $contactRepository;
+
+    public function __construct(string $finisherIdentifier = '', ContactRepository $contactRepository = null)
     {
-        $mauticService = GeneralUtility::makeInstance(MauticService::class);
-        if (!$mauticService->checkConfigPresent()) {
-            if (GeneralUtility::getApplicationContext()->isDevelopment()) {
-                throw new \InvalidArgumentException('Mautic Username, url and/or Password not set.', 1499940156);
-            }
+        parent::__construct($finisherIdentifier);
 
-            return;
-        }
-
-        $contactApi = $mauticService->createMauticApi('contacts');
-
-        $formDefinition = $this->finisherContext->getFormRuntime()->getFormDefinition();
-
-        $formValues = $this->finisherContext->getFormValues();
-
-        $mauticArray = [];
-
-        foreach ($formValues as $key => $value) {
-            $mauticType = $this->getMauticType($key, $formDefinition);
-
-            if (!empty($mauticType)) {
-                $mauticArray[$mauticType] = $value;
-            }
-        }
-
-        if (count($mauticArray) > 0) {
-            $mauticArray['ipAddress'] = $_SERVER['REMOTE_ADDR'];
-            $contactApi->create($mauticArray);
-        }
+        $this->contactRepository = $contactRepository ?: GeneralUtility::makeInstance(ContactRepository::class);
     }
 
     /**
-     * @param string         $field
-     * @param FormDefinition $formDefinition
-     *
-     * @return string
+     * Creates a contact in Mautic if enough data is present from the collected form results
      */
-    private function getMauticType(string $field, FormDefinition $formDefinition): string
+    protected function executeInternal()
     {
-        $properties = $formDefinition->getElementByIdentifier($field)->getProperties();
-        if (!empty($properties['mauticTable'])) {
-            $mauticType = $properties['mauticTable'];
-        } else {
-            $mauticType = '';
+        $formDefinition = $this->finisherContext->getFormRuntime()->getFormDefinition();
+
+        $mauticFields = [];
+
+        foreach ($this->finisherContext->getFormValues() as $key => $value) {
+            $formElement = $formDefinition->getElementByIdentifier($key);
+
+            if ($formElement instanceof GenericFormElement) {
+                $properties = $formElement->getProperties();
+                if (!empty($properties['mauticTable'])) {
+                    $mauticFields[$properties['mauticTable']] = $value;
+                }
+            }
         }
 
-        return $mauticType;
+        if (\count($mauticFields) === 0) {
+            return;
+        }
+
+        $contact = [];
+        $mauticFields['ipAddress'] = $_SERVER['REMOTE_ADDR'];
+
+        if (isset($_COOKIE['mtc_id'])) {
+            $contact = $this->contactRepository->getContact((int)$_COOKIE['mtc_id']);
+        }
+
+        if (!empty($contact) && isset($contact['id'])) {
+            $response = $this->contactRepository->editContact($contact['id'], $mauticFields);
+        } else {
+            $response = $this->contactRepository->createContact($mauticFields);
+        }
+
+        if (isset($response['errors'])) {
+            foreach ($response['errors'] as $error) {
+                // TODO: Log this?
+            }
+        }
     }
 }

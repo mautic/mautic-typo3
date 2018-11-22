@@ -1,11 +1,23 @@
-# cat=basic/enable; type=string; label=Mautic installation URL
-mauticUrl =
+# cat=Authorization/enable/10; type=user[Bitmotion\Mautic\UserFunctions\Mautic\Authorize->render]; label=LLL:EXT:mautic/Resources/Private/Language/locallang_em.xlf:authorization.authorize
+authorize = 0
 
-# cat=basic/enable; type=string; label=Mautic username
-mauticUsername =
+# cat=Authorization/enable/20; type=string; label=LLL:EXT:mautic/Resources/Private/Language/locallang_em.xlf:authorization.baseUrl
+baseUrl =
 
-# cat=basic/enable; type=string; label=Mautic password
-mauticPassword =
+# cat=Authorization/enable/30; type=string; label=LLL:EXT:mautic/Resources/Private/Language/locallang_em.xlf:authorization.publicKey
+publicKey =
 
-#cat=basic/enable; type=boolean; label=Enable Mautic tracking
+# cat=Authorization/enable/40; type=string; label=LLL:EXT:mautic/Resources/Private/Language/locallang_em.xlf:authorization.secretKey
+secretKey =
+
+# cat=Authorization/enable/50; type=string; label=LLL:EXT:mautic/Resources/Private/Language/locallang_em.xlf:authorization.accessToken
+accessToken =
+
+# cat=Authorization/enable/60; type=string; label=LLL:EXT:mautic/Resources/Private/Language/locallang_em.xlf:authorization.accessTokenSecret
+accessTokenSecret =
+
+# cat=Tracking/enable/10; type=boolean; label=LLL:EXT:mautic/Resources/Private/Language/locallang_em.xlf:tracking.tracking
 tracking = 0
+
+# cat=Tracking/enable/20; type=string; label=LLL:EXT:mautic/Resources/Private/Language/locallang_em.xlf:tracking.trackingScriptOverride
+trackingScriptOverride =

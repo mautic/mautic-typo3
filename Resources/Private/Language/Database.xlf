@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2016-08-21T20:15:32Z" product-name="mautic">
+        <header/>
+        <body>
+            <trans-unit id="formManager.selectablePrototypesConfiguration.mautic.label" xml:space="preserve">
+                <source>Mautic Form</source>
+            </trans-unit>
+
+            <trans-unit id="formEditor.elements.Form.editor.finishers.MauticContactFinisher.label" xml:space="preserve">
+                <source>Create Mautic Contact</source>
+            </trans-unit>
+            <trans-unit id="formEditor.elements.Form.editor.finishers.MauticFinisher.label" xml:space="preserve">
+                <source>Send to Mautic Form</source>
+            </trans-unit>
+            <trans-unit id="formEditor.elements.Form.editor.finishers.MauticCompanyFinisher.label" xml:space="preserve">
+                <source>Create Mautic Company</source>
+            </trans-unit>
+            <trans-unit id="formEditor.elements.Form.editor.finishers.MauticPointsFinisher.label" xml:space="preserve">
+                <source>Modify Mautic Contact Points</source>
+            </trans-unit>
+
+            <trans-unit id="formEditor.elements.Form.editor.mauticId.label" xml:space="preserve">
+                <source>Mautic Form ID</source>
+            </trans-unit>
+
+            <trans-unit id="formEditor.elements.Form.editor.mauticFormType.label" xml:space="preserve">
+                <source>Mautic Form Type</source>
+            </trans-unit>
+            <trans-unit id="formEditor.elements.Form.editor.mauticFormType.mautic_finisher_standalone_prototype.label" xml:space="preserve">
+                <source>Standalone</source>
+            </trans-unit>
+            <trans-unit id="formEditor.elements.Form.editor.mauticFormType.mautic_finisher_campaign_prototype.label" xml:space="preserve">
+                <source>Campaign</source>
+            </trans-unit>
+
+            <trans-unit id="tt_content.finishersDefinition.MauticFinisher.label" xml:space="preserve">
+                <source>Mautic Finisher</source>
+            </trans-unit>
+            <trans-unit id="tt_content.finishersDefinition.MauticFinisher.mauticId.label" xml:space="preserve">
+                <source>Mautic Form ID Override</source>
+            </trans-unit>
+
+            <trans-unit id="tt_content.finishersDefinition.MauticPointsFinisher.label" xml:space="preserve">
+                <source>Mautic Points Finisher</source>
+            </trans-unit>
+            <trans-unit id="tt_content.finishersDefinition.MauticPointsFinisher.mauticPointsModifier.label" xml:space="preserve">
+                <source>Points Modifier</source>
+            </trans-unit>
+            <trans-unit id="tt_content.finishersDefinition.MauticPointsFinisher.mauticEventName.label" xml:space="preserve">
+                <source>Mautic Event Name</source>
+            </trans-unit>
+
+            <trans-unit id="formEditor.elements.FormElementMixin.editor.mauticTable.label" xml:space="preserve">
+                <source>Mautic Property Type</source>
+            </trans-unit>
+
+            <trans-unit id="formEditor.elements.FinisherMixin.editor.label" xml:space="preserve">
+                <source>Send To Mautic Form</source>
+            </trans-unit>
+            <trans-unit id="formEditor.elements.FinisherMixin.editor.mauticId.label" xml:space="preserve">
+                <source>Mautic Form ID Override</source>
+            </trans-unit>
+
+            <trans-unit id="formEditor.elements.ContactFinisherMixin.editor.label" xml:space="preserve">
+                <source>Create Mautic Contact</source>
+            </trans-unit>
+
+            <trans-unit id="formEditor.elements.CompanyFinisherMixin.editor.label" xml:space="preserve">
+                <source>Create Mautic Company</source>
+            </trans-unit>
+
+            <trans-unit id="formEditor.elements.PointsFinisherMixin.editor.label" xml:space="preserve">
+                <source>Modify Mautic Contact Points</source>
+            </trans-unit>
+            <trans-unit id="formEditor.elements.PointsFinisherMixin.editor.mauticPointsModifier.label" xml:space="preserve">
+                <source>Modify Contacts Points By</source>
+            </trans-unit>
+            <trans-unit id="formEditor.elements.PointsFinisherMixin.editor.mauticEventName.label" xml:space="preserve">
+                <source>Mautic Event Name</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

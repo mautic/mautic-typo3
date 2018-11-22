@@ -1,0 +1,46 @@
+TYPO3:
+  CMS:
+    Form:
+      prototypes:
+        mautic:
+          __inheritances:
+            10: 'TYPO3.CMS.Form.prototypes.standard'
+
+
+          finishersDefinition:
+            MauticContactFinisher:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
+              implementationClassName: 'Bitmotion\Mautic\Domain\Finishers\MauticContactFinisher'
+
+#            TODO: Support companies
+#            MauticCompanyFinisher:
+#              __inheritances:
+#                10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
+#              implementationClassName: 'Bitmotion\Mautic\Domain\Finishers\MauticCompanyFinisher'
+
+            MauticFinisher:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
+              implementationClassName: 'Bitmotion\Mautic\Domain\Finishers\MauticFinisher'
+
+#            TODO: Points should be handled be Mautic
+#            MauticPointsFinisher:
+#              __inheritances:
+#                10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
+#              implementationClassName: 'Bitmotion\Mautic\Domain\Finishers\MauticPointsFinisher'
+
+          formElementsDefinition:
+            Form:
+              renderingOptions:
+                partialRootPaths:
+                  1539075007: 'EXT:mautic/Resources/Private/Partials/'
+
+            Email:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.formElementMixins.TextMixin'
+
+            CountryList:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.formElementMixins.TextMixin'
+              implementationClassName: 'Bitmotion\Mautic\Domain\Model\FormElement\CountryListFormElement'

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2018-06-20T20:25:23Z" product-name="mautic">
+        <header />
+        <body>
+            <trans-unit id="mautic">
+                <source>Mautic</source>
+            </trans-unit>
+            <trans-unit id="tx_marketingautomation_persona.segments">
+                <source>Segments</source>
+            </trans-unit>
+            <trans-unit id="tx_marketingautomation_segment">
+                <source>Segment</source>
+            </trans-unit>
+
+            <trans-unit id="content_element.mautic_form">
+                <source>Mautic Form</source>
+            </trans-unit>
+            <trans-unit id="content_element.mautic_form.description">
+                <source>Insert a Mautic form via JavaScript.</source>
+            </trans-unit>
+            <trans-unit id="mautic_form.id">
+                <source>Mautic Form ID</source>
+            </trans-unit>
+            <trans-unit id="mautic.contact">
+                <source>Contact</source>
+            </trans-unit>
+            <trans-unit id="mautic.company">
+                <source>Company</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

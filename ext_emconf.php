@@ -1,36 +1,36 @@
 <?php
 
-/*
- * This extension was developed by Beech.it
+/***************************************************************
+ * Extension Manager/Repository config file for ext "mautic".
  *
- * This file is part of the TYPO3 CMS project.
+ * Auto generated 20-06-2018 11:55
  *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 3
- * of the License, or any later version.
- *
- * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
- */
+ * Manual updates:
+ * Only the data in the array - everything else is removed by next
+ * writing. "version" and "dependencies" must not be touched!
+ ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = [
-    'title'            => 'Mautic',
-    'description'      => 'An extension to sync forms between TYPO3 and Mautic',
-    'category'         => 'be',
-    'version'          => '1.5.1',
-    'state'            => 'beta',
-    'clearcacheonload' => 0,
-    'author'           => 'Woeler',
-    'author_email'     => 'woeler@esoleaderboards.com',
-    'author_company'   => 'Beech.it',
-    'constraints'      => [
+    'title' => 'Marketing Automation - Mautic Adapter',
+    'description' => 'Add-on TYPO3 extension that enhances the "marketing-automation" TYPO3 extension by connecting it to the Mautic Marketing Automation platform: Determine "Persona" from Mautic segments. Also provides additional services e.g. language synchronisation between Mautic and TYPO3.',
+    'category' => 'fe',
+    'state' => 'stable',
+    'uploadfolder' => 0,
+    'createDirs' => '',
+    'author' => 'Bitmotion GmbH',
+    'author_company' => 'Bitmotion GmbH',
+    'author_email' => 'typo3-ext@bitmotion.de',
+    'clearCacheOnLoad' => 0,
+    'version' => '2.0.0-dev',
+    'constraints' => [
         'depends' => [
             'typo3' => '8.7.0-8.7.99',
+            'marketing_automation' => '',
         ],
         'conflicts' => [],
-        'suggests'  => [],
+        'suggests' => [
+            'static_info_tables' => '6.4.0',
+        ],
     ],
-    'suggests' => [],
 ];
+
