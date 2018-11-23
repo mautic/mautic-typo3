@@ -9,10 +9,19 @@ class FrontendController extends ActionController
 {
     public function formAction()
     {
-        $this->view->setTemplatePathAndFilename($this->settings['form']['templatePath']);
+        $this->view->setTemplatePathAndFilename($this->getTemplatePath());
         $this->view->assignMultiple([
             'mauticBaseUrl' => AuthorizationFactory::createAuthorizationFromExtensionConfiguration()->getBaseUrl(),
             'data' => $this->configurationManager->getContentObject()->data,
         ]);
+    }
+
+    protected function getTemplatePath(): string
+    {
+        if (!empty($this->settings['form']['templatePath'])) {
+            return $this->settings['form']['templatePath'];
+        }
+
+        return 'EXT:mautic/Resources/Private/Templates/Form.html';
     }
 }
