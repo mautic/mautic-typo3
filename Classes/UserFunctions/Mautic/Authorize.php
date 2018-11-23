@@ -221,8 +221,8 @@ class Authorize
     protected function showUnsecureConnectionInformation(): string
     {
         $languageService = $this->getLanguageService();
-        $title = $languageService->sL('LLL:EXT:mautic/Resources/Private/Language/locallang_em.xlf:authorization.unsecureConnection.title');
-        $message = $languageService->sL('LLL:EXT:mautic/Resources/Private/Language/locallang_em.xlf:authorization.unsecureConnection.message');
+        $title = $languageService->sL('LLL:EXT:mautic/Resources/Private/Language/locallang_em.xlf:authorization.insecureConnection.title');
+        $message = $languageService->sL('LLL:EXT:mautic/Resources/Private/Language/locallang_em.xlf:authorization.insecureConnection.message');
 
         return $this->showWarningMessage($title, $message);
     }
