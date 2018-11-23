@@ -16,6 +16,17 @@ call_user_func(function () {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['settingLanguage_postProcess']['mautic'] =
         \Bitmotion\Mautic\Slot\MauticSubscriber::class . '->setPreferredLocale';
 
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['configArrayPostProc']['mautic'] =
+        \Bitmotion\Mautic\Hooks\MauticTrackingHook::class . '->addTrackingCode';
+
+    // Register for hook to show preview of tt_content element of CType="mautic_form" in page module
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem']['mautic_form'] =
+        \Bitmotion\Mautic\Hooks\PageLayoutView\MauticFormPreviewRenderer::class;
+
+
+    ###################
+    #       FORM      #
+    ###################
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'][\Bitmotion\Mautic\Form\FormDataProvider\MauticFormDataProvider::class] = [
         'depends' => [
             \TYPO3\CMS\Backend\Form\FormDataProvider\DatabaseRowDefaultValues::class,
@@ -31,6 +42,10 @@ call_user_func(function () {
         'class' => \Bitmotion\Mautic\FormEngine\FieldControl\UpdateSegmentsControl::class,
     ];
 
+
+    ###################
+    #   SIGNALSLOTS   #
+    ###################
     $slotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
     $slotDispatcher->connect(
         \TYPO3\CMS\Backend\Controller\EditDocumentController::class,
@@ -38,13 +53,6 @@ call_user_func(function () {
         \Bitmotion\Mautic\Slot\EditDocumentControllerSlot::class,
         'synchronizeSegments'
     );
-
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['configArrayPostProc']['mautic'] =
-        \Bitmotion\Mautic\Hooks\MauticTrackingHook::class . '->addTrackingCode';
-
-    // Register for hook to show preview of tt_content element of CType="mautic_form" in page module
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem']['mautic_form'] =
-        \Bitmotion\Mautic\Hooks\PageLayoutView\MauticFormPreviewRenderer::class;
 
 
     ###################
@@ -63,20 +71,18 @@ call_user_func(function () {
     #      ICONS      #
     ###################
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-    $iconRegistry->registerIcon(
-        'tx_mautic-mautic-icon',
-        \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
-        [
-            'source' => 'EXT:mautic/Resources/Public/Icons/mautic.png',
-        ]
-    );
-    $iconRegistry->registerIcon(
-        'tx_mautic-mautic-blue-icon',
-        \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
-        [
-            'source' => 'EXT:mautic/Resources/Public/Icons/mautic-with-background.png',
-        ]
-    );
+    $icons = [
+        'tx_mautic-mautic-icon' => 'EXT:mautic/Resources/Public/Icons/mautic.png',
+        'tx_mautic-mautic-blue-icon' => 'EXT:mautic/Resources/Public/Icons/mautic-with-background.png',
+    ];
+
+    foreach ($icons as $identifier => $source) {
+        $iconRegistry->registerIcon(
+            $identifier,
+            \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+            ['source' => $source]
+        );
+    }
 
 
     ###################
@@ -132,4 +138,17 @@ call_user_func(function () {
             ],
         ],
     ];
+
+    if (\TYPO3\CMS\Core\Utility\GeneralUtility::getApplicationContext()->isDevelopment()) {
+        $GLOBALS['TYPO3_CONF_VARS']['LOG']['Bitmotion']['Mautic'] = [
+            'writerConfiguration' => [
+                \TYPO3\CMS\Core\Log\LogLevel::DEBUG => [
+                    \TYPO3\CMS\Core\Log\Writer\FileWriter::class => [
+                        'logFile' => 'typo3temp/logs/ext_mautic.log'
+                    ],
+                ],
+            ],
+        ];
+    }
+
 });
