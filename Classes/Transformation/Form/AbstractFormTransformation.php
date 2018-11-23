@@ -45,11 +45,9 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
      */
     protected $customFieldValues = [];
 
-    public function __construct(array $formDefinition = [], LoggerInterface $logger = null)
+    public function __construct(array $formDefinition = [])
     {
         $this->formDefinition = $formDefinition;
-
-        parent::__construct($logger);
     }
 
     public function transform()
