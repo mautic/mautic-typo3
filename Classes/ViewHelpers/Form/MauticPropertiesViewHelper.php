@@ -9,11 +9,6 @@ use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
 class MauticPropertiesViewHelper extends SelectViewHelper
 {
     /**
-     * @const Value if no Mautic property has been selected
-     */
-    const NONE = '__NONE__';
-
-    /**
      * @var FieldRepository
      */
     protected $fieldRepository;
