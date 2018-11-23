@@ -7,6 +7,7 @@ use Bitmotion\Mautic\Service\MauticSendFormService;
 use Mautic\Api\Forms;
 use Mautic\Auth\AuthInterface;
 use Mautic\MauticApi;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -15,6 +16,8 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class FormRepository implements SingletonInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var AuthInterface
      */
@@ -25,17 +28,11 @@ class FormRepository implements SingletonInterface
      */
     protected $formsApi;
 
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
-
-    public function __construct(AuthInterface $authorization = null, LoggerInterface $logger = null)
+    public function __construct(AuthInterface $authorization = null)
     {
         $this->authorization = $authorization ?: AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
         $api = new MauticApi();
         $this->formsApi = $api->newApi('forms', $this->authorization, $this->authorization->getBaseUrl());
-        $this->logger = $logger ?: GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
     }
 
     public function getForm(int $identifier): array

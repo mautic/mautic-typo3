@@ -4,6 +4,7 @@ namespace Bitmotion\Mautic\Domain\Model\FormElement;
 
 use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Doctrine\DBAL\Connection;
+use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
@@ -13,6 +14,8 @@ use TYPO3\CMS\Form\Domain\Model\FormElements\GenericFormElement;
 
 class CountryListFormElement extends GenericFormElement
 {
+    use LoggerAwareTrait;
+
     /**
      * @var string
      */
@@ -28,11 +31,6 @@ class CountryListFormElement extends GenericFormElement
      */
     protected $locale;
 
-    /**
-     * @var Logger
-     */
-    protected $logger;
-
     public function __construct(
         string $identifier,
         string $type,
@@ -44,10 +42,9 @@ class CountryListFormElement extends GenericFormElement
         $authorization = AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
         $this->baseUrl = $authorization->getBaseUrl();
         $this->locale = $locale ?: $GLOBALS['TSFE']->lang;
-        $this->logger = $logger ?: GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
     }
 
-    public function setOptions(array $options)
+    public function setOptions(array $options, bool $reset = false)
     {
         parent::setOptions($options);
 

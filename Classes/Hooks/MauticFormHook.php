@@ -10,6 +10,7 @@ use Bitmotion\Mautic\Exception\UnknownTransformationClassException;
 use Bitmotion\Mautic\Transformation\Form\AbstractFormTransformation;
 use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationPrototype;
 use Bitmotion\Mautic\Transformation\TransformationInterface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -19,6 +20,8 @@ use TYPO3\CMS\Form\Mvc\Persistence\FormPersistenceManagerInterface;
 
 class MauticFormHook
 {
+    use LoggerAwareTrait;
+
     /**
      * @var FormPersistenceManagerInterface
      */
@@ -28,11 +31,6 @@ class MauticFormHook
      * @var FormRepository
      */
     protected $formRepository;
-
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
 
     /**
      * @var array
@@ -60,7 +58,6 @@ class MauticFormHook
 
         $this->formPersistenceManager = $formPersistenceManager;
         $this->formRepository = $formRepository ?: GeneralUtility::makeInstance(FormRepository::class);
-        $this->logger = $logger ?: GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
         $this->extConf = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic'];
     }
 

@@ -3,12 +3,15 @@ declare(strict_types = 1);
 namespace Bitmotion\Mautic\Domain\Finishers;
 
 use Bitmotion\Mautic\Domain\Repository\ContactRepository;
+use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 use TYPO3\CMS\Form\Domain\Model\FormElements\GenericFormElement;
 
 class MauticContactFinisher extends AbstractFinisher
 {
+    use LoggerAwareTrait;
+
     /**
      * @var ContactRepository
      */
@@ -60,7 +63,7 @@ class MauticContactFinisher extends AbstractFinisher
 
         if (isset($response['errors'])) {
             foreach ($response['errors'] as $error) {
-                // TODO: Log this?
+                $this->logger->critical(sprintf('%s: %s', (string)$error['code'], $error['message']));
             }
         }
     }
