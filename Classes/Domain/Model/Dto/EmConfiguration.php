@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 namespace Bitmotion\Mautic\Domain\Model\Dto;
 
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -61,14 +62,10 @@ class EmConfiguration implements SingletonInterface
 
     protected function getRawEmConfig(): array
     {
-        if (class_exists('\TYPO3\CMS\Core\Configuration\ExtensionConfiguration')) {
-            try {
-                return GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('mautic');
-            } catch (\Exception $e) {
-                return [];
-            }
-        } else {
-            return unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mautic'], ['allowed_classes' => false]);
+        try {
+            return GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('mautic');
+        } catch (\Exception $e) {
+            return [];
         }
     }
 
