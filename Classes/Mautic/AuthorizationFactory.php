@@ -20,7 +20,7 @@ class AuthorizationFactory
             'callback' => GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
         ];
 
-        if (!empty($extensionConfiguration['accessToken'])) {
+        if ($extensionConfiguration->getAccessToken() !== '') {
             $settings['accessToken'] = $extensionConfiguration->getAccessToken();
             $settings['accessTokenSecret'] = $extensionConfiguration->getAccessTokenSecret();
         }
