@@ -16,8 +16,8 @@
     "require": {
         "php": ">=7.0.0",
         "ext-json": "*",
-        "typo3/cms-core": "^8.7 || ^9.5",
-        "typo3/cms-extbase": "^8.7 || ^9.5",
+        "typo3/cms-core": "^9.5",
+        "typo3/cms-extbase": "^9.5",
         "bitmotion/marketing-automation": "@dev",
         "mautic/api-library": "^2.14.2"
     },
