@@ -32,6 +32,7 @@
     },
     "suggest": {
         "sjbr/static-info-tables": "Extended language configuration for preferred locale for Mautic contacts",
+        "typo3/cms-form": "TYPO3 form framework for building Mautic forms in TYPO3",
         "ext-intl": "For sorting arrays"
     },
     "config": {
