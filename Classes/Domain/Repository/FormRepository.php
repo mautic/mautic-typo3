@@ -7,12 +7,13 @@ use Bitmotion\Mautic\Service\MauticSendFormService;
 use Mautic\Api\Forms;
 use Mautic\Auth\AuthInterface;
 use Mautic\MauticApi;
+use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
-class FormRepository implements SingletonInterface
+class FormRepository implements SingletonInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 

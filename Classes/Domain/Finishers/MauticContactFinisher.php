@@ -3,12 +3,13 @@ declare(strict_types = 1);
 namespace Bitmotion\Mautic\Domain\Finishers;
 
 use Bitmotion\Mautic\Domain\Repository\ContactRepository;
+use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 use TYPO3\CMS\Form\Domain\Model\FormElements\GenericFormElement;
 
-class MauticContactFinisher extends AbstractFinisher
+class MauticContactFinisher extends AbstractFinisher implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 

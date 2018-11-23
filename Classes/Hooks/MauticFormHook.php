@@ -10,6 +10,7 @@ use Bitmotion\Mautic\Exception\UnknownTransformationClassException;
 use Bitmotion\Mautic\Transformation\Form\AbstractFormTransformation;
 use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationPrototype;
 use Bitmotion\Mautic\Transformation\TransformationInterface;
+use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -17,7 +18,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Form\Mvc\Configuration\Exception\ParseErrorException;
 use TYPO3\CMS\Form\Mvc\Persistence\FormPersistenceManagerInterface;
 
-class MauticFormHook
+class MauticFormHook implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
