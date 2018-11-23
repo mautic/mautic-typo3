@@ -2,26 +2,27 @@
 declare(strict_types = 1);
 namespace Bitmotion\Mautic\Mautic;
 
+use Bitmotion\Mautic\Domain\Model\Dto\EmConfiguration;
 use Mautic\Auth\ApiAuth;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AuthorizationFactory
 {
-    public static function createAuthorizationFromExtensionConfiguration(array $extensionConfiguration = null): OAuth
+    public static function createAuthorizationFromExtensionConfiguration(): OAuth
     {
-        $extensionConfiguration = $extensionConfiguration ?: unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mautic'], ['allowed_classes' => false]);
+        $extensionConfiguration = GeneralUtility::makeInstance(EmConfiguration::class);
 
         $settings = [
-            'baseUrl' => $extensionConfiguration['baseUrl'],
+            'baseUrl' => $extensionConfiguration->getBaseUrl(),
             'version' => 'OAuth1a',
-            'clientKey' => $extensionConfiguration['publicKey'],
-            'clientSecret' => $extensionConfiguration['secretKey'],
-            'callback' => $extensionConfiguration['callback'] ?? GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
+            'clientKey' => $extensionConfiguration->getPublicKey(),
+            'clientSecret' => $extensionConfiguration->getSecretKey(),
+            'callback' => GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
         ];
 
         if (!empty($extensionConfiguration['accessToken'])) {
-            $settings['accessToken'] = $extensionConfiguration['accessToken'];
-            $settings['accessTokenSecret'] = $extensionConfiguration['accessTokenSecret'];
+            $settings['accessToken'] = $extensionConfiguration->getAccessToken();
+            $settings['accessTokenSecret'] = $extensionConfiguration->getAccessTokenSecret();
         }
 
         $initAuth = new ApiAuth();

@@ -2,24 +2,25 @@
 declare(strict_types=1);
 namespace Bitmotion\Mautic\Service;
 
+use Bitmotion\Mautic\Domain\Model\Dto\EmConfiguration;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class MauticTrackingService implements SingletonInterface
 {
     /**
-     * @var array
+     * @var EmConfiguration
      */
     protected $extensionConfiguration;
 
-    public function __construct(array $extensionConfiguration = null)
+    public function __construct()
     {
-        $this->extensionConfiguration = $extensionConfiguration ?: unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mautic'], ['allowed_classes' => false]);
+        $this->extensionConfiguration = GeneralUtility::makeInstance(EmConfiguration::class);
     }
 
     public function isTrackingEnabled(): bool
     {
-        return !empty($this->extensionConfiguration['tracking']) && !empty($this->extensionConfiguration['baseUrl']);
+        return ($this->extensionConfiguration->isTracking() && $this->extensionConfiguration->getBaseUrl() !== '');
     }
 
     public function getTrackingCode(): string
@@ -28,14 +29,14 @@ class MauticTrackingService implements SingletonInterface
             return '';
         }
 
-        if (!empty($this->extensionConfiguration['trackingScriptOverride'])) {
-            return $this->extensionConfiguration['trackingScriptOverride'];
+        if (!empty($this->extensionConfiguration->getTrackingScriptOverride())) {
+            return $this->extensionConfiguration->getTrackingScriptOverride();
         }
 
         return '(function(w,d,t,u,n,a,m){w[\'MauticTrackingObject\']=n;'
             . 'w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments)},a=d.createElement(t),m=d.getElementsByTagName(t)[0];'
             . 'a.async=1;a.src=u;m.parentNode.insertBefore(a,m)})(window,document,\'script\','
-            . GeneralUtility::quoteJSvalue($this->extensionConfiguration['baseUrl'] . '/mtc.js')
+            . GeneralUtility::quoteJSvalue($this->extensionConfiguration->getBaseUrl() . '/mtc.js')
             . ',\'mt\');mt(\'send\', \'pageview\');';
     }
 }
