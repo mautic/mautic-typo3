@@ -23,7 +23,7 @@ abstract class LoggerInterfaceTest extends \PHPUnit_Framework_TestCase
      *
      * The simple formatting of the messages is: "<LOG LEVEL> <MESSAGE>".
      *
-     * Example ->error('Foo') would yield "error Foo".
+     * Example ->critical('Foo') would yield "error Foo".
      *
      * @return string[]
      */

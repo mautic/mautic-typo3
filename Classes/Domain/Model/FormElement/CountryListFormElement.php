@@ -71,7 +71,7 @@ class CountryListFormElement extends GenericFormElement
         // TODO: Datei lokal laden
         // TODO: Core "Bug?" - Nein
         if ($report['message'] !== '') {
-            $this->logger->error($report['message']);
+            $this->logger->critical($report['message']);
 
             return [];
         }

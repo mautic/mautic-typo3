@@ -284,7 +284,7 @@ class Api implements LoggerAwareInterface
                         );
                     }
                 } catch (\Exception $e) {
-                    $this->getLogger()->error('Failed connecting to Mautic API: '.$e->getMessage(), array('trace' => $e->getTraceAsString()));
+                    $this->getLogger()->critical('Failed connecting to Mautic API: '.$e->getMessage(), array('trace' => $e->getTraceAsString()));
 
                     $error = array(
                         'code'    => $e->getCode(),
@@ -300,7 +300,7 @@ class Api implements LoggerAwareInterface
                     'error'  => $error
                 );
             } elseif (!empty($response['errors'])) {
-                $this->getLogger()->error('Mautic API returned errors: '.var_export($response['errors'], true));
+                $this->getLogger()->critical('Mautic API returned errors: '.var_export($response['errors'], true));
             }
 
             // @deprecated 2.6.0 BC error handling

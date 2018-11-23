@@ -44,7 +44,7 @@ class FormRepository implements SingletonInterface
 
         if (isset($form['errors'])) {
             foreach ($form['errors'] as $error) {
-                $this->logger->error(sprintf('%s: %s', $error['code'], $error['message']));
+                $this->logger->critical(sprintf('%s: %s', $error['code'], $error['message']));
             }
 
             return [];

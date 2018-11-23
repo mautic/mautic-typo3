@@ -94,7 +94,7 @@ class MauticFormHook
                 return $this->formTransformation->getUpdatedFormDefinition($response);
             }
         } catch (\Exception $exception) {
-            $this->logger->error($exception->getCode() . ': ' . $exception->getMessage());
+            $this->logger->critical($exception->getCode() . ': ' . $exception->getMessage());
         }
 
         return $formDefinition;
@@ -125,7 +125,7 @@ class MauticFormHook
                 return $this->formTransformation->getUpdatedFormDefinition($response);
             }
         } catch (\Exception $exception) {
-            $this->logger->error($exception->getCode() . ': ' . $exception->getMessage());
+            $this->logger->critical($exception->getCode() . ': ' . $exception->getMessage());
         }
 
         return $formDefinition;
@@ -276,7 +276,7 @@ class MauticFormHook
     {
         if (isset($response['errors']) && is_array($response['errors'])) {
             foreach ($response['errors'] as $error) {
-                $this->logger->error($error['code'] . ':' . $error['message']);
+                $this->logger->critical($error['code'] . ':' . $error['message']);
             }
 
             return true;

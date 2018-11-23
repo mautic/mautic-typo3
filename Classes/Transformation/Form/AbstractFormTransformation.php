@@ -220,7 +220,7 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
 
                             if (isset($response['errors']) && is_array($response['errors'])) {
                                 foreach ($response['errors'] as $error) {
-                                    $this->logger->error($error['code'] . ':' . $error['message']);
+                                    $this->logger->critical($error['code'] . ':' . $error['message']);
                                 }
                             }
                         }
