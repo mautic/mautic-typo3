@@ -3,8 +3,8 @@ declare(strict_types = 1);
 namespace Bitmotion\Mautic\ViewHelpers\Form;
 
 use Bitmotion\Mautic\Domain\Repository\FieldRepository;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
-use TYPO3\CMS\Lang\LanguageService;
 
 class MauticPropertiesViewHelper extends SelectViewHelper
 {
