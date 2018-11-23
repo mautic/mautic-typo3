@@ -21,10 +21,10 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'Bitmotion GmbH',
     'author_email' => 'typo3-ext@bitmotion.de',
     'clearCacheOnLoad' => 0,
-    'version' => '2.0.0',
+    'version' => '2.1.0-dev',
     'constraints' => [
         'depends' => [
-            'typo3' => '8.7.0-8.7.99',
+            'typo3' => '8.7.0-9.5.99',
             'marketing_automation' => '',
         ],
         'conflicts' => [],
