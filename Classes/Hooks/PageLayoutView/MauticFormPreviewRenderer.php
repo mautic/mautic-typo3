@@ -18,15 +18,15 @@ class MauticFormPreviewRenderer implements PageLayoutViewDrawItemHookInterface
      * @param string $itemContent Item content
      * @param array $row Record row of tt_content
      */
-    public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row) {
+    public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row)
+    {
         if ($row['CType'] === 'mautic_form') {
-
             $mauticForm = GeneralUtility::makeInstance(FormRepository::class)->getForm((int)$row['mautic_form_id']);
 
             if (empty($mauticForm)) {
                 $this->getFormNotFoundContent((int)$row['mautic_form_id'], $itemContent);
             } else {
-                if($mauticForm['isPublished'] === false) {
+                if ($mauticForm['isPublished'] === false) {
                     $this->getFormNotPublishedContent((int)$mauticForm['id'], $mauticForm['name'], $itemContent);
                 }
 
@@ -49,7 +49,6 @@ class MauticFormPreviewRenderer implements PageLayoutViewDrawItemHookInterface
                 $itemContent .= sprintf('<tr><td>Field Count</td><td>%s</td></tr>', count($mauticForm['fields']));
                 $itemContent .= sprintf('<tr><td>Kiosk Mode</td><td>%s</td></tr>', $mauticForm['inKioskMode'] ? 'yes' : 'no');
                 $itemContent .= '</tbody>';
-
 
                 $itemContent .= '</table>';
                 $itemContent .= '</div>';

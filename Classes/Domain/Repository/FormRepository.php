@@ -8,8 +8,6 @@ use Mautic\Api\Forms;
 use Mautic\Auth\AuthInterface;
 use Mautic\MauticApi;
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\LoggerInterface;
-use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;

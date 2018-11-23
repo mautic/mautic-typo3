@@ -8,7 +8,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class EmConfiguration implements SingletonInterface
 {
-
     /**
      * @var int
      */

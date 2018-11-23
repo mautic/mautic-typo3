@@ -12,7 +12,6 @@ use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationProtot
 use Bitmotion\Mautic\Transformation\TransformationInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
-use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Form\Mvc\Configuration\Exception\ParseErrorException;

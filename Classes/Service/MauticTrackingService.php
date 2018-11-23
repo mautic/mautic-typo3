@@ -20,7 +20,7 @@ class MauticTrackingService implements SingletonInterface
 
     public function isTrackingEnabled(): bool
     {
-        return ($this->extensionConfiguration->isTracking() && $this->extensionConfiguration->getBaseUrl() !== '');
+        return $this->extensionConfiguration->isTracking() && $this->extensionConfiguration->getBaseUrl() !== '';
     }
 
     public function getTrackingCode(): string
