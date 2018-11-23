@@ -5,7 +5,6 @@ namespace Bitmotion\Mautic\UserFunctions\Mautic;
 use Bitmotion\Mautic\Domain\Repository\SegmentRepository;
 use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Mautic\Auth\AuthInterface;
-use Mautic\Exception\AbstractApiException;
 use Mautic\MauticApi;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
@@ -157,7 +156,8 @@ class Authorize
                 $this->segmentRepository->initializeSegments();
                 $this->saveConfiguration();
             }
-        } catch (AbstractApiException $e) {
+        } catch (\Exception $e) {
+            // TODO: Log this?
         }
 
         return $this->showErrorMessage();

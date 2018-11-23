@@ -4,7 +4,6 @@ namespace Bitmotion\Mautic\Transformation\FormField;
 
 use Bitmotion\Mautic\Exception\TransformationException;
 use Bitmotion\Mautic\Transformation\AbstractTransformation;
-use Psr\Log\LoggerInterface;
 
 abstract class AbstractFormFieldTransformation extends AbstractTransformation
 {

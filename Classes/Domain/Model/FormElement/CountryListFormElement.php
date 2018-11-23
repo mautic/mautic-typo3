@@ -7,7 +7,6 @@ use Doctrine\DBAL\Connection;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Form\Domain\Model\FormElements\GenericFormElement;
@@ -34,8 +33,7 @@ class CountryListFormElement extends GenericFormElement implements LoggerAwareIn
     public function __construct(
         string $identifier,
         string $type,
-        string $locale = '',
-        Logger $logger = null
+        string $locale = ''
     ) {
         parent::__construct($identifier, $type);
 

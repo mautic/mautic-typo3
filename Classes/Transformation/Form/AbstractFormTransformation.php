@@ -4,7 +4,6 @@ namespace Bitmotion\Mautic\Transformation\Form;
 
 use Bitmotion\Mautic\Domain\Repository\FieldRepository;
 use Bitmotion\Mautic\Transformation\AbstractTransformation;
-use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
