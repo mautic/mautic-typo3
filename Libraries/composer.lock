@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94d70627cfdaecf29aa6c4f630d2e12e",
+    "content-hash": "5d6a8f593fad07b4f188f23ea2cf69ba",
     "packages": [
         {
             "name": "mautic/api-library",
-            "version": "2.14.2",
+            "version": "2.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mautic/api-library.git",
-                "reference": "71ca3d23f0ea21e0911dcfbfd1b572ec65a1a1ad"
+                "reference": "6ff1dfa1da912ca1fc78cbcab3a8c395a22d5e14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mautic/api-library/zipball/71ca3d23f0ea21e0911dcfbfd1b572ec65a1a1ad",
-                "reference": "71ca3d23f0ea21e0911dcfbfd1b572ec65a1a1ad",
+                "url": "https://api.github.com/repos/mautic/api-library/zipball/6ff1dfa1da912ca1fc78cbcab3a8c395a22d5e14",
+                "reference": "6ff1dfa1da912ca1fc78cbcab3a8c395a22d5e14",
                 "shasum": ""
             },
             "require": {
@@ -40,20 +40,20 @@
                 "MIT"
             ],
             "description": "Mautic API Connector Library",
-            "time": "2018-10-24T07:37:40+00:00"
+            "time": "2018-12-19T14:55:48+00:00"
         },
         {
             "name": "psr/log",
-            "version": "1.0.2",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
+                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
-                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
+                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10T12:19:37+00:00"
+            "time": "2018-11-20T15:27:04+00:00"
         }
     ],
     "packages-dev": [],
@@ -99,6 +99,6 @@
     "platform": [],
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.0.0"
+        "php": "7.2.0"
     }
 }

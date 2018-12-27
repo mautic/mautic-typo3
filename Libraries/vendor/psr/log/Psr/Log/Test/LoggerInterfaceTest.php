@@ -23,7 +23,7 @@ abstract class LoggerInterfaceTest extends \PHPUnit_Framework_TestCase
      *
      * The simple formatting of the messages is: "<LOG LEVEL> <MESSAGE>".
      *
-     * Example ->critical('Foo') would yield "error Foo".
+     * Example ->error('Foo') would yield "error Foo".
      *
      * @return string[]
      */
@@ -101,6 +101,9 @@ abstract class LoggerInterfaceTest extends \PHPUnit_Framework_TestCase
 
     public function testContextCanContainAnything()
     {
+        $closed = fopen('php://memory', 'r');
+        fclose($closed);
+
         $context = array(
             'bool' => true,
             'null' => null,
@@ -110,6 +113,7 @@ abstract class LoggerInterfaceTest extends \PHPUnit_Framework_TestCase
             'nested' => array('with object' => new DummyTest),
             'object' => new \DateTime,
             'resource' => fopen('php://memory', 'r'),
+            'closed' => $closed,
         );
 
         $this->getLogger()->warning('Crazy context data', $context);
