@@ -1,1 +1,97 @@
-Content goes here...
+<h1>Configure Extension mautic</h1>
+<div role="tabpanel">
+	<ul class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active">
+			<a class="text-capitalize" href="#category-mautic-authorization" aria-controls="category-mautic-authorization" role="tab" data-toggle="tab" aria-expanded="true">
+				authorization
+			</a>
+		</li>
+		<li role="presentation">
+			<a class="text-capitalize" href="#category-mautic-tracking" aria-controls="category-mautic-tracking" role="tab" data-toggle="tab" aria-expanded="false">
+				tracking
+			</a>
+		</li>
+	</ul>
+	<f:form action="save" name="configurationform" object="{configuration}" objectName="configuration" class="t3js-extensionConfiguration-form extensionConfiguration-form">
+		<div class="tab-content">
+			<f:render section="tabpanel-authorization" />
+			<f:render section="tabpanel-tracking" />
+		</div>
+		<f:form.button type="submit" class="btn btn-default" name="save">Save "mautic" configuration</f:form.button>
+	</f:form>
+</div>
+
+<f:section name="tabpanel-authorization">
+	<div role="tabpanel" class="tab-pane active" id="category-mautic-authorization">
+		<div class="form-section">
+			<h2 class="h4 form-section-headline">Enable features</h2>
+			<div class="form-group form-group-dashed">
+				<label for="em-authorize"><f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:authorization.authorize"/></label>
+				<p>authorization.authorize</p>
+				<div class="form-control-wrap">[SUCCESS]</div>
+			</div>
+
+			<f:render section="form-element-text" arguments="{key: 'baseUrl', type: 'authorization'}" />
+			<f:render section="form-element-text" arguments="{key: 'publicKey', type: 'authorization'}" />
+			<f:render section="form-element-text" arguments="{key: 'secretKey', type: 'authorization'}" />
+			<f:render section="form-element-text" arguments="{key: 'accessToken', type: 'authorization'}" />
+			<f:render section="form-element-text" arguments="{key: 'accessTokenSecret', type: 'authorization'}" />
+
+
+		</div>
+	</div>
+</f:section>
+
+<f:section name="tabpanel-tracking">
+	<div role="tabpanel" class="tab-pane" id="category-mautic-tracking">
+		<div class="form-section">
+			<h2 class="h4 form-section-headline">Enable features</h2>
+
+			<f:render section="form-element-bool" arguments="{key: 'tracking', type: 'tracking'}" />
+			<f:render section="form-element-textarea" arguments="{key: 'trackingScriptOverride', type: 'tracking'}" />
+		</div>
+	</div>
+</f:section>
+
+<f:section name="form-element-text">
+	<div class="form-group form-group-dashed">
+		<label for="{type}-{key}">
+			<f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:{type}.{key}" />
+		</label>
+		<p>{type}.{key} (string)</p>
+		<div class="form-control-wrap">
+			<f:form.textfield id="{type}-{key}" property="{key}" class="form-control" />
+		</div>
+		<div class="help-block"></div>
+	</div>
+</f:section>
+
+<f:section name="form-element-textarea">
+	<div class="form-group form-group-dashed">
+		<label for="{type}-{key}">
+			<f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:{type}.{key}" />
+		</label>
+		<p>{type}.{key} (string)</p>
+		<div class="form-control-wrap">
+			<f:form.textarea id="{type}-{key}" property="{key}" class="form-control" />
+		</div>
+		<div class="help-block"></div>
+	</div>
+</f:section>
+
+<f:section name="form-element-bool">
+	<div class="form-group form-group-dashed">
+		<label for="{type}-{key}">
+			<f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:{type}.{key}" />
+		</label>
+		<p>{type}.{key} (boolean)</p>
+		<div class="form-control-wrap">
+			<div class="checkbox">
+				<label>
+					<f:form.checkbox property="{key}" id="{type}-{key}" value="1"/>
+				</label>
+			</div>
+		</div>
+		<div class="help-block"></div>
+	</div>
+</f:section>

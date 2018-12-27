@@ -16,10 +16,10 @@ call_user_func(function () {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
         'Bitmotion.Mautic',
         'tools',
-        'mautic',
+        'api',
         'bottom',
         [
-            'Backend' => 'show, authorize'
+            'Backend' => 'show, save'
         ],
         [
             'access' => 'admin',

@@ -78,6 +78,9 @@
             <trans-unit id="mlang_labels_tablabel">
                 <source>Mautic API Connection.</source>
             </trans-unit>
+            <trans-unit id="emConfiguration.link">
+                <source>Extension Configuration</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
