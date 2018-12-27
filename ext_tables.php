@@ -11,4 +11,20 @@ call_user_func(function () {
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['beforeFormSave'][1489959059] =
         \Bitmotion\Mautic\Hooks\MauticFormHook::class;
+
+    // Backend Module
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+        'Bitmotion.Mautic',
+        'tools',
+        'mautic',
+        'bottom',
+        [
+            'Backend' => 'show, authorize'
+        ],
+        [
+            'access' => 'admin',
+            'icon' => 'EXT:mautic/Resources/Public/Icons/mautic-with-background.png',
+            'labels' => 'LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf',
+        ]
+    );
 });
