@@ -3,12 +3,15 @@ declare(strict_types=1);
 namespace Bitmotion\Mautic\Controller;
 
 use Bitmotion\Mautic\Domain\Model\Dto\EmConfiguration;
+use Bitmotion\Mautic\Service\MauticAuthorizeService;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class BackendController extends ActionController
 {
+    const FLASH_MESSAGE_QUEUE = 'marketingautomation.mautic.flashMessages';
+
     /**
      * @var BackendTemplateView
      */
@@ -16,14 +19,33 @@ class BackendController extends ActionController
 
     public function showAction()
     {
-        $this->view->assignMultiple([
-            'configuration' => new EmConfiguration(),
-        ]);
+        $emConfiguration = new EmConfiguration();
+        $authorizeService = GeneralUtility::makeInstance(MauticAuthorizeService::class);
+
+        if ($authorizeService->validateCredentials() === true) {
+            if ($emConfiguration->getAccessToken() === '' || $emConfiguration->getAccessTokenSecret() === '') {
+                if ((int)GeneralUtility::_GP('tx_marketingauthorizemautic_authorize') !== 1) {
+                    $this->view->assign('authorizeButton', $authorizeService->getAuthorizeButton());
+                } else {
+                    $authorizeService->authorize();
+                }
+            } else {
+                $authorizeService->checkConnection();
+            }
+        }
+
+        $this->view->assign('configuration', $emConfiguration);
     }
 
     public function saveAction(array $configuration)
     {
-        DebuggerUtility::var_dump($configuration);
-        die;
+        $emConfiguration = new EmConfiguration();
+
+        if (substr($configuration['baseUrl'], -1) === '/') {
+            $configuration['baseUrl'] = rtrim($configuration['baseUrl'], '/');
+        }
+
+        $emConfiguration->save($configuration);
+        $this->redirect('show');
     }
 }

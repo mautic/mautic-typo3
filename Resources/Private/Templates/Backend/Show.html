@@ -14,7 +14,7 @@
 	</ul>
 	<f:form action="save" name="configurationform" object="{configuration}" objectName="configuration" class="t3js-extensionConfiguration-form extensionConfiguration-form">
 		<div class="tab-content">
-			<f:render section="tabpanel-authorization" />
+			<f:render section="tabpanel-authorization" arguments="{authorizeButton: authorizeButton}"/>
 			<f:render section="tabpanel-tracking" />
 		</div>
 		<f:form.button type="submit" class="btn btn-default" name="save">Save "mautic" configuration</f:form.button>
@@ -28,7 +28,11 @@
 			<div class="form-group form-group-dashed">
 				<label for="em-authorize"><f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:authorization.authorize"/></label>
 				<p>authorization.authorize</p>
-				<div class="form-control-wrap">[SUCCESS]</div>
+				<f:if condition="{authorizeButton}">
+					<f:format.raw>{authorizeButton}</f:format.raw>
+				</f:if>
+				<f:flashMessages queueIdentifier="marketingautomation.mautic.flashMessages"/>
+				<!--<div class="form-control-wrap">[SUCCESS]</div>-->
 			</div>
 
 			<f:render section="form-element-text" arguments="{key: 'baseUrl', type: 'authorization'}" />

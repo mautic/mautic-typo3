@@ -44,6 +44,11 @@ class EmConfiguration implements SingletonInterface
     protected $tracking = false;
 
     /**
+     * @var array
+     */
+    protected $configurationArray = [];
+
+    /**
      * @var string
      */
     protected $trackingScriptOverride = '';
@@ -51,6 +56,7 @@ class EmConfiguration implements SingletonInterface
     public function __construct()
     {
         $settings = $this->getRawEmConfig();
+        $this->configurationArray = $settings;
 
         foreach ($settings as $key => $value) {
             if (property_exists(__CLASS__, $key)) {
@@ -65,6 +71,14 @@ class EmConfiguration implements SingletonInterface
             return GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('mautic');
         } catch (\Exception $e) {
             return [];
+        }
+    }
+
+    public function save(array $configuration = [])
+    {
+        if (!empty($configuration)) {
+            $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class);
+            $extensionConfiguration->set('mautic', '', $configuration);
         }
     }
 
@@ -106,5 +120,10 @@ class EmConfiguration implements SingletonInterface
     public function getTrackingScriptOverride(): string
     {
         return (string)$this->trackingScriptOverride;
+    }
+
+    public function getConfigurationArray(): array
+    {
+        return $this->configurationArray;
     }
 }
