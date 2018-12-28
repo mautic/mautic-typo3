@@ -8,8 +8,6 @@ use Bitmotion\Mautic\Domain\Repository\SegmentRepository;
 use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Mautic\Auth\AuthInterface;
 use Mautic\MauticApi;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -17,10 +15,8 @@ use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 
-class MauticAuthorizeService implements LoggerAwareInterface
+class MauticAuthorizeService
 {
-    use LoggerAwareTrait;
-
     /**
      * @var AuthInterface
      */
