@@ -13,6 +13,9 @@ call_user_func(function () {
         '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:mautic/Configuration/PageTS/Mod/Wizards/NewContentElement.tsconfig">'
     );
 
+    ###################
+    #      HOOKS      #
+    ###################
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['settingLanguage_postProcess']['mautic'] =
         \Bitmotion\Mautic\Slot\MauticSubscriber::class . '->setPreferredLocale';
 
@@ -23,6 +26,10 @@ call_user_func(function () {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem']['mautic_form'] =
         \Bitmotion\Mautic\Hooks\PageLayoutView\MauticFormPreviewRenderer::class;
 
+    if (TYPO3_MODE === 'FE') {
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-postTransform']['mautic_tag'] =
+            \Bitmotion\Mautic\Hooks\MauticTagHook::class . '->setTags';
+    }
 
     ###################
     #       FORM      #
@@ -42,6 +49,12 @@ call_user_func(function () {
         'class' => \Bitmotion\Mautic\FormEngine\FieldControl\UpdateSegmentsControl::class,
     ];
 
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1551778913] = [
+        'nodeName' => 'updateTagsControl',
+        'priority' => 30,
+        'class' => \Bitmotion\Mautic\FormEngine\FieldControl\UpdateTagsControl::class,
+    ];
+
 
     ###################
     #   SIGNALSLOTS   #
@@ -54,6 +67,12 @@ call_user_func(function () {
         'synchronizeSegments'
     );
 
+    $slotDispatcher->connect(
+        \TYPO3\CMS\Backend\Controller\EditDocumentController::class,
+        'initAfter',
+        \Bitmotion\Mautic\Slot\EditDocumentControllerSlot::class,
+        'synchronizeTags'
+    );
 
     ###################
     #      PLUGIN     #

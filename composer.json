@@ -14,8 +14,9 @@
         "issues": "https://github.com/mautic/mautic-typo3/issues"
     },
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=7.2.0",
         "ext-json": "*",
+        "ext-pdo": "*",
         "typo3/cms-core": "^9.5",
         "typo3/cms-extbase": "^9.5",
         "bitmotion/marketing-automation": "@dev",
@@ -27,7 +28,7 @@
         }
     },
     "replace": {
-        "mautic": "self.version",
+        "mautic/mautic-typo3": "self.version",
         "typo3-ter/mautic": "self.version"
     },
     "suggest": {
