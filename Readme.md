@@ -22,6 +22,9 @@ If you wish to use Mautic forms directly, you can now add them with the Mautic F
 ### Tracking Script Integration
 Integrate the Mautic tracking script into your frontend with one click of a button!
 
+### Tags ###
+Set tags for users when they are visiting a page
+
 ### OAuth support
 All requests made by this extension are secured using OAuth1a. You can easily configure your API tokens in the extension manager of TYPO3.
 
