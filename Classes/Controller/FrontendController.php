@@ -2,12 +2,13 @@
 declare(strict_types=1);
 namespace Bitmotion\Mautic\Controller;
 
-
 use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class FrontendController extends ActionController
 {
+    const DEFAULT_TEMPLATE_PATH = 'EXT:mautic/Resources/Private/Templates/Form.html';
+
     public function formAction()
     {
         $this->view->setTemplatePathAndFilename($this->getTemplatePath());
@@ -19,10 +20,6 @@ class FrontendController extends ActionController
 
     protected function getTemplatePath(): string
     {
-        if (!empty($this->settings['form']['templatePath'])) {
-            return $this->settings['form']['templatePath'];
-        }
-
-        return 'EXT:mautic/Resources/Private/Templates/Form.html';
+        return $this->settings['form']['templatePath'] ?? self::DEFAULT_TEMPLATE_PATH;
     }
 }
