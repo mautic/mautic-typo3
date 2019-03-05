@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace Bitmotion\Mautic\Service;
 
 use GuzzleHttp\Client;
