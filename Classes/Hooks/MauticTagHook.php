@@ -2,7 +2,7 @@
 declare(strict_types = 1);
 namespace Bitmotion\Mautic\Hooks;
 
-use Bitmotion\Mautic\Domain\Model\Dto\EmConfiguration;
+use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -28,7 +28,7 @@ class MauticTagHook
 
     protected function getMauticDomain(): string
     {
-        $config = new EmConfiguration();
+        $config = new YamlConfiguration();
 
         return $config->getBaseUrl();
     }

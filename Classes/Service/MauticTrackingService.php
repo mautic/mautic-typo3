@@ -2,20 +2,20 @@
 declare(strict_types=1);
 namespace Bitmotion\Mautic\Service;
 
-use Bitmotion\Mautic\Domain\Model\Dto\EmConfiguration;
+use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class MauticTrackingService implements SingletonInterface
 {
     /**
-     * @var EmConfiguration
+     * @var YamlConfiguration
      */
     protected $extensionConfiguration;
 
     public function __construct()
     {
-        $this->extensionConfiguration = GeneralUtility::makeInstance(EmConfiguration::class);
+        $this->extensionConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class);
     }
 
     public function isTrackingEnabled(): bool
