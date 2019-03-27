@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace Bitmotion\Mautic\Controller;
 
-use Bitmotion\Mautic\Domain\Model\Dto\EmConfiguration;
+use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Bitmotion\Mautic\Service\MauticAuthorizeService;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -19,7 +19,7 @@ class BackendController extends ActionController
 
     public function showAction()
     {
-        $emConfiguration = new EmConfiguration();
+        $emConfiguration = new YamlConfiguration();
         $authorizeService = GeneralUtility::makeInstance(MauticAuthorizeService::class);
 
         if ($authorizeService->validateCredentials() === true) {
@@ -39,7 +39,7 @@ class BackendController extends ActionController
 
     public function saveAction(array $configuration)
     {
-        $emConfiguration = new EmConfiguration();
+        $emConfiguration = new YamlConfiguration();
 
         if (substr($configuration['baseUrl'], -1) === '/') {
             $configuration['baseUrl'] = rtrim($configuration['baseUrl'], '/');

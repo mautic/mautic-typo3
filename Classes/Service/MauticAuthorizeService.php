@@ -3,7 +3,7 @@ declare(strict_types = 1);
 namespace Bitmotion\Mautic\Service;
 
 use Bitmotion\Mautic\Controller\BackendController;
-use Bitmotion\Mautic\Domain\Model\Dto\EmConfiguration;
+use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Bitmotion\Mautic\Domain\Repository\SegmentRepository;
 use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Mautic\Auth\AuthInterface;
@@ -46,7 +46,7 @@ class MauticAuthorizeService
             session_start();
         }
 
-        $this->extensionConfiguration = $extensionConfiguration ?: GeneralUtility::makeInstance(EmConfiguration::class)->getConfigurationArray();
+        $this->extensionConfiguration = $extensionConfiguration ?: GeneralUtility::makeInstance(YamlConfiguration::class)->getConfigurationArray();
         $this->authorization = $authorization ?: AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
         $this->segmentRepository = $segmentRepository ?: GeneralUtility::makeInstance(SegmentRepository::class, $this->authorization);
     }
