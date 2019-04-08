@@ -20,7 +20,7 @@ class ListTransformationPrototype extends AbstractFormFieldTransformation
     /**
      * @var int
      */
-    protected $syncList = 1;
+    protected $syncList = 0;
 
     /**
      * @var array
@@ -45,7 +45,11 @@ class ListTransformationPrototype extends AbstractFormFieldTransformation
         parent::transform();
 
         $properties = [];
-        $properties['syncList'] = $this->syncList;
+
+        if (isset($properties['leadField'])) {
+            $this->syncList = 1;
+            $properties['syncList'] = $this->syncList;
+        }
 
         if ($this->updateCustomFieldsProperties || $this->syncList === 0) {
             $properties[$this->listIdentifier] = [
