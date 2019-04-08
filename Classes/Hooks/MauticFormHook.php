@@ -12,7 +12,6 @@ use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationProtot
 use Bitmotion\Mautic\Transformation\TransformationInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Form\Mvc\Configuration\Exception\ParseErrorException;
@@ -49,8 +48,7 @@ class MauticFormHook implements LoggerAwareInterface
 
     public function __construct(
         FormPersistenceManagerInterface $formPersistenceManager = null,
-        FormRepository $formRepository = null,
-        LoggerInterface $logger = null
+        FormRepository $formRepository = null
     ) {
         if ($formPersistenceManager === null) {
             $formPersistenceManager = GeneralUtility::makeInstance(ObjectManager::class)->get(FormPersistenceManagerInterface::class);
