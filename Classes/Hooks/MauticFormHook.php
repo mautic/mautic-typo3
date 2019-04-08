@@ -8,8 +8,8 @@ use Bitmotion\Mautic\Exception\NoTransformationFoundException;
 use Bitmotion\Mautic\Exception\TransformationException;
 use Bitmotion\Mautic\Exception\UnknownTransformationClassException;
 use Bitmotion\Mautic\Transformation\Form\AbstractFormTransformation;
+use Bitmotion\Mautic\Transformation\FormField\AbstractFormFieldTransformation;
 use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationPrototype;
-use Bitmotion\Mautic\Transformation\TransformationInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -189,7 +189,7 @@ class MauticFormHook implements LoggerAwareInterface
         }
 
         $transformationClass = GeneralUtility::makeInstance($transformationClassName, $formDefinition);
-        if (!$transformationClass instanceof TransformationInterface) {
+        if (!$transformationClass instanceof AbstractFormTransformation) {
             throw new InvalidTransformationClassException(
                 sprintf(
                     '%s has to extend %s',
@@ -232,7 +232,7 @@ class MauticFormHook implements LoggerAwareInterface
      * @throws ParseErrorException
      * @throws UnknownTransformationClassException
      */
-    protected function getFieldTransformation(array $formElement): TransformationInterface
+    protected function getFieldTransformation(array $formElement): AbstractFormFieldTransformation
     {
         if (!isset($formElement['type'])) {
             throw new ParseErrorException('Form element has no type definition.', 1539064841);
@@ -255,12 +255,12 @@ class MauticFormHook implements LoggerAwareInterface
         }
 
         $transformationClass = GeneralUtility::makeInstance($transformationClassName, $formElement);
-        if (!$transformationClass instanceof TransformationInterface) {
+        if (!$transformationClass instanceof AbstractFormFieldTransformation) {
             throw new InvalidTransformationClassException(
                 sprintf(
-                    '%s doesn\'t implement %s',
+                    '%s does not extend %s',
                     get_class($transformationClass),
-                    TransformationInterface::class
+                    AbstractFormFieldTransformation::class
                 ),
                 1539064897
             );

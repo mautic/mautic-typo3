@@ -5,7 +5,7 @@ namespace Bitmotion\Mautic\Transformation\FormField;
 use Bitmotion\Mautic\Exception\TransformationException;
 use Bitmotion\Mautic\Transformation\AbstractTransformation;
 
-abstract class AbstractFormFieldTransformation extends AbstractTransformation
+abstract class AbstractFormFieldTransformation extends AbstractTransformation implements FormFieldTransformationInterface
 {
     /**
      * @var string
