@@ -146,6 +146,12 @@ class MauticFormHook implements LoggerAwareInterface
         return true;
     }
 
+    /**
+     * @throws InvalidTransformationClassException
+     * @throws NoTransformationFoundException
+     * @throws ParseErrorException
+     * @throws UnknownTransformationClassException
+     */
     protected function transformForm(array $formDefinition)
     {
         $this->injectFormTransformation($formDefinition);
