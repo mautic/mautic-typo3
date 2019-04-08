@@ -50,12 +50,8 @@ class MauticFormHook implements LoggerAwareInterface
         FormPersistenceManagerInterface $formPersistenceManager = null,
         FormRepository $formRepository = null
     ) {
-        if ($formPersistenceManager === null) {
-            $formPersistenceManager = GeneralUtility::makeInstance(ObjectManager::class)->get(FormPersistenceManagerInterface::class);
-        }
-
-        $this->formPersistenceManager = $formPersistenceManager;
-        $this->formRepository = $formRepository ?: GeneralUtility::makeInstance(FormRepository::class);
+        $this->formPersistenceManager = $formPersistenceManager ?? GeneralUtility::makeInstance(ObjectManager::class)->get(FormPersistenceManagerInterface::class);
+        $this->formRepository = $formRepository ?? GeneralUtility::makeInstance(FormRepository::class);
         $this->extConf = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic'];
     }
 
