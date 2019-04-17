@@ -26,9 +26,6 @@ class MauticFormHook implements LoggerAwareInterface
      */
     protected $formPersistenceManager;
 
-    /**
-     * @var FormRepository
-     */
     protected $formRepository;
 
     /**
@@ -47,11 +44,11 @@ class MauticFormHook implements LoggerAwareInterface
     protected $formTransformation;
 
     public function __construct(
-        FormPersistenceManagerInterface $formPersistenceManager = null,
-        FormRepository $formRepository = null
+        FormPersistenceManagerInterface $formPersistenceManager = null
     ) {
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->formPersistenceManager = $formPersistenceManager ?? GeneralUtility::makeInstance(ObjectManager::class)->get(FormPersistenceManagerInterface::class);
-        $this->formRepository = $formRepository ?? GeneralUtility::makeInstance(FormRepository::class);
+        $this->formRepository = $objectManager->get(FormRepository::class);
         $this->extConf = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic'];
     }
 

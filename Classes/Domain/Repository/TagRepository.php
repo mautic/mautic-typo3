@@ -2,32 +2,21 @@
 declare(strict_types = 1);
 namespace Bitmotion\Mautic\Domain\Repository;
 
-use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Mautic\Api\Tags;
-use Mautic\Auth\AuthInterface;
-use Mautic\MauticApi;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class TagRepository implements SingletonInterface
+class TagRepository extends AbstractRepository
 {
-    /**
-     * @var AuthInterface
-     */
-    protected $authorization;
-
     /**
      * @var Tags
      */
     protected $tagsApi;
 
-    public function __construct(AuthInterface $authorization = null)
+    protected function injectApis(): void
     {
-        $this->authorization = $authorization ?: AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
-        $api = new MauticApi();
-        $this->tagsApi = $api->newApi('tags', $this->authorization, $this->authorization->getBaseUrl());
+        $this->tagsApi = $this->getApi('tags');
     }
 
     public function findAll(): array

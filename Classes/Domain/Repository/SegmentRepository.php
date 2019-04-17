@@ -2,30 +2,25 @@
 declare(strict_types = 1);
 namespace Bitmotion\Mautic\Domain\Repository;
 
-use Bitmotion\Mautic\Mautic\AuthorizationFactory;
+use Doctrine\DBAL\DBALException;
 use Mautic\Api\Segments;
-use Mautic\Auth\AuthInterface;
-use Mautic\MauticApi;
+use Mautic\Exception\ContextNotFoundException;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class SegmentRepository
+class SegmentRepository extends AbstractRepository
 {
-    /**
-     * @var AuthInterface
-     */
-    protected $authorization;
-
     /**
      * @var Segments
      */
     protected $segmentsApi;
 
-    public function __construct(AuthInterface $authorization = null)
+    /**
+     * @throws ContextNotFoundException
+     */
+    protected function injectApis(): void
     {
-        $this->authorization = $authorization ?: AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
-        $api = new MauticApi();
-        $this->segmentsApi = $api->newApi('segments', $this->authorization, $this->authorization->getBaseUrl());
+        $this->segmentsApi = $this->getApi('segments');
     }
 
     public function findAll(): array

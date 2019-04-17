@@ -8,36 +8,28 @@ use Bitmotion\Mautic\Domain\Repository\ContactRepository;
 use Bitmotion\Mautic\Domain\Repository\PersonaRepository;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class MauticSubscriber implements SubscriberInterface, SingletonInterface
 {
-    /**
-     * @var int
-     */
     protected $mauticId;
 
-    /**
-     * @var ContactRepository
-     */
     protected $contactRepository;
 
-    /**
-     * @var PersonaRepository
-     */
     protected $personaRepository;
 
-    /**
-     * @var bool
-     */
     protected $languageNeedsUpdate = false;
 
-    public function __construct(
-        ContactRepository $contactRepository = null,
-        PersonaRepository $personaRepository = null
-    ) {
-        $this->contactRepository = $contactRepository ?: GeneralUtility::makeInstance(ContactRepository::class);
-        $this->personaRepository = $personaRepository ?: GeneralUtility::makeInstance(PersonaRepository::class);
+    /**
+     * TODO: Rewrite EXT:marketing_automation/Classes/Dispatcher/Dispatcher.php::45 for using constructor autoloader
+     */
+    public function __construct()
+    {
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+
+        $this->contactRepository = $objectManager->get(ContactRepository::class);
+        $this->personaRepository = $objectManager->get(PersonaRepository::class);
 
         $this->mauticId = (int)($_COOKIE['mtc_id'] ?? 0);
     }

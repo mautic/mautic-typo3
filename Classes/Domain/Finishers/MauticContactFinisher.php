@@ -6,6 +6,7 @@ use Bitmotion\Mautic\Domain\Repository\ContactRepository;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 use TYPO3\CMS\Form\Domain\Model\FormElements\GenericFormElement;
 
@@ -13,16 +14,13 @@ class MauticContactFinisher extends AbstractFinisher implements LoggerAwareInter
 {
     use LoggerAwareTrait;
 
-    /**
-     * @var ContactRepository
-     */
     protected $contactRepository;
 
-    public function __construct(string $finisherIdentifier = '', ContactRepository $contactRepository = null)
+    public function __construct(string $finisherIdentifier = '')
     {
         parent::__construct($finisherIdentifier);
 
-        $this->contactRepository = $contactRepository ?: GeneralUtility::makeInstance(ContactRepository::class);
+        $this->contactRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(ContactRepository::class);
     }
 
     /**

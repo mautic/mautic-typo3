@@ -2,36 +2,25 @@
 declare(strict_types = 1);
 namespace Bitmotion\Mautic\Domain\Repository;
 
-use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Bitmotion\Mautic\Service\MauticSendFormService;
 use Mautic\Api\Forms;
-use Mautic\Auth\AuthInterface;
-use Mautic\MauticApi;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
-use TYPO3\CMS\Core\SingletonInterface;
+use Mautic\Exception\ContextNotFoundException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
-class FormRepository implements SingletonInterface, LoggerAwareInterface
+class FormRepository extends AbstractRepository
 {
-    use LoggerAwareTrait;
-
-    /**
-     * @var AuthInterface
-     */
-    protected $authorization;
-
     /**
      * @var Forms
      */
     protected $formsApi;
 
-    public function __construct(AuthInterface $authorization = null)
+    /**
+     * @throws ContextNotFoundException
+     */
+    protected function injectApis(): void
     {
-        $this->authorization = $authorization ?: AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
-        $api = new MauticApi();
-        $this->formsApi = $api->newApi('forms', $this->authorization, $this->authorization->getBaseUrl());
+        $this->formsApi = $this->getApi('forms');
     }
 
     public function getForm(int $identifier): array

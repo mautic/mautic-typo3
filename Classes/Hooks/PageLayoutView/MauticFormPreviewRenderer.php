@@ -6,6 +6,7 @@ use Bitmotion\Mautic\Domain\Repository\FormRepository;
 use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class MauticFormPreviewRenderer implements PageLayoutViewDrawItemHookInterface
 {
@@ -21,7 +22,8 @@ class MauticFormPreviewRenderer implements PageLayoutViewDrawItemHookInterface
     public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row)
     {
         if ($row['CType'] === 'mautic_form') {
-            $mauticForm = GeneralUtility::makeInstance(FormRepository::class)->getForm((int)$row['mautic_form_id']);
+            $formRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(FormRepository::class);
+            $mauticForm = $formRepository->getForm((int)$row['mautic_form_id']);
 
             if (empty($mauticForm)) {
                 $this->getFormNotFoundContent((int)$row['mautic_form_id'], $itemContent);

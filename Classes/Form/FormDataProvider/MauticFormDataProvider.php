@@ -9,18 +9,11 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class MauticFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var FormRepository
-     */
     protected $formRepository;
 
-    public function __construct(FormRepository $formRepository = null)
+    public function __construct()
     {
-        if ($formRepository === null) {
-            $formRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(FormRepository::class);
-        }
-
-        $this->formRepository = $formRepository;
+        $this->formRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(FormRepository::class);
     }
 
     public function addData(array $result): array

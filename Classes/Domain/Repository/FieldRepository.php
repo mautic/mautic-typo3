@@ -2,20 +2,12 @@
 declare(strict_types = 1);
 namespace Bitmotion\Mautic\Domain\Repository;
 
-use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Mautic\Api\CompanyFields;
 use Mautic\Api\ContactFields;
-use Mautic\Auth\AuthInterface;
-use Mautic\MauticApi;
-use TYPO3\CMS\Core\SingletonInterface;
+use Mautic\Exception\ContextNotFoundException;
 
-class FieldRepository implements SingletonInterface
+class FieldRepository extends AbstractRepository
 {
-    /**
-     * @var AuthInterface
-     */
-    protected $authorization;
-
     /**
      * @var ContactFields
      */
@@ -26,12 +18,13 @@ class FieldRepository implements SingletonInterface
      */
     protected $companyFieldsApi;
 
-    public function __construct(AuthInterface $authorization = null)
+    /**
+     * @throws ContextNotFoundException
+     */
+    protected function injectApis(): void
     {
-        $this->authorization = $authorization ?: AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
-        $api = new MauticApi();
-        $this->contactFieldsApi = $api->newApi('contactFields', $this->authorization, $this->authorization->getBaseUrl());
-        $this->companyFieldsApi = $api->newApi('companyFields', $this->authorization, $this->authorization->getBaseUrl());
+        $this->contactFieldsApi = $this->getApi('contactFields');
+        $this->companyFieldsApi = $this->getApi('companyFields');
     }
 
     public function editContactField(int $id, array $params): array

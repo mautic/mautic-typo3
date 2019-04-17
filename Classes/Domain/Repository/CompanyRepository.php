@@ -2,28 +2,22 @@
 declare(strict_types = 1);
 namespace Bitmotion\Mautic\Domain\Repository;
 
-use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Mautic\Api\Companies;
-use Mautic\Auth\AuthInterface;
-use Mautic\MauticApi;
+use Mautic\Exception\ContextNotFoundException;
 
-class CompanyRepository
+class CompanyRepository extends AbstractRepository
 {
-    /**
-     * @var AuthInterface
-     */
-    protected $authorization;
-
     /**
      * @var Companies
      */
     protected $companiesApi;
 
-    public function __construct(AuthInterface $authorization = null)
+    /**
+     * @throws ContextNotFoundException
+     */
+    protected function injectApis(): void
     {
-        $this->authorization = $authorization ?: AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
-        $api = new MauticApi();
-        $this->companiesApi = $api->newApi('companies', $this->authorization, $this->authorization->getBaseUrl());
+        $this->companiesApi = $this->getApi('companies');
     }
 
     public function createCompany(array $parameters)

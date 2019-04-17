@@ -4,25 +4,20 @@ namespace Bitmotion\Mautic\Domain\Finishers;
 
 use Bitmotion\Mautic\Domain\Repository\ContactRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 
 class MauticPointsFinisher extends AbstractFinisher
 {
-    /**
-     * @var int
-     */
     protected $mauticId;
 
-    /**
-     * @var ContactRepository
-     */
     protected $contactRepository;
 
-    public function __construct(string $finisherIdentifier = '', ContactRepository $contactRepository = null)
+    public function __construct(string $finisherIdentifier = '')
     {
         parent::__construct($finisherIdentifier);
 
-        $this->contactRepository = $contactRepository ?: GeneralUtility::makeInstance(ContactRepository::class);
+        $this->contactRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(ContactRepository::class);
         $this->mauticId = (int)($_COOKIE['mtc_id'] ?? 0);
     }
 

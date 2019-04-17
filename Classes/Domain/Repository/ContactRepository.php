@@ -2,29 +2,22 @@
 declare(strict_types = 1);
 namespace Bitmotion\Mautic\Domain\Repository;
 
-use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Mautic\Api\Contacts;
-use Mautic\Auth\AuthInterface;
-use Mautic\MauticApi;
-use TYPO3\CMS\Core\SingletonInterface;
+use Mautic\Exception\ContextNotFoundException;
 
-class ContactRepository implements SingletonInterface
+class ContactRepository extends AbstractRepository
 {
-    /**
-     * @var AuthInterface
-     */
-    protected $authorization;
-
     /**
      * @var Contacts
      */
     protected $contactsApi;
 
-    public function __construct(AuthInterface $authorization = null)
+    /**
+     * @throws ContextNotFoundException
+     */
+    protected function injectApis(): void
     {
-        $this->authorization = $authorization ?: AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
-        $api = new MauticApi();
-        $this->contactsApi = $api->newApi('contacts', $this->authorization, $this->authorization->getBaseUrl());
+        $this->contactsApi = $this->getApi('contacts');
     }
 
     public function findContactSegments(int $id): array
