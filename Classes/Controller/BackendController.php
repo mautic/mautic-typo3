@@ -7,14 +7,13 @@ use Bitmotion\Mautic\Service\MauticAuthorizeService;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+use TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException;
 
 class BackendController extends ActionController
 {
     const FLASH_MESSAGE_QUEUE = 'marketingautomation.mautic.flashMessages';
 
-    /**
-     * @var BackendTemplateView
-     */
     protected $defaultViewObjectName = BackendTemplateView::class;
 
     public function showAction()
@@ -37,6 +36,10 @@ class BackendController extends ActionController
         $this->view->assign('configuration', $emConfiguration);
     }
 
+    /**
+     * @throws StopActionException
+     * @throws UnsupportedRequestTypeException
+     */
     public function saveAction(array $configuration)
     {
         $emConfiguration = new YamlConfiguration();

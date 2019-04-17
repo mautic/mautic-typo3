@@ -64,7 +64,6 @@ class CountryListFormElement extends GenericFormElement implements LoggerAwareIn
 
         // cURL errors return errorCode 0, so we can not check for "if ($report['error'] !== 0) { ... }"
         // TODO: Datei lokal laden
-        // TODO: Core "Bug?" - Nein
         if ($report['message'] !== '') {
             $this->logger->critical($report['message']);
 
