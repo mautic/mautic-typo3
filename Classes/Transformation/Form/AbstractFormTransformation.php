@@ -3,6 +3,7 @@ declare(strict_types = 1);
 namespace Bitmotion\Mautic\Transformation\Form;
 
 use Bitmotion\Mautic\Domain\Repository\FieldRepository;
+use Bitmotion\Mautic\Domain\Repository\FormRepository;
 use Bitmotion\Mautic\Transformation\AbstractTransformation;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -58,6 +59,8 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
             'name' => $this->formDefinition['label'],
             'postAction' => 'return',
         ];
+
+        $this->enrichFormData();
     }
 
     public function getFormData(): array
@@ -106,6 +109,22 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
         }
 
         return $this->formDefinition;
+    }
+
+    protected function enrichFormData()
+    {
+        if (isset($this->formDefinition['renderingOptions']['mauticId']) && !empty($this->formDefinition['renderingOptions']['mauticId'])) {
+            $mauticId = (int)$this->formDefinition['renderingOptions']['mauticId'];
+
+            if ($mauticId !== 0) {
+                $formRepository = GeneralUtility::makeInstance(FormRepository::class);
+                $mauticForm = $formRepository->getForm($mauticId);
+
+                if (!empty($mauticForm)) {
+                    $this->formData = array_replace($mauticForm, $this->formData);
+                }
+            }
+        }
     }
 
     public function addCustomFieldValues(array $values)
