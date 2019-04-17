@@ -26,10 +26,10 @@ class MauticFormPreviewRenderer implements PageLayoutViewDrawItemHookInterface
             $mauticForm = $formRepository->getForm((int)$row['mautic_form_id']);
 
             if (empty($mauticForm)) {
-                $this->getFormNotFoundContent((int)$row['mautic_form_id'], $itemContent);
+                $itemContent .= $this->getFormNotFoundContent((int)$row['mautic_form_id']);
             } else {
                 if ($mauticForm['isPublished'] === false) {
-                    $this->getFormNotPublishedContent((int)$mauticForm['id'], $mauticForm['name'], $itemContent);
+                    $itemContent .= $this->getFormNotPublishedContent((int)$mauticForm['id'], $mauticForm['name']);
                 }
 
                 $contentType = $parentObject->CType_labels[$row['CType']];
@@ -60,33 +60,39 @@ class MauticFormPreviewRenderer implements PageLayoutViewDrawItemHookInterface
         }
     }
 
-    protected function getFormNotFoundContent(int $formId, string &$itemContent): string
+    protected function getFormNotFoundContent(int $formId): string
     {
-        $itemContent .= '<div class="alert alert-danger">';
-        $itemContent .= '<div class="media">';
-        $itemContent .= '<div class="media-left"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-info fa-stack-1x"></i></span></div>';
-        $itemContent .= '<div class="media-body">';
-        $itemContent .= '<h4 class="alert-title">' . sprintf('Mautic form with ID %s not found', $formId) . '</h4>';
-        $itemContent .= '<p class="alert-message">Form does not exist or there is no connection to your mautic instance.</p>';
-        $itemContent .= '</div>';
-        $itemContent .= '</div>';
-        $itemContent .= '</div>';
+        $content = sprintf('Mautic form with ID %s not found', $formId);
 
-        return $itemContent;
+        return
+<<<HTML
+<div class="alert alert-danger">
+    <div class="media">
+        <div class="media-left"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-info fa-stack-1x"></i></span></div>
+        <div class="media-body">
+            <h4 class="alert-title">{$content}</h4>
+            <p class="alert-message">Form does not exist or there is no connection to your mautic instance.</p>
+        </div>
+    </div>
+</div>
+HTML;
     }
 
-    protected function getFormNotPublishedContent(int $formId, string $formTitle, string &$itemContent): string
+    protected function getFormNotPublishedContent(int $formId, string $formTitle): string
     {
-        $itemContent .= '<div class="alert alert-warning">';
-        $itemContent .= '<div class="media">';
-        $itemContent .= '<div class="media-left"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-info fa-stack-1x"></i></span></div>';
-        $itemContent .= '<div class="media-body">';
-        $itemContent .= '<h4 class="alert-title">Mautic form is not published</h4>';
-        $itemContent .= '<p class="alert-message">' . sprintf('Mautic form with <strong>ID %s</strong> (%s) is not published.', $formId, htmlspecialchars($formTitle)) . '</p>';
-        $itemContent .= '</div>';
-        $itemContent .= '</div>';
-        $itemContent .= '</div>';
+        $content = sprintf('Mautic form with <strong>ID %s</strong> (%s) is not published.', $formId, htmlspecialchars($formTitle));
 
-        return $itemContent;
+        return
+<<<HTML
+<div class="alert alert-warning">
+    <div class="media">
+        <div class="media-left"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-info fa-stack-1x"></i></span></div>
+        <div class="media-body">
+            <h4 class="alert-title">Mautic form is not published</h4>
+            <p class="alert-message">{$content}</p>
+        </div>
+    </div>
+</div>
+HTML;
     }
 }
