@@ -27,8 +27,5 @@ namespace Bitmotion\Mautic\Transformation\FormField;
  */
 class EmailTransformation extends AbstractFormFieldTransformation
 {
-    /**
-     * @var string
-     */
     protected $type = 'email';
 }

@@ -25,8 +25,5 @@ namespace Bitmotion\Mautic\Transformation\FormField;
  */
 class TextareaTransformation extends AbstractFormFieldTransformation
 {
-    /**
-     * @var string
-     */
     protected $type = 'textarea';
 }

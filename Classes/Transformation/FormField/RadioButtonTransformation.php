@@ -38,23 +38,11 @@ use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationProtot
  */
 class RadioButtonTransformation extends ListTransformationPrototype
 {
-    /**
-     * @var string
-     */
     protected $type = 'radiogrp';
 
-    /**
-     * @var string
-     */
     protected $listIdentifier = 'optionlist';
 
-    /**
-     * @var int
-     */
     protected $multiple = 0;
 
-    /**
-     * @var bool
-     */
     protected $updateCustomFieldsProperties = true;
 }

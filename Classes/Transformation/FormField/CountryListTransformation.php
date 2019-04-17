@@ -28,8 +28,5 @@ namespace Bitmotion\Mautic\Transformation\FormField;
  */
 class CountryListTransformation extends AbstractFormFieldTransformation
 {
-    /**
-     * @var string
-     */
     protected $type = 'country';
 }

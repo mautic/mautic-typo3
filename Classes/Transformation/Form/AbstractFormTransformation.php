@@ -10,39 +10,18 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 abstract class AbstractFormTransformation extends AbstractTransformation implements SingletonInterface
 {
-    /**
-     * @var string
-     */
     protected $formType = '';
 
-    /**
-     * @var array
-     */
     protected $formDefinition = [];
 
-    /**
-     * @var array
-     */
     protected $formData = [];
 
-    /**
-     * @var array
-     */
     protected $formElements = [];
 
-    /**
-     * @var bool
-     */
     protected $isFormDefinitionUpdated = false;
 
-    /**
-     * @var bool
-     */
     protected $shouldUpdateCustomFields = false;
 
-    /**
-     * @var array
-     */
     protected $customFieldValues = [];
 
     public function __construct(array $formDefinition = [])

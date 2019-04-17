@@ -8,9 +8,6 @@ use TYPO3\CMS\Fluid\ViewHelpers\Form\SelectViewHelper;
 
 class MauticPropertiesViewHelper extends SelectViewHelper
 {
-    /**
-     * @var FieldRepository
-     */
     protected $fieldRepository;
 
     public function __construct(FieldRepository $fieldRepository)

@@ -25,8 +25,5 @@ namespace Bitmotion\Mautic\Transformation\FormField;
  */
 class HiddenTransformation extends AbstractFormFieldTransformation
 {
-    /**
-     * @var string
-     */
     protected $type = 'hidden';
 }

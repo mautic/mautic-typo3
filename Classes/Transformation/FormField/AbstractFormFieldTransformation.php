@@ -7,19 +7,10 @@ use Bitmotion\Mautic\Transformation\AbstractTransformation;
 
 abstract class AbstractFormFieldTransformation extends AbstractTransformation implements FormFieldTransformationInterface
 {
-    /**
-     * @var string
-     */
     protected $type = '';
 
-    /**
-     * @var array
-     */
     protected $fieldDefinition = [];
 
-    /**
-     * @var array
-     */
     protected $fieldData = [];
 
     public function __construct(array $fieldDefinition = [])

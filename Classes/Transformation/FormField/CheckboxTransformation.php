@@ -38,23 +38,11 @@ use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationProtot
  */
 class CheckboxTransformation extends ListTransformationPrototype
 {
-    /**
-     * @var string
-     */
     protected $type = 'checkboxgrp';
 
-    /**
-     * @var string
-     */
     protected $listIdentifier = 'optionlist';
 
-    /**
-     * @var int
-     */
     protected $multiple = 0;
 
-    /**
-     * @var bool
-     */
     protected $updateCustomFieldsProperties = true;
 }

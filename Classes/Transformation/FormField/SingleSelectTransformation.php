@@ -39,18 +39,9 @@ use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationProtot
  */
 class SingleSelectTransformation extends ListTransformationPrototype
 {
-    /**
-     * @var string
-     */
     protected $type = 'select';
 
-    /**
-     * @var string
-     */
     protected $listIdentifier = 'list';
 
-    /**
-     * @var int
-     */
     protected $multiple = 0;
 }

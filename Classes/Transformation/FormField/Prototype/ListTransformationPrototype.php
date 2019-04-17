@@ -7,34 +7,16 @@ use Bitmotion\Mautic\Transformation\FormField\AbstractFormFieldTransformation;
 
 class ListTransformationPrototype extends AbstractFormFieldTransformation
 {
-    /**
-     * @var string
-     */
     protected $listIdentifier = 'list';
 
-    /**
-     * @var int
-     */
     protected $multiple = 0;
 
-    /**
-     * @var int
-     */
     protected $syncList = 0;
 
-    /**
-     * @var array
-     */
     protected $customFieldProperties = [];
 
-    /**
-     * @var array
-     */
     protected $customFieldValues = [];
 
-    /**
-     * @var bool
-     */
     protected $updateCustomFieldsProperties = true;
 
     /**
