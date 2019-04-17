@@ -18,16 +18,14 @@ class MauticFormDataProvider implements FormDataProviderInterface
 
     public function addData(array $result): array
     {
-        if ('tt_content' !== $result['tableName'] || 'mautic_form' !== $result['recordTypeValue']) {
-            return $result;
-        }
-
-        foreach ($this->formRepository->getAllForms() as $mauticForm) {
-            $result['processedTca']['columns']['mautic_form_id']['config']['items'][] = [
-                $mauticForm['name'],
-                $mauticForm['id'],
-                'content-form',
-            ];
+        if ($result['tableName'] === 'tt_content' && $result['recordTypeValue'] === 'mautic_form') {
+            foreach ($this->formRepository->getAllForms() as $mauticForm) {
+                $result['processedTca']['columns']['mautic_form_id']['config']['items'][] = [
+                    $mauticForm['name'],
+                    $mauticForm['id'],
+                    'content-form',
+                ];
+            }
         }
 
         return $result;
