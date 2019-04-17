@@ -30,6 +30,9 @@ class SegmentRepository extends AbstractRepository
         return $segments['lists'] ?? [];
     }
 
+    /**
+     * @throws DBALException
+     */
     public function initializeSegments()
     {
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)
