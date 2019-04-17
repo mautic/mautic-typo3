@@ -7,4 +7,10 @@ namespace Bitmotion\Mautic\Domain\Model\Dto;
  */
 class EmConfiguration extends YamlConfiguration
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        trigger_error("Use YamlConfiguration instead.", E_USER_DEPRECATED);
+    }
 }

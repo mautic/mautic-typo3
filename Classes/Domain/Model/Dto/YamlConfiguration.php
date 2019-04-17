@@ -96,6 +96,7 @@ class YamlConfiguration implements SingletonInterface
      */
     protected function getRawEmConfig(): array
     {
+        trigger_error("Use getYamlConfiguration() instead.", E_USER_DEPRECATED);
         return $this->getYamlConfiguration();
     }
 
