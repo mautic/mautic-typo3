@@ -11,6 +11,6 @@ class EmConfiguration extends YamlConfiguration
     {
         parent::__construct();
 
-        trigger_error("Use YamlConfiguration instead.", E_USER_DEPRECATED);
+        trigger_error('Use YamlConfiguration instead.', E_USER_DEPRECATED);
     }
 }
