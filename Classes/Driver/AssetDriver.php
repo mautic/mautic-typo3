@@ -182,7 +182,6 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         }
 
         $targetIdentifier = '/asset/' . $newFileName;
-        error_log('upload file');
         $asset = $this->getAssetApi()->upload($targetPath, $newFileName);
 
         if (!empty($asset)) {
