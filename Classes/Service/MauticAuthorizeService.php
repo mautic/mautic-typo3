@@ -14,6 +14,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class MauticAuthorizeService
 {
@@ -37,18 +38,15 @@ class MauticAuthorizeService
      */
     protected $minimumMauticVersion = '2.14.2';
 
-    public function __construct(
-        array $extensionConfiguration = [],
-        AuthInterface $authorization = null,
-        SegmentRepository $segmentRepository = null
-    ) {
+    public function __construct()
+    {
         if (session_id() === '') {
             session_start();
         }
 
-        $this->extensionConfiguration = $extensionConfiguration ?: GeneralUtility::makeInstance(YamlConfiguration::class)->getConfigurationArray();
-        $this->authorization = $authorization ?: AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
-        $this->segmentRepository = $segmentRepository ?: GeneralUtility::makeInstance(SegmentRepository::class, $this->authorization);
+        $this->extensionConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class)->getConfigurationArray();
+        $this->authorization = AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
+        $this->segmentRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(SegmentRepository::class);
     }
 
     public function validateCredentials(): bool
