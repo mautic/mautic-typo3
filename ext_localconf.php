@@ -55,6 +55,21 @@ call_user_func(function () {
         'class' => \Bitmotion\Mautic\FormEngine\FieldControl\UpdateTagsControl::class,
     ];
 
+    ##################
+    #   FAL DRIVER   #
+    ##################
+    $driverRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\Driver\DriverRegistry::class);
+    $driverRegistry->registerDriverClass(
+        \Bitmotion\Mautic\Driver\AssetDriver::class,
+        \Bitmotion\Mautic\Driver\AssetDriver::DRIVER_SHORT_NAME,
+        \Bitmotion\Mautic\Driver\AssetDriver::DRIVER_NAME,
+        'FILE:EXT:mautic/Configuration/FlexForm/AssetDriver.xml'
+    );
+
+    ##################
+    #   EXTRACTOR    #
+    ##################
+    \TYPO3\CMS\Core\Resource\Index\ExtractorRegistry::getInstance()->registerExtractionService(\Bitmotion\Mautic\Index\Extractor::class);
 
     ###################
     #   SIGNALSLOTS   #
@@ -72,6 +87,34 @@ call_user_func(function () {
         'initAfter',
         \Bitmotion\Mautic\Slot\EditDocumentControllerSlot::class,
         'synchronizeTags'
+    );
+
+    $slotDispatcher->connect(
+        \TYPO3\CMS\Core\Resource\Index\FileIndexRepository::class,
+        'recordUpdated',
+        \Bitmotion\Mautic\Slot\FileIndexRepository::class,
+        'updateRecord'
+    );
+
+    $slotDispatcher->connect(
+        \TYPO3\CMS\Core\Resource\Index\FileIndexRepository::class,
+        'recordCreated',
+        \Bitmotion\Mautic\Slot\FileIndexRepository::class,
+        'createRecord'
+    );
+
+    $slotDispatcher->connect(
+        \TYPO3\CMS\Core\Resource\Index\FileIndexRepository::class,
+        'recordDeleted',
+        \Bitmotion\Mautic\Slot\FileIndexRepository::class,
+        'deleteRecord'
+    );
+
+    $slotDispatcher->connect(
+        \TYPO3\CMS\Core\Resource\Index\FileIndexRepository::class,
+        'recordMarkedAsMissing',
+        \Bitmotion\Mautic\Slot\FileIndexRepository::class,
+        'markRecordAsMissing'
     );
 
     ###################
