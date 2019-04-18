@@ -355,16 +355,16 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
 
     public function getFilesInFolder($folderIdentifier, $start = 0, $numberOfItems = 0, $recursive = false, array $filenameFilterCallbacks = [], $sort = '', $sortRev = false): array
     {
-        if ($this->cleanUp === true) {
-            $this->removeObsoleteFiles();
-            $this->cleanUp = false;
-        }
-
-        if (($sort !== '' && $sort !== 'file') || $sortRev === true) {
+        if (($sort !== '' && $sort !== 'file') || $sortRev === true || $this->assetsLoaded === false) {
             $order = $this->getOrder($sort);
             $orderByDir = $sortRev ? 'DESC' : 'ASC';
             $this->rebuildAssetCache($this->getAssetApi()->list('', $start, $numberOfItems, $order, $orderByDir));
             $this->assetsLoaded = true;
+        }
+
+        if ($this->cleanUp === true) {
+            $this->removeObsoleteFiles();
+            $this->cleanUp = false;
         }
 
         return array_keys($this->assets);
