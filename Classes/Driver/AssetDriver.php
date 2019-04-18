@@ -18,7 +18,6 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class AssetDriver extends AbstractHierarchicalFilesystemDriver implements LoggerAwareInterface, SingletonInterface
 {
@@ -386,10 +385,11 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return count($this->getFoldersInFolder($folderIdentifier, 0, 0, $recursive, $folderNameFilterCallbacks));
     }
 
-    public function dumpFileContents($identifier)
+    public function dumpFileContents($identifier): string
     {
         $this->logger->debug('dumpFileContents');
-        DebuggerUtility::var_dump('dumpFileContents');
+
+        return '';
     }
 
     public function getPermissions($identifier): array
