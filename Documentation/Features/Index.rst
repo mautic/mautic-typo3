@@ -10,7 +10,15 @@ This chapter will go through all the features of the Mautic extension for TYPO3.
 Enabling the Mautic Tracking Script
 ===================================
 
-ToDo
+To enable Mautic tracking on your TYPO3 frontend, navigate to the Extension Manager. Find the Mautic extension and go to its settings page. On the settings
+page there is a tab called "Tracking". In this tab check the "Enable Mautic user tracking" checkbox and save the settings. This implements the default
+Mautic tracking script based on the base URL of your Mautic installation.
+
+   .. figure:: 002.png
+      :class: with-shadow
+
+If you would like to customize the tracking script you can do so by parsing it into the "Override default Mautic tracking script (without script tags)"
+field. If the default script suits your needs, leave this field blank.
 
 Tagging Leads of Page Visits
 ============================
