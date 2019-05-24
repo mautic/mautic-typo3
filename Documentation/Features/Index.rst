@@ -71,3 +71,28 @@ Select Marketing Automation -> Persona
 
    .. figure:: 004.png
       :class: with-shadow
+
+Give your Persona a name and fill it in the title field. Now lets open the "Mautic" tab. It should look like the image below:
+
+   .. figure:: 005.png
+      :class: with-shadow
+
+On the right we see a list of Mautic segments. This list comes directly from Mautic. If it is out of date, you can update
+the list by clicking the refresh button right next to the list.
+
+To add segments to your new Persona, simply click them. They should move into the list on the left. Repeat this with all
+the segments you would like to add to this Persona. Then save the Persona. Our Persona is now ready.
+
+Now we will go to the Page module. We are now going to add a Persona to a content element. Either create a new content element
+or edit an already existing one.
+
+Configure the content element to your liking. Once done, we will add the Persona. Go to the "Access" tab and scroll down.
+There will be a section called "Limit to Targeting Personas". On the right we have all known Personas on the current page.
+On the right we have the Personas bound to this content element. Once a content element is bound to a Persona (or more)
+that content element will only show if the user is a member of (one of) the Persona(s). You can again click the Personas
+in the right list, they will move to the left. Once you are happy with the configuration, save the content element.
+
+   .. figure:: 006.png
+      :class: with-shadow
+
+Done. You have successfully created a content element that is shown/hidden based on information coming from Mautic!
