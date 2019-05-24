@@ -12,7 +12,7 @@ class MauticTagHook
     {
         $page = $this->getPage();
 
-        if ($page['tx_mautic_tags'] > 0) {
+        if (!empty($page) && isset($page['tx_mautic_tags']) && $page['tx_mautic_tags'] > 0) {
             $tags = $this->getTagsToAssign($page['uid']);
             $domain = $this->getMauticDomain();
             if (!empty($tags) && $domain !== '') {
@@ -29,12 +29,14 @@ class MauticTagHook
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
 
-        return $queryBuilder
+        $result = $queryBuilder
             ->select('uid', 'tx_mautic_tags')
             ->from('pages')
             ->where($queryBuilder->expr()->eq('uid', $GLOBALS['TSFE']->id))
             ->execute()
-            ->fetch() ?? [];
+            ->fetch();
+
+        return  is_array($result) ? $result : [];
     }
 
     protected function getMauticDomain(): string
