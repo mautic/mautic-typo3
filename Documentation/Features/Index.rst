@@ -67,6 +67,29 @@ to the form. The demo form should already have this added.
    .. figure:: 009.png
       :class: with-shadow
 
+With this set, all data submitted to the form will automatically be saved in Mautic.
+
+Now let's make sure Mautic knows what kind of data is submitted in the form fields. For instance, if you have a field in which
+the user should enter his or her email address, we would like Mautic to know that we are dealing with an email address in this
+specific field.
+
+To do this, click on the field in the form editor. In the right hand side menu you will find a dropdown menu called "Mautic Property Type".
+This dropdown will contain all the contact fields Mautic knows (including fields you have created yourself in Mautic). Select
+"Contact: Email" in the dropdown and save the form.
+
+   .. figure:: 010.png
+      :class: with-shadow
+
+Now Mautic knows that data submitted in this field must be treated as an email address. Let's have a look in Mautic and see what
+it looks like. Navigate to the form in Mautic and click "Edit" in the top-right. Then navigate to the tab "Fields".
+
+It should show that the "Email" field has been linked to the contact property "Email".
+
+   .. figure:: 011.png
+      :class: with-shadow
+
+That's it. You can do this for every field in the form.
+
 Using Dynamic Content Elements
 ==============================
 
