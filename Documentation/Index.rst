@@ -2,9 +2,9 @@
 
 .. _start:
 
-===================
-Plugin cache engine
-===================
+======
+Mautic
+======
 
 .. only:: html
 
