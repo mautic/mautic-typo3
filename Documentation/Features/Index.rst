@@ -36,7 +36,36 @@ Adding this content element to a page will render the Mautic form on the fronten
 Syncing TYPO3 forms with Mautic
 ===============================
 
-ToDo
+Instead of including forms from Mautic, the extension also allows you to sync your TYPO3 forms to Mautic. With this feature
+you can keep using the TYPO3 Forms environment to create your forms, and make sure Mautic receives all the relevant data.
+
+To start creating a form, go to the Forms module. Click the "Create a new form" button at the top. You can now name your
+form. Make sure to check the "Advanced settings" checkbox. Then click next.
+
+In the next screen select "Mautic Form" under "Form prototype". Under "Start template" you can either select "Blank form" to
+start with a blank form, or "Simple contact form" to start with a simple template form. We recommend selecting the
+"Simple contact form" for the sake of this tutorial. then click next, and click next again.
+
+You should now see the simple contact form before you in the form editor. Before we continue, let's save our form. By saving
+we automatically let Mautic know that a form has been created or updated.
+
+   .. figure:: 007.png
+      :class: with-shadow
+
+After saving, our form should also appear in Mautic. Let's check there if it is present. Go to Mautic and navigate to
+Components -> Forms.
+
+   .. figure:: 008.png
+      :class: with-shadow
+
+As you can see, the form has been created. You can have a look inside the form if you want, you will see that all the fields
+are present too.
+
+To make sure the form data is sent to Mautic when the form is submitted, the "Send to Mautic Form" finisher must be added
+to the form. The demo form should already have this added.
+
+   .. figure:: 009.png
+      :class: with-shadow
 
 Using Dynamic Content Elements
 ==============================
