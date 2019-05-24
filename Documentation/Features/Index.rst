@@ -2,8 +2,8 @@
 
 .. _features:
 
-Introduction
-============
+Features
+========
 
 This chapter will go through all the features of the Mautic extension for TYPO3.
 

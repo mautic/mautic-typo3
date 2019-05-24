@@ -2,7 +2,7 @@
 
 .. _installation:
 
-Introduction
+Installation
 ============
 
 This chapter will show you how to install the mautic extension in your TYPO3 instance.
