@@ -50,6 +50,9 @@ class FormRepository extends AbstractRepository
 
     public function editForm(int $id, array $parameters, bool $createIfNotExists = false): array
     {
+        // Unset cachedHtml to not exceed request header field server limit
+        $parameters['cachedHtml'] = '';
+
         return $this->formsApi->edit($id, $parameters, $createIfNotExists) ?: [];
     }
 
