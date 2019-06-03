@@ -7,7 +7,6 @@ use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Bitmotion\Mautic\Domain\Repository\SegmentRepository;
 use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Bitmotion\Mautic\Mautic\OAuth;
-use Mautic\Auth\AuthInterface;
 use Mautic\MauticApi;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
@@ -16,7 +15,6 @@ use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class MauticAuthorizeService
 {

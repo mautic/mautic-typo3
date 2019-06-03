@@ -29,7 +29,6 @@ class MauticContactFinisher extends AbstractFinisher implements LoggerAwareInter
     protected function executeInternal()
     {
         $formDefinition = $this->finisherContext->getFormRuntime()->getFormDefinition();
-
         $mauticFields = [];
 
         foreach ($this->finisherContext->getFormValues() as $key => $value) {

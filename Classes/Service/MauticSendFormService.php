@@ -5,12 +5,15 @@ namespace Bitmotion\Mautic\Service;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Cookie\SetCookie;
-use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class MauticSendFormService implements SingletonInterface
+class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     public function submitForm(string $url, array $data): int
     {
         $client = new Client();
@@ -29,20 +32,17 @@ class MauticSendFormService implements SingletonInterface
 
         $result = null;
         try {
-            $result = $client->request('POST', $url, [
+            $result = $client->post($url, [
                 'cookies' => $cookies,
                 'headers' => $headers,
                 'multipart' => $multipart,
             ]);
         } catch (\Exception $e) {
-            /** @var ResponseInterface $result */
-            $result = $e->getResponse();
-            if ($result !== null) {
-                return (int)$result->getStatusCode();
-            }
+            $this->logger->critical(sprintf('%s: %s', $e->getCode(), $e->getMessage()));
 
             return 500;
         }
+
         $statusCode = $result->getStatusCode();
 
         return (int)$statusCode;
