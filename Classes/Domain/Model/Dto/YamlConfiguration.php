@@ -74,8 +74,9 @@ class YamlConfiguration implements SingletonInterface
     {
         $this->configPath = Environment::getConfigPath() . '/mautic';
         $this->fileName = $this->configPath . '/' . $this->configFileName;
-        $settings = $this->getYamlConfiguration();
-        $this->configurationArray = $settings;
+        $this->configurationArray = $this->getYamlConfiguration();
+        $extensionConfiguration = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic'];
+        $settings = array_replace_recursive($this->configurationArray, $extensionConfiguration);
 
         foreach ($settings as $key => $value) {
             if (property_exists(__CLASS__, $key)) {
@@ -106,6 +107,7 @@ class YamlConfiguration implements SingletonInterface
         if (!file_exists($this->fileName)) {
             GeneralUtility::mkdir_deep($this->configPath);
         }
+
         $yamlFileContents = Yaml::dump($configuration, 99, 2);
         GeneralUtility::writeFile($this->fileName, $yamlFileContents);
     }
