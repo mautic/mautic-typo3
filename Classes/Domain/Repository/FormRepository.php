@@ -76,4 +76,9 @@ class FormRepository extends AbstractRepository
             );
         }
     }
+
+    public function formExists(int $id): bool
+    {
+        return !empty($this->getForm($id));
+    }
 }

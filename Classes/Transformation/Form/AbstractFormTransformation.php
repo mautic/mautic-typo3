@@ -63,6 +63,11 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
         return $this->shouldUpdateCustomFields;
     }
 
+    public function removeMauticFormId()
+    {
+        unset($this->formDefinition['renderingOptions']['mauticId']);
+    }
+
     public function addField(array $fieldDefinition)
     {
         if (!empty($fieldDefinition)) {

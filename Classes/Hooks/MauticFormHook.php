@@ -26,6 +26,9 @@ class MauticFormHook implements LoggerAwareInterface
      */
     protected $formPersistenceManager;
 
+    /**
+     * @var FormRepository
+     */
     protected $formRepository;
 
     /**
@@ -68,11 +71,15 @@ class MauticFormHook implements LoggerAwareInterface
 
             // Update existing Mautic form or create a new one if no form exists
             if (isset($formDefinition['renderingOptions']['mauticId']) && !empty($formDefinition['renderingOptions']['mauticId'])) {
-                $response = $this->formRepository->editForm(
-                    (int)$formDefinition['renderingOptions']['mauticId'],
-                    $this->formTransformation->getFormData(),
-                    true
-                );
+                $formId = (int)$formDefinition['renderingOptions']['mauticId'];
+
+                if ($this->formRepository->formExists($formId)) {
+                    $response = $this->formRepository->editForm($formId, $this->formTransformation->getFormData(), true);
+                } else {
+                    // Remove given mauticId from form definition if mautic form does not exist (e.g. if the form was removed from mautic).
+                    $this->formTransformation->removeMauticFormId();
+                    $response = $this->formRepository->createForm($this->formTransformation->getFormData());
+                }
             } else {
                 $response = $this->formRepository->createForm($this->formTransformation->getFormData());
             }
