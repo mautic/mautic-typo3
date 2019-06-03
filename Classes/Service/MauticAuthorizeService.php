@@ -155,7 +155,7 @@ class MauticAuthorizeService
 
                 $this->segmentRepository->initializeSegments();
 
-                GeneralUtility::makeInstance(EmConfiguration::class)->save($this->extensionConfiguration);
+                GeneralUtility::makeInstance(YamlConfiguration::class)->save($this->extensionConfiguration);
                 HttpUtility::redirect($_SERVER['REQUEST_URI']);
             }
         } catch (\Exception $exception) {
