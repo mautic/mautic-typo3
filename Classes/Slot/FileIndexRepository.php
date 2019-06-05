@@ -15,12 +15,6 @@ class FileIndexRepository implements LoggerAwareInterface
         // TODO: Implement when we support file uploads within TYPO3
     }
 
-    public function deleteRecord(int $uid)
-    {
-        $this->logger->debug('deleteRecord');
-        // TODO: Implement when we support file uploads within TYPO3
-    }
-
     public function updateRecord(array $record)
     {
         $this->logger->debug('updateRecord');

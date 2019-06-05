@@ -105,13 +105,6 @@ call_user_func(function () {
 
     $slotDispatcher->connect(
         \TYPO3\CMS\Core\Resource\Index\FileIndexRepository::class,
-        'recordDeleted',
-        \Bitmotion\Mautic\Slot\FileIndexRepository::class,
-        'deleteRecord'
-    );
-
-    $slotDispatcher->connect(
-        \TYPO3\CMS\Core\Resource\Index\FileIndexRepository::class,
         'recordMarkedAsMissing',
         \Bitmotion\Mautic\Slot\FileIndexRepository::class,
         'markRecordAsMissing'
