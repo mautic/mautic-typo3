@@ -89,27 +89,6 @@ call_user_func(function () {
         'synchronizeTags'
     );
 
-    $slotDispatcher->connect(
-        \TYPO3\CMS\Core\Resource\Index\FileIndexRepository::class,
-        'recordUpdated',
-        \Bitmotion\Mautic\Slot\FileIndexRepository::class,
-        'updateRecord'
-    );
-
-    $slotDispatcher->connect(
-        \TYPO3\CMS\Core\Resource\Index\FileIndexRepository::class,
-        'recordCreated',
-        \Bitmotion\Mautic\Slot\FileIndexRepository::class,
-        'createRecord'
-    );
-
-    $slotDispatcher->connect(
-        \TYPO3\CMS\Core\Resource\Index\FileIndexRepository::class,
-        'recordMarkedAsMissing',
-        \Bitmotion\Mautic\Slot\FileIndexRepository::class,
-        'markRecordAsMissing'
-    );
-
     ###################
     #      PLUGIN     #
     ###################
