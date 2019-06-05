@@ -42,8 +42,8 @@
 			<f:render section="form-element-text" arguments="{key: 'baseUrl', type: 'authorization'}" />
 			<f:render section="form-element-text" arguments="{key: 'publicKey', type: 'authorization'}" />
 			<f:render section="form-element-text" arguments="{key: 'secretKey', type: 'authorization'}" />
-			<f:render section="form-element-text" arguments="{key: 'accessToken', type: 'authorization'}" />
-			<f:render section="form-element-text" arguments="{key: 'accessTokenSecret', type: 'authorization'}" />
+			<f:render section="form-element-text" arguments="{key: 'accessToken', type: 'authorization', readOnly: 1}" />
+			<f:render section="form-element-text" arguments="{key: 'accessTokenSecret', type: 'authorization', readOnly: 1}" />
 		</div>
 	</div>
 </f:section>
@@ -68,7 +68,14 @@
 		</label>
 		<p>{type}.{key} (string)</p>
 		<div class="form-control-wrap">
-			<f:form.textfield id="{type}-{key}" property="{key}" class="form-control" />
+			<f:if condition="{readOnly}">
+				<f:then>
+					<f:form.textfield id="{type}-{key}" property="{key}" class="form-control" readonly />
+				</f:then>
+				<f:else>
+					<f:form.textfield id="{type}-{key}" property="{key}" class="form-control" />
+				</f:else>
+			</f:if>
 		</div>
 		<div class="help-block"></div>
 	</div>
