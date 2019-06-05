@@ -148,3 +148,19 @@ in the right list, they will move to the left. Once you are happy with the confi
       :class: with-shadow
 
 Done. You have successfully created a content element that is shown/hidden based on information coming from Mautic!
+
+Link Assets
+===========
+
+You can link Mautic assets directly in TYPO3 using file relations or the link wizard. To start, you have to create a
+new file storage within TYPO3. Open your TYPO3 backend and navigate to the list module, select the root page (pid = 0)
+and add a new file storage. All you have to do is to select `Mautic` as driver and choose a name. We recommend to use
+the processing folder of the TYPO3 default storage (e.g. `fileadmin`):
+
+   .. figure:: 012.png
+      :class: with-shadow
+
+You can now link your assets:
+
+   .. figure:: 013.png
+      :class: with-shadow

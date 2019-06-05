@@ -22,13 +22,21 @@ Features
 - Mautic form embedding
 - Tracking script integration
 - OAuth support
+- Tag users
+- Link assets
 
 See also
 --------
 
 - https://github.com/mautic/mautic-typo3
 
+Compatibility
+-------------
+
+This extension works with TYPO3 9 LTS.
+
 Thanks
 ------
 
-This extension was developed by Bitmotion GmbH in collaboration with Jurian Janssen.
+This extension was developed by `Bitmotion GmbH <https://www.bitmotion.de/>`_
+ in collaboration with Jurian Janssen.
