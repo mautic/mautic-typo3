@@ -7,6 +7,7 @@ use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Bitmotion\Mautic\Domain\Repository\SegmentRepository;
 use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Bitmotion\Mautic\Mautic\OAuth;
+use Mautic\Exception\UnexpectedResponseFormatException;
 use Mautic\MauticApi;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
@@ -156,6 +157,14 @@ class MauticAuthorizeService
                 GeneralUtility::makeInstance(YamlConfiguration::class)->save($this->extensionConfiguration);
                 HttpUtility::redirect($_SERVER['REQUEST_URI']);
             }
+        } catch (UnexpectedResponseFormatException $exception) {
+            $errors = \GuzzleHttp\json_decode($exception->getResponse()->getBody(), true)['errors'];
+
+            foreach ($errors as $error) {
+                $this->addErrorMessage('Error ' . (string)$error['code'], (string)$error['message']);
+            }
+
+            return false;
         } catch (\Exception $exception) {
             $this->addErrorMessage((string)$exception->getCode(), (string)$exception->getMessage());
 
