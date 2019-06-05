@@ -70,7 +70,7 @@
 		<div class="form-control-wrap">
 			<f:if condition="{readOnly}">
 				<f:then>
-					<f:form.textfield id="{type}-{key}" property="{key}" class="form-control" readonly />
+					<f:form.textfield id="{type}-{key}" property="{key}" class="form-control" readonly="readonly" />
 				</f:then>
 				<f:else>
 					<f:form.textfield id="{type}-{key}" property="{key}" class="form-control" />
