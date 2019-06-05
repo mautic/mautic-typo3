@@ -3,6 +3,7 @@ declare(strict_types = 1);
 namespace Bitmotion\Mautic\Domain\Repository;
 
 use Mautic\Api\Tags;
+use Mautic\Exception\ContextNotFoundException;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -14,6 +15,9 @@ class TagRepository extends AbstractRepository
      */
     protected $tagsApi;
 
+    /**
+     * @throws ContextNotFoundException
+     */
     protected function injectApis(): void
     {
         $this->tagsApi = $this->getApi('tags');
