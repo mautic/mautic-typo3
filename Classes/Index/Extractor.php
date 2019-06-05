@@ -64,6 +64,6 @@ class Extractor implements ExtractorInterface
         $assetApi = GeneralUtility::makeInstance(ObjectManager::class)->get(AssetRepository::class);
         $assets = $assetApi->list($mauticAlias);
 
-        return array_shift($assets);
+        return !empty($assets) ? array_shift($assets) : [];
     }
 }
