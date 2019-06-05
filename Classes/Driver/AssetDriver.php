@@ -221,7 +221,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
 
     public function deleteFile($fileIdentifier)
     {
-        return true;
+        return $this->removeFileByIdentifier($fileIdentifier);
     }
 
     public function deleteFolder($folderIdentifier, $deleteRecursively = false)
@@ -577,6 +577,18 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
             ->fetch();
 
         return ($file === false) ? [] : $file;
+    }
+
+    protected function removeFileByIdentifier(string $identifier)
+    {
+        $this->normalizeIdentifier($identifier);
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_file');
+
+        return (bool)$queryBuilder
+            ->delete('sys_file')
+            ->where($queryBuilder->expr()->eq('storage', $this->storageUid))
+            ->andWhere($queryBuilder->expr()->eq('identifier', $queryBuilder->createNamedParameter('/' . $identifier)))
+            ->execute();
     }
 
     protected function removeFileFromDatabase(int $uid)

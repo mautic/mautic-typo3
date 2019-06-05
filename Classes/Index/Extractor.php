@@ -22,12 +22,14 @@ class Extractor implements ExtractorInterface
             'title' => $asset['title'],
         ];
 
-        $fileName = $file->getForLocalProcessing(false);
-        $imageInfo = GeneralUtility::makeInstance(ImageInfo::class, $fileName);
+        if ($file->isDeleted() === false) {
+            $fileName = $file->getForLocalProcessing(false);
+            $imageInfo = GeneralUtility::makeInstance(ImageInfo::class, $fileName);
 
-        if ($imageInfo !== null) {
-            $data['width'] = $imageInfo->getWidth();
-            $data['height'] = $imageInfo->getHeight();
+            if ($imageInfo !== null) {
+                $data['width'] = $imageInfo->getWidth();
+                $data['height'] = $imageInfo->getHeight();
+            }
         }
 
         return $data;
