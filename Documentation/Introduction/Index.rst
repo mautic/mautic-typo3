@@ -38,5 +38,4 @@ This extension works with TYPO3 9 LTS.
 Thanks
 ------
 
-This extension was developed by `Bitmotion GmbH <https://www.bitmotion.de/>`_
- in collaboration with Jurian Janssen.
+This extension was developed by `Bitmotion GmbH <https://www.bitmotion.de/>`_  in collaboration with Jurian Janssen.
