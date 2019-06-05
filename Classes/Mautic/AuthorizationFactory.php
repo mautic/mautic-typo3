@@ -4,12 +4,19 @@ namespace Bitmotion\Mautic\Mautic;
 
 use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Mautic\Auth\ApiAuth;
+use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class AuthorizationFactory
+class AuthorizationFactory implements SingletonInterface
 {
+    protected static $oAuth;
+
     public static function createAuthorizationFromExtensionConfiguration(): OAuth
     {
+        if (self::$oAuth instanceof OAuth) {
+            return self::$oAuth;
+        }
+
         $extensionConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class);
 
         $settings = [
@@ -28,6 +35,9 @@ class AuthorizationFactory
         $initAuth = new ApiAuth();
         $authorization = $initAuth->newAuth($settings);
 
-        return new OAuth($authorization, $settings['baseUrl']);
+        $oAuth = new OAuth($authorization, $settings['baseUrl']);
+        self::$oAuth = $oAuth;
+
+        return $oAuth;
     }
 }
