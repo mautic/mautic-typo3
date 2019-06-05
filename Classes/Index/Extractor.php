@@ -15,20 +15,21 @@ class Extractor implements ExtractorInterface
     public function extractMetaData(Resource\File $file, array $previousExtractedData = []): array
     {
         $asset = $this->getAsset($file);
+        $data = [];
 
-        $data = [
-            'description' => $asset['dscription'],
-            'alternative' => $asset['description'],
-            'title' => $asset['title'],
-        ];
+        if (!empty($asset)) {
+            $data['description'] = $asset['description'];
+            $data['alternative'] = $asset['description'];
+            $data['title'] = $asset['title'];
 
-        if ($file->isDeleted() === false) {
-            $fileName = $file->getForLocalProcessing(false);
-            $imageInfo = GeneralUtility::makeInstance(ImageInfo::class, $fileName);
+            if ($file->isDeleted() === false) {
+                $fileName = $file->getForLocalProcessing(false);
+                $imageInfo = GeneralUtility::makeInstance(ImageInfo::class, $fileName);
 
-            if ($imageInfo !== null) {
-                $data['width'] = $imageInfo->getWidth();
-                $data['height'] = $imageInfo->getHeight();
+                if ($imageInfo !== null) {
+                    $data['width'] = $imageInfo->getWidth();
+                    $data['height'] = $imageInfo->getHeight();
+                }
             }
         }
 
