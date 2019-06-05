@@ -5,6 +5,7 @@ namespace Bitmotion\Mautic\Service;
 use Bitmotion\Mautic\Controller\BackendController;
 use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Bitmotion\Mautic\Domain\Repository\SegmentRepository;
+use Bitmotion\Mautic\Domain\Repository\TagRepository;
 use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Bitmotion\Mautic\Mautic\OAuth;
 use Mautic\Exception\UnexpectedResponseFormatException;
@@ -35,6 +36,11 @@ class MauticAuthorizeService
     protected $segmentRepository;
 
     /**
+     * @var TagRepository
+     */
+    protected $tagRepository;
+
+    /**
      * @var string
      */
     protected $minimumMauticVersion = '2.14.2';
@@ -45,9 +51,12 @@ class MauticAuthorizeService
             session_start();
         }
 
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+
         $this->extensionConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class)->getConfigurationArray();
         $this->authorization = AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
-        $this->segmentRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(SegmentRepository::class);
+        $this->segmentRepository = $objectManager->get(SegmentRepository::class);
+        $this->tagRepository = $objectManager->get(TagRepository::class);
     }
 
     public function validateCredentials(): bool
@@ -153,6 +162,7 @@ class MauticAuthorizeService
                 }
 
                 $this->segmentRepository->initializeSegments();
+                $this->tagRepository->synchronizeTags();
 
                 GeneralUtility::makeInstance(YamlConfiguration::class)->save($this->extensionConfiguration);
                 HttpUtility::redirect($_SERVER['REQUEST_URI']);
