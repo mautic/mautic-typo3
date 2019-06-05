@@ -174,6 +174,8 @@ class MauticAuthorizeService
                 $this->addErrorMessage('Error ' . (string)$error['code'], (string)$error['message']);
             }
 
+            unset($_SESSION['oauth']);
+
             return false;
         } catch (\Exception $exception) {
             $this->addErrorMessage((string)$exception->getCode(), (string)$exception->getMessage());
