@@ -47,7 +47,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
     /**
      * @var AssetRepository
      */
-    protected $assetApi;
+    protected $assetRepository;
 
     public function __construct(array $configuration = [])
     {
@@ -181,7 +181,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         }
 
         $targetIdentifier = '/asset/' . $newFileName;
-        $asset = $this->getAssetApi()->upload($targetPath, $newFileName);
+        $asset = $this->getAssetRepository()->upload($targetPath, $newFileName);
 
         if (!empty($asset)) {
             $assetData = $this->getAssetDataFromResponse($asset);
@@ -358,7 +358,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         if (($sort !== '' && $sort !== 'file') || $sortRev === true || $this->assetsLoaded === false) {
             $order = $this->getOrder($sort);
             $orderByDir = $sortRev ? 'DESC' : 'ASC';
-            $this->rebuildAssetCache($this->getAssetApi()->list('', $start, $numberOfItems, $order, $orderByDir));
+            $this->rebuildAssetCache($this->getAssetRepository()->list('', $start, $numberOfItems, $order, $orderByDir));
             $this->assetsLoaded = true;
         }
 
@@ -468,7 +468,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
     protected function getAsset(string $identifier): array
     {
         $identifier = PathUtility::basename($identifier);
-        $assets = $this->getAssetApi()->list($identifier, 0, 1);
+        $assets = $this->getAssetRepository()->list($identifier, 0, 1);
         $asset = [];
 
         if (!empty($assets)) {
@@ -586,13 +586,13 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         $file->getStorage()->deleteFile($file);
     }
 
-    protected function getAssetApi(): AssetRepository
+    protected function getAssetRepository(): AssetRepository
     {
-        if (!$this->assetApi instanceof AssetRepository) {
-            $this->assetApi = GeneralUtility::makeInstance(ObjectManager::class)->get(AssetRepository::class);
+        if (!$this->assetRepository instanceof AssetRepository) {
+            $this->assetRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(AssetRepository::class);
         }
 
-        return $this->assetApi;
+        return $this->assetRepository;
     }
 
     protected function processFile(string $fileIdentifier, array $asset): string
