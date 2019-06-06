@@ -154,6 +154,17 @@ in the right list, they will move to the left. Once you are happy with the confi
 
 Done. You have successfully created a content element that is shown/hidden based on information coming from Mautic!
 
+Tagging
+=======
+
+Assign tags to your contacts when the enter a page. Go into the settings of your page and choose the tab `mautic`.
+If you already have some tags in your Mautic instance, you can synchronize them with TYPO3 by pressing the synchronize
+Button. If you do not, just create a new tag on the fly and assign it to the page. The tag is automatically created in
+Mautic, too.
+
+   .. figure:: 014.png
+      :class: with-shadow
+
 Link Assets
 ===========
 
