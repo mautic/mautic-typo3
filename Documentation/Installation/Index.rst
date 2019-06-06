@@ -2,13 +2,14 @@
 
 .. _installation:
 
+============
 Installation
 ============
 
 This chapter will show you how to install the mautic extension in your TYPO3 instance.
 
 Installation via Composer
--------------------------
+=========================
 
 If your TYPO3 instance is running in composer mode, you can simply require the extension by running
 
@@ -17,22 +18,22 @@ If your TYPO3 instance is running in composer mode, you can simply require the e
    composer require mautic/mautic-typo3
 
 Installation via Extension Manager
-----------------------------------
+==================================
 
 Open the extension manager module of your TYPO3 instance and select "Get Extensions" in the select menu above the upload
 button. There you can search for `mautic` and simply install the extension. Please make sure you are using the latest
 version of the extension by updating the extension list before installing the mautic extension.
 
 Installation via zip file
--------------------------
+=========================
 
 First you need the Marketing Automation extension, which can be found here https://extensions.typo3.org/extension/marketing_automation/.
 Download the zip file, upload it to the extension manager of your TYPO3 instance and activate it. Then download the Mautic extension
 at https://extensions.typo3.org/extension/mautic/ and also upload this zip file to the extension manager of your
 TYPO3 instance and activate it.
 
-Initial Configuration
----------------------
+Configuration
+=============
 
 Log in to your Mautic dashboard. Click on the little cog-wheel icon at the top-right of the screen. A menu opens,
 select "API Credentials". Click "New" at the top right. Select "OAuth 1.0a", fill in a name, and leave the Callback URI
@@ -58,16 +59,10 @@ If all went well a green flashmessage should show you that the connection to the
 
 Your extension has now been configured.
 
-Enable Tracking
----------------
-
-You can simply enable the Mautic tracking by enabling the tracking option in the "Tracking" tab of the backend module
-mentioned above. It is also possible to override the default Mautic JavaScript code.
-
 Override Configuration
 ----------------------
 
-All configuration made in the backend module can simply be overwritten by PHP:
+All configuration made in the backend module can simply be overwritten in your configuration files:
 
 .. code-block:: php
 
