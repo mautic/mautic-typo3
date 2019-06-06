@@ -2,10 +2,11 @@
 declare(strict_types = 1);
 namespace Bitmotion\Mautic\Hooks;
 
-use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
+use Bitmotion\Mautic\Domain\Repository\ContactRepository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class MauticTagHook
 {
@@ -15,27 +16,20 @@ class MauticTagHook
 
         if ($page['tx_mautic_tags'] > 0) {
             $tags = $this->getTagsToAssign($page);
-            $domain = $this->getMauticDomain();
-            if (!empty($tags) && $domain !== '') {
-                $params['footerData'][] = sprintf(
-                    '<img src="%s/mtracking.gif?tags=%s" style="display: none;" />',
-                    $domain,
-                    implode(',', $tags)
-                    );
+            if (!empty($tags)) {
+                $contactId = (int)$_COOKIE['mtc_id'];
+
+                if ($contactId > 0) {
+                    $contactRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(ContactRepository::class);
+                    $contactRepository->editContact($contactId, ['tags' => $tags]);
+                }
             }
         }
     }
 
-    protected function getMauticDomain(): string
-    {
-        $config = new YamlConfiguration();
-
-        return $config->getBaseUrl();
-    }
-
     protected function getTagsToAssign(array $page): array
     {
-        $pageUid = $page['_PAGES_OVERLAY'] ? $page['_PAGES_OVERLAY_UID'] : $page['uid'];
+        $pageUid = $page['_PAGES_OVERLAY_UID'] ?? $page['uid'];
 
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_mautic_page_tag_mm');
         $result = $queryBuilder
