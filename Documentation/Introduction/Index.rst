@@ -43,6 +43,7 @@ See also
 ========
 
 - https://github.com/mautic/mautic-typo3
+- https://extensions.typo3.org/extension/mautic/
 
 Compatibility
 =============
