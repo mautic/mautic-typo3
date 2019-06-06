@@ -20,15 +20,13 @@ $temporaryColumns = [
             'fieldControl' => [
                 'updateTagsControl' => [
                     'renderType' => 'updateTagsControl',
-                ],
-                'editPopup' => [
-                    'disabled' => true,
+                    'title' => 'Synchronize Tags',
                 ],
                 'addRecord' => [
-                    'disabled' => true,
-                ],
-                'listModule' => [
-                    'disabled' => true,
+                    'disabled' => false,
+                    'pid' => 0,
+                    'table' => 'tx_mautic_domain_model_tag',
+                    'title' => 'Create new Tag',
                 ],
             ],
         ],
