@@ -26,7 +26,7 @@ call_user_func(function () {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem']['mautic_form'] =
         \Bitmotion\Mautic\Hooks\PageLayoutView\MauticFormPreviewRenderer::class;
 
-    $GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['mautic'] =
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['mautic'] =
         \Bitmotion\Mautic\Hooks\TCEmainHook::class;
 
     if (TYPO3_MODE === 'FE') {

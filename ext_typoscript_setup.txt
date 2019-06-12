@@ -26,7 +26,6 @@ tt_content {
             extensionName = Mautic
             pluginName = Form
             userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
-
         }
     }
 }
