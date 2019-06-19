@@ -41,6 +41,12 @@ Then you must go into the backend of Mautic and create a pair of OAuth1a tokens.
 ## Documentation
 Documentation and a getting started guide can be found [here](https://docs.typo3.org/p/mautic/mautic-typo3/master/en-us/).
 
+## Packaging for use in the Extension Manager
+Clone the repository and run the following in the extension root directory:
+```
+composer package
+```
+
 ## Contributing Partners
 * [Beech](https://beech.it)
 * [Bitmotion GmbH](https://bitmotion.de)
