@@ -40,6 +40,9 @@
         "vendor-dir": ".Build/vendor",
         "bin-dir": ".Build/bin"
     },
+    "scripts": {
+        "package": "cd Libraries/ && composer install && cd ../ && TAG=$(git describe --tags); zip -9 -r --exclude=*.git* --exclude=.* --exclude=Libraries/composer.* mautic_$TAG.zip ."
+    },
     "extra": {
         "typo3/cms": {
             "extension-key": "mautic",
