@@ -38,6 +38,9 @@ composer require mautic/mautic-typo3
 ```
 Then you must go into the backend of Mautic and create a pair of OAuth1a tokens. You can read how to correctly configure the API [here](https://www.mautic.org/blog/developer/how-to-use-the-mautic-rest-api/) under section "3. How to authorize your Mautic API application". After correctly configuring the API and creating a pair of OAuth1a tokens, you can enter them alongside of your Mautic URL in the extension configuration. As soon as these are saved, a button should pop up. This button will allow you to complete the OAuth authentication process and will retrieve the needed tokens. Once that is done, you are all set!
 
+## Documentation
+Documentation and a getting started guide can be found [here](https://docs.typo3.org/p/mautic/mautic-typo3/master/en-us/).
+
 ## Contributing Partners
 * [Beech](https://beech.it)
 * [Bitmotion GmbH](https://bitmotion.de)
