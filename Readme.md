@@ -50,4 +50,4 @@ Documentation and a getting started guide can be found [here](https://docs.typo3
 You can contribute by making a pull request to the master branch of this repository.
 
 ## Questions or Suggestions?
-You can always open an issue in this repository if you find a bug or have a feature request. Next to that you can also come visit us on Slack via <https://www.mautic.org/slack> in the channel `#typo3-mautic`.
+You can always open an issue in this repository if you find a bug or have a feature request. Next to that you can also come visit us on Slack ([Mautic](https://www.mautic.org/slack) or [TYPO3](https://typo3.org/article/how-to-use-slack-in-the-typo3-community/)> in the channel `#typo3-mautic`.
