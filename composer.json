@@ -41,7 +41,7 @@
         "bin-dir": ".Build/bin"
     },
     "scripts": {
-        "package": "cd Libraries/ && composer install && cd ../ && TAG=$(git describe --tags); zip -9 -r --exclude=*.git* --exclude=.* --exclude=Libraries/composer.* mautic_$TAG.zip ."
+        "package": "./Build/scripts/package.sh"
     },
     "extra": {
         "typo3/cms": {
