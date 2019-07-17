@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-TAG=$(git describe --tags);
-echo "Build release ${TAG//v}"
+TAG=$(git describe --tags | sed 's/v//g')
+echo "Build release ${TAG}"
 cd Libraries/
 
 COMPOSER=$(which composer);
