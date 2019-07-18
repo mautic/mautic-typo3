@@ -40,6 +40,9 @@
         "vendor-dir": ".Build/vendor",
         "bin-dir": ".Build/bin"
     },
+    "scripts": {
+        "package": "./Build/scripts/package.sh"
+    },
     "extra": {
         "typo3/cms": {
             "extension-key": "mautic",
