@@ -1,0 +1,10 @@
+/.github/ export-ignore
+/Build/ export-ignore
+/Documentation/ export-ignore
+/Libraries/ export-ignore
+/Tests/ export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.php_cs.dist export-ignore
+/Readme.md export-ignore
+/Libraries/composer.lock -diff
