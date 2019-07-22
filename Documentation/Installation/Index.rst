@@ -31,6 +31,7 @@ First you need the Marketing Automation extension, which can be found here https
 Download the zip file, upload it to the extension manager of your TYPO3 instance and activate it. Then download the Mautic extension
 at https://extensions.typo3.org/extension/mautic/ and also upload this zip file to the extension manager of your
 TYPO3 instance and activate it.
+Note: Please do not use GitHub to export a zip file because dependencies are missing.
 
 Configuration
 =============
