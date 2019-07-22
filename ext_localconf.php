@@ -3,7 +3,16 @@ defined('TYPO3_MODE') || die;
 
 call_user_func(function () {
     if (!defined('TYPO3_COMPOSER_MODE') || !TYPO3_COMPOSER_MODE) {
-        require \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mautic') . 'Libraries/vendor/autoload.php';
+        $filePath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mautic') . 'Libraries/vendor/autoload.php';
+        if (@file_exists($filePath)) {
+            require_once $filePath;
+        } else {
+            throw new \Exception(sprintf('File %s does not exist. Dependencies could not be loaded.', $filePath));
+        }
+    }
+
+    if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('marketing_automation') === false) {
+        throw new \Exception('Required extension is not loaded: EXT:marketing_automation.');
     }
 
     $marketingDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Bitmotion\MarketingAutomation\Dispatcher\Dispatcher::class);
