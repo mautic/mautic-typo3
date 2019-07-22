@@ -37,18 +37,17 @@
         "ext-intl": "For sorting arrays"
     },
     "config": {
-        "vendor-dir": ".Build/vendor",
-        "bin-dir": ".Build/bin"
+        "vendor-dir": "Build/vendor",
+        "bin-dir": "Build/bin"
     },
     "scripts": {
-        "package": "./Build/scripts/package.sh"
+        "package": "Build/scripts/package.sh"
     },
     "extra": {
         "typo3/cms": {
             "extension-key": "mautic",
             "cms-package-dir": "{$vendor-dir}/typo3/cms",
-            "app-dir": ".Build",
-            "web-dir": ".Build/public"
+            "web-dir": "Build/web"
         }
     }
 }
