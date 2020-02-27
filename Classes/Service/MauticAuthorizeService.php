@@ -88,10 +88,10 @@ class MauticAuthorizeService
 
     public function checkConnection()
     {
-        $api = new MauticApi();
-        $api = $api->newApi('contacts', $this->authorization, $this->authorization->getBaseUrl());
-        $api->getList('', 0, 1);
-        $version = $api->getMauticVersion();
+        // Perform a dummy request for retrieving HTTP headers and getting Mautic Version
+        $contactsApi = (new MauticApi())->newApi('contacts', $this->authorization, $this->authorization->getBaseUrl());
+        $contactsApi->getList('', 0, 1);
+        $version = $contactsApi->getMauticVersion();
 
         if ($version === null) {
             $this->addErrorMessage();
@@ -194,10 +194,10 @@ class MauticAuthorizeService
         return true;
     }
 
-    protected function addErrorMessage(string $title = null, string $message = null)
+    protected function addErrorMessage(?string $title = null, ?string $message = null)
     {
         $title = $title ?: $this->translate('authorization.error.title');
-        $message = $message ?: $this->translate('authorization.error.message');
+        $message = $this->translate('authorization.error.message.' . $message) ?: $message ?: $this->translate('authorization.error.message');
 
         $this->addFlashMessage(
             GeneralUtility::makeInstance(FlashMessage::class, $message, $title, FlashMessage::ERROR, true)
