@@ -51,10 +51,22 @@
                 <source>Your Mautic installation is contacted over http and not https. Consider securing your Mautic installation with an SSL certificate.</source>
             </trans-unit>
             <trans-unit id="authorization.error.title">
-                <source>An error occurred</source>
+                <source>An Error Occurred</source>
+            </trans-unit>
+            <trans-unit id="authorization.error.title.invalid_response">
+                <source>Invalid Response</source>
             </trans-unit>
             <trans-unit id="authorization.error.message">
                 <source>Please verify your credentials.</source>
+            </trans-unit>
+            <trans-unit id="authorization.error.message.consumer_key_unknown">
+                <source>Consumer key (public key) unknown.</source>
+            </trans-unit>
+            <trans-unit id="authorization.error.message.signature_invalid">
+                <source>Invalid signature.</source>
+            </trans-unit>
+            <trans-unit id="authorization.error.message.invalid_response">
+                <source>The given response was not a valid JSON. Does the baseURL exists?</source>
             </trans-unit>
             <trans-unit id="authorization.warning.title">
                 <source>Warning</source>

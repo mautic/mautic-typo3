@@ -8,6 +8,7 @@ use Bitmotion\Mautic\Domain\Repository\SegmentRepository;
 use Bitmotion\Mautic\Domain\Repository\TagRepository;
 use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Bitmotion\Mautic\Mautic\OAuth;
+use GuzzleHttp\Exception\InvalidArgumentException;
 use Mautic\Exception\UnexpectedResponseFormatException;
 use Mautic\MauticApi;
 use TYPO3\CMS\Core\Imaging\Icon;
@@ -168,15 +169,22 @@ class MauticAuthorizeService
                 HttpUtility::redirect($_SERVER['REQUEST_URI']);
             }
         } catch (UnexpectedResponseFormatException $exception) {
-            $errors = \GuzzleHttp\json_decode($exception->getResponse()->getBody(), true)['errors'];
+            try {
+                $errors = \GuzzleHttp\json_decode($exception->getResponse()->getBody(), true)['errors'];
 
-            foreach ($errors as $error) {
-                $this->addErrorMessage('Error ' . (string)$error['code'], (string)$error['message']);
+                foreach ($errors as $error) {
+                    $this->addErrorMessage('Error ' . (string)$error['code'], (string)$error['message']);
+                }
+            } catch (InvalidArgumentException $exception) {
+                $this->addErrorMessage(
+                    $this->translate('authorization.error.title.invalid_response'),
+                    $this->translate('authorization.error.message.invalid_response')
+                );
+            } finally {
+                unset($_SESSION['oauth']);
+
+                return false;
             }
-
-            unset($_SESSION['oauth']);
-
-            return false;
         } catch (\Exception $exception) {
             $this->addErrorMessage((string)$exception->getCode(), (string)$exception->getMessage());
 
