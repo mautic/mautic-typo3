@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 namespace Bitmotion\Mautic\Service;
 
 use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;

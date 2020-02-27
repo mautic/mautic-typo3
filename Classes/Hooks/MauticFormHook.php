@@ -173,9 +173,11 @@ class MauticFormHook implements LoggerAwareInterface
     {
         if (!isset($formDefinition['renderingOptions'])) {
             throw new ParseErrorException('Form has no rendering options.', 1539064345);
-        } elseif (!isset($formDefinition['renderingOptions']['mauticFormType'])) {
+        }
+        if (!isset($formDefinition['renderingOptions']['mauticFormType'])) {
             throw new ParseErrorException('Form has no Mautic form type.', 1539064529);
-        } elseif (!isset($this->extConf['transformation']['form'][$formDefinition['renderingOptions']['mauticFormType']])) {
+        }
+        if (!isset($this->extConf['transformation']['form'][$formDefinition['renderingOptions']['mauticFormType']])) {
             throw new NoTransformationFoundException('No transformation class found.', 1539064606);
         }
 
@@ -239,7 +241,8 @@ class MauticFormHook implements LoggerAwareInterface
     {
         if (!isset($formElement['type'])) {
             throw new ParseErrorException('Form element has no type definition.', 1539064841);
-        } elseif (!isset($this->extConf['transformation']['formField'][$formElement['type']])) {
+        }
+        if (!isset($this->extConf['transformation']['formField'][$formElement['type']])) {
             throw new NoTransformationFoundException(
                 sprintf('No transformation class for form type "%s" found.', $formElement['type']),
                 1539064875

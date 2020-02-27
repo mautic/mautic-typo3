@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 namespace Bitmotion\Mautic\Index;
 
 use Bitmotion\Mautic\Domain\Repository\AssetRepository;

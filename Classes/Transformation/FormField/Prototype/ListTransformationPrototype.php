@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 namespace Bitmotion\Mautic\Transformation\FormField\Prototype;
 
 use Bitmotion\Mautic\Exception\TransformationException;
