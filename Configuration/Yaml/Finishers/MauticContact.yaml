@@ -1,0 +1,10 @@
+TYPO3:
+  CMS:
+    Form:
+      prototypes:
+        mautic:
+          finishersDefinition:
+            MauticContactFinisher:
+              implementationClassName: Bitmotion\Mautic\Domain\Finishers\MauticContactFinisher
+              formEditor:
+                iconIdentifier: 't3-form-icon-finisher'

@@ -1,0 +1,75 @@
+imports:
+  - { resource: "./FormElements/Checkbox.yaml" }
+  - { resource: "./FormElements/CountryList.yaml" }
+  - { resource: "./FormElements/Date.yaml" }
+  - { resource: "./FormElements/DatePicker.yaml" }
+  - { resource: "./FormElements/Email.yaml" }
+  - { resource: "./FormElements/Form.yaml" }
+  - { resource: "./FormElements/Hidden.yaml" }
+  - { resource: "./FormElements/MultiCheckbox.yaml" }
+  - { resource: "./FormElements/MultiSelect.yaml" }
+  - { resource: "./FormElements/Number.yaml" }
+  - { resource: "./FormElements/RadioButton.yaml" }
+  - { resource: "./FormElements/SingleSelect.yaml" }
+  - { resource: "./FormElements/Telephone.yaml" }
+  - { resource: "./FormElements/Text.yaml" }
+  - { resource: "./FormElements/Textarea.yaml" }
+  - { resource: "./FormElements/Url.yaml" }
+
+  - { resource: "./Finishers/Mautic.yaml" }
+  - { resource: "./Finishers/MauticContact.yaml" }
+
+TYPO3:
+  CMS:
+    Form:
+      formManager:
+        selectablePrototypesConfiguration:
+          1484232130:
+            identifier: 'mautic'
+            label: 'Mautic Form'
+            newFormTemplates:
+              100:
+                __inheritances:
+                  10: 'TYPO3.CMS.Form.formManager.selectablePrototypesConfiguration.100.newFormTemplates.100'
+              200:
+                templatePath: 'EXT:mautic/Resources/Private/Backend/Templates/FormEditor/Yaml/NewForms/SimpleContactFormMautic.yaml'
+                label: formManager.selectablePrototypesConfiguration.standard.newFormTemplates.simpleContactForm.label
+
+      prototypes:
+        mautic:
+          __inheritances:
+            10: 'TYPO3.CMS.Form.prototypes.standard'
+
+          formEditor:
+            dynamicRequireJsModules:
+              additionalViewModelModules:
+                - 'TYPO3/CMS/Mautic/Backend/FormEditor/ViewModel'
+
+            formEditorFluidConfiguration:
+              partialRootPaths:
+                100: 'EXT:mautic/Resources/Private/Backend/Partials/FormEditor/'
+
+            formEditorPartials:
+              Inspector-MauticPropertySelectEditor: 'Inspector/MauticPropertySelectEditor'
+              Inspector-MauticHiddenFieldEditor: 'Inspector/MauticHiddenFieldEditor'
+              FormElement-Email: 'Stage/SimpleTemplate'
+              FormElement-CountryList: 'Stage/SelectTemplate'
+
+            formElementGroups:
+              mautic:
+                label: 'Mautic Elements'
+
+      mixins:
+        formElementMixins:
+          mautic:
+            FormElementMixin:
+              formEditor:
+                predefinedDefaults:
+                  properties:
+                    mauticTable: ''
+                editors:
+                  791:
+                    identifier: 'mauticTable'
+                    templateName: 'Inspector-MauticPropertySelectEditor'
+                    label: 'Mautic Property Type'
+                    propertyPath: 'properties.mauticTable'

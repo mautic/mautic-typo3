@@ -1,0 +1,20 @@
+TYPO3:
+  CMS:
+    Form:
+      prototypes:
+        mautic:
+          finishersDefinition:
+            MauticFinisher:
+              implementationClassName: Bitmotion\Mautic\Domain\Finishers\MauticFinisher
+              formEditor:
+                iconIdentifier: 't3-form-icon-finisher'
+                predefinedDefaults:
+                  options:
+                    mauticId: ''
+              FormEngine:
+                label: 'Mautic Finisher'
+                elements:
+                  mauticId:
+                    label: 'Mautic Form ID'
+                    config:
+                      type: 'input'

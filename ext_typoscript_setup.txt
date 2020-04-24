@@ -1,14 +1,19 @@
 # frontend configuration
-plugin.tx_form.settings.yamlConfigurations {
-    1539066837 = EXT:mautic/Configuration/Yaml/BaseSetup.yml
-    1539066863 = EXT:mautic/Configuration/Yaml/FormEngineSetup.yml
+plugin.tx_form {
+    settings {
+        yamlConfigurations {
+            1587741381 = EXT:mautic/Configuration/Yaml/FormSetup.yaml
+        }
+    }
 }
 
 # backend configuration
-module.tx_form.settings.yamlConfigurations {
-    1539066837 = EXT:mautic/Configuration/Yaml/BaseSetup.yml
-    1539066863 = EXT:mautic/Configuration/Yaml/FormEngineSetup.yml
-    1539066879 = EXT:mautic/Configuration/Yaml/FormEditorSetup.yml
+module.tx_form {
+    settings {
+        yamlConfigurations {
+            1587741381 = EXT:mautic/Configuration/Yaml/FormSetup.yaml
+        }
+    }
 }
 
 lib.contentElement {

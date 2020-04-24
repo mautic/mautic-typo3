@@ -1,0 +1,9 @@
+TYPO3:
+  CMS:
+    Form:
+      prototypes:
+        mautic:
+          formElementsDefinition:
+            Checkbox:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.FormElementMixin'

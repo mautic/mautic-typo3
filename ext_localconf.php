@@ -154,22 +154,32 @@ call_user_func(function () {
     ########################
     # FIELD TRANSFORMATION #
     ########################
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['AdvancedPassword'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Checkbox'] = \Bitmotion\Mautic\Transformation\FormField\CheckboxTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['ContentElement'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Date'] = \Bitmotion\Mautic\Transformation\FormField\DatetimeTransformation::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['DatePicker'] = \Bitmotion\Mautic\Transformation\FormField\DatetimeTransformation::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Email'] = \Bitmotion\Mautic\Transformation\FormField\EmailTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['GridRow'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Fieldset'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['FileUpload'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Hidden'] = \Bitmotion\Mautic\Transformation\FormField\HiddenTransformation::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['ImageUpload'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['MultiCheckbox'] = \Bitmotion\Mautic\Transformation\FormField\MultiCheckboxTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['MultiSelect'] = \Bitmotion\Mautic\Transformation\FormField\MultiSelectTransformation::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Number'] = \Bitmotion\Mautic\Transformation\FormField\NumberTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Page'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Password'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['RadioButton'] = \Bitmotion\Mautic\Transformation\FormField\RadioButtonTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['SingleSelect'] = \Bitmotion\Mautic\Transformation\FormField\SingleSelectTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['StaticText'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['SummaryPage'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Telephone'] = \Bitmotion\Mautic\Transformation\FormField\TelephoneTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Text'] = \Bitmotion\Mautic\Transformation\FormField\TextTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Textarea'] = \Bitmotion\Mautic\Transformation\FormField\TextareaTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['SummaryPage'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Url'] = \Bitmotion\Mautic\Transformation\FormField\UrlTransformation::class;
 
     // Register custom field transformation classes
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Email'] = \Bitmotion\Mautic\Transformation\FormField\EmailTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['CountryList'] = \Bitmotion\Mautic\Transformation\FormField\CountryListTransformation::class;
 
 
