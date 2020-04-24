@@ -13,6 +13,12 @@ call_user_func(
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['beforeFormSave'][1489959059] =
             \Bitmotion\Mautic\Hooks\MauticFormHook::class;
 
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+            $extensionKey,
+            'Configuration/TypoScript',
+            'Mautic'
+        );
+
         // Backend Module
         if (version_compare(TYPO3_version, '10.0.0', '<')) {
             $extensionName = 'Bitmotion.Mautic';
