@@ -1,26 +1,34 @@
 {
     "name": "mautic/mautic-typo3",
     "description": "Add-on TYPO3 extension that enhances the \"EXT:marketing_automation\" TYPO3 extension by connecting it to the Mautic Marketing Automation platform: Determine \"Persona\" from Mautic segments. Also provides additional services e.g. language synchronisation between Mautic and TYPO3.",
-    "type": "typo3-cms-extension",
     "keywords": [
         "TYPO3 CMS",
         "Marketing",
         "Automation",
         "Mautic"
     ],
+    "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
-    "homepage": "https://www.bitmotion.de",
+    "homepage": "https://www.Leuchtfeuer.com",
+    "authors": [
+        {
+            "name": "Florian Wessels",
+            "email": "f.wessels@Leuchtfeuer.com",
+            "role": "Developer",
+            "homepage": "https://www.Leuchtfeuer.com"
+        }
+    ],
     "support": {
-        "issues": "https://github.com/mautic/mautic-typo3/issues"
+        "issues": "https://github.com/mautic/mautic-typo3/issues",
+        "source": "https://github.com/mautic/mautic-typo3",
+        "email": "dev@Leuchtfeuer.com",
+        "docs": "https://docs.typo3.org/p/bitmotion/mautic/master/en-us/"
     },
     "require": {
-        "php": ">=7.2.0",
-        "ext-json": "*",
-        "ext-pdo": "*",
-        "typo3/cms-core": "^9.5",
-        "typo3/cms-extbase": "^9.5",
-        "bitmotion/marketing-automation": "^1.1",
-        "mautic/api-library": "^2.14.2"
+        "typo3/cms-core": "^9.5 || ^10.4",
+        "typo3/cms-extbase": "^9.5 || ^10.4",
+        "bitmotion/marketing-automation": "@dev",
+        "mautic/api-library": "^2.15"
     },
     "autoload": {
         "psr-4": {
