@@ -4,20 +4,16 @@ namespace Bitmotion\Mautic\Service;
 
 use Bitmotion\Mautic\Controller\BackendController;
 use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
-use Bitmotion\Mautic\Domain\Repository\SegmentRepository;
-use Bitmotion\Mautic\Domain\Repository\TagRepository;
 use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Bitmotion\Mautic\Mautic\OAuth;
-use GuzzleHttp\Exception\InvalidArgumentException;
-use Mautic\Exception\UnexpectedResponseFormatException;
+use Bitmotion\Mautic\Middleware\AuthorizeMiddleware;
 use Mautic\MauticApi;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\HttpUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class MauticAuthorizeService
 {
@@ -26,45 +22,33 @@ class MauticAuthorizeService
      */
     protected $authorization;
 
-    /**
-     * @var array
-     */
-    protected $extensionConfiguration;
+    protected $extensionConfiguration = [];
 
-    /**
-     * @var SegmentRepository
-     */
-    protected $segmentRepository;
+    protected $createFlashMessages = true;
 
-    /**
-     * @var TagRepository
-     */
-    protected $tagRepository;
-
-    /**
-     * @var string
-     */
     protected $minimumMauticVersion = '2.14.2';
 
-    public function __construct()
+    protected $messages = [];
+
+    protected $languageService;
+
+    public function __construct(OAuth $authorization = null, $createFlashMessages = true)
     {
         if (session_id() === '') {
             session_start();
         }
 
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-
         $this->extensionConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class)->getConfigurationArray();
-        $this->authorization = AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
-        $this->segmentRepository = $objectManager->get(SegmentRepository::class);
-        $this->tagRepository = $objectManager->get(TagRepository::class);
+        $this->authorization = $authorization ?? AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
+        $this->createFlashMessages = $createFlashMessages;
+        $this->languageService = $GLOBALS['LANG'];
     }
 
     public function validateCredentials(): bool
     {
-        if ($this->extensionConfiguration['baseUrl'] === ''
-            || $this->extensionConfiguration['publicKey'] === ''
-            || $this->extensionConfiguration['secretKey'] === ''
+        if (empty($this->extensionConfiguration['baseUrl'])
+            || empty($this->extensionConfiguration['publicKey'])
+            || empty($this->extensionConfiguration['secretKey'])
         ) {
             $this->showCredentialsInformation();
 
@@ -74,23 +58,36 @@ class MauticAuthorizeService
         return true;
     }
 
-    public function getAuthorizeButton(): string
+    public function configurationHasAccessToken(): bool
     {
-        $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
-        $title = $this->translate('authorization.withMautic');
-
-        return '<a href="' . $_SERVER['REQUEST_URI'] . '&amp;tx_marketingauthorizemautic_authorize=1" '
-            . 'class="btn btn-default btn-sm" title="' . htmlspecialchars($title) . '">'
-            . $iconFactory->getIcon('tx_mautic-mautic-icon', Icon::SIZE_SMALL)
-            . ' ' . htmlspecialchars($title)
-            . '</a>';
+        return !empty($this->extensionConfiguration['accessToken']) && !empty($this->extensionConfiguration['accessTokenSecret']);
     }
 
-    public function checkConnection()
+    public function getAuthorizeButton(): string
+    {
+        $title = htmlspecialchars($this->translate('authorization.withMautic'));
+        $icon = GeneralUtility::makeInstance(IconFactory::class)->getIcon('tx_mautic-mautic-icon', Icon::SIZE_SMALL);
+        $url = GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST') . AuthorizeMiddleware::PATH;
+
+        return sprintf(
+            '<a href="%s" class="btn btn-default btn-sm" title="%s" target="_blank">%s %s</a>',
+            rawurldecode($url),
+            $title,
+            $icon,
+            $title
+        );
+    }
+
+    public function checkConnection(): bool
     {
         // Perform a dummy request for retrieving HTTP headers and getting Mautic Version
         $contactsApi = (new MauticApi())->newApi('contacts', $this->authorization, $this->authorization->getBaseUrl());
-        $contactsApi->getList('', 0, 1);
+        $contacts = $contactsApi->getList('', 0, 1);
+
+        if ($this->apiCallHasErrors($contacts)) {
+            return false;
+        }
+
         $version = $contactsApi->getMauticVersion();
 
         if ($version === null) {
@@ -126,20 +123,58 @@ class MauticAuthorizeService
         }
 
         $this->showSuccessMessage();
-
         return true;
+    }
+
+    public function getMessages(): array
+    {
+        if ($this->createFlashMessages) {
+            return [];
+        }
+
+        return $this->messages;
+    }
+
+    protected function apiCallHasErrors(array $contacts): bool
+    {
+        if (isset($contacts['errors'])) {
+            $error = array_shift($contacts['errors']);
+            $title = 'API could not be reached';
+
+            switch ($error['code']) {
+                case 403:
+                    $message = 'Maybe your API is not enabled. Please check your Mautic configuration.';
+                    break;
+                case 404:
+                    $message = 'Sometimes it is necessary to clear the Mautic cache.';
+                    break;
+
+            }
+
+            $message = sprintf(
+                'Your Mautic API returned an unexpected status code (%d). %s',
+                $error['code'],
+                $message ?? ''
+            );
+
+            $this->createMessage($message, $title, FlashMessage::ERROR, true);
+
+            return true;
+        }
+
+        return false;
     }
 
     protected function showCredentialsInformation()
     {
         $missingInformation = [];
-        if ($this->extensionConfiguration['baseUrl'] === '') {
+        if (empty($this->extensionConfiguration['baseUrl'])) {
             $missingInformation[] = 'baseUrl';
         }
-        if ($this->extensionConfiguration['publicKey'] === '') {
+        if (empty($this->extensionConfiguration['publicKey'])) {
             $missingInformation[] = 'publicKey';
         }
-        if ($this->extensionConfiguration['secretKey'] === '') {
+        if (empty($this->extensionConfiguration['secretKey'])) {
             $missingInformation[] = 'secretKey';
         }
 
@@ -152,86 +187,48 @@ class MauticAuthorizeService
         );
     }
 
-    public function authorize()
+    protected function createMessage(string $message, string $title, int $severity, bool $storeInSession = true): void
     {
-        try {
-            if ($this->authorization->validateAccessToken()) {
-                if ($this->authorization->accessTokenUpdated()) {
-                    $accessTokenData = $this->authorization->getAccessTokenData();
-                    $this->extensionConfiguration['accessToken'] = $accessTokenData['access_token'];
-                    $this->extensionConfiguration['accessTokenSecret'] = $accessTokenData['access_token_secret'];
-                }
-
-                $this->segmentRepository->initializeSegments();
-                $this->tagRepository->synchronizeTags();
-
-                GeneralUtility::makeInstance(YamlConfiguration::class)->save($this->extensionConfiguration);
-                HttpUtility::redirect($_SERVER['REQUEST_URI']);
-            }
-        } catch (UnexpectedResponseFormatException $exception) {
-            try {
-                $errors = \GuzzleHttp\json_decode($exception->getResponse()->getBody(), true)['errors'];
-
-                foreach ($errors as $error) {
-                    $this->addErrorMessage('Error ' . (string)$error['code'], (string)$error['message']);
-                }
-            } catch (InvalidArgumentException $exception) {
-                $this->addErrorMessage(
-                    $this->translate('authorization.error.title.invalid_response'),
-                    $this->translate('authorization.error.message.invalid_response')
-                );
-            } finally {
-                unset($_SESSION['oauth']);
-
-                return false;
-            }
-        } catch (\Exception $exception) {
-            $this->addErrorMessage((string)$exception->getCode(), (string)$exception->getMessage());
-
-            return false;
+        if ($this->createFlashMessages) {
+            $this->addFlashMessage(new FlashMessage($message, $title, $severity, $storeInSession));
+        } else {
+            $this->messages[md5($message . $title . $severity)] = [
+                'message' => $message,
+                'title' => $title,
+                'severity' => $severity
+            ];
         }
-
-        return true;
     }
 
-    protected function addErrorMessage(?string $title = null, ?string $message = null)
+    protected function addErrorMessage(?string $title = null, ?string $message = null): void
     {
         $title = $title ?: $this->translate('authorization.error.title');
         $message = $this->translate('authorization.error.message.' . $message) ?: $message ?: $this->translate('authorization.error.message');
-
-        $this->addFlashMessage(
-            GeneralUtility::makeInstance(FlashMessage::class, $message, $title, FlashMessage::ERROR, true)
-        );
+        $this->createMessage($message, $title, FlashMessage::ERROR, true);
     }
 
-    protected function addFlashMessage(FlashMessage $message)
+    protected function addFlashMessage(FlashMessage $message): void
     {
         $messageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $messageQueue = $messageService->getMessageQueueByIdentifier(BackendController::FLASH_MESSAGE_QUEUE);
         $messageQueue->addMessage($message);
     }
 
-    protected function addWarningMessage(string $title = null, string $message = null)
+    protected function addWarningMessage(?string $title = null, ?string $message = null): void
     {
         $title = $title ?: $this->translate('authorization.warning.title');
         $message = $message ?: $this->translate('authorization.warning.message');
-
-        $this->addFlashMessage(
-            GeneralUtility::makeInstance(FlashMessage::class, $message, $title, FlashMessage::WARNING, true)
-        );
+        $this->createMessage($message, $title, FlashMessage::WARNING, true);
     }
 
-    protected function showSuccessMessage(string $title = null, string $message = null)
+    protected function showSuccessMessage(?string $title = null, ?string $message = null): void
     {
         $title = $title ?: $this->translate('authorization.success.title');
         $message = $message ?: $this->translate('authorization.success.message');
-
-        $this->addFlashMessage(
-            GeneralUtility::makeInstance(FlashMessage::class, $message, $title, FlashMessage::OK, true)
-        );
+        $this->createMessage($message, $title, FlashMessage::OK, true);
     }
 
-    protected function showIncorrectVersionInformation(string $version)
+    protected function showIncorrectVersionInformation(string $version): void
     {
         $title = $this->translate('authorization.wrongMauticVersion.title');
         $message = sprintf(
@@ -243,16 +240,18 @@ class MauticAuthorizeService
         $this->addErrorMessage($title, $message);
     }
 
-    protected function showInsecureConnectionInformation()
+    protected function showInsecureConnectionInformation(): void
     {
         $title = $this->translate('authorization.insecureConnection.title');
         $message = $this->translate('authorization.insecureConnection.message');
-
         $this->addWarningMessage($title, $message);
     }
 
     protected function translate(string $key): string
     {
-        return $GLOBALS['LANG']->sL('LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:' . $key);
+        if (!$this->languageService instanceof LanguageService) {
+            $this->languageService = LanguageService::createFromUserPreferences($GLOBALS['BE_USER']);
+        }
+        return $this->languageService->sL('LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:' . $key);
     }
 }

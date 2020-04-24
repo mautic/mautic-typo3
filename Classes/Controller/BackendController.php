@@ -23,11 +23,7 @@ class BackendController extends ActionController
 
         if ($authorizeService->validateCredentials() === true) {
             if ($emConfiguration->getAccessToken() === '' || $emConfiguration->getAccessTokenSecret() === '') {
-                if ((int)GeneralUtility::_GP('tx_marketingauthorizemautic_authorize') !== 1) {
-                    $this->view->assign('authorizeButton', $authorizeService->getAuthorizeButton());
-                } else {
-                    $authorizeService->authorize();
-                }
+                $this->view->assign('authorizeButton', $authorizeService->getAuthorizeButton());
             } else {
                 $authorizeService->checkConnection();
             }
