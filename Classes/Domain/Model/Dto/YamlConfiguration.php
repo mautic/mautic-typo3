@@ -89,7 +89,11 @@ class YamlConfiguration implements SingletonInterface
     {
         $loader = GeneralUtility::makeInstance(YamlFileLoader::class);
 
-        return $loader->load(GeneralUtility::fixWindowsFilePath($this->fileName), YamlFileLoader::PROCESS_IMPORTS);
+        try {
+            return $loader->load(GeneralUtility::fixWindowsFilePath($this->fileName), YamlFileLoader::PROCESS_IMPORTS);
+        } catch (\Exception $exception) {
+            return [];
+        }
     }
 
     /**
