@@ -46,7 +46,7 @@ class MauticPropertiesViewHelper extends SelectViewHelper
 //        $companiesLang = $languageService->sL('LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:mautic.company');
 
         foreach ($contactFields as $field) {
-            $options[$field['alias']] = $contactsLang . ': ' . $field['label'];
+            $options[$field['alias']] = sprintf('%s: %s |||%s|||', $contactsLang, $field['label'], $field['type']);
         }
 
         asort($options);
@@ -57,6 +57,25 @@ class MauticPropertiesViewHelper extends SelectViewHelper
 //        }
 
         return $options;
+    }
+
+    protected function renderOptionTag($value, $label, $isSelected)
+    {
+        $output = '<option value="' . htmlspecialchars($value) . '"';
+        if ($isSelected) {
+            $output .= ' selected="selected"';
+        }
+
+        $matches = preg_match('/\|\|\|(.*)\|\|\|/m', $label, $dataType);
+
+        if ($matches === 1) {
+            $label = str_replace($dataType[0], '', $label);
+            $output .= ' data-type="' . htmlspecialchars($dataType[1]) . '">' . htmlspecialchars($label) . '</option>';
+        } else {
+            $output .= '>' . htmlspecialchars($label) . '</option>';
+        }
+
+        return $output;
     }
 
     protected function getLanguageService(): LanguageService
