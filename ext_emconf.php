@@ -1,16 +1,6 @@
 <?php
 
-/***************************************************************
- * Extension Manager/Repository config file for ext "mautic".
- *
- * Auto generated 20-06-2018 11:55
- *
- * Manual updates:
- * Only the data in the array - everything else is removed by next
- * writing. "version" and "dependencies" must not be touched!
- ***************************************************************/
-
-$EM_CONF[$_EXTKEY] = [
+$EM_CONF['mautic'] = [
     'title' => 'Marketing Automation - Mautic Adapter',
     'description' => 'Add-on TYPO3 extension that enhances the "marketing-automation" TYPO3 extension by connecting it to the Mautic Marketing Automation platform: Determine "Persona" from Mautic segments. Also provides additional services e.g. language synchronisation between Mautic and TYPO3.',
     'category' => 'fe',
