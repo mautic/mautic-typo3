@@ -84,24 +84,6 @@ call_user_func(function () {
     \TYPO3\CMS\Core\Resource\Index\ExtractorRegistry::getInstance()->registerExtractionService(\Bitmotion\Mautic\Index\Extractor::class);
 
     ###################
-    #   SIGNALSLOTS   #
-    ###################
-    $slotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
-    $slotDispatcher->connect(
-        \TYPO3\CMS\Backend\Controller\EditDocumentController::class,
-        'initAfter',
-        \Bitmotion\Mautic\Slot\EditDocumentControllerSlot::class,
-        'synchronizeSegments'
-    );
-
-    $slotDispatcher->connect(
-        \TYPO3\CMS\Backend\Controller\EditDocumentController::class,
-        'initAfter',
-        \Bitmotion\Mautic\Slot\EditDocumentControllerSlot::class,
-        'synchronizeTags'
-    );
-
-    ###################
     #      PLUGIN     #
     ###################
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(

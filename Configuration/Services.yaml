@@ -6,3 +6,9 @@ services:
 
   Bitmotion\Mautic\:
     resource: '../Classes/*'
+
+  Bitmotion\Mautic\EventListener\SynchronizeMauticData:
+    tags:
+      - name: event.listener
+        identifier: synchronizeMauticData
+        event: TYPO3\CMS\Backend\Controller\Event\AfterFormEnginePageInitializedEvent
