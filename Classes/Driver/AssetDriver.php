@@ -102,9 +102,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
 
     public function hash($fileIdentifier, $hashAlgorithm): string
     {
-        $hash = $this->hashIdentifier($fileIdentifier);
-
-        return $hash;
+        return $this->hashIdentifier($fileIdentifier);
     }
 
     public function getDefaultFolder(): string

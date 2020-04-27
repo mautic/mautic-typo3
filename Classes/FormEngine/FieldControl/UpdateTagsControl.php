@@ -39,7 +39,7 @@ class UpdateTagsControl extends AbstractNode
             . ');'
             . 'return false;';
 
-        $result = [
+        return [
             'iconIdentifier' => 'actions-refresh',
             'title' => 'updateTagsControl',
             'linkAttributes' => [
@@ -47,7 +47,5 @@ class UpdateTagsControl extends AbstractNode
                 'href' => '#',
             ],
         ];
-
-        return $result;
     }
 }

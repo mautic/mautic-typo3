@@ -39,7 +39,7 @@ class UpdateSegmentsControl extends AbstractNode
             . ');'
             . 'return false;';
 
-        $result = [
+        return [
             'iconIdentifier' => 'actions-refresh',
             'title' => 'updateSegmentsControl',
             'linkAttributes' => [
@@ -47,7 +47,5 @@ class UpdateSegmentsControl extends AbstractNode
                 'href' => '#',
             ],
         ];
-
-        return $result;
     }
 }
