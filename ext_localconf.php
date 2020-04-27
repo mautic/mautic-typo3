@@ -2,7 +2,7 @@
 defined('TYPO3_MODE') || die;
 
 call_user_func(function () {
-    if (!defined('TYPO3_COMPOSER_MODE') || !TYPO3_COMPOSER_MODE) {
+    if (\TYPO3\CMS\Core\Core\Environment::isComposerMode() === false) {
         $filePath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mautic') . 'Libraries/vendor/autoload.php';
         if (@file_exists($filePath)) {
             require_once $filePath;
@@ -195,12 +195,12 @@ call_user_func(function () {
         ],
     ];
 
-    if (\TYPO3\CMS\Core\Utility\GeneralUtility::getApplicationContext()->isDevelopment()) {
+    if (\TYPO3\CMS\Core\Core\Environment::getContext()->isDevelopment()) {
         $GLOBALS['TYPO3_CONF_VARS']['LOG']['Bitmotion']['Mautic'] = [
             'writerConfiguration' => [
                 \TYPO3\CMS\Core\Log\LogLevel::DEBUG => [
                     \TYPO3\CMS\Core\Log\Writer\FileWriter::class => [
-                        'logFile' => 'typo3temp/logs/ext_mautic.log'
+                        'logFileInfix' => 'mautic'
                     ],
                 ],
             ],
