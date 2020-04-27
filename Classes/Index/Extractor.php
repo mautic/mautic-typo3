@@ -19,7 +19,6 @@ use TYPO3\CMS\Core\Resource;
 use TYPO3\CMS\Core\Resource\Index\ExtractorInterface;
 use TYPO3\CMS\Core\Type\File\ImageInfo;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class Extractor implements ExtractorInterface
 {
@@ -75,7 +74,7 @@ class Extractor implements ExtractorInterface
     protected function getAsset(Resource\File $file): array
     {
         $mauticAlias = ltrim($file->getIdentifier(), '/asset/');
-        $assetApi = GeneralUtility::makeInstance(ObjectManager::class)->get(AssetRepository::class);
+        $assetApi = GeneralUtility::makeInstance(AssetRepository::class);
         $assets = $assetApi->list($mauticAlias);
 
         return !empty($assets) ? array_shift($assets) : [];

@@ -16,7 +16,6 @@ namespace Bitmotion\Mautic\Form\FormDataProvider;
 use Bitmotion\Mautic\Domain\Repository\FormRepository;
 use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class MauticFormDataProvider implements FormDataProviderInterface
 {
@@ -24,7 +23,7 @@ class MauticFormDataProvider implements FormDataProviderInterface
 
     public function __construct()
     {
-        $this->formRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(FormRepository::class);
+        $this->formRepository = GeneralUtility::makeInstance(FormRepository::class);
     }
 
     public function addData(array $result): array

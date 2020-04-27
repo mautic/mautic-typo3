@@ -18,7 +18,6 @@ use Bitmotion\Mautic\Domain\Repository\FormRepository;
 use Bitmotion\Mautic\Transformation\AbstractTransformation;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 abstract class AbstractFormTransformation extends AbstractTransformation implements SingletonInterface
 {
@@ -113,7 +112,7 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
             $mauticId = (int)$this->formDefinition['renderingOptions']['mauticId'];
 
             if ($mauticId !== 0) {
-                $formRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(FormRepository::class);
+                $formRepository = GeneralUtility::makeInstance(FormRepository::class);
                 $mauticForm = $formRepository->getForm($mauticId);
 
                 if (!empty($mauticForm)) {
@@ -196,7 +195,7 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
     protected function updateCustomFields()
     {
         $formElements = $this->resolveFormElements($this->formDefinition['renderables']);
-        $fieldRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(FieldRepository::class);
+        $fieldRepository = GeneralUtility::makeInstance(FieldRepository::class);
 
         foreach ($this->customFieldValues as $alias => $properties) {
             foreach ($formElements as $formElement) {

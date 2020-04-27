@@ -15,7 +15,6 @@ namespace Bitmotion\Mautic\Domain\Finishers;
 
 use Bitmotion\Mautic\Domain\Repository\FormRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 use TYPO3\CMS\Form\Domain\Model\FormElements\GenericFormElement;
 
@@ -27,7 +26,7 @@ class MauticFinisher extends AbstractFinisher
     {
         parent::__construct($finisherIdentifier);
 
-        $this->formRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(FormRepository::class);
+        $this->formRepository = GeneralUtility::makeInstance(FormRepository::class);
     }
 
     /**

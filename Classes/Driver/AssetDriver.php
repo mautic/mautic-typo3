@@ -28,7 +28,6 @@ use TYPO3\CMS\Core\Resource\ResourceStorage;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class AssetDriver extends AbstractHierarchicalFilesystemDriver implements LoggerAwareInterface, SingletonInterface
 {
@@ -604,7 +603,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
 
     protected function removeFileFromDatabase(int $uid)
     {
-        $fileRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(FileRepository::class);
+        $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
         $file = $fileRepository->findByIdentifier($uid);
         $file->getStorage()->deleteFile($file);
     }
@@ -612,7 +611,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
     protected function getAssetRepository(): AssetRepository
     {
         if (!$this->assetRepository instanceof AssetRepository) {
-            $this->assetRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(AssetRepository::class);
+            $this->assetRepository = GeneralUtility::makeInstance(AssetRepository::class);
         }
 
         return $this->assetRepository;

@@ -19,7 +19,6 @@ use Bitmotion\Mautic\Domain\Repository\ContactRepository;
 use Bitmotion\Mautic\Domain\Repository\PersonaRepository;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class MauticSubscriber implements SubscriberInterface, SingletonInterface
@@ -37,10 +36,8 @@ class MauticSubscriber implements SubscriberInterface, SingletonInterface
      */
     public function __construct()
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-
-        $this->contactRepository = $objectManager->get(ContactRepository::class);
-        $this->personaRepository = $objectManager->get(PersonaRepository::class);
+        $this->contactRepository = GeneralUtility::makeInstance(ContactRepository::class);
+        $this->personaRepository = GeneralUtility::makeInstance(PersonaRepository::class);
 
         $this->mauticId = (int)($_COOKIE['mtc_id'] ?? 0);
     }

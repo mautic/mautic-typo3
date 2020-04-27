@@ -17,7 +17,6 @@ use Bitmotion\Mautic\Service\MauticSendFormService;
 use Mautic\Api\Forms;
 use Mautic\Exception\ContextNotFoundException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class FormRepository extends AbstractRepository
 {
@@ -77,7 +76,7 @@ class FormRepository extends AbstractRepository
         $data['formId'] = $id;
         $url = rtrim(trim($this->authorization->getBaseUrl()), '/') . '/form/submit?formId=' . $id;
 
-        $mauticSendFormService = GeneralUtility::makeInstance(ObjectManager::class)->get(MauticSendFormService::class);
+        $mauticSendFormService = GeneralUtility::makeInstance(MauticSendFormService::class);
         $code = $mauticSendFormService->submitForm($url, $data);
 
         if ($code < 200 || $code >= 400) {

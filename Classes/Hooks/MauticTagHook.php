@@ -17,7 +17,6 @@ use Bitmotion\Mautic\Domain\Repository\ContactRepository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class MauticTagHook
 {
@@ -31,7 +30,7 @@ class MauticTagHook
                 $contactId = (int)$_COOKIE['mtc_id'];
 
                 if ($contactId > 0) {
-                    $contactRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(ContactRepository::class);
+                    $contactRepository = GeneralUtility::makeInstance(ContactRepository::class);
                     $contactRepository->editContact($contactId, ['tags' => $tags]);
                 }
             }

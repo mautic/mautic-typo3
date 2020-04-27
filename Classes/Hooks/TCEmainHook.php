@@ -17,7 +17,6 @@ use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Bitmotion\Mautic\Domain\Repository\TagRepository;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class TCEmainHook
 {
@@ -33,7 +32,7 @@ class TCEmainHook
             GeneralUtility::getUrl($url);
 
             // Synchronize tags to receive proper ids
-            $tagRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(TagRepository::class);
+            $tagRepository = GeneralUtility::makeInstance(TagRepository::class);
             $tagRepository->synchronizeTags();
         }
     }
