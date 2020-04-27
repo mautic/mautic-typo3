@@ -16,17 +16,18 @@ Mautic
    en
 
 :Copyright:
-   2018-2019
+   2018-2020
 
 :Authors:
-   Bitmotion GmbH, Jurian Janssen
+   Florian Wessels, Jurian Janssen
 
 :Email:
-   typo3-ext@bitmotion.de
+   dev@Leuchtfeuer.com
 
 :License:
-   This document is published under the Open Content License
-   available from http://www.opencontent.org/opl.shtml
+   This extension documentation is published under the
+   `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`__ (Creative Commons)
+   license.
 
 **TYPO3**
 

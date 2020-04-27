@@ -7,20 +7,20 @@ $EM_CONF['mautic'] = [
     'state' => 'stable',
     'uploadfolder' => 0,
     'createDirs' => '',
-    'author' => 'Bitmotion GmbH',
-    'author_company' => 'Bitmotion GmbH',
-    'author_email' => 'typo3-ext@bitmotion.de',
+    'author' => 'Florian Wessels, Jurian Jansen',
+    'author_company' => 'Leuchtfeuer Digital Marketing',
+    'author_email' => 'dev@Leuchtfeuer.com',
     'clearCacheOnLoad' => 0,
-    'version' => '3.1.0-dev',
+    'version' => '4.0.0-dev',
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5.0-10.4.99',
-            'marketing_automation' => '',
+            'typo3' => '10.4.0-10.4.99',
+            'marketing_automation' => '1.2.2-1.2.99',
         ],
         'conflicts' => [],
         'suggests' => [
             'static_info_tables' => '6.7.0',
-            'form' => '9.5.0'
+            'form' => '10.4.0'
         ],
     ],
 ];

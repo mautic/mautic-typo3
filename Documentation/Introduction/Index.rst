@@ -30,7 +30,7 @@ Requirements
 ============
 
 The Mautic extension requires the TYPO3 Extension
-`marketing_automation <https://github.com/bitmotion/typo3-marketing-automation>`_. For API calls it also requires the
+`marketing_automation <https://github.com/Leuchtfeuer/typo3-marketing-automation>`_. For API calls it also requires the
 `Mautic API Library <https://github.com/mautic/api-library>`_.
 
 Suggestions
@@ -48,9 +48,4 @@ See also
 Compatibility
 =============
 
-This extension works with TYPO3 9 LTS.
-
-Thanks
-======
-
-This extension was developed by `Bitmotion GmbH <https://www.bitmotion.de/>`_  in collaboration with Jurian Janssen.
+This extension works with TYPO3 v10 LTS.

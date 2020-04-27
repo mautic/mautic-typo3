@@ -16,6 +16,10 @@
             "email": "f.wessels@Leuchtfeuer.com",
             "role": "Developer",
             "homepage": "https://www.Leuchtfeuer.com"
+        },
+        {
+            "name": "Jurian Jansen",
+            "role": "Developer"
         }
     ],
     "support": {
@@ -25,9 +29,9 @@
         "docs": "https://docs.typo3.org/p/bitmotion/mautic/master/en-us/"
     },
     "require": {
-        "typo3/cms-core": "^9.5 || ^10.4",
-        "typo3/cms-extbase": "^9.5 || ^10.4",
-        "bitmotion/marketing-automation": "@dev",
+        "typo3/cms-core": "^10.4",
+        "typo3/cms-extbase": "^10.4",
+        "bitmotion/marketing-automation": "^1.2",
         "mautic/api-library": "^2.15"
     },
     "autoload": {
