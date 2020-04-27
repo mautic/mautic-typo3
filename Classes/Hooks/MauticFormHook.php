@@ -191,11 +191,14 @@ class MauticFormHook implements LoggerAwareInterface
         if (!isset($formDefinition['renderingOptions']['mauticFormType'])) {
             throw new ParseErrorException('Form has no Mautic form type.', 1539064529);
         }
-        if (!isset($this->extConf['transformation']['form'][$formDefinition['renderingOptions']['mauticFormType']])) {
+
+        $formType = $formDefinition['renderingOptions']['mauticFormType'];
+
+        if (!isset($this->extConf['transformation']['form'][$formType])) {
             throw new NoTransformationFoundException('No transformation class found.', 1539064606);
         }
 
-        $transformationClassName = $this->extConf['transformation']['form'][$formDefinition['renderingOptions']['mauticFormType']];
+        $transformationClassName = $this->extConf['transformation']['form'][$formType];
 
         if (!class_exists($transformationClassName)) {
             throw new UnknownTransformationClassException(
