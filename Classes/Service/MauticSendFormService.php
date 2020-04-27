@@ -125,7 +125,7 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
             $cookies->setCookie(new SetCookie([
                 'Name' => $cookieName,
                 'Value' => $_COOKIE[$cookieName],
-                'Domain' => GeneralUtility::getHostname(),
+                'Domain' => GeneralUtility::getIndpEnv('HTTP_HOST'),
             ]));
         }
     }

@@ -17,7 +17,9 @@ use Bitmotion\MarketingAutomation\Dispatcher\SubscriberInterface;
 use Bitmotion\MarketingAutomation\Persona\Persona;
 use Bitmotion\Mautic\Domain\Repository\ContactRepository;
 use Bitmotion\Mautic\Domain\Repository\PersonaRepository;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
@@ -31,13 +33,10 @@ class MauticSubscriber implements SubscriberInterface, SingletonInterface
 
     protected $languageNeedsUpdate = false;
 
-    /**
-     * TODO: Rewrite EXT:marketing_automation/Classes/Dispatcher/Dispatcher.php::45 for using constructor autoloader
-     */
-    public function __construct()
+    public function __construct(ContactRepository $contactRepository, PersonaRepository $personaRepository)
     {
-        $this->contactRepository = GeneralUtility::makeInstance(ContactRepository::class);
-        $this->personaRepository = GeneralUtility::makeInstance(PersonaRepository::class);
+        $this->contactRepository = $contactRepository;
+        $this->personaRepository = $personaRepository;
 
         $this->mauticId = (int)($_COOKIE['mtc_id'] ?? 0);
     }
@@ -68,10 +67,14 @@ class MauticSubscriber implements SubscriberInterface, SingletonInterface
     public function setPreferredLocale($_, TypoScriptFrontendController $typoScriptFrontendController)
     {
         if ($this->languageNeedsUpdate) {
+            $languageId = GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('language', 'id');
+            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId((int)$GLOBALS['TSFE']->id);
+            $isoCode = $site->getLanguageById($languageId)->getTwoLetterIsoCode();
+
             $this->contactRepository->editContact(
                 $this->mauticId,
                 [
-                    'preferred_locale' => $typoScriptFrontendController->sys_language_isocode,
+                    'preferred_locale' => $isoCode,
                 ]
             );
         }
