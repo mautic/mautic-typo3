@@ -32,6 +32,8 @@ class MauticFormHook implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
+    const FORM_PROTOTYPE_NAME = 'mautic';
+
     /**
      * @var FormPersistenceManagerInterface
      */
@@ -49,6 +51,7 @@ class MauticFormHook implements LoggerAwareInterface
 
     /**
      * @var string
+     * @deprecated Use self::FORM_PROTOTYPE_NAME instead
      */
     protected $formPrototypeName = 'mautic';
 
@@ -153,7 +156,7 @@ class MauticFormHook implements LoggerAwareInterface
 
     protected function isResponsible(array $formDefinition): bool
     {
-        if (!isset($formDefinition['prototypeName']) || $formDefinition['prototypeName'] !== $this->formPrototypeName) {
+        if (!isset($formDefinition['prototypeName']) || $formDefinition['prototypeName'] !== self::FORM_PROTOTYPE_NAME) {
             return false;
         }
 
