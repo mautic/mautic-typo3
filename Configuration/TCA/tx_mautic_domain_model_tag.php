@@ -4,7 +4,7 @@ defined('TYPO3_MODE') || die();
 
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:tx_marketingautomation_segment',
+        'title' => 'LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:tx_mautic_domain_model_tag',
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -34,7 +34,7 @@ return [
     'palettes' => [],
     'columns' => [
         'title' => [
-            'label' => 'LLL:EXT:marketing_automation/Resources/Private/Language/locallang_tca.xlf:tx_marketingautomation_persona.title',
+            'label' => 'LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:tx_mautic_domain_model_tag.title',
             'config' => [
                 'type' => 'input',
                 'width' => 200,

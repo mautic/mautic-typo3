@@ -13,6 +13,13 @@
                 <source>Segment</source>
             </trans-unit>
 
+            <trans-unit id="tx_mautic_domain_model_tag">
+                <source>Tag</source>
+            </trans-unit>
+            <trans-unit id="tx_mautic_domain_model_tag.title">
+                <source>Title</source>
+            </trans-unit>
+
             <trans-unit id="pages.tx_mautic_tags">
                 <source>Tags</source>
             </trans-unit>
