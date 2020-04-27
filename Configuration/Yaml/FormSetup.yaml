@@ -23,6 +23,8 @@ TYPO3:
   CMS:
     Form:
       formManager:
+        translationFiles:
+          1587971368: 'EXT:mautic/Resources/Private/Language/Database.xlf'
         selectablePrototypesConfiguration:
           1484232130:
             identifier: 'mautic'
