@@ -1,8 +1,11 @@
-{namespace hs=Bitmotion\Mautic\ViewHelpers}
+{namespace mautic=Bitmotion\Mautic\ViewHelpers}
 
 <div class="t3-form-control-group form-group">
-    <label><span data-template-property="label"></span></label>
+    <label data-random-id data-random-id-attribute="for" data-random-id-number="1"><span
+            data-template-property="label"/></label>
     <div class="t3-form-controls" data-identifier="inspectorEditorControlsWrapper">
-        <hs:form.mauticProperties data="{template-property: 'selectOptions'}" class="form-control" prependOptionLabel="None" prependOptionValue=""/>
+        <mautic:form.mauticProperties
+                data="{template-property: 'selectOptions', random-id: '', random-id-attribute: 'id', random-id-number: '1'}"
+                class="form-control" prependOptionLabel="None" prependOptionValue=""/>
     </div>
 </div>

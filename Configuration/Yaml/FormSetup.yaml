@@ -41,13 +41,16 @@ TYPO3:
             10: 'TYPO3.CMS.Form.prototypes.standard'
 
           formEditor:
+            translationFiles:
+              1587971368: 'EXT:mautic/Resources/Private/Language/Database.xlf'
+
             dynamicRequireJsModules:
               additionalViewModelModules:
                 - 'TYPO3/CMS/Mautic/Backend/FormEditor/ViewModel'
 
             formEditorFluidConfiguration:
               partialRootPaths:
-                100: 'EXT:mautic/Resources/Private/Backend/Partials/FormEditor/'
+                1587971587: 'EXT:mautic/Resources/Private/Backend/Partials/FormEditor/'
 
             formEditorPartials:
               Inspector-MauticPropertySelectEditor: 'Inspector/MauticPropertySelectEditor'
