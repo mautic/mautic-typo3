@@ -71,7 +71,6 @@ class AuthorizeMiddleware implements MiddlewareInterface, LoggerAwareInterface
     {
         $authorization = AuthorizationFactory::createAuthorizationFromExtensionConfiguration($this->getState());
         $authorizeService = new MauticAuthorizeService($authorization, false);
-        $stream = 'php://temp';
         $statusCode = 400;
 
         // Authorize TYPO3 when there are no
