@@ -48,7 +48,7 @@ class FieldRepository extends AbstractRepository
         return $this->companyFieldsApi->edit($id, $params);
     }
 
-    public function getContactFields(string $query = '', bool $onlyActive = true): array
+    public function getContactFields(string $query = ''): array
     {
         $response = $this->contactFieldsApi->getList($query);
         $fields = $response['fields'] ?? [];
