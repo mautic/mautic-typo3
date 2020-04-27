@@ -52,7 +52,6 @@ TYPO3:
             formEditorPartials:
               Inspector-MauticPropertySelectEditor: 'Inspector/MauticPropertySelectEditor'
               Inspector-MauticHiddenFieldEditor: 'Inspector/MauticHiddenFieldEditor'
-              FormElement-Email: 'Stage/SimpleTemplate'
               FormElement-CountryList: 'Stage/SelectTemplate'
 
             formElementGroups:

@@ -1,18 +1,14 @@
-/*
- * This file is part of the TYPO3 CMS project.
+/***
  *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- * The TYPO3 project - inspiring people to share!
- */
-/**
- * Module: TYPO3/CMS/ExtFormMarketingAutomatisation/Backend/FormEditor/ViewModel
- */
+ *  (c) 2020 Florian Wessels <f.wessels@Leuchtfeuer.com>, Leuchtfeuer Digital Marketing
+ *
+ ***/
+
 define(['jquery',
     'TYPO3/CMS/Form/Backend/FormEditor/StageComponent',
     'TYPO3/CMS/Form/Backend/FormEditor/Helper'
@@ -33,7 +29,8 @@ define(['jquery',
          */
         function getFormEditorApp() {
             return _formEditorApp;
-        };
+        }
+
         /**
          * @private
          *
@@ -41,7 +38,8 @@ define(['jquery',
          */
         function getPublisherSubscriber() {
             return getFormEditorApp().getPublisherSubscriber();
-        };
+        }
+
         /**
          * @private
          *
@@ -49,16 +47,17 @@ define(['jquery',
          */
         function getUtility() {
             return getFormEditorApp().getUtility();
-        };
+        }
+
         /**
          * @private
          *
-         * @param object
          * @return object
          */
         function getHelper() {
             return Helper;
-        };
+        }
+
         /**
          * @private
          *
@@ -66,18 +65,20 @@ define(['jquery',
          */
         function getCurrentlySelectedFormElement() {
             return getFormEditorApp().getCurrentlySelectedFormElement();
-        };
+        }
+
         /**
          * @private
          *
-         * @param mixed test
-         * @param string message
-         * @param int messageCode
+         * @param test mixed
+         * @param message string
+         * @param messageCode int
          * @return void
          */
         function assert(test, message, messageCode) {
             return getFormEditorApp().assert(test, message, messageCode);
-        };
+        }
+
         /**
          * @private
          *
@@ -90,7 +91,8 @@ define(['jquery',
                 1483708624
             );
             Helper.bootstrap(getFormEditorApp());
-        };
+        }
+
         /**
          * @private
          *
@@ -102,10 +104,10 @@ define(['jquery',
              *
              * @param string
              * @param array
-             *		  args[0] = editorConfiguration
-             *		  args[1] = editorHtml
-             *		  args[2] = collectionElementIdentifier
-             *		  args[2] = collectionName
+             *          args[0] = editorConfiguration
+             *          args[1] = editorHtml
+             *          args[2] = collectionElementIdentifier
+             *          args[2] = collectionName
              * @return void
              * @subscribe view/inspector/editor/insert/perform
              */
@@ -125,31 +127,31 @@ define(['jquery',
              *
              * @param string
              * @param array
-             *		  args[0] = formElement
-             *		  args[1] = template
+             *          args[0] = formElement
+             *          args[1] = template
              * @return void
              * @subscribe view/stage/abstract/render/template/perform
              */
-            getPublisherSubscriber().subscribe('view/stage/abstract/render/template/perform', function(topic, args) {
+            getPublisherSubscriber().subscribe('view/stage/abstract/render/template/perform', function (topic, args) {
                 switch (args[0].get('type')) {
                     case  'HiddenDate':
                         StageComponent.renderSimpleTemplate(args[0], args[1]);
                         break;
-                    case 'Email':
                     case 'CountryList':
                         getFormEditorApp().getViewModel().getStage().renderSimpleTemplateWithValidators(args[0], args[1]);
                         break;
                 }
             });
-        };
+        }
 
         /**
          * @private
+         * @see renderSingleSelectEditor
          *
-         * @param object editorConfiguration
-         * @param object editorHtml
-         * @param string collectionElementIdentifier
-         * @param string collectionName
+         * @param editorConfiguration object
+         * @param editorHtml object
+         * @param collectionElementIdentifier string
+         * @param collectionName string
          * @return void
          * @throws 1475421048
          * @throws 1475421049
@@ -158,7 +160,7 @@ define(['jquery',
          * @throws 1475421052
          */
         function renderMauticPropertySelectEditor(editorConfiguration, editorHtml, collectionElementIdentifier, collectionName) {
-            var options, propertyData, propertyPath, selectElement, values;
+            var propertyData, propertyPath, selectElement;
             assert(
                 'object' === $.type(editorConfiguration),
                 'Invalid parameter "editorConfiguration"',
@@ -179,51 +181,55 @@ define(['jquery',
                 'Invalid configuration "propertyPath"',
                 1475421051
             );
+
             propertyPath = getFormEditorApp().buildPropertyPath(
                 editorConfiguration['propertyPath'],
                 collectionElementIdentifier,
                 collectionName
             );
+
             getHelper()
                 .getTemplatePropertyDomElement('label', editorHtml)
                 .append(editorConfiguration['label']);
+
             selectElement = getHelper()
                 .getTemplatePropertyDomElement('selectOptions', editorHtml);
+
             propertyData = getCurrentlySelectedFormElement().get(propertyPath);
-            options = $('option', selectElement);
+            const options = $('option', selectElement);
             selectElement.empty();
+
             for (var i = 0, len = options.length; i < len; ++i) {
                 var option;
-                if (
-                    options[i].value === propertyData
-                    || (!propertyData && i === 0)
-                ) {
-                    option = new Option(options[i].text, i, false, true);
+                console.log(options[i]);
+
+                if (options[i]['value'] === propertyData) {
+                    option = new Option(options[i]['label'], i, false, true);
                 } else {
-                    option = new Option(options[i].text, i);
+                    option = new Option(options[i]['label'], i);
                 }
-                $(option).data({value: options[i].value});
+                $(option).data({value: options[i]['value'], type: options[i]['data-type']});
                 selectElement.append(option);
             }
-            if (!propertyData) {
-                getCurrentlySelectedFormElement().set(propertyPath, options[0].value);
-            }
+
             selectElement.on('change', function () {
                 getCurrentlySelectedFormElement().set(propertyPath, $('option:selected', $(this)).data('value'));
             });
-        };
+        }
+
         /**
          * @public
          *
-         * @param object formEditorApp
-         * @param object additionalViewModelModules
+         * @param  formEditorApp object
+         * @param  additionalViewModelModules object
          * @return void
          */
         function bootstrap(formEditorApp, additionalViewModelModules) {
             _formEditorApp = formEditorApp;
             _helperSetup();
             _subscribeEvents();
-        };
+        }
+
         /**
          * Publish the public methods.
          * Implements the "Revealing Module Pattern".
