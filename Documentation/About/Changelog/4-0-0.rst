@@ -1,7 +1,7 @@
 ﻿.. include:: ../../Includes.txt
 
 ==========================
-Version 4.0.0 - TBA
+Version 4.0.0 - 2020/05/04
 ==========================
 
 This is a feature release. Be careful when upgrading to this version as it contains breaking changes regarding the OAuth
@@ -55,6 +55,11 @@ All Changes
 
 This is a list of all changes in this release::
 
+   2020-05-04 [TASK] Exchange extension and module icon (Commit 0ddcc6f by Florian Wessels)
+   2020-05-04 [TASK] Remove console output (Commit e0f0007 by Florian Wessels)
+   2020-05-04 [REVERT][WIP] Move Mautic configuration into site configuration (Commit bc20b9c by Florian Wessels)
+   2020-05-04 [DOC] Add changelog for upcoming version (Commit fe634f2 by Florian Wessels)
+   2020-05-04 [TASK] Use extension icon as SVG (Commit 50e7376 by Florian Wessels)
    2020-05-04 [DOC] Add changelog (Commit cb25c73 by Florian Wessels)
    2020-05-04 [TASK] Rename license file (Commit dd8efa0 by Florian Wessels)
    2020-04-27 [TASK] Adapt dependencies (Commit c88ba29 by Florian Wessels)
