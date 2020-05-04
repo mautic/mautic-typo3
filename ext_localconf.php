@@ -100,14 +100,13 @@ call_user_func(function () {
     ###################
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
     $icons = [
-        'tx_mautic-mautic-icon' => 'EXT:mautic/Resources/Public/Icons/mautic.png',
-        'tx_mautic-mautic-blue-icon' => 'EXT:mautic/Resources/Public/Icons/mautic-with-background.png',
+        'tx_mautic-mautic-icon' => 'EXT:mautic/Resources/Public/Icons/Extension.svg',
     ];
 
     foreach ($icons as $identifier => $source) {
         $iconRegistry->registerIcon(
             $identifier,
-            \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
             ['source' => $source]
         );
     }

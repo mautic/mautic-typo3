@@ -5,14 +5,14 @@ defined('TYPO3_MODE') || die();
 /***************
  * Add Content Element
  */
-$GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['mautic_form'] = 'tx_mautic-mautic-blue-icon';
+$GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['mautic_form'] = 'tx_mautic-mautic-icon';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',
     [
         'LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:content_element.mautic_form',
         'mautic_form',
-        'tx_mautic-mautic-blue-icon',
+        'tx_mautic-mautic-icon',
     ]
 );
 
@@ -76,5 +76,5 @@ $GLOBALS['TCA']['tt_content']['columns'] = array_replace_recursive(
     'Bitmotion.mautic',
     'Form',
     'LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:content_element.mautic_form',
-    'tx_mautic-mautic-blue-icon'
+    'tx_mautic-mautic-icon'
 );

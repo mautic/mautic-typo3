@@ -35,7 +35,7 @@ call_user_func(
             ],
             [
                 'access' => 'admin',
-                'icon' => 'EXT:mautic/Resources/Public/Icons/mautic-with-background.png',
+                'iconIdentifier' => 'tx_mautic-mautic-icon',
                 'labels' => 'LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf',
             ]
         );

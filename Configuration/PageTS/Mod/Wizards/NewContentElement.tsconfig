@@ -5,7 +5,7 @@ mod.wizards.newContentElement.wizardItems.forms {
     show := addToList(mautic_form)
     elements {
         mautic_form {
-            iconIdentifier = tx_mautic-mautic-blue-icon
+            iconIdentifier = tx_mautic-mautic-icon
             title = LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:content_element.mautic_form
             description = LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:content_element.mautic_form.description
             tt_content_defValues.CType = mautic_form
