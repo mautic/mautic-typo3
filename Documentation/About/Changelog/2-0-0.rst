@@ -1,0 +1,61 @@
+﻿.. include:: ../../Includes.txt
+
+==========================
+Version 2.0.0 - 2018/11/22
+==========================
+
+Version 2.0.0 is a complete overhaul of the Mautic extension for TYPO3. It includes many new features such as dynamic
+content, OAuth and a stable sync with Mautic forms.
+
+Download
+========
+
+Download this version from the `TYPO3 extension repository <https://extensions.typo3.org/extension/mautic/>`__ or from
+`GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v2.0.0>`__.
+
+Added
+=====
+
+* Dedicated license file added
+* Several translations regarding forms
+* Paths to template files are now configurable
+* Dynamic content based on segments
+* Language synchronization between TYPO3 and Mautic
+* Forms integration
+
+Changed
+=======
+
+* Backend preview of Mautic forms
+
+Removed
+=======
+
+* Obsolete TODO annotations
+
+All Changes
+===========
+
+This is a list of all changes in this release::
+
+   2018-11-22 [TASK] Add image to readme (Commit d7909b3 by Woeler)
+   2018-11-22 Update Readme.md (Commit 0b1c303 by Woeler)
+   2018-11-22 Merge pull request #28 from mautic/v2-release (Commit 5f2dba4 by Woeler)
+   2018-11-22 [ (Commit bbd7dd4 by Woeler)
+   2018-11-22 [TASK] Make view configurable (Commit 2c9f4cb by Florian Wessels)
+   2018-11-22 [TASK] Use dedicated icon for mautic forms (Commit b10f94b by Florian Wessels)
+   2018-11-22 [TASK] Improve BE view of mautic forms (Commit 043b89f by Florian Wessels)
+   2018-11-22 [TASK] Remove obsolete @todo annotations (Commit 94bbe3d by Florian Wessels)
+   2018-11-22 [TASK] Log errors if form not found (Commit 1eb0f7f by Florian Wessels)
+   2018-11-21 [BUGFIX] Remove null coalescing operator (Commit 919550f by Woeler)
+   2018-11-21 [TASK] Add get all forms method (Commit 34091aa by Woeler)
+   2018-11-21 [TASK] Fetch forms from Mautic (Commit 2315476 by Woeler)
+   2018-11-21 [TASK] Add correct translation for Mautic form (Commit b64d30c by Woeler)
+   2018-11-21 [TASK] Prepare for v2 release (Commit bcfca50 by Woeler)
+   2018-11-21 [CLEANUP] Clean repository for new code (Commit db12a8f by Woeler)
+   2018-11-02 Merge pull request #27 from mautic/Woeler-patch-1 (Commit 4c34ac8 by Woeler)
+   2018-11-02 Update README.md (Commit a6aa336 by Woeler)
+   2018-01-26 Cs fixes (Commit 4a1ec38 by Jurian Janssen)
+   2018-01-26 Fixed some typos and docs (Commit c3e594e by Jurian Janssen)
+   2018-01-26 Corrected license in composer json (Commit b2d48a5 by Jurian Janssen)
+

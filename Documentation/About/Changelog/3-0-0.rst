@@ -1,0 +1,76 @@
+﻿.. include:: ../../Includes.txt
+
+==========================
+Version 3.0.0 - 2019/03/05
+==========================
+
+This release introduces TYPO3 9 support. It includes all features of version 2.x.
+
+Download
+========
+
+Download this version from the `TYPO3 extension repository <https://extensions.typo3.org/extension/mautic/>`__ or from
+`GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v3.0.0>`__.
+
+Added
+=====
+
+* TYPO3 v9 Support
+* German translations
+* Dedicated module for extension configuration
+* Support für PHP 7.3 and 7.4
+* Constant :php:`FrontendController::DEFAULT_TEMPLATE_PATH`
+* Allow to assign tags via page property
+
+Changed
+=======
+
+* Use PSR-3 logger interfaces
+* Extension configuration was moved into dedicated backend module as there are no deeplinks for extension configuration
+  available anymore.
+
+Removed
+=======
+
+* TYPO3 v8 support
+* PHP v7.0 support
+
+All Changes
+===========
+
+This is a list of all changes in this release::
+
+   2019-03-05 [RELEASE] Release of version 3.0.0 (Commit fd4bc38 by Florian Wessels)
+   2018-11-23 [TASK] Add contributing partners to Readme (Commit 32fe6b5 by Woeler)
+   2019-03-05 [TASK] Require EXT:marketing_automation in version ^1.1 (Commit 46cc262 by Florian Wessels)
+   2019-03-05 [TASK] Use constant for template path (Commit b1c705c by Florian Wessels)
+   2019-03-05 [FEATURE] Allow to set Mautic tags (Commit e325ea2 by Florian Wessels)
+   2018-12-28 [CLEAN-UP] Clean up code (Commit 3cd06d8 by Florian Wessels)
+   2018-12-28 [WIP] Refactor AuthorizeService (Commit 0c13776 by Florian Wessels)
+   2018-12-27 [WIP] Move extension configuration into BE module (Commit c61a795 by Florian Wessels)
+   2018-12-27 [WIP] Kickstart BE module (Commit 4e38761 by Florian Wessels)
+   2018-12-27 [TASK] Replace 'or' by '||' (Commit 76eedf5 by Florian Wessels)
+   2018-12-27 [TASK] Exclude Libraries directory (Commit 68397cb by Florian Wessels)
+   2018-12-27 [TASK] Raise PHP dependency to 7.2 and update mautic/api-library (Commit 49609ae by Florian Wessels)
+   2018-11-23 [TASK] Add german Em configuration translations (Commit ab69c61 by Florian Wessels)
+   2018-11-23 [TASK] Add german TCA translations (Commit 879c7ca by Florian Wessels)
+   2018-11-23 [TASK] Clean up code (Commit 8e92561 by Florian Wessels)
+   2018-11-23 [TASK] Remove logger from constructor (Commit 922a503 by Florian Wessels)
+   2018-11-23 [TASK] Implement LoggerAwareInterface if necessary (Commit 367b5a6 by Florian Wessels)
+   2018-11-23 [BUGFIX] Handle extension configuration as object (Commit 42c7e85 by Florian Wessels)
+   2018-11-23 [CLEAN-UP] Remove obsolete file (Commit 9a3a500 by Florian Wessels)
+   2018-11-23 [TASK] Add fallback if no form template is configured (Commit 1826c17 by Florian Wessels)
+   2018-11-23 [CLEANU-UP] Remove unnecessary sql code (Commit 3348c52 by Florian Wessels)
+   2018-11-23 [TASK] Enable logging vor development environments (Commit 37b77c9 by Florian Wessels)
+   2018-11-23 [TASK] Reformat code (Commit 2c3d083 by Florian Wessels)
+   2018-11-23 [TASK] Remove unused constant (Commit db0d96e by Florian Wessels)
+   2018-11-23 [TASK] Use proper LanguageService class (Commit 2b72f1a by Florian Wessels)
+   2018-11-23 [TASK] Use LoggerAwareTrait (Commit c6cd3df by Florian Wessels)
+   2018-11-23 [TASK] Suggest EXT:form in ext_emconf.php file (Commit ede91d5 by Florian Wessels)
+   2018-11-23 [TASK] Suggest typo3/cms-form in composer.json (Commit 71b9eee by Florian Wessels)
+   2018-11-23 [TASK] Drop TYPO3 8 LTS support from EmConfiguration DTO (Commit 1303d51 by Florian Wessels)
+   2018-11-23 [TASK] Drop TYPO3 8 LTS support and set version to 3.0.0-dev (Commit bd536a1 by Florian Wessels)
+   2018-11-23 [TASK] Introduce extension config as dto (Commit 9a109e0 by Florian Wessels)
+   2018-11-23 [TASK] Set version to 2.1.0-dev and adapt dependencies in ext_emconf.php (Commit 473c5f6 by Florian Wessels)
+   2018-11-23 [TASK] Replace logger->error by logger->critical and adapt dependencies (Commit 61a02da by Florian Wessels)
+

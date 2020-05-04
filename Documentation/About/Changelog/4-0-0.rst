@@ -1,0 +1,142 @@
+﻿.. include:: ../../Includes.txt
+
+==========================
+Version 4.0.0 - TBA
+==========================
+
+This is a future release.
+
+Download
+========
+
+Download this version from the `TYPO3 extension repository <https://extensions.typo3.org/extension/mautic/>`__ or from
+`GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v4.0.0>`__.
+
+Added
+=====
+
+*
+
+Deprecated
+==========
+
+*
+
+Removed
+=======
+
+*
+
+All Changes
+===========
+
+This is a list of all changes in this release::
+
+   2020-04-27 [TASK] Adapt dependencies (Commit c88ba29 by Florian Wessels)
+   2020-04-27 [TASK] Get rid of deprecated methods and properties (Commit e031dc8 by Florian Wessels)
+   2020-04-27 [TASK] Remove unused variable (Commit 7d79d9d by Florian Wessels)
+   2020-04-27 [TASK] Remove obsolete argument (Commit 6be6d71 by Florian Wessels)
+   2020-04-27 [BUGFIX] Use proper labels for tags (Commit 8ba9218 by Florian Wessels)
+   2020-04-27 [TASK] Get rid of deprecated signals (Commit ed7a213 by Florian Wessels)
+   2020-04-27 [TASK] Return data directly (Commit d0403a3 by Florian Wessels)
+   2020-04-27 [TASK] Get rid of ObjectManager->get() (Commit 9eebe08 by Florian Wessels)
+   2020-04-27 [TASK] Prepare LLL support (Commit b296f81 by Florian Wessels)
+   2020-04-27 [TASK] Use logFileInfix for file writer (Commit 5605af4 by Florian Wessels)
+   2020-04-27 [TASK] Update form partials (Commit fefed4a by Florian Wessels)
+   2020-04-27 [TASK] Prevent duplicated array value access (Commit ec923b1 by Florian Wessels)
+   2020-04-27 [TASK] Use form prototype name as constant (Commit 0ec0cbb by Florian Wessels)
+   2020-04-27 [TASK] Get rid of obsolete email form field (Commit 1ec950e by Florian Wessels)
+   2020-04-24 [TASK] Allow editors to include TypoScript (Commit 0e030fb by Florian Wessels)
+   2020-04-24 [TASK] Respect data type in option list (Commit 32b6ec2 by Florian Wessels)
+   2020-04-24 [TASK] Migrate form structure (Commit 51af397 by Florian Wessels)
+   2020-04-24 [TASK] Add introduciong php comment (Commit 799d6ce by Florian Wessels)
+   2020-04-24 [TASK] Use extension key as string (Commit d3bea47 by Florian Wessels)
+   2020-04-24 [TASK] Catch exception (Commit f8024ef by Florian Wessels)
+   2020-04-24 [FEATURE] Introduce compatibility for TYPO3 v10 (Commit 042143f by Florian Wessels)
+   2020-04-24 [BUGFIX] Spelling (Commit 5f92d3b by Florian Wessels)
+   2020-04-24 [FEATURE] Introduce PSR-15 middleware for API Authorization (Commit 2532a9d by Florian Wessels)
+   2020-02-27 [WIP] Move Mautic configuration into site configuration (Commit c9000de by Florian Wessels)
+   2020-02-27 [TASK] Apply CS (Commit 3cfae73 by Florian Wessels)
+   2020-02-27 [TASK] Replace PHP CS file (Commit df305fc by Florian Wessels)
+   2020-02-27 [TASK] Introduce better described error messages (Commit 89f78d8 by Florian Wessels)
+   2020-02-27 [TASK] Catch invalid JSON response (Commit 28872da by Florian Wessels)
+   2020-02-13 [TASK] Fix documentation includes (Commit 47dea5e by Woeler)
+   2019-07-22 [TASK] Add .gitattributes file (Commit 6dc4e82 by Florian Wessels)
+   2019-07-22 [TASK] Check whether file exists and dependencies are loaded (Commit 4bf7a13 by Florian Wessels)
+   2019-07-22 [TASK] Updates paths in composer.json file (Commit 820fb11 by Florian Wessels)
+   2019-07-22 [TASK] Add hint for GitHub zip export (Commit 8ebbbf7 by Florian Wessels)
+   2019-07-18 Merge pull request #31 from mautic/remove-dependencies (Commit a022ab5 by Florian Wessels)
+   2019-07-17 [TASK] Add hint for TYPO3 Slack (Commit 6de105c by Florian Wessels)
+   2019-07-17 [BUGFIX] Remove 'v' from version (Commit 777805c by Florian Wessels)
+   2019-07-17 [TASK] Update script and use dedicated file (Commit ebbe7f2 by Florian Wessels)
+   2019-06-19 [TASK] Add how to package to readme (Commit 3cd5f66 by Woeler)
+   2019-06-19 [TASK] Add build package script to composer (Commit 7dd2a1f by Woeler)
+   2019-06-19 [TASK] Remove dependencies from repository (Commit cc544eb by Woeler)
+   2019-06-19 [TASK] Add link to documentation (Commit ee1e670 by Woeler)
+   2019-06-12 [TASK] Move JS code from head to footer (Commit 59b0574 by Florian Wessels)
+   2019-06-12 [CLEAN-UP] Remove whitespace (Commit ae45b59 by Florian Wessels)
+   2019-06-06 [TASK] Add link to TER website (Commit 37beb68 by Florian Wessels)
+   2019-06-06 [TASK] Add documentation for tagging feature (Commit 3d54209 by Florian Wessels)
+   2019-06-06 [TASK] Use API for assigning tags instead of tagging pixel (Commit e41e5ff by Florian Wessels)
+   2019-06-06 [FEATURE] Allow to create new Tags within TYPO3 (Commit bd8e6cb by Florian Wessels)
+   2019-06-06 [TASK] Update documentation (Commit 3460d86 by Florian Wessels)
+   2019-06-05 [FOLLOW-UP] Remove whitspaces (Commit 836949f by Florian Wessels)
+   2019-06-05 [BUGFIX] Remove whitspaces (Commit e13b2bd by Florian Wessels)
+   2019-06-05 [TASK] Update documentation (Commit a9e1b07 by Florian Wessels)
+   2019-06-05 [TASK] Update readme (Commit b08cff5 by Florian Wessels)
+   2019-06-05 [TASK] Remove obsolete slots (Commit 9d174a0 by Florian Wessels)
+   2019-06-05 [TASK] Remove obsolete slot (Commit 1fe8ba1 by Florian Wessels)
+   2019-06-05 [BUGFIX] Do not extract metadata from deleted files (Commit a283b63 by Florian Wessels)
+   2019-06-05 [TASK] Prevent processing of deleted files (Commit 5507150 by Florian Wessels)
+   2019-06-05 [TASK] Use factory as singleton (Commit 1876eff by Florian Wessels)
+   2019-06-05 [TASK] Unset oauth session on authentication error (Commit f2efb00 by Florian Wessels)
+   2019-06-05 [BUGFIX] Assign value to readonly attribute (Commit dd620ea by Florian Wessels)
+   2019-06-05 [TASK] Add missing throw annotation (Commit 5aea5cf by Florian Wessels)
+   2019-06-05 [TASK] Synchronize tags on first authentication (Commit 1359fb8 by Florian Wessels)
+   2019-06-05 [TASK] Make access key fields readonly (Commit 5fdfffc by Florian Wessels)
+   2019-06-05 [TASK] Improve error output (Commit 1f7f074 by Florian Wessels)
+   2019-06-05 [BUGFIX] Always return array (Commit 1303c57 by Florian Wessels)
+   2019-06-05 [TASK] Rename assetApi (Commit e4adc1d by Florian Wessels)
+   2019-06-03 [FEATURE] Allow to override extension configuration (Commit 5feeff1 by Florian Wessels)
+   2019-06-03 [BUGFIX] Unset cachedHTML (Commit eca0135 by Florian Wessels)
+   2019-06-03 [TASK] Log post request response (Commit 27f7dad by Florian Wessels)
+   2019-06-03 [TASK] Use YamlConfiguration class (Commit 8a23adb by Florian Wessels)
+   2019-06-03 [BUGFIX] Do not try to update deleted mautic form (Commit 38fbef5 by Florian Wessels)
+   2019-05-24 [TASK] Remove nonsens from Docs (Commit e9f81a1 by Woeler)
+   2019-05-24 [TASK] Set correct headers for documentation (Commit a124766 by Woeler)
+   2019-05-24 [Merge] pull request #30 from mautic/documentation (Commit 761ffba by Woeler)
+   2019-05-24 [TASK] Set correct title (Commit 023476b by Woeler)
+   2019-05-24 [TASK] Add more docs (Commit e3f3e71 by Woeler)
+   2019-05-24 [TASK] Add more docs (Commit 30495c4 by Woeler)
+   2019-05-24 [TASK] Add more docs (Commit 8f55144 by Woeler)
+   2019-05-24 [TASK] Write more docs (Commit 72f5bba by Woeler)
+   2019-05-24 [TASK] Add docs for tracking enabling (Commit 15618a5 by Woeler)
+   2019-05-24 [TASK] Add more documentation (Commit 2b03e63 by Woeler)
+   2019-05-20 [TASK] Write installation guide (Commit b6acaf5 by Woeler)
+   2019-05-20 [WIP] Add documentation (Commit e71d1c7 by Woeler)
+   2019-04-18 [BUGFIX] Do not remove files before they are loaded (Commit 6230dd5 by Florian Wessels)
+   2019-04-18 [TASK] Do not break while removing files (Commit f24cd77 by Florian Wessels)
+   2019-04-18 [FOLLOW-UP] Remove logging (Commit 4367069 by Florian Wessels)
+   2019-04-18 [TASK] Remove logging (Commit 2c9b25b by Florian Wessels)
+   2019-04-18 [FEATURE] Access Mautic assets via dedicated file system driver (Commit f35d337 by Florian Wessels)
+   2019-04-18 [TASK] Raise version number (Commit 0e788af by Florian Wessels)
+   2019-04-18 [TASK] Inject properties (Commit 8212e4c by Florian Wessels)
+   2019-04-17 [TASK] Use Heredoc-Syntax for larger HTML blocks (Commit 835ac88 by Florian Wessels)
+   2019-04-17 [TASK] Negate condition (Commit 7b2a4c2 by Florian Wessels)
+   2019-04-17 [TASK] Add missing throw annotation (Commit 14bd8ab by Florian Wessels)
+   2019-04-17 [TASK] Use constructor autoloader in repositories (Commit c08faff by Florian Wessels)
+   2019-04-17 [TASK] Apply CS (Commit 7631b36 by Florian Wessels)
+   2019-04-17 [TASK] Trigger deprecation errors (Commit 3b0626d by Florian Wessels)
+   2019-04-17 [TASK] Remove obsolete PHP annotations from transformation and viewhelper classes (Commit 2e87f95 by Florian Wessels)
+   2019-04-17 [TASK] Add missing throw annotations (Commit 6e2dab6 by Florian Wessels)
+   2019-04-17 [TASK] Enrich TYPO3 form data by mautic form data (Commit 798a925 by Florian Wessels)
+   2019-04-17 [BUGFIX] Do not implement obsolete interface (Commit d623c13 by Florian Wessels)
+   2019-04-08 Merge pull request #29 from mautic/add-license-1 (Commit 092df65 by Woeler)
+   2019-04-08 [TASK] Add missing license (Commit 9bd36d6 by Woeler)
+   2019-04-08 [TASK] Get rid of TransformationInterface and use abstract class instead" (Commit 31e8ce7 by Florian Wessels)
+   2019-04-08 [TASK] Add missing throw annotations (Commit 45f1f6c by Florian Wessels)
+   2019-04-08 [TASK] Use null coalescing operator (Commit 42a57f2 by Florian Wessels)
+   2019-04-08 [TASK] Remove obsolete logger property from cunstructor (Commit 6ad8153 by Florian Wessels)
+   2019-04-08 [BUGFIX] Do not use synclist property when there is no lead field (Commit b0f8998 by Florian Wessels)
+   2019-03-27 [BUGFIX] Use YAML configuration instead of obsolete extension configuration (Commit ed8a16f by Florian Wessels)
+

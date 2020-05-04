@@ -1,0 +1,30 @@
+.. include:: ../../Includes.txt
+
+==========================
+Version 2.1.1 - 2019/08/04
+==========================
+
+This release contains mostly bug fixes. Also it introduces documentation for TYPO3 extensions.
+
+Download
+========
+
+Download this version from the `TYPO3 extension repository <https://extensions.typo3.org/extension/mautic/>`__ or from
+`GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v2.1.1>`__.
+
+Added
+=====
+
+* Documentation
+
+All Changes
+===========
+
+This is a list of all changes in this release::
+
+   2019-08-04 [RELEASE] Release of version 2.1.1 (Commit 9a182fa by Florian Wessels)
+   2019-06-05 [TASK] Set versions to 2.x (Commit af4bd92 by Woeler)
+   2019-06-05 [TASK] Add documentation (Commit 00fdfc8 by Woeler)
+   2019-05-24 [BUGFIX] Prevent boolean return value (Commit 7b1c516 by Florian Wessels)
+   2019-04-09 [TASK] Add missing license (Commit 62343fd by Woeler)
+   2019-04-08 [BUGFIX] Do not use synclist property when there is no lead field (Commit 9401346 by Florian Wessels)

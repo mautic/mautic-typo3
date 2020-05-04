@@ -1,0 +1,43 @@
+﻿.. include:: ../../Includes.txt
+
+==========================
+Version 2.1.0 - 2019/03/05
+==========================
+
+This release contains several bug fixes and introduces two features.
+
+Download
+========
+
+Download this version from the `TYPO3 extension repository <https://extensions.typo3.org/extension/mautic/>`__ or from
+`GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v2.1.0>`__.
+
+Added
+=====
+
+* Add feature to override template path for Mautic form
+* Introduces tagging: Assign configured tags to user when visiting a page
+
+All Changes
+===========
+
+This is a list of all changes in this release::
+
+   2019-03-05 [RELEASE] Release of version 2.1.0 (Commit 1c28de0 by Florian Wessels)
+   2019-03-05 [TASK] Set version to 2.1.0-dev (Commit 119b102 by Florian Wessels)
+   2019-03-05 [TASK] Use constant for template path (Commit 53b1331 by Florian Wessels)
+   2019-03-05 [TASK] Use vendor name in replace section (Commit 5773c7f by Florian Wessels)
+   2019-03-05 [TASK] Adapt code styles (Commit 12142b4 by Florian Wessels)
+   2019-03-05 [FEATURE] Allow to set Mautic tags (Commit 4a24409 by Florian Wessels)
+   2018-11-23 [TASK] Add fallback if no form template is configured (Commit 29412b5 by Florian Wessels)
+   2018-11-23 [CLEAN-UP] Remove obsolete file (Commit 3323ed9 by Florian Wessels)
+   2018-11-23 [TASK] Set version to 2.0.1-dev (Commit c8a4071 by Florian Wessels)
+   2018-11-23 [TASK] Suggest EXT:form in ext_emconf.php file (Commit c4f943c by Florian Wessels)
+   2018-11-23 [TASK] Suggest typo3/cms-form in composer.json (Commit 0812516 by Florian Wessels)
+   2018-11-23 [TASK] Remove unused constant (Commit 58190f9 by Florian Wessels)
+   2018-11-23 [TASK] Add contributing partners to Readme (Commit 30f959b by Woeler)
+   2018-11-22 [TASK] Add php requirements (Commit e115081 by Woeler)
+   2018-11-22 [TASK] Require t3-extbase (Commit 983cecd by Woeler)
+   2018-11-22 [TASK] Clarify readme (Commit 7544bb5 by Woeler)
+   2018-11-22 [TASK] Remove dev from version (Commit 3992182 by Woeler)
+

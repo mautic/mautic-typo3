@@ -31,13 +31,14 @@ Mautic
 
 **TYPO3**
 
-   The content of this document is related to TYPO3, a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
+   The content of this document is related to TYPO3, a GNU/GPL CMS/Framework available from
+   `www.typo3.org <http://www.typo3.org/>`_.
 
 **Community documentation:**
 
-   This document is *not* official TYPO3 documentation.
+   This documentation is community documentation for the TYPO3 extension {extension.name}
 
-   It is maintained as part of a third party extension.
+   It is maintained as part of this third party extension.
 
    If you find an error or something is missing, please:
    `Report a Problem <https://github.com/mautic/mautic-typo3/issues/new>`__
@@ -51,13 +52,16 @@ Mautic
    You are welcome to help improve this guide. Just click on "Edit me on GitHub" on the top right to submit your
    change request.
 
-**Table of Contents**
+
+
+:ref:`sitemap`
 
 .. toctree::
     :maxdepth: 3
-    :titlesonly:
-    :glob:
+    :hidden:
 
     Introduction/Index
     Installation/Index
     Features/Index
+    About/Index
+    Sitemap
