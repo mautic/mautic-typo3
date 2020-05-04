@@ -201,7 +201,6 @@ define(['jquery',
 
             for (var i = 0, len = options.length; i < len; ++i) {
                 var option;
-                console.log(options[i]);
 
                 if (options[i]['value'] === propertyData) {
                     option = new Option(options[i]['label'], i, false, true);
