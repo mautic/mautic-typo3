@@ -4,7 +4,10 @@
 Version 4.0.0 - TBA
 ==========================
 
-This is a future release.
+This is a feature release. Be careful when upgrading to this version as it contains breaking changes regarding the OAuth
+authentication workflow. Please check your connection after upgrading to this version when using the forms, tags or
+segments feature. Besides these points, this release also includes several bug fixes and new features like the TYPO3
+v10 support and the linking to Mautic assets directly from TYPO3's link wizard.
 
 Download
 ========
@@ -15,23 +18,45 @@ Download this version from the `TYPO3 extension repository <https://extensions.t
 Added
 =====
 
-*
+* Added changelog to documentation
+* TYPO3 v10 compatibility
+* Allow to link to Mautic assets directly from TYPO3's file list module and link wizard
+* More default form fields are now supported (email, url, phone, ...)
+* TypoScript can now be included using the `sys_template` data record
+* Default value for property :php:`$extensionConfiguration` of service class :php:`MauticAuthorizeService`
+* Strict return types for several methods in various classes
+
+Changed
+=======
+
+* License file was moved from `LICENSE` to `LICENSE.txt`
+* Author company was changed from "Bitmotion" to "Leuchtfeuer Digital Marketing"
+* Signal slots were migrated to PSR-14 events
+* Use PSR-11 compliant symfony component for object initialization instead of :php:`ObjectManager` class
+* Yaml configuration for EXT:form was moved to new file and configuration structure
+* OAuth authorization is now handled via a PSR-15 middleware to avoid several bugs and to simplify the workflow
 
 Deprecated
 ==========
 
-*
+* Protected property :php:`$formPrototypeName` of class :php:`MauticFormHook`
 
 Removed
 =======
 
-*
+* TYPO3 v9 compatibility
+* Second argument of :php:`getContactFields` method of :php:`FieldRepository`
+* Custom email field for EXT:forms
+* Argument :php:`$state` of method :php:`createAuthorizationFromExtensionConfiguration()` of factory class
+  :php:`AuthorizationFactor`
 
 All Changes
 ===========
 
 This is a list of all changes in this release::
 
+   2020-05-04 [DOC] Add changelog (Commit cb25c73 by Florian Wessels)
+   2020-05-04 [TASK] Rename license file (Commit dd8efa0 by Florian Wessels)
    2020-04-27 [TASK] Adapt dependencies (Commit c88ba29 by Florian Wessels)
    2020-04-27 [TASK] Get rid of deprecated methods and properties (Commit e031dc8 by Florian Wessels)
    2020-04-27 [TASK] Remove unused variable (Commit 7d79d9d by Florian Wessels)
@@ -65,7 +90,6 @@ This is a list of all changes in this release::
    2019-07-22 [TASK] Check whether file exists and dependencies are loaded (Commit 4bf7a13 by Florian Wessels)
    2019-07-22 [TASK] Updates paths in composer.json file (Commit 820fb11 by Florian Wessels)
    2019-07-22 [TASK] Add hint for GitHub zip export (Commit 8ebbbf7 by Florian Wessels)
-   2019-07-18 Merge pull request #31 from mautic/remove-dependencies (Commit a022ab5 by Florian Wessels)
    2019-07-17 [TASK] Add hint for TYPO3 Slack (Commit 6de105c by Florian Wessels)
    2019-07-17 [BUGFIX] Remove 'v' from version (Commit 777805c by Florian Wessels)
    2019-07-17 [TASK] Update script and use dedicated file (Commit ebbe7f2 by Florian Wessels)
@@ -131,7 +155,6 @@ This is a list of all changes in this release::
    2019-04-17 [TASK] Add missing throw annotations (Commit 6e2dab6 by Florian Wessels)
    2019-04-17 [TASK] Enrich TYPO3 form data by mautic form data (Commit 798a925 by Florian Wessels)
    2019-04-17 [BUGFIX] Do not implement obsolete interface (Commit d623c13 by Florian Wessels)
-   2019-04-08 Merge pull request #29 from mautic/add-license-1 (Commit 092df65 by Woeler)
    2019-04-08 [TASK] Add missing license (Commit 9bd36d6 by Woeler)
    2019-04-08 [TASK] Get rid of TransformationInterface and use abstract class instead" (Commit 31e8ce7 by Florian Wessels)
    2019-04-08 [TASK] Add missing throw annotations (Commit 45f1f6c by Florian Wessels)
