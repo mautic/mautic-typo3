@@ -161,7 +161,7 @@ This is a list of all changes in this release::
    2019-04-17 [TASK] Enrich TYPO3 form data by mautic form data (Commit 798a925 by Florian Wessels)
    2019-04-17 [BUGFIX] Do not implement obsolete interface (Commit d623c13 by Florian Wessels)
    2019-04-08 [TASK] Add missing license (Commit 9bd36d6 by Woeler)
-   2019-04-08 [TASK] Get rid of TransformationInterface and use abstract class instead" (Commit 31e8ce7 by Florian Wessels)
+   2019-04-08 [TASK] Get rid of TransformationInterface and use abstract class instead (Commit 31e8ce7 by Florian Wessels)
    2019-04-08 [TASK] Add missing throw annotations (Commit 45f1f6c by Florian Wessels)
    2019-04-08 [TASK] Use null coalescing operator (Commit 42a57f2 by Florian Wessels)
    2019-04-08 [TASK] Remove obsolete logger property from cunstructor (Commit 6ad8153 by Florian Wessels)
