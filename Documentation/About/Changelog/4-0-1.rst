@@ -1,0 +1,27 @@
+.. include:: ../../Includes.txt
+
+==========================
+Version 4.0.1 - 2020/06/03
+==========================
+
+This release is a regular maintenance release. It contains bugfixes only.
+
+Download
+========
+
+Download this version from the `TYPO3 extension repository <https://extensions.typo3.org/extension/mautic/>`__ or from
+`GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v4.0.1>`__.
+
+All Changes
+===========
+
+This is a list of all changes in this release::
+
+    2020-06-03 [TASK] Add GitHub files (Commit acc5634 by Florian Wessels)
+    2020-06-03 [TASK] Adapt dependencies in ext_emconf file (Commit 20f1f78 by Florian Wessels)
+    2020-06-03 [TASK] Rename file (Commit 2f3080c by Florian Wessels)
+    2020-06-03 [BUGFIX] Adapt link to documentation (Commit e8cc977 by Florian Wessels)
+    2020-06-03 [TASK] Update dependencies (Commit 11f87d2 by Florian Wessels)
+    2020-05-04 [TASK] Set version to 4.0.1-dev (Commit 0f721f0 by Florian Wessels)
+    2020-05-04 [BUGFIX][DOC] Do not break layout (Commit d3775e9 by Florian Wessels)
+
