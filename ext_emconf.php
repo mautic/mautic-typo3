@@ -14,8 +14,8 @@ $EM_CONF['mautic'] = [
     'version' => '4.0.1-dev',
     'constraints' => [
         'depends' => [
-            'typo3' => '10.4.0-10.4.99',
-            'marketing_automation' => '1.2.2-1.2.99',
+            'typo3' => '10.4.2-10.4.99',
+            'marketing_automation' => '1.2.3-1.2.99',
         ],
         'conflicts' => [],
         'suggests' => [
