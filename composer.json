@@ -26,7 +26,7 @@
         "issues": "https://github.com/mautic/mautic-typo3/issues",
         "source": "https://github.com/mautic/mautic-typo3",
         "email": "dev@Leuchtfeuer.com",
-        "docs": "https://docs.typo3.org/p/bitmotion/mautic/master/en-us/"
+        "docs": "https://docs.typo3.org/p/mautic/mautic-typo3/master/en-us/"
     },
     "require": {
         "typo3/cms-core": "^10.4.2",
