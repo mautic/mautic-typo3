@@ -23,8 +23,10 @@ use Bitmotion\Mautic\Transformation\FormField\AbstractFormFieldTransformation;
 use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationPrototype;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Form\Mvc\Configuration\Exception\ParseErrorException;
+use TYPO3\CMS\Form\Mvc\Configuration\YamlSource;
 use TYPO3\CMS\Form\Mvc\Persistence\FormPersistenceManager;
 use TYPO3\CMS\Form\Mvc\Persistence\FormPersistenceManagerInterface;
 
@@ -62,7 +64,14 @@ class MauticFormHook implements LoggerAwareInterface
 
     public function __construct(FormPersistenceManagerInterface $formPersistenceManager = null)
     {
-        $this->formPersistenceManager = $formPersistenceManager ?? GeneralUtility::makeInstance(FormPersistenceManager::class);
+        if ($formPersistenceManager === null) {
+            $formPersistenceManager = GeneralUtility::makeInstance(FormPersistenceManager::class);
+            $formPersistenceManager->initializeObject();
+            $formPersistenceManager->injectResourceFactory(GeneralUtility::makeInstance(ResourceFactory::class));
+            $formPersistenceManager->injectYamlSource(GeneralUtility::makeInstance(YamlSource::class));
+        }
+
+        $this->formPersistenceManager = $formPersistenceManager;
         $this->formRepository = GeneralUtility::makeInstance(FormRepository::class);
         $this->extConf = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic'];
     }
