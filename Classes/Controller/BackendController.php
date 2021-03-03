@@ -13,6 +13,7 @@ namespace Bitmotion\Mautic\Controller;
  *
  ***/
 
+use Bitmotion\Mautic\Domain\Model\AccessTokenData;
 use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Bitmotion\Mautic\Service\MauticAuthorizeService;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
@@ -33,7 +34,7 @@ class BackendController extends ActionController
         $authorizeService = GeneralUtility::makeInstance(MauticAuthorizeService::class);
 
         if ($authorizeService->validateCredentials() === true) {
-            if ($emConfiguration->getAccessToken() === '' || $emConfiguration->getAccessTokenSecret() === '') {
+            if (NULL === AccessTokenData::get()) {
                 $this->view->assign('authorizeButton', $authorizeService->getAuthorizeButton());
             } else {
                 $authorizeService->checkConnection();
