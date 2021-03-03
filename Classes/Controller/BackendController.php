@@ -30,7 +30,7 @@ class BackendController extends ActionController
 
     public function showAction()
     {
-        $emConfiguration = new YamlConfiguration();
+        $emConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class);
         $authorizeService = GeneralUtility::makeInstance(MauticAuthorizeService::class);
 
         if ($authorizeService->validateCredentials() === true) {
@@ -50,7 +50,7 @@ class BackendController extends ActionController
      */
     public function saveAction(array $configuration)
     {
-        $emConfiguration = new YamlConfiguration();
+        $emConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class);
 
         if (substr($configuration['baseUrl'], -1) === '/') {
             $configuration['baseUrl'] = rtrim($configuration['baseUrl'], '/');
