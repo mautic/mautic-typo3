@@ -13,6 +13,7 @@ namespace Bitmotion\Mautic\Mautic;
  *
  ***/
 
+use Bitmotion\Mautic\Domain\Model\AccessTokenData;
 use Mautic\Auth\AuthInterface;
 
 class OAuth implements AuthInterface
@@ -67,6 +68,11 @@ class OAuth implements AuthInterface
      */
     public function makeRequest($url, array $parameters = [], $method = 'GET', array $settings = [])
     {
+        if ($this->authorization->validateAccessToken(false)) {
+            if ($this->authorization->accessTokenUpdated()) {
+                AccessTokenData::set($this->authorization->getAccessTokenData());
+            }
+        }
         return $this->authorization->makeRequest($url, $parameters, $method, $settings);
     }
 }

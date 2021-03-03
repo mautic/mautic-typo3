@@ -13,15 +13,18 @@ namespace Bitmotion\Mautic\Mautic;
  *
  ***/
 
+use Bitmotion\Mautic\Domain\Model\AccessTokenData;
 use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Bitmotion\Mautic\Middleware\AuthorizeMiddleware;
 use Mautic\Auth\ApiAuth;
+use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AuthorizationFactory implements SingletonInterface
 {
     public const VERSION = 'OAuth1a';
+    public const VERSION2 = 'OAuth2';
 
     protected static $oAuth;
 
@@ -36,15 +39,24 @@ class AuthorizationFactory implements SingletonInterface
 
         $settings = [
             'baseUrl' => $baseUrl,
-            'version' => self::VERSION,
+            'version' => $extensionConfiguration->isOauth2() ? self::VERSION2 : self::VERSION,
             'clientKey' => $extensionConfiguration->getPublicKey(),
             'clientSecret' => $extensionConfiguration->getSecretKey(),
             'callback' => self::getCallback($state),
         ];
 
-        if (!empty($extensionConfiguration->getAccessToken()) && !empty($extensionConfiguration->getAccessTokenSecret())) {
-            $settings['accessToken'] = $extensionConfiguration->getAccessToken();
-            $settings['accessTokenSecret'] = $extensionConfiguration->getAccessTokenSecret();
+        if (NULL !== $accessTokenData = AccessTokenData::get()) {
+            $translateKeys = [
+                'access_token' => 'accessToken',
+                'access_token_secret' => 'accessTokenSecret',
+                'expires' => 'accessTokenExpires',
+                'refresh_token' => 'refreshToken',
+            ];
+            foreach ($accessTokenData as $key => $value) {
+                if (isset($translateKeys[$key])) {
+                    $settings[$translateKeys[$key]] = $value;
+                }
+            }
         }
 
         self::$oAuth = new OAuth((new ApiAuth())->newAuth($settings), $baseUrl);

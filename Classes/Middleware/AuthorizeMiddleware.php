@@ -13,6 +13,7 @@ namespace Bitmotion\Mautic\Middleware;
  *
  ***/
 
+use Bitmotion\Mautic\Domain\Model\AccessTokenData;
 use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Bitmotion\Mautic\Domain\Repository\SegmentRepository;
 use Bitmotion\Mautic\Domain\Repository\TagRepository;
@@ -32,6 +33,7 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Core\Http\Stream;
+use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
@@ -80,7 +82,7 @@ class AuthorizeMiddleware implements MiddlewareInterface, LoggerAwareInterface
             return new Response($stream, $statusCode);
         }
 
-        $hasAccessToken = $authorizeService->configurationHasAccessToken();
+        $hasAccessToken = $authorizeService->hasAccessToken();
 
         if (!$hasAccessToken) {
             $response = $this->authorize($authorization);
@@ -108,7 +110,7 @@ class AuthorizeMiddleware implements MiddlewareInterface, LoggerAwareInterface
             if ($authorization->validateAccessToken() && $this->validateState()) {
                 if ($authorization->accessTokenUpdated()) {
                     $accessTokenData = $authorization->getAccessTokenData();
-                    $this->updateExtensionConfiguration($accessTokenData);
+                    AccessTokenData::set($accessTokenData);
                 }
 
                 /** @var ObjectManager $objectManager */
@@ -166,17 +168,6 @@ class AuthorizeMiddleware implements MiddlewareInterface, LoggerAwareInterface
         }
 
         return $_SESSION['mautic']['oauth']['state'] ?? '';
-    }
-
-    protected function updateExtensionConfiguration(array $accessTokenData): void
-    {
-        $yamlConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class);
-
-        $extensionConfiguration = $yamlConfiguration->getConfigurationArray();
-        $extensionConfiguration['accessToken'] = $accessTokenData['access_token'];
-        $extensionConfiguration['accessTokenSecret'] = $accessTokenData['access_token_secret'];
-
-        $yamlConfiguration->save($extensionConfiguration);
     }
 
     protected function buildStreamFromMessages(MauticAuthorizeService $authorizeService): StreamInterface

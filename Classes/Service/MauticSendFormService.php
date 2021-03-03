@@ -27,6 +27,7 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
 
     public function submitForm(string $url, array $data): int
     {
+
         $client = new Client();
         $multipart = [];
 

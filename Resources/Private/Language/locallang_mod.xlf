@@ -13,13 +13,10 @@
                 <source>Secret Key from Mautic API Credentials</source>
             </trans-unit>
             <trans-unit id="authorization.authorize">
-                <source>Provide OAuth1 API Credentials from Mautic</source>
+                <source>Provide OAuth API Credentials from Mautic</source>
             </trans-unit>
-            <trans-unit id="authorization.accessToken">
-                <source>Access token</source>
-            </trans-unit>
-            <trans-unit id="authorization.accessTokenSecret">
-                <source>Access token secret</source>
+            <trans-unit id="authorization.oauth2">
+                <source>Enable Oauth2</source>
             </trans-unit>
 
             <trans-unit id="tracking.tracking">

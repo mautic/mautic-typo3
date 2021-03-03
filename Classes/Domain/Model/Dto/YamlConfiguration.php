@@ -27,6 +27,11 @@ class YamlConfiguration implements SingletonInterface
     protected $authorize = 0;
 
     /**
+     * @var bool
+     */
+    protected $oauth2 = false;
+
+    /**
      * @var string
      */
     protected $baseUrl = '';
@@ -40,16 +45,6 @@ class YamlConfiguration implements SingletonInterface
      * @var string
      */
     protected $secretKey = '';
-
-    /**
-     * @var string
-     */
-    protected $accessToken = '';
-
-    /**
-     * @var string
-     */
-    protected $accessTokenSecret = '';
 
     /**
      * @var bool
@@ -132,6 +127,11 @@ class YamlConfiguration implements SingletonInterface
         return (int)$this->authorize;
     }
 
+    public function isOauth2(): bool
+    {
+        return (bool)$this->oauth2;
+    }
+
     public function getBaseUrl(): string
     {
         return (string)$this->baseUrl;
@@ -145,16 +145,6 @@ class YamlConfiguration implements SingletonInterface
     public function getSecretKey(): string
     {
         return (string)$this->secretKey;
-    }
-
-    public function getAccessToken(): string
-    {
-        return (string)$this->accessToken;
-    }
-
-    public function getAccessTokenSecret(): string
-    {
-        return (string)$this->accessTokenSecret;
     }
 
     public function isTracking(): bool
