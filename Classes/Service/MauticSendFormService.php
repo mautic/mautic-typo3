@@ -13,11 +13,14 @@ namespace Bitmotion\Mautic\Service;
  *
  ***/
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Cookie\CookieJar;
-use GuzzleHttp\Cookie\SetCookie;
+use Http\Message\MultipartStream\MultipartStreamBuilder;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Symfony\Component\HttpFoundation\Cookie;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -25,60 +28,65 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
+    /** @var ClientInterface */
+    protected $httpClient;
+
+    /** @var RequestFactoryInterface */
+    protected $requestFactory;
+
+    /** @var StreamFactoryInterface  */
+    protected $streamFactory;
+
+    public function __construct(ClientInterface $httpClient, RequestFactoryInterface $requestFactory, StreamFactoryInterface $streamFactory)
+    {
+        $this->httpClient = $httpClient;
+        $this->requestFactory = $requestFactory;
+        $this->streamFactory = $streamFactory;
+    }
+
     public function submitForm(string $url, array $data): int
     {
-
-        $client = new Client();
-        $multipart = [];
-
-        $headers = $this->makeHeaders();
-        $cookies = $this->makeCookies();
-        $this->makeMultipart($multipart, 'mauticform', $data);
+        $multipartStreamBuilder = new MultipartStreamBuilder($this->streamFactory);
+        $this->addDataToMultipartStreamBuilder($multipartStreamBuilder, 'mauticform', $data);
 
         if (\array_key_exists('mautic_device_id', $_COOKIE)) {
-            $multipart[] = [
-                'name' => 'mautic_device_id',
-                'contents' => $_COOKIE['mautic_device_id'],
-            ];
+            $multipartStreamBuilder->addResource('mautic_device_id', $_COOKIE['mautic_device_id']);
         }
 
-        $result = null;
-        try {
-            $result = $client->post($url, [
-                'cookies' => $cookies,
-                'headers' => $headers,
-                'multipart' => $multipart,
-            ]);
-        } catch (\Exception $e) {
-            $this->logger->critical(sprintf('%s: %s', $e->getCode(), $e->getMessage()));
+        $request = $this->requestFactory->createRequest('POST', $url)
+            ->withBody($multipartStreamBuilder->build())
+            ->withHeader('Content-Type', 'multipart/form-data; boundary="' . $multipartStreamBuilder->getBoundary() . '"');
+        $request = $this->addCommonHeadersToRequest($request);
+        $request = $this->addCookiesToRequest($request);
 
+        try {
+            $response = $this->httpClient->sendRequest($request);
+        } catch (\Psr\Http\Client\ClientExceptionInterface $e) {
+            $this->logger->critical(sprintf('%s: %s', $e->getCode(), $e->getMessage()));
             return 500;
         }
 
-        $statusCode = $result->getStatusCode();
+        $statusCode = $response->getStatusCode();
 
         return (int)$statusCode;
     }
 
-    private function makeHeaders(): array
+    private function addCommonHeadersToRequest(RequestInterface $request): RequestInterface
     {
-        $headers = [];
         if (isset($_SERVER['HTTP_REFERER'])) {
-            $headers['Referer'] = $_SERVER['HTTP_REFERER'];
+            $request = $request->withAddedHeader('Referer', $_SERVER['HTTP_REFERER']);
         }
-        $ip = $this->getIpFromServer();
+        $ip = $this->guessIpFromServerGlobal();
         if ($ip !== '') {
-            $headers['X-Forwarded-For'] = $ip;
-            $headers['Client-Ip'] = $ip;
+            $request = $request
+                ->withAddedHeader('X-Forwarded-For', $ip)
+                ->withAddedHeader('Client-Ip', $ip);
         }
 
-        return $headers;
+        return $request;
     }
 
-    /**
-     * Guesses IP address from $_SERVER
-     */
-    public function getIpFromServer(): string
+    protected function guessIpFromServerGlobal(): string
     {
         $ip = '';
         $ipHolders = [
@@ -109,39 +117,44 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
         return $ip;
     }
 
-    private function makeCookies(): CookieJar
+    protected function addCookiesToRequest(RequestInterface $request): RequestInterface
     {
-        $cookies = new CookieJar(true);
-        $this->addCookies($cookies, 'mtc_id');
-        $this->addCookies($cookies, 'mtc_sid');
-        $this->addCookies($cookies, 'mautic_device_id');
-        $this->addCookies($cookies, 'mautic_session_id');
+        $cookies = array_filter([
+            $this->createProxyCookieIfExists('mtc_id'),
+            $this->createProxyCookieIfExists('mtc_sid'),
+            $this->createProxyCookieIfExists('mautic_device_id'),
+            $this->createProxyCookieIfExists('mautic_session_id')
+        ]);
 
-        return $cookies;
+        if (!empty($cookies)) {
+            return $request->withHeader('Cookie', implode('; ', $cookies));
+        }
+
+        return $request;
     }
 
-    private function addCookies(CookieJar $cookies, string $cookieName)
+    protected function createProxyCookieIfExists(string $cookieName): ?string
     {
         if (\array_key_exists($cookieName, $_COOKIE)) {
-            $cookies->setCookie(new SetCookie([
-                'Name' => $cookieName,
-                'Value' => $_COOKIE[$cookieName],
-                'Domain' => GeneralUtility::getIndpEnv('HTTP_HOST'),
-            ]));
+            return (string)Cookie::create(
+                $cookieName,
+                $_COOKIE[$cookieName],
+                0,
+                null,
+                GeneralUtility::getIndpEnv('HTTP_HOST')
+            );
         }
+        return null;
     }
 
-    private function makeMultipart(array &$multipart, string $path, array $data)
+    protected function addDataToMultipartStreamBuilder(MultipartStreamBuilder $multipartStreamBuilder, string $path, array $data)
     {
         foreach ($data as $key => $value) {
             $tempPath = $path . '[' . $key . ']';
             if (is_array($value)) {
-                $this->makeMultipart($multipart, $tempPath, $value);
+                $this->addDataToMultipartStreamBuilder($multipartStreamBuilder, $tempPath, $value);
             } else {
-                $multipart[] = [
-                    'name' => $tempPath,
-                    'contents' => $value,
-                ];
+                $multipartStreamBuilder->addResource($tempPath, (string)$value);
             }
         }
     }
