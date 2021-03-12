@@ -94,6 +94,24 @@ It should show that the "Email" field has been linked to the contact property "E
 
 That's it. You can do this for every field in the form.
 
+TYPO3 Form Customization
+==============================
+
+In case you got own elements or similiar customization within the EXT:form component you should be aware of the possibly necessary adaptions you have to do.
+A custom element needs a transformation and field property depending of the element content and what you want to do with it.
+In case of an e.g. LinkedCheckbox element providing an GDPR checkbox along with a linked text you might not want the data to be transferred into mautic.
+In this case you can do the following:
+
+   .. code-block:: php
+   $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['LinkedCheckbox'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
+
+
+If you actually want to transfer the data into mautic you need to choose a fitting Transformation class along with extending the inheritance of the custom element to use the mautic mixin. This provides the possibility to choose a property for the element in the form module.
+
+The side effect of not handling those custom elements could be that the form data is not transferred into mautic correctly.
+This is only the case on initial setup and first submitting of the form with such an non configured element.
+Once the form is submitted those custom elements are getting ignored.
+
 Using Dynamic Content Elements
 ==============================
 
