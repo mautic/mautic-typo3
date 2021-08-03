@@ -53,6 +53,21 @@ class EmConfiguration implements SingletonInterface
      */
     protected $trackingScriptOverride = '';
 
+    /**
+     * @var string
+     */
+    protected $authorizeMode = '';
+
+    /**
+     * @var string
+     */
+    protected $refreshToken = '';
+
+    /**
+     * @var int
+     */
+    protected $expires = 0;
+
     public function __construct()
     {
         $settings = $this->getRawEmConfig();
@@ -125,5 +140,20 @@ class EmConfiguration implements SingletonInterface
     public function getConfigurationArray(): array
     {
         return $this->configurationArray;
+    }
+
+    public function getAuthorizeMode(): string
+    {
+        return $this->authorizeMode;
+    }
+
+    public function getRefreshToken(): string
+    {
+        return $this->refreshToken;
+    }
+
+    public function getExpires(): int
+    {
+        return (int)$this->expires;
     }
 }

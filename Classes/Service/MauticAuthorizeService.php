@@ -56,6 +56,7 @@ class MauticAuthorizeService
         if ($this->extensionConfiguration['baseUrl'] === ''
             || $this->extensionConfiguration['publicKey'] === ''
             || $this->extensionConfiguration['secretKey'] === ''
+            || $this->extensionConfiguration['authorizeMode'] === ''
         ) {
             $this->showCredentialsInformation();
 
@@ -69,9 +70,14 @@ class MauticAuthorizeService
     {
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
         $title = $this->translate('authorization.withMautic');
+        $target = '';
+        if($this->extensionConfiguration['authorizeMode'] !== 'OAuth1a') {
+            //open authorizaion in new tab to avoid x-frame sameorigin issue in typo3 backend
+            $target = 'target="_blank"';
+        }
 
         return '<a href="' . $_SERVER['REQUEST_URI'] . '&amp;tx_marketingauthorizemautic_authorize=1" '
-            . 'class="btn btn-default btn-sm" title="' . htmlspecialchars($title) . '">'
+            . 'class="btn btn-default btn-sm" title="' . htmlspecialchars($title) . '" ' . $target . '>'
             . $iconFactory->getIcon('tx_mautic-mautic-icon', Icon::SIZE_SMALL)
             . ' ' . htmlspecialchars($title)
             . '</a>';
@@ -150,7 +156,12 @@ class MauticAuthorizeService
                 if ($this->authorization->accessTokenUpdated()) {
                     $accessTokenData = $this->authorization->getAccessTokenData();
                     $this->extensionConfiguration['accessToken'] = $accessTokenData['access_token'];
-                    $this->extensionConfiguration['accessTokenSecret'] = $accessTokenData['access_token_secret'];
+                    if($this->extensionConfiguration['authorizeMode'] === 'OAuth1a') {
+                        $this->extensionConfiguration['accessTokenSecret'] = $accessTokenData['access_token_secret'];
+                    } else {
+                        $this->extensionConfiguration['refreshToken'] = $accessTokenData['refresh_token'];
+                        $this->extensionConfiguration['expires'] = $accessTokenData['expires'];
+                    }
                 }
 
                 $this->segmentRepository->initializeSegments();
@@ -227,5 +238,54 @@ class MauticAuthorizeService
     protected function translate(string $key): string
     {
         return $GLOBALS['LANG']->sL('LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:' . $key);
+    }
+
+    public function validateAccessToken(): bool
+    {
+        if($this->extensionConfiguration['authorizeMode'] === 'OAuth1a') {
+            if ($this->extensionConfiguration['accessToken'] !== ''
+                && $this->extensionConfiguration['accessTokenSecret'] !== ''
+            ) {
+                return true;
+            }
+
+            return false;
+        }
+
+        if($this->extensionConfiguration['accessToken'] === ''
+            || $this->extensionConfiguration['refreshToken'] === ''
+        ) {
+            return false;
+        }
+
+        if ($this->extensionConfiguration['expires'] > 0
+            && $this->extensionConfiguration['expires'] > time()
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function accessTokenToBeRefreshed(): bool
+    {
+        //Access token have no expire on OAuth 1
+        if($this->extensionConfiguration['authorizeMode'] === 'OAuth1a') {
+            return false;
+        }
+
+        if($this->extensionConfiguration['accessToken'] === ''
+            || $this->extensionConfiguration['refreshToken'] === ''
+        ) {
+            return false;
+        }
+
+        if ($this->extensionConfiguration['expires'] > 0
+            && $this->extensionConfiguration['expires'] < time()
+        ) {
+            return true;
+        }
+
+        return false;
     }
 }
