@@ -21,7 +21,7 @@ class MauticTagHook
                     '<img src="%s/mtracking.gif?tags=%s" style="display: none;" />',
                     $domain,
                     implode(',', $tags)
-                    );
+                );
             }
         }
     }

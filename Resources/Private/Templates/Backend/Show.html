@@ -39,11 +39,14 @@
 				<f:flashMessages queueIdentifier="marketingautomation.mautic.flashMessages"/>
 			</div>
 
+			<f:render section="form-element-select" arguments="{key: 'authorizeMode', type: 'authorization', options: '{OAuth1a: \' OAuth 1\', OAuth2: \' OAuth 2\'}'}" />
 			<f:render section="form-element-text" arguments="{key: 'baseUrl', type: 'authorization'}" />
 			<f:render section="form-element-text" arguments="{key: 'publicKey', type: 'authorization'}" />
 			<f:render section="form-element-text" arguments="{key: 'secretKey', type: 'authorization'}" />
 			<f:render section="form-element-text" arguments="{key: 'accessToken', type: 'authorization'}" />
 			<f:render section="form-element-text" arguments="{key: 'accessTokenSecret', type: 'authorization'}" />
+			<f:render section="form-element-text" arguments="{key: 'refreshToken', type: 'authorization'}" />
+			<f:render section="form-element-text" arguments="{key: 'expires', type: 'authorization'}" />
 		</div>
 	</div>
 </f:section>
@@ -99,6 +102,18 @@
 					<f:form.checkbox property="{key}" id="{type}-{key}" value="1"/>
 				</label>
 			</div>
+		</div>
+		<div class="help-block"></div>
+	</div>
+</f:section>
+
+<f:section name="form-element-select">
+	<div class="form-group form-group-dashed">
+		<label for="{type}-{key}">
+			<f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:{type}.{key}" />
+		</label>
+		<div class="form-control-wrap">
+			<f:form.select id="{type}-{key}" property="{key}" class="form-control" options="{options}" />
 		</div>
 		<div class="help-block"></div>
 	</div>

@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace Bitmotion\Mautic\Service;
 
+use Bitmotion\Mautic\Domain\Model\Dto\EmConfiguration;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Cookie\SetCookie;
@@ -11,14 +12,30 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class MauticSendFormService implements SingletonInterface
 {
-    public function submitForm(string $url, array $data): int
+    /**
+     * @var array
+     */
+    private $extensionConfiguration;
+
+    /**
+     * @var MauticAuthorizeService
+     */
+    private $authorizeService;
+
+    public function __construct()
+    {
+        $this->extensionConfiguration = GeneralUtility::makeInstance(EmConfiguration::class)->getConfigurationArray();
+        $this->authorizeService = GeneralUtility::makeInstance(MauticAuthorizeService::class);
+    }
+
+    public function submitForm(string $url, array $data, bool $maintainDataKeys = false): int
     {
         $client = new Client();
         $multipart = [];
 
         $headers = $this->makeHeaders();
         $cookies = $this->makeCookies();
-        $this->makeMultipart($multipart, 'mauticform', $data);
+        $this->makeMultipart($multipart, 'mauticform', $data, $maintainDataKeys);
 
         if (\array_key_exists('mautic_device_id', $_COOKIE)) {
             $multipart[] = [
@@ -58,6 +75,13 @@ class MauticSendFormService implements SingletonInterface
         if ($ip !== '') {
             $headers['X-Forwarded-For'] = $ip;
             $headers['Client-Ip'] = $ip;
+        }
+
+        if ($this->extensionConfiguration['authorizeMode'] !== EmConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+            if ($this->authorizeService->accessTokenToBeRefreshed()) {
+                $this->authorizeService->authorize();
+            }
+            $headers['Authorization'] = sprintf('Bearer %s', $this->extensionConfiguration['accessToken']);
         }
 
         return $headers;
@@ -119,10 +143,10 @@ class MauticSendFormService implements SingletonInterface
         }
     }
 
-    private function makeMultipart(array &$multipart, string $path, array $data)
+    private function makeMultipart(array &$multipart, string $path, array $data, bool $maintainDataKeys)
     {
         foreach ($data as $key => $value) {
-            $tempPath = $path . '[' . $key . ']';
+            $tempPath = $maintainDataKeys ? $key : $path . '[' . $key . ']';
             if (is_array($value)) {
                 $this->makeMultipart($multipart, $tempPath, $value);
             } else {

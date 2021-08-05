@@ -69,7 +69,9 @@ class SegmentRepository
 
         $segments = $this->findAll();
         foreach ($segments as $segment) {
-            $dateAdded = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $segment['dateAdded']);
+            //segment date Added in mautic can be null
+            $dateAdded = empty($segment['dateAdded']) ? new \DateTime()
+                : \DateTime::createFromFormat('Y-m-d\TH:i:sP', $segment['dateAdded']);
             if (!empty($segment['dateModified'])) {
                 $dateModified = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $segment['dateModified']);
             } else {

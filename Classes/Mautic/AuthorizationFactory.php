@@ -14,7 +14,7 @@ class AuthorizationFactory
 
         $settings = [
             'baseUrl' => $extensionConfiguration->getBaseUrl(),
-            'version' => 'OAuth1a',
+            'version' => $extensionConfiguration->getAuthorizeMode(),
             'clientKey' => $extensionConfiguration->getPublicKey(),
             'clientSecret' => $extensionConfiguration->getSecretKey(),
             'callback' => GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
@@ -22,7 +22,12 @@ class AuthorizationFactory
 
         if ($extensionConfiguration->getAccessToken() !== '') {
             $settings['accessToken'] = $extensionConfiguration->getAccessToken();
-            $settings['accessTokenSecret'] = $extensionConfiguration->getAccessTokenSecret();
+            if ($extensionConfiguration->getAuthorizeMode() === EmConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+                $settings['accessTokenSecret'] = $extensionConfiguration->getAccessTokenSecret();
+            } else {
+                $settings['refreshToken'] = $extensionConfiguration->getRefreshToken();
+                $settings['accessTokenExpires'] = $extensionConfiguration->getExpires();
+            }
         }
 
         $initAuth = new ApiAuth();
