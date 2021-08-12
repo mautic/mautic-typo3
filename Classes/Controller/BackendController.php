@@ -20,11 +20,14 @@ class BackendController extends ActionController
     public function showAction()
     {
         $emConfiguration = new EmConfiguration();
+        /** @var MauticAuthorizeService $authorizeService */
         $authorizeService = GeneralUtility::makeInstance(MauticAuthorizeService::class);
 
         if ($authorizeService->validateCredentials() === true) {
-            if ($emConfiguration->getAccessToken() === '' || $emConfiguration->getAccessTokenSecret() === '') {
-                if ((int)GeneralUtility::_GP('tx_marketingauthorizemautic_authorize') !== 1) {
+            if (!$authorizeService->validateAccessToken()) {
+                if ((int)GeneralUtility::_GP('tx_marketingauthorizemautic_authorize') !== 1
+                    && !$authorizeService->accessTokenToBeRefreshed()
+                ) {
                     $this->view->assign('authorizeButton', $authorizeService->getAuthorizeButton());
                 } else {
                     $authorizeService->authorize();

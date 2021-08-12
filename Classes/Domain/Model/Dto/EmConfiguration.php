@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class EmConfiguration implements SingletonInterface
 {
+    public const OAUTH1_AUTHORIZATION_MODE = 'OAuth1a';
     /**
      * @var int
      */
@@ -52,6 +53,21 @@ class EmConfiguration implements SingletonInterface
      * @var string
      */
     protected $trackingScriptOverride = '';
+
+    /**
+     * @var string
+     */
+    protected $authorizeMode = '';
+
+    /**
+     * @var string
+     */
+    protected $refreshToken = '';
+
+    /**
+     * @var int
+     */
+    protected $expires = 0;
 
     public function __construct()
     {
@@ -125,5 +141,20 @@ class EmConfiguration implements SingletonInterface
     public function getConfigurationArray(): array
     {
         return $this->configurationArray;
+    }
+
+    public function getAuthorizeMode(): string
+    {
+        return $this->authorizeMode;
+    }
+
+    public function getRefreshToken(): string
+    {
+        return $this->refreshToken;
+    }
+
+    public function getExpires(): int
+    {
+        return (int)$this->expires;
     }
 }
