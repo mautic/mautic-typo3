@@ -33,6 +33,6 @@ class AuthorizationFactory
         $initAuth = new ApiAuth();
         $authorization = $initAuth->newAuth($settings);
 
-        return new OAuth($authorization, $settings['baseUrl']);
+        return new OAuth($authorization, $settings['baseUrl'], $settings['accessToken'] ?? '', $extensionConfiguration->getAuthorizeMode() ?? '');
     }
 }
