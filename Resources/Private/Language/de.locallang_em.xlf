@@ -21,6 +21,18 @@
             <trans-unit id="authorization.accessTokenSecret">
                 <target>Access token secret</target>
             </trans-unit>
+            <trans-unit id="authorization.baseUrl">
+                <target>Basis URL der Mautic Instanz</target>
+            </trans-unit>
+            <trans-unit id="authorization.authorizeMode">
+                <source>Autorisierung-Protokoll</source>
+            </trans-unit>
+            <trans-unit id="authorization.refreshToken">
+                <source>Refresh token</source>
+            </trans-unit>
+            <trans-unit id="authorization.expires">
+                <source>Expires</source>
+            </trans-unit>
 
             <trans-unit id="tracking.tracking">
                 <target>Benutzertracking mit Mautic aktivieren</target>

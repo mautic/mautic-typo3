@@ -13,6 +13,8 @@ namespace Bitmotion\Mautic\Mautic;
  *
  ***/
 
+use Bitmotion\Mautic\Domain\Model\Dto\EmConfiguration;
+use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Mautic\Auth\AuthInterface;
 
 class OAuth implements AuthInterface
@@ -27,10 +29,22 @@ class OAuth implements AuthInterface
      */
     protected $baseUrl;
 
-    public function __construct(AuthInterface $authorization, string $baseUrl)
+    /**
+     * @var string
+     */
+    protected $accesToken;
+
+    /**
+     * @var string
+     */
+    protected $authorizationMode;
+
+    public function __construct(AuthInterface $authorization, string $baseUrl, string $accesToken, string $authorizationMode)
     {
         $this->authorization = $authorization;
         $this->baseUrl = rtrim($baseUrl, '/');
+        $this->accesToken = $accesToken;
+        $this->authorizationMode = $authorizationMode;
     }
 
     public function __call($method, $arguments)
@@ -67,6 +81,10 @@ class OAuth implements AuthInterface
      */
     public function makeRequest($url, array $parameters = [], $method = 'GET', array $settings = [])
     {
+        if ($this->authorizationMode !== YamlConfiguration::OAUTH1_AUTHORIZATION_MODE && $method !== 'GET') {
+            $settings['headers']['Authorization'] = sprintf('Authorization: Bearer %s', $this->accesToken);
+        }
+
         return $this->authorization->makeRequest($url, $parameters, $method, $settings);
     }
 }

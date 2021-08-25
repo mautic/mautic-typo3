@@ -21,6 +21,15 @@
             <trans-unit id="authorization.accessTokenSecret">
                 <source>Access token secret</source>
             </trans-unit>
+            <trans-unit id="authorization.authorizeMode">
+                <source>Authorization Mode</source>
+            </trans-unit>
+            <trans-unit id="authorization.refreshToken">
+                <source>Refresh token</source>
+            </trans-unit>
+            <trans-unit id="authorization.expires">
+                <source>Expires</source>
+            </trans-unit>
 
             <trans-unit id="tracking.tracking">
                 <source>Enable Mautic user tracking</source>

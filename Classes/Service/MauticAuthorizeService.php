@@ -60,6 +60,7 @@ class MauticAuthorizeService
         if (empty($this->extensionConfiguration['baseUrl'])
             || empty($this->extensionConfiguration['publicKey'])
             || empty($this->extensionConfiguration['secretKey'])
+            || $this->extensionConfiguration['authorizeMode'] === ''
         ) {
             $this->showCredentialsInformation();
 
@@ -264,5 +265,80 @@ class MauticAuthorizeService
             $this->languageService = LanguageService::createFromUserPreferences($GLOBALS['BE_USER']);
         }
         return $this->languageService->sL('LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:' . $key);
+    }
+
+    public function validateAccessToken(): bool
+    {
+        if ($this->extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+            if ($this->extensionConfiguration['accessToken'] !== ''
+                && $this->extensionConfiguration['accessTokenSecret'] !== ''
+            ) {
+                return true;
+            }
+
+            return false;
+        }
+
+        if ($this->extensionConfiguration['accessToken'] === ''
+            || $this->extensionConfiguration['refreshToken'] === ''
+        ) {
+            return false;
+        }
+
+        if ($this->extensionConfiguration['expires'] > 0
+            && $this->extensionConfiguration['expires'] > time()
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function accessTokenToBeRefreshed(): bool
+    {
+        //Access token have no expire on OAuth 1
+        if ($this->extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+            return false;
+        }
+
+        if ($this->extensionConfiguration['accessToken'] === ''
+            || $this->extensionConfiguration['refreshToken'] === ''
+        ) {
+            return false;
+        }
+
+        if ($this->extensionConfiguration['expires'] > 0
+            && $this->extensionConfiguration['expires'] < time()
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function refreshAccessToken()
+    {
+        try {
+            if ($this->authorization->validateAccessToken()) {
+                if ($this->authorization->accessTokenUpdated()) {
+                    $accessTokenData = $this->authorization->getAccessTokenData();
+                    $this->extensionConfiguration['accessToken'] = $accessTokenData['access_token'];
+                    if ($this->extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+                        $this->extensionConfiguration['accessTokenSecret'] = $accessTokenData['access_token_secret'];
+                    } else {
+                        $this->extensionConfiguration['refreshToken'] = $accessTokenData['refresh_token'];
+                        $this->extensionConfiguration['expires'] = $accessTokenData['expires'];
+                    }
+
+                    GeneralUtility::makeInstance(YamlConfiguration::class)->save($this->extensionConfiguration);
+                }
+            }
+        } catch (\Exception $exception) {
+            $this->addErrorMessage((string)$exception->getCode(), (string)$exception->getMessage());
+
+            return false;
+        }
+
+        return $this->checkConnection();
     }
 }

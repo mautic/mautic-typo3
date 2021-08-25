@@ -21,6 +21,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class YamlConfiguration implements SingletonInterface
 {
+    public const OAUTH1_AUTHORIZATION_MODE = 'OAuth1a';
+
     /**
      * @var int
      */
@@ -81,6 +83,21 @@ class YamlConfiguration implements SingletonInterface
      */
     protected $trackingScriptOverride = '';
 
+    /**
+     * @var string
+     */
+    protected $authorizeMode = '';
+
+    /**
+     * @var string
+     */
+    protected $refreshToken = '';
+
+    /**
+     * @var int
+     */
+    protected $expires = 0;
+
     public function __construct()
     {
         $this->configPath = Environment::getConfigPath() . '/mautic';
@@ -127,6 +144,19 @@ class YamlConfiguration implements SingletonInterface
         GeneralUtility::writeFile($this->fileName, $yamlFileContents);
     }
 
+    public function reloadConfigurations()
+    {
+        $this->configurationArray = $this->getYamlConfiguration();
+        $extensionConfiguration = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic'];
+        $settings = array_replace_recursive($this->configurationArray, $extensionConfiguration);
+
+        foreach ($settings as $key => $value) {
+            if (property_exists(__CLASS__, $key)) {
+                $this->$key = $value;
+            }
+        }
+    }
+
     public function getAuthorize(): int
     {
         return (int)$this->authorize;
@@ -170,5 +200,20 @@ class YamlConfiguration implements SingletonInterface
     public function getConfigurationArray(): array
     {
         return $this->configurationArray;
+    }
+
+    public function getAuthorizeMode(): string
+    {
+        return $this->authorizeMode;
+    }
+
+    public function getRefreshToken(): string
+    {
+        return $this->refreshToken;
+    }
+
+    public function getExpires(): int
+    {
+        return (int)$this->expires;
     }
 }
