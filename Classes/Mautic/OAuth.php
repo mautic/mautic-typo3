@@ -13,7 +13,6 @@ namespace Bitmotion\Mautic\Mautic;
  *
  ***/
 
-use Bitmotion\Mautic\Domain\Model\Dto\EmConfiguration;
 use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Mautic\Auth\AuthInterface;
 

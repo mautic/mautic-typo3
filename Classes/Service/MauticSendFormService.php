@@ -13,7 +13,6 @@ namespace Bitmotion\Mautic\Service;
  *
  ***/
 
-use Bitmotion\Mautic\Domain\Model\Dto\EmConfiguration;
 use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
