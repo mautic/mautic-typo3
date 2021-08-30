@@ -1,0 +1,21 @@
+.. include:: ../../Includes.txt
+
+==========================
+Version 4.1.0 - 2020/06/03
+==========================
+
+This release is a feature release. It contains the implementation of OAuth2 authorization protocol.
+
+Download
+========
+
+Download this version from the `TYPO3 extension repository <https://extensions.typo3.org/extension/mautic/>`__ or from
+`GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v4.0.1>`__.
+
+All Changes
+===========
+
+This is a list of all changes in this release::
+
+   2021-08-25 [TASK] Add OAuth2 authorization (Commit a33dc74 by Yassien Abid)
+
