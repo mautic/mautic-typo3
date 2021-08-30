@@ -17,5 +17,6 @@ All Changes
 
 This is a list of all changes in this release::
 
+   2021-08-30 [DOC] Update installation and changelog (Commit 02e335e by Yassine Abid)
    2021-08-25 [TASK] Add OAuth2 authorization (Commit a33dc74 by Yassien Abid)
 
