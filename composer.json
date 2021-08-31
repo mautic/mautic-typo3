@@ -1,5 +1,5 @@
 {
-    "name": "mautic/mautic-typo3",
+    "name": "toujou/mautic-typo3",
     "description": "Add-on TYPO3 extension that enhances the \"EXT:marketing_automation\" TYPO3 extension by connecting it to the Mautic Marketing Automation platform: Determine \"Persona\" from Mautic segments. Also provides additional services e.g. language synchronisation between Mautic and TYPO3.",
     "keywords": [
         "TYPO3 CMS",
@@ -41,7 +41,7 @@
         }
     },
     "replace": {
-        "mautic/mautic-typo3": "self.version",
+        "toujou/mautic-typo3": "self.version",
         "typo3-ter/mautic": "self.version"
     },
     "suggest": {
