@@ -10,7 +10,7 @@ Download
 ========
 
 Download this version from the `TYPO3 extension repository <https://extensions.typo3.org/extension/mautic/>`__ or from
-`GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v4.0.1>`__.
+`GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v4.1.0>`__.
 
 All Changes
 ===========
@@ -18,5 +18,5 @@ All Changes
 This is a list of all changes in this release::
 
    2021-08-30 [DOC] Update installation and changelog (Commit 02e335e by Yassine Abid)
-   2021-08-25 [TASK] Add OAuth2 authorization (Commit a33dc74 by Yassien Abid)
+   2021-08-25 [TASK] Add OAuth2 authorization (Commit a33dc74 by Yassine Abid)
 

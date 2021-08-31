@@ -37,7 +37,7 @@ Configuration
 =============
 
 Log in to your Mautic dashboard. Click on the little cog-wheel icon at the top-right of the screen. A menu opens,
-select "API Credentials". Click "New" at the top right. Select the authorization protcol "OAuth 1.0a" or "OAuth2", that you want to use, fill in a name, and leave the Callback URI
+select "API Credentials". Click "New" at the top right. Select the authorization protocol "OAuth 1.0a" or "OAuth2", that you want to use, fill in a name, and leave the Callback URI
 field blank to restrict callbacks. Then hit "Save & Close" at the top right of the screen.
 
 You should now have two keys, "Public Key" and "Secret Key". We will come back to them later.
