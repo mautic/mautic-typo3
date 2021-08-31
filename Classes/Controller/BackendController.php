@@ -13,6 +13,7 @@ namespace Bitmotion\Mautic\Controller;
  *
  ***/
 
+use Bitmotion\Mautic\Domain\Model\AccessTokenData;
 use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Bitmotion\Mautic\Service\MauticAuthorizeService;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
@@ -29,11 +30,11 @@ class BackendController extends ActionController
 
     public function showAction()
     {
-        $emConfiguration = new YamlConfiguration();
+        $emConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class);
         $authorizeService = GeneralUtility::makeInstance(MauticAuthorizeService::class);
 
         if ($authorizeService->validateCredentials() === true) {
-            if ($emConfiguration->getAccessToken() === '' || $emConfiguration->getAccessTokenSecret() === '') {
+            if (NULL === AccessTokenData::get()) {
                 $this->view->assign('authorizeButton', $authorizeService->getAuthorizeButton());
             } else {
                 $authorizeService->checkConnection();
@@ -49,7 +50,7 @@ class BackendController extends ActionController
      */
     public function saveAction(array $configuration)
     {
-        $emConfiguration = new YamlConfiguration();
+        $emConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class);
 
         if (substr($configuration['baseUrl'], -1) === '/') {
             $configuration['baseUrl'] = rtrim($configuration['baseUrl'], '/');

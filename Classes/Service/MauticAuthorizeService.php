@@ -14,6 +14,7 @@ namespace Bitmotion\Mautic\Service;
  ***/
 
 use Bitmotion\Mautic\Controller\BackendController;
+use Bitmotion\Mautic\Domain\Model\AccessTokenData;
 use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Bitmotion\Mautic\Mautic\AuthorizationFactory;
 use Bitmotion\Mautic\Mautic\OAuth;
@@ -69,9 +70,9 @@ class MauticAuthorizeService
         return true;
     }
 
-    public function configurationHasAccessToken(): bool
+    public function hasAccessToken(): bool
     {
-        return !empty($this->extensionConfiguration['accessToken']) && !empty($this->extensionConfiguration['accessTokenSecret']);
+        return NULL !== AccessTokenData::get();
     }
 
     public function getAuthorizeButton(): string

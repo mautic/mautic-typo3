@@ -30,6 +30,7 @@
 			<h2 class="h4 form-section-headline">
 				<f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:module.features"/>
 			</h2>
+			<f:render section="form-element-bool" arguments="{key: 'oauth2', type: 'authorization'}" />
 			<div class="form-group form-group-dashed">
 				<label for="em-authorize"><f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:authorization.authorize"/></label>
 				<p>authorization.authorize</p>
@@ -38,12 +39,9 @@
 				</f:if>
 				<f:flashMessages queueIdentifier="marketingautomation.mautic.flashMessages"/>
 			</div>
-
 			<f:render section="form-element-text" arguments="{key: 'baseUrl', type: 'authorization'}" />
 			<f:render section="form-element-text" arguments="{key: 'publicKey', type: 'authorization'}" />
 			<f:render section="form-element-text" arguments="{key: 'secretKey', type: 'authorization'}" />
-			<f:render section="form-element-text" arguments="{key: 'accessToken', type: 'authorization', readOnly: 1}" />
-			<f:render section="form-element-text" arguments="{key: 'accessTokenSecret', type: 'authorization', readOnly: 1}" />
 		</div>
 	</div>
 </f:section>
@@ -68,14 +66,7 @@
 		</label>
 		<p>{type}.{key} (string)</p>
 		<div class="form-control-wrap">
-			<f:if condition="{readOnly}">
-				<f:then>
-					<f:form.textfield id="{type}-{key}" property="{key}" class="form-control" readonly="readonly" />
-				</f:then>
-				<f:else>
-					<f:form.textfield id="{type}-{key}" property="{key}" class="form-control" />
-				</f:else>
-			</f:if>
+			<f:form.textfield id="{type}-{key}" property="{key}" class="form-control" />
 		</div>
 		<div class="help-block"></div>
 	</div>

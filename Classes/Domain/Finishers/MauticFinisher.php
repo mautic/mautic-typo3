@@ -20,6 +20,7 @@ use TYPO3\CMS\Form\Domain\Model\FormElements\GenericFormElement;
 
 class MauticFinisher extends AbstractFinisher
 {
+    /** @var FormRepository */
     protected $formRepository;
 
     public function __construct(string $finisherIdentifier = '')
