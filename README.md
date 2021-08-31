@@ -10,6 +10,7 @@ Changes
 
 - [FEATURE] Oauth2 for Mautic 3.x
 - [BUGFIX] YamlConfiguration is not loaded via GeneralUtility::makeInstance
+- [TASK] Throw SubmitFormException on error during form submission
 
 
 Installation

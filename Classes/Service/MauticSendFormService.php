@@ -17,6 +17,7 @@ use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -44,7 +45,7 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
         $this->streamFactory = $streamFactory;
     }
 
-    public function submitForm(string $url, array $data): int
+    public function submitForm(string $url, array $data): ResponseInterface
     {
         $multipartStreamBuilder = new MultipartStreamBuilder($this->streamFactory);
         $this->addDataToMultipartStreamBuilder($multipartStreamBuilder, 'mauticform', $data);
@@ -59,16 +60,7 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
         $request = $this->addCommonHeadersToRequest($request);
         $request = $this->addCookiesToRequest($request);
 
-        try {
-            $response = $this->httpClient->sendRequest($request);
-        } catch (\Psr\Http\Client\ClientExceptionInterface $e) {
-            $this->logger->critical(sprintf('%s: %s', $e->getCode(), $e->getMessage()));
-            return 500;
-        }
-
-        $statusCode = $response->getStatusCode();
-
-        return (int)$statusCode;
+        return $this->httpClient->sendRequest($request);
     }
 
     private function addCommonHeadersToRequest(RequestInterface $request): RequestInterface

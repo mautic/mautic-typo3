@@ -13,6 +13,7 @@ namespace Bitmotion\Mautic\Domain\Repository;
  *
  ***/
 
+use Bitmotion\Mautic\Exception\SubmitFormException;
 use Bitmotion\Mautic\Service\MauticSendFormService;
 use Mautic\Api\Forms;
 use Mautic\Exception\ContextNotFoundException;
@@ -71,22 +72,46 @@ class FormRepository extends AbstractRepository
         return $this->formsApi->delete($id) ?: [];
     }
 
-    public function submitForm(int $id, array $data)
+    public function submitForm(int $id, array $data): void
     {
         $data['formId'] = $id;
         $url = rtrim(trim($this->authorization->getBaseUrl()), '/') . '/form/submit?formId=' . $id;
 
+        /** @var MauticSendFormService $mauticSendFormService */
         $mauticSendFormService = GeneralUtility::makeInstance(MauticSendFormService::class);
-        $code = $mauticSendFormService->submitForm($url, $data);
+        try {
+            $response = $mauticSendFormService->submitForm($url, $data);
+            $code = $response->getStatusCode();
 
-        if ($code < 200 || $code >= 400) {
-            $this->logger->critical(
-                sprintf(
+            if ($code < 200 || $code >= 400) {
+                $errorMsg = \sprintf(
                     'An error occured submitting the form with the Mautic id %d to Mautic. Status code %d returned by Mautic.',
                     $id,
                     $code
-                )
+                );
+                throw new SubmitFormException($errorMsg, 1630398752303);
+            }
+
+            if (302 === $code) {
+                $content = $response->getBody()->getContents();
+                if (\preg_match('/mauticError=.*/', $content)) {
+                    $errorMsg = \sprintf(
+                        'An error during form submission with the Mautic id %d to Mautic. Status code %d with response: %s.',
+                        $id,
+                        $code,
+                        $content
+                    );
+
+                    throw new SubmitFormException($content, 1630395758101);
+                }
+            }
+        } catch (\Throwable $throwable) {
+            $errorMsg = \sprintf(
+                'An error occured submitting the form with the Mautic id %d to Mautic. Error: %s.',
+                $id,
+                $throwable->getMessage()
             );
+            throw new SubmitFormException($errorMsg, 1630399106988);
         }
     }
 
