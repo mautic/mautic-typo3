@@ -299,19 +299,17 @@ class MauticAuthorizeService
     public function refreshAccessToken()
     {
         try {
-            if ($this->authorization->validateAccessToken()) {
-                if ($this->authorization->accessTokenUpdated()) {
-                    $accessTokenData = $this->authorization->getAccessTokenData();
-                    $this->extensionConfiguration['accessToken'] = $accessTokenData['access_token'];
-                    if ($this->extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
-                        $this->extensionConfiguration['accessTokenSecret'] = $accessTokenData['access_token_secret'];
-                    } else {
-                        $this->extensionConfiguration['refreshToken'] = $accessTokenData['refresh_token'];
-                        $this->extensionConfiguration['expires'] = $accessTokenData['expires'];
-                    }
-
-                    GeneralUtility::makeInstance(YamlConfiguration::class)->save($this->extensionConfiguration);
+            if ($this->authorization->validateAccessToken() && $this->authorization->accessTokenUpdated()) {
+                $accessTokenData = $this->authorization->getAccessTokenData();
+                $this->extensionConfiguration['accessToken'] = $accessTokenData['access_token'];
+                if ($this->extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+                    $this->extensionConfiguration['accessTokenSecret'] = $accessTokenData['access_token_secret'];
+                } else {
+                    $this->extensionConfiguration['refreshToken'] = $accessTokenData['refresh_token'];
+                    $this->extensionConfiguration['expires'] = $accessTokenData['expires'];
                 }
+
+                GeneralUtility::makeInstance(YamlConfiguration::class)->save($this->extensionConfiguration);
             }
         } catch (\Exception $exception) {
             $this->addErrorMessage((string)$exception->getCode(), (string)$exception->getMessage());
