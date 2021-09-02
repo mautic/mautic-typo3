@@ -26,19 +26,6 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    private $extensionConfiguration = [];
-
-    /**
-     * @var MauticAuthorizeService
-     */
-    private $authorizeService;
-
-    public function __construct()
-    {
-        $this->extensionConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class)->getConfigurationArray();
-        $this->authorizeService = GeneralUtility::makeInstance(MauticAuthorizeService::class);
-    }
-
     public function submitForm(string $url, array $data): int
     {
         $client = new Client();
