@@ -28,15 +28,9 @@ class OAuth implements AuthInterface
      */
     protected $baseUrl;
 
-    /**
-     * @var string
-     */
-    protected $accesToken;
+    protected $accesToken = '';
 
-    /**
-     * @var string
-     */
-    protected $authorizationMode;
+    protected $authorizationMode = '';
 
     public function __construct(AuthInterface $authorization, string $baseUrl, string $accesToken, string $authorizationMode)
     {

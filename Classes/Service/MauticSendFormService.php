@@ -26,10 +26,7 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    /**
-     * @var array
-     */
-    private $extensionConfiguration;
+    private $extensionConfiguration = [];
 
     /**
      * @var MauticAuthorizeService
