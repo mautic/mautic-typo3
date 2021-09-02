@@ -270,28 +270,14 @@ class MauticAuthorizeService
     public function validateAccessToken(): bool
     {
         if ($this->extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
-            if ($this->extensionConfiguration['accessToken'] !== ''
-                && $this->extensionConfiguration['accessTokenSecret'] !== ''
-            ) {
-                return true;
-            }
+            return $this->extensionConfiguration['accessToken'] !== '' && $this->extensionConfiguration['accessTokenSecret'] !== '';
+        }
 
+        if ($this->extensionConfiguration['accessToken'] === '' || $this->extensionConfiguration['refreshToken'] === '') {
             return false;
         }
 
-        if ($this->extensionConfiguration['accessToken'] === ''
-            || $this->extensionConfiguration['refreshToken'] === ''
-        ) {
-            return false;
-        }
-
-        if ($this->extensionConfiguration['expires'] > 0
-            && $this->extensionConfiguration['expires'] > time()
-        ) {
-            return true;
-        }
-
-        return false;
+        return $this->extensionConfiguration['expires'] > time();
     }
 
     public function accessTokenToBeRefreshed(): bool
@@ -307,13 +293,7 @@ class MauticAuthorizeService
             return false;
         }
 
-        if ($this->extensionConfiguration['expires'] > 0
-            && $this->extensionConfiguration['expires'] < time()
-        ) {
-            return true;
-        }
-
-        return false;
+        return $this->extensionConfiguration['expires'] < time();
     }
 
     public function refreshAccessToken()
