@@ -12,6 +12,10 @@ Download
 Download this version from the `TYPO3 extension repository <https://extensions.typo3.org/extension/mautic/>`__ or from
 `GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v4.1.0>`__.
 
+Added
+=====
+* Added support for OAuth2, thus you can now choose between OAuth1 and OAuth2. Next major version will drop OAuth1 support.
+
 All Changes
 ===========
 
