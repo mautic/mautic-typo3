@@ -42,7 +42,7 @@
                 <target>Notwendige Informationen fehlen</target>
             </trans-unit>
             <trans-unit id="authorization.missingInformation.message">
-                <target>Bitte geben sie folgende Informationen an: %s.</target>
+                <target>Bitte geben Sie folgende Informationen an: %s.</target>
             </trans-unit>
             <trans-unit id="authorization.withMautic">
                 <target>Mautic verknüpfen</target>
@@ -57,7 +57,7 @@
                 <target>Unsichere Verbindung zu Mautic hergestellt</target>
             </trans-unit>
             <trans-unit id="authorization.insecureConnection.message">
-                <target>Ihre Mautic Installation wird über HTTP und nicht über HTTPS angesprochen. Schützen sie die Mautic Installation mit einem SSL Zertifikat.</target>
+                <target>Ihre Mautic Installation wird über HTTP und nicht über HTTPS angesprochen. Schützen Sie die Mautic Installation mit einem SSL Zertifikat.</target>
             </trans-unit>
             <trans-unit id="authorization.error.title">
                 <target>Ein Fehler ist aufgetreten</target>
@@ -66,7 +66,7 @@
                 <source>Ungültige Antwort</source>
             </trans-unit>
             <trans-unit id="authorization.error.message">
-                <target>Bitte überprüfen sie ihre Anmeldedaten.</target>
+                <target>Bitte überprüfen Sie Ihre Anmeldedaten.</target>
             </trans-unit>
             <trans-unit id="authorization.error.message.consumer_key_unknown">
                 <source>Öffentlicher Schlüssel ist unbekannt</source>

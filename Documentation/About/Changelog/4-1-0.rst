@@ -1,7 +1,7 @@
 .. include:: ../../Includes.txt
 
 ==========================
-Version 4.1.0 - 2020/06/03
+Version 4.1.0 - 2021/10/03
 ==========================
 
 This release is a feature release. It contains the implementation of OAuth2 authorization protocol.
@@ -12,15 +12,30 @@ Download
 Download this version from the `TYPO3 extension repository <https://extensions.typo3.org/extension/mautic/>`__ or from
 `GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v4.1.0>`__.
 
+Announcement
+============
+We do plan a new major version 5 which will drop support for OAuth1. That new version will support TYPO3 versions
+10 & 11 and Mautic 4. Since this is just an announcement we did not add any deprecated notices for the time beeing.
+There will be a future release to include deprecation notices. Stay tuned.
+
 Added
 =====
-* Added support for OAuth2, thus you can now choose between OAuth1 and OAuth2. Next major version will drop OAuth1 support.
+* Added support for OAuth2, thus you can now choose between OAuth1 and OAuth2.
 
 All Changes
 ===========
 
 This is a list of all changes in this release::
 
+   2021-09-02 [DOC] Add information about new feature (Commit 6095d45 by Max Rösch)
+   2021-09-02 [TASK] Remove obsolete constructor and properties (Commit 81fbd7c by Max Rösch)
+   2021-09-02 [TASK] Simplify if statement (Commit 3ff322b by Max Rösch)
+   2021-09-02 [BUGFIX] Move language file to correct name (Commit 8a554fc by Max Rösch)
+   2021-09-02 [TASK] Simplify docheader for variables (Commit 688ec4f by Max Rösch)
+   2021-09-02 [TASK] Simplify conditions in token check functions (Commit 1c7dab9 by Max Rösch)
+   2021-08-31 [DOC] Fix typos in documentation (Commit dbe7339 by Max Rösch)
+   2021-08-30 [TASK] Codestyle fixes (Commit 43dd3e9 by Max Rösch)
+   2021-08-30 [DOC] Update changelog (Commit df2b12e by Yassine Abid)
    2021-08-30 [DOC] Update installation and changelog (Commit 02e335e by Yassine Abid)
    2021-08-25 [TASK] Add OAuth2 authorization (Commit a33dc74 by Yassine Abid)
-
+   2020-09-18 [TASK] Use unique class names within svg files (Commit 3c793a4 by Florian Wessels)
