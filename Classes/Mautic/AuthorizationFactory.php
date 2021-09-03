@@ -21,6 +21,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AuthorizationFactory implements SingletonInterface
 {
+
+    public const VERSION = 'OAuth1a';
+
     protected static $oAuth;
 
     public static function createAuthorizationFromExtensionConfiguration(?string $state = null): OAuth
