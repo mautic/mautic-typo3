@@ -13,7 +13,6 @@ namespace Bitmotion\Mautic\Mautic;
  *
  ***/
 
-use Bitmotion\Mautic\Domain\Model\Dto\EmConfiguration;
 use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Mautic\Auth\AuthInterface;
 
@@ -29,15 +28,9 @@ class OAuth implements AuthInterface
      */
     protected $baseUrl;
 
-    /**
-     * @var string
-     */
-    protected $accesToken;
+    protected $accesToken = '';
 
-    /**
-     * @var string
-     */
-    protected $authorizationMode;
+    protected $authorizationMode = '';
 
     public function __construct(AuthInterface $authorization, string $baseUrl, string $accesToken, string $authorizationMode)
     {

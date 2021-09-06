@@ -13,7 +13,6 @@ namespace Bitmotion\Mautic\Service;
  *
  ***/
 
-use Bitmotion\Mautic\Domain\Model\Dto\EmConfiguration;
 use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
@@ -26,22 +25,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
-
-    /**
-     * @var array
-     */
-    private $extensionConfiguration;
-
-    /**
-     * @var MauticAuthorizeService
-     */
-    private $authorizeService;
-
-    public function __construct()
-    {
-        $this->extensionConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class)->getConfigurationArray();
-        $this->authorizeService = GeneralUtility::makeInstance(MauticAuthorizeService::class);
-    }
 
     public function submitForm(string $url, array $data): int
     {

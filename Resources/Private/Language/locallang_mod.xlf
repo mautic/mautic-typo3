@@ -57,13 +57,13 @@
                 <source>Connection successful, but your Mautic connection is not secure</source>
             </trans-unit>
             <trans-unit id="authorization.insecureConnection.message">
-                <source>Your Mautic installation is contacted over http and not https. Consider securing your Mautic installation with an SSL certificate.</source>
+                <source>Your Mautic installation is contacted over HTTP and not HTTPs. Consider securing your Mautic installation with an SSL certificate.</source>
             </trans-unit>
             <trans-unit id="authorization.error.title">
-                <source>An Error Occurred</source>
+                <source>An error occurred</source>
             </trans-unit>
             <trans-unit id="authorization.error.title.invalid_response">
-                <source>Invalid Response</source>
+                <source>Invalid response</source>
             </trans-unit>
             <trans-unit id="authorization.error.message">
                 <source>Please verify your credentials.</source>
