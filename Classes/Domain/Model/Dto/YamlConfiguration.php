@@ -216,4 +216,17 @@ class YamlConfiguration implements SingletonInterface
     {
         return (int)$this->expires;
     }
+
+    public function isSameCredentials(array $configuration): bool
+    {
+        return $this->authorizeMode === $configuration['authorizeMode']
+            && $this->secretKey === $configuration['secretKey']
+            && $this->publicKey === $configuration['publicKey']
+            && $this->baseUrl === $configuration['baseUrl'];
+    }
+
+    public function isOAuth1(): bool
+    {
+        return $this->authorizeMode === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE;
+    }
 }

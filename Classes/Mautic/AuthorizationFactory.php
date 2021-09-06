@@ -46,7 +46,7 @@ class AuthorizationFactory implements SingletonInterface
 
         if (!empty($extensionConfiguration->getAccessToken())) {
             $settings['accessToken'] = $extensionConfiguration->getAccessToken();
-            if ($extensionConfiguration->getAuthorizeMode() === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE
+            if ($extensionConfiguration->isOAuth1()
                 && !empty($extensionConfiguration->getAccessTokenSecret())) {
                 $settings['accessTokenSecret'] = $extensionConfiguration->getAccessTokenSecret();
             } else {

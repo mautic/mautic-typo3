@@ -61,6 +61,10 @@ class BackendController extends ActionController
             $configuration['baseUrl'] = rtrim($configuration['baseUrl'], '/');
         }
 
+        if (!empty($emConfiguration->getAccessToken()) && !$emConfiguration->isSameCredentials($configuration)) {
+            $configuration['accessToken'] = '';
+        }
+
         $emConfiguration->save($configuration);
         $this->redirect('show');
     }
