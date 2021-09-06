@@ -27,6 +27,8 @@ All Changes
 
 This is a list of all changes in this release::
 
+   2021-09-03 [TASK] Readd version constant to prevent breaking changes (Commit 394815f by Max Rösch)
+   2021-09-03 [DOC] Update documentation and language files (Commit be8f285 by Max Rösch)
    2021-09-02 [DOC] Add information about new feature (Commit 6095d45 by Max Rösch)
    2021-09-02 [TASK] Remove obsolete constructor and properties (Commit 81fbd7c by Max Rösch)
    2021-09-02 [TASK] Simplify if statement (Commit 3ff322b by Max Rösch)
