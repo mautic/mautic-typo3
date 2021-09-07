@@ -26,6 +26,8 @@ All Changes
 ===========
 
 This is a list of all changes in this release::
+   2021-09-07 [TASK] Set OAuth1 as Fallback to resolve issues with old versions (Commit b449c41 by Yassine Abid)
+   2021-09-06 [DOC] Update change log (Commit e835b80 by Yassine Abid)
    2021-09-06 [TASK] Reset acces token when credentials changed (Commit b2efe05 by Yassine Abid)
    2021-09-03 [TASK] Readd version constant to prevent breaking changes (Commit 394815f by Max Rösch)
    2021-09-03 [DOC] Update documentation and language files (Commit be8f285 by Max Rösch)
