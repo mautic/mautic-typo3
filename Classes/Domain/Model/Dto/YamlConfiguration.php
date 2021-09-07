@@ -204,7 +204,7 @@ class YamlConfiguration implements SingletonInterface
 
     public function getAuthorizeMode(): string
     {
-        return $this->authorizeMode;
+        return empty($this->authorizeMode) ? self::OAUTH1_AUTHORIZATION_MODE : $this->authorizeMode;
     }
 
     public function getRefreshToken(): string
@@ -227,6 +227,6 @@ class YamlConfiguration implements SingletonInterface
 
     public function isOAuth1(): bool
     {
-        return $this->authorizeMode === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE;
+        return $this->getAuthorizeMode() === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE;
     }
 }

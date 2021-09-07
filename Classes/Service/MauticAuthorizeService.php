@@ -60,7 +60,6 @@ class MauticAuthorizeService
         if (empty($this->extensionConfiguration['baseUrl'])
             || empty($this->extensionConfiguration['publicKey'])
             || empty($this->extensionConfiguration['secretKey'])
-            || $this->extensionConfiguration['authorizeMode'] === ''
         ) {
             $this->showCredentialsInformation();
 
@@ -269,7 +268,7 @@ class MauticAuthorizeService
 
     public function validateAccessToken(): bool
     {
-        if ($this->extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+        if (!isset($this->extensionConfiguration['authorizeMode']) || $this->extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
             return $this->extensionConfiguration['accessToken'] !== '' && $this->extensionConfiguration['accessTokenSecret'] !== '';
         }
 

@@ -59,7 +59,7 @@ class AuthorizationFactory implements SingletonInterface
             (new ApiAuth())->newAuth($settings),
             $baseUrl,
             $settings['accessToken'] ?? '',
-            $extensionConfiguration->getAuthorizeMode() ?? ''
+            $extensionConfiguration->getAuthorizeMode()
         );
 
         return self::$oAuth;
