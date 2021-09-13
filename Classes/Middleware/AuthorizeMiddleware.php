@@ -80,10 +80,10 @@ class AuthorizeMiddleware implements MiddlewareInterface, LoggerAwareInterface
             return new Response($stream, $statusCode);
         }
 
-        $hasAccessToken = $authorizeService->configurationHasAccessToken();
+        $hasAccessToken = $authorizeService->validateAccessToken();
 
         if (!$hasAccessToken) {
-            $response = $this->authorize($authorization);
+            $response = $this->authorize($authorization, $authorizeService->accessTokenToBeRefreshed());
             if ($response instanceof ResponseInterface) {
                 return $response;
             }
@@ -99,13 +99,13 @@ class AuthorizeMiddleware implements MiddlewareInterface, LoggerAwareInterface
         return new Response($stream, $statusCode);
     }
 
-    protected function authorize(OAuth $authorization): ?ResponseInterface
+    protected function authorize(OAuth $authorization, bool $refreshToken = false): ?ResponseInterface
     {
         $stream = $this->getStream('Unknown Error', 'An unknown error occurred.');
         $statusCode = 400;
 
         try {
-            if ($authorization->validateAccessToken() && $this->validateState()) {
+            if ($authorization->validateAccessToken() && ($this->validateState() || $refreshToken)) {
                 if ($authorization->accessTokenUpdated()) {
                     $accessTokenData = $authorization->getAccessTokenData();
                     $this->updateExtensionConfiguration($accessTokenData);
@@ -174,7 +174,12 @@ class AuthorizeMiddleware implements MiddlewareInterface, LoggerAwareInterface
 
         $extensionConfiguration = $yamlConfiguration->getConfigurationArray();
         $extensionConfiguration['accessToken'] = $accessTokenData['access_token'];
-        $extensionConfiguration['accessTokenSecret'] = $accessTokenData['access_token_secret'];
+        if ($extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+            $extensionConfiguration['accessTokenSecret'] = $accessTokenData['access_token_secret'];
+        } else {
+            $extensionConfiguration['refreshToken'] = $accessTokenData['refresh_token'];
+            $extensionConfiguration['expires'] = $accessTokenData['expires'];
+        }
 
         $yamlConfiguration->save($extensionConfiguration);
     }

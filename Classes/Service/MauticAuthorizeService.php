@@ -265,4 +265,57 @@ class MauticAuthorizeService
         }
         return $this->languageService->sL('LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:' . $key);
     }
+
+    public function validateAccessToken(): bool
+    {
+        if (!isset($this->extensionConfiguration['authorizeMode']) || $this->extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+            return $this->extensionConfiguration['accessToken'] !== '' && $this->extensionConfiguration['accessTokenSecret'] !== '';
+        }
+
+        if ($this->extensionConfiguration['accessToken'] === '' || $this->extensionConfiguration['refreshToken'] === '') {
+            return false;
+        }
+
+        return $this->extensionConfiguration['expires'] > time();
+    }
+
+    public function accessTokenToBeRefreshed(): bool
+    {
+        //Access token have no expire on OAuth 1
+        if ($this->extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+            return false;
+        }
+
+        if ($this->extensionConfiguration['accessToken'] === ''
+            || $this->extensionConfiguration['refreshToken'] === ''
+        ) {
+            return false;
+        }
+
+        return $this->extensionConfiguration['expires'] < time();
+    }
+
+    public function refreshAccessToken()
+    {
+        try {
+            if ($this->authorization->validateAccessToken() && $this->authorization->accessTokenUpdated()) {
+                $accessTokenData = $this->authorization->getAccessTokenData();
+                $this->extensionConfiguration['accessToken'] = $accessTokenData['access_token'];
+                if ($this->extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+                    $this->extensionConfiguration['accessTokenSecret'] = $accessTokenData['access_token_secret'];
+                } else {
+                    $this->extensionConfiguration['refreshToken'] = $accessTokenData['refresh_token'];
+                    $this->extensionConfiguration['expires'] = $accessTokenData['expires'];
+                }
+
+                GeneralUtility::makeInstance(YamlConfiguration::class)->save($this->extensionConfiguration);
+            }
+        } catch (\Exception $exception) {
+            $this->addErrorMessage((string)$exception->getCode(), (string)$exception->getMessage());
+
+            return false;
+        }
+
+        return $this->checkConnection();
+    }
 }

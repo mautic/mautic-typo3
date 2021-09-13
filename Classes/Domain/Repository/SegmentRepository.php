@@ -78,7 +78,8 @@ class SegmentRepository extends AbstractRepository
 
         $segments = $this->findAll();
         foreach ($segments as $segment) {
-            $dateAdded = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $segment['dateAdded']);
+            $dateAdded = empty($segment['dateAdded']) ? new \DateTime()
+                : \DateTime::createFromFormat('Y-m-d\TH:i:sP', $segment['dateAdded']);
             if (!empty($segment['dateModified'])) {
                 $dateModified = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $segment['dateModified']);
             } else {

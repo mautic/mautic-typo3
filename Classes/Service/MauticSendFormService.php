@@ -13,6 +13,7 @@ namespace Bitmotion\Mautic\Service;
  *
  ***/
 
+use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Cookie\SetCookie;
@@ -69,6 +70,16 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
         if ($ip !== '') {
             $headers['X-Forwarded-For'] = $ip;
             $headers['Client-Ip'] = $ip;
+        }
+
+        $extensionConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class)->getConfigurationArray();
+        $authorizeService = GeneralUtility::makeInstance(MauticAuthorizeService::class);
+        if ($extensionConfiguration['authorizeMode'] !== YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+            if ($authorizeService->accessTokenToBeRefreshed()) {
+                $authorizeService->refreshAccessToken();
+                $extensionConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class)->getConfigurationArray();
+            }
+            $headers['Authorization'] = sprintf('Bearer %s', $extensionConfiguration['accessToken']);
         }
 
         return $headers;

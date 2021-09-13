@@ -21,6 +21,15 @@
             <trans-unit id="authorization.accessTokenSecret">
                 <target>Access token secret</target>
             </trans-unit>
+            <trans-unit id="authorization.authorizeMode">
+                <source>Autorisierung-Protokoll</source>
+            </trans-unit>
+            <trans-unit id="authorization.refreshToken">
+                <source>Refresh token</source>
+            </trans-unit>
+            <trans-unit id="authorization.expires">
+                <source>Läuft aus</source>
+            </trans-unit>
 
             <trans-unit id="tracking.tracking">
                 <target>Benutzertracking mit Mautic aktivieren</target>
@@ -30,7 +39,7 @@
             </trans-unit>
 
             <trans-unit id="authorization.missingInformation.title">
-                <target>Notwendige Informationen Fehlen</target>
+                <target>Notwendige Informationen fehlen</target>
             </trans-unit>
             <trans-unit id="authorization.missingInformation.message">
                 <target>Bitte geben Sie folgende Informationen an: %s.</target>
@@ -48,13 +57,25 @@
                 <target>Unsichere Verbindung zu Mautic hergestellt</target>
             </trans-unit>
             <trans-unit id="authorization.insecureConnection.message">
-                <target>Ihre Mautic Installation wird über http und nicht über https angesprochen. Schützen Sie die Mautic Installation mit einem SSL Zertifikat.</target>
+                <target>Ihre Mautic Installation wird über HTTP und nicht über HTTPS angesprochen. Schützen Sie die Mautic Installation mit einem SSL Zertifikat.</target>
             </trans-unit>
             <trans-unit id="authorization.error.title">
                 <target>Ein Fehler ist aufgetreten</target>
             </trans-unit>
+            <trans-unit id="authorization.error.title.invalid_response">
+                <source>Ungültige Antwort</source>
+            </trans-unit>
             <trans-unit id="authorization.error.message">
-                <target>Bitte überprüfen Sie die Anmeldedaten.</target>
+                <target>Bitte überprüfen Sie Ihre Anmeldedaten.</target>
+            </trans-unit>
+            <trans-unit id="authorization.error.message.consumer_key_unknown">
+                <source>Öffentlicher Schlüssel ist unbekannt</source>
+            </trans-unit>
+            <trans-unit id="authorization.error.message.signature_invalid">
+                <source>Ungültige Signatur</source>
+            </trans-unit>
+            <trans-unit id="authorization.error.message.invalid_response">
+                <source>Die Server Antwort war kein gültiges JSON. Ist die baseURL vorhanden/fehlerhaft?</source>
             </trans-unit>
             <trans-unit id="authorization.warning.title">
                 <target>Warnung</target>
@@ -67,6 +88,25 @@
             </trans-unit>
             <trans-unit id="authorization.success.message">
                 <target>Verbindung zur Mautic REST API hergestellt.</target>
+            </trans-unit>
+
+            <trans-unit id="mlang_tabs_tab">
+                <source>API Verbindung</source>
+            </trans-unit>
+            <trans-unit id="mlang_labels_tabdescr">
+                <source>Verbindet TYPO3 mit der Mautic API.</source>
+            </trans-unit>
+            <trans-unit id="mlang_labels_tablabel">
+                <source>Mautic API Verbindung</source>
+            </trans-unit>
+            <trans-unit id="module.title">
+                <source>Mautic Extension Konfiguration</source>
+            </trans-unit>
+            <trans-unit id="module.features">
+                <source>Funktionen aktivieren</source>
+            </trans-unit>
+            <trans-unit id="module.save">
+                <source>Speichere Konfiguration</source>
             </trans-unit>
         </body>
     </file>

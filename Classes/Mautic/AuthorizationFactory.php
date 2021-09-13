@@ -21,6 +21,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AuthorizationFactory implements SingletonInterface
 {
+
     public const VERSION = 'OAuth1a';
 
     protected static $oAuth;
@@ -31,23 +32,35 @@ class AuthorizationFactory implements SingletonInterface
             return self::$oAuth;
         }
 
+        /** @var YamlConfiguration $extensionConfiguration */
         $extensionConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class);
         $baseUrl = $extensionConfiguration->getBaseUrl();
 
         $settings = [
             'baseUrl' => $baseUrl,
-            'version' => self::VERSION,
+            'version' => $extensionConfiguration->getAuthorizeMode(),
             'clientKey' => $extensionConfiguration->getPublicKey(),
             'clientSecret' => $extensionConfiguration->getSecretKey(),
             'callback' => self::getCallback($state),
         ];
 
-        if (!empty($extensionConfiguration->getAccessToken()) && !empty($extensionConfiguration->getAccessTokenSecret())) {
+        if (!empty($extensionConfiguration->getAccessToken())) {
             $settings['accessToken'] = $extensionConfiguration->getAccessToken();
-            $settings['accessTokenSecret'] = $extensionConfiguration->getAccessTokenSecret();
+            if ($extensionConfiguration->isOAuth1()
+                && !empty($extensionConfiguration->getAccessTokenSecret())) {
+                $settings['accessTokenSecret'] = $extensionConfiguration->getAccessTokenSecret();
+            } else {
+                $settings['refreshToken'] = $extensionConfiguration->getRefreshToken();
+                $settings['accessTokenExpires'] = $extensionConfiguration->getExpires();
+            }
         }
 
-        self::$oAuth = new OAuth((new ApiAuth())->newAuth($settings), $baseUrl);
+        self::$oAuth = new OAuth(
+            (new ApiAuth())->newAuth($settings),
+            $baseUrl,
+            $settings['accessToken'] ?? '',
+            $extensionConfiguration->getAuthorizeMode()
+        );
 
         return self::$oAuth;
     }

@@ -37,7 +37,7 @@ Configuration
 =============
 
 Log in to your Mautic dashboard. Click on the little cog-wheel icon at the top-right of the screen. A menu opens,
-select "API Credentials". Click "New" at the top right. Select "OAuth 1.0a", fill in a name, and leave the Callback URI
+select "API Credentials". Click "New" at the top right. Select the authorization protocol "OAuth 1.0a" or "OAuth2", that you want to use, fill in a name, and leave the Callback URI
 field blank to restrict callbacks. Then hit "Save & Close" at the top right of the screen.
 
 You should now have two keys, "Public Key" and "Secret Key". We will come back to them later.
@@ -51,7 +51,7 @@ Again in configuration, on the left side click the tab "API Settings". Set "API 
 Before we continue you must clear Mautic's cache. This can be done by deleting the contents of the `app/cache` directory
 on the server.
 
-Go back to the TYPO3 backend and open the Mautic backend module. Fill in the root URL of your Mautic installation. Then
+Go back to the TYPO3 backend and open the Mautic backend module. Select the right authorization protocol. Fill in the root URL of your Mautic installation. Then
 fill the public and the secret key with the values we generated earlier in Mautic. Click save. A new button should now
 pop up that reads "Authorize with Mautic". Click this button, then log in and accept. You will be redirected back to
 your TYPO3 instance.
@@ -74,3 +74,6 @@ All configuration made in the backend module can simply be overwritten in your c
    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['accessTokenSecret'] = '...';
    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['tracking'] = '1';
    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['trackingScriptOverride'] = '';
+   $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['authorizeMode'] = 'OAuth2';
+   $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['refreshToken'] = '...';
+   $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['expires'] = '...';
