@@ -1,9 +1,10 @@
 .. include:: ../../Includes.txt
 
 ==========================
-Version 4.1.0 - 2021/10/03
+Version 4.1.0 - TBA
 ==========================
 
+This is a future release
 This release is a feature release. It contains the implementation of OAuth2 authorization protocol.
 
 Download
