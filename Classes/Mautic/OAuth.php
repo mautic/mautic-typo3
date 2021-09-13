@@ -32,7 +32,7 @@ class OAuth implements AuthInterface
 
     protected $authorizationMode = '';
 
-    public function __construct(AuthInterface $authorization, string $baseUrl, string $accesToken, string $authorizationMode)
+    public function __construct(AuthInterface $authorization, string $baseUrl, string $accesToken = '', string $authorizationMode = '')
     {
         $this->authorization = $authorization;
         $this->baseUrl = rtrim($baseUrl, '/');
