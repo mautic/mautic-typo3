@@ -37,6 +37,9 @@ class MauticAuthorizeService
      */
     protected $minimumMauticVersion = '2.14.2';
 
+    /** @var bool */
+    protected $createFlashMessages = true;
+
     public function __construct(
         array $extensionConfiguration = [],
         AuthInterface $authorization = null,
@@ -58,7 +61,9 @@ class MauticAuthorizeService
             || $this->extensionConfiguration['secretKey'] === ''
             || $this->extensionConfiguration['authorizeMode'] === ''
         ) {
-            $this->showCredentialsInformation();
+            if ($this->createFlashMessages) {
+                $this->showCredentialsInformation();
+            }
 
             return false;
         }
@@ -91,13 +96,17 @@ class MauticAuthorizeService
         $version = $api->getMauticVersion();
 
         if ($version === null) {
-            $this->addErrorMessage();
+            if ($this->createFlashMessages) {
+                $this->addErrorMessage();
+            }
 
             return false;
         }
 
         if (version_compare($version, $this->minimumMauticVersion, '<')) {
-            $this->showIncorrectVersionInformation($version);
+            if ($this->createFlashMessages) {
+                $this->showIncorrectVersionInformation($version);
+            }
 
             return false;
         }
@@ -117,12 +126,16 @@ class MauticAuthorizeService
         }
 
         if (0 === strpos($this->extensionConfiguration['baseUrl'], 'http:')) {
-            $this->showInsecureConnectionInformation();
+            if ($this->createFlashMessages) {
+                $this->showInsecureConnectionInformation();
+            }
 
             return false;
         }
 
-        $this->showSuccessMessage();
+        if ($this->createFlashMessages) {
+            $this->showSuccessMessage();
+        }
 
         return true;
     }
@@ -140,13 +153,15 @@ class MauticAuthorizeService
             $missingInformation[] = 'secretKey';
         }
 
-        $this->addErrorMessage(
-            $this->translate('authorization.missingInformation.title'),
-            sprintf(
-                $this->translate('authorization.missingInformation.message'),
-                implode(', ', $missingInformation)
-            )
-        );
+        if ($this->createFlashMessages) {
+            $this->addErrorMessage(
+                $this->translate('authorization.missingInformation.title'),
+                sprintf(
+                    $this->translate('authorization.missingInformation.message'),
+                    implode(', ', $missingInformation)
+                )
+            );
+        }
     }
 
     public function authorize()
@@ -170,7 +185,9 @@ class MauticAuthorizeService
                 HttpUtility::redirect($_SERVER['REQUEST_URI']);
             }
         } catch (\Exception $exception) {
-            $this->addErrorMessage((string)$exception->getCode(), (string)$exception->getMessage());
+            if ($this->createFlashMessages) {
+                $this->addErrorMessage((string)$exception->getCode(), (string)$exception->getMessage());
+            }
 
             return false;
         }
@@ -287,5 +304,10 @@ class MauticAuthorizeService
         }
 
         return false;
+    }
+
+    public function deactivateFlashMessages(): void
+    {
+        $this->createFlashMessages = false;
     }
 }
