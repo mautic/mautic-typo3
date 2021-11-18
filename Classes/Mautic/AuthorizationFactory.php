@@ -22,7 +22,7 @@ class AuthorizationFactory
 
         if ($extensionConfiguration->getAccessToken() !== '') {
             $settings['accessToken'] = $extensionConfiguration->getAccessToken();
-            if ($extensionConfiguration->getAuthorizeMode() === EmConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+            if ($extensionConfiguration->isOAuth1()) {
                 $settings['accessTokenSecret'] = $extensionConfiguration->getAccessTokenSecret();
             } else {
                 $settings['refreshToken'] = $extensionConfiguration->getRefreshToken();

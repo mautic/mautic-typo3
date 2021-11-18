@@ -2,6 +2,17 @@
 declare(strict_types = 1);
 namespace Bitmotion\Mautic\Domain\Model\Dto;
 
+/***
+ *
+ * This file is part of the "Mautic" extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ *  (c) 2020 Florian Wessels <f.wessels@Leuchtfeuer.com>, Leuchtfeuer Digital Marketing
+ *
+ ***/
+
 use Symfony\Component\Yaml\Yaml;
 use TYPO3\CMS\Core\Configuration\Loader\YamlFileLoader;
 use TYPO3\CMS\Core\Core\Environment;
@@ -10,6 +21,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class YamlConfiguration implements SingletonInterface
 {
+    public const OAUTH1_AUTHORIZATION_MODE = 'OAuth1a';
+
     /**
      * @var int
      */
@@ -70,12 +83,28 @@ class YamlConfiguration implements SingletonInterface
      */
     protected $trackingScriptOverride = '';
 
+    /**
+     * @var string
+     */
+    protected $authorizeMode = '';
+
+    /**
+     * @var string
+     */
+    protected $refreshToken = '';
+
+    /**
+     * @var int
+     */
+    protected $expires = 0;
+
     public function __construct()
     {
         $this->configPath = Environment::getConfigPath() . '/mautic';
         $this->fileName = $this->configPath . '/' . $this->configFileName;
-        $settings = $this->getYamlConfiguration();
-        $this->configurationArray = $settings;
+        $this->configurationArray = $this->getYamlConfiguration();
+        $extensionConfiguration = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic'];
+        $settings = array_replace_recursive($this->configurationArray, $extensionConfiguration);
 
         foreach ($settings as $key => $value) {
             if (property_exists(__CLASS__, $key)) {
@@ -88,7 +117,11 @@ class YamlConfiguration implements SingletonInterface
     {
         $loader = GeneralUtility::makeInstance(YamlFileLoader::class);
 
-        return $loader->load(GeneralUtility::fixWindowsFilePath($this->fileName), YamlFileLoader::PROCESS_IMPORTS);
+        try {
+            return $loader->load(GeneralUtility::fixWindowsFilePath($this->fileName), YamlFileLoader::PROCESS_IMPORTS);
+        } catch (\Exception $exception) {
+            return [];
+        }
     }
 
     /**
@@ -96,6 +129,8 @@ class YamlConfiguration implements SingletonInterface
      */
     protected function getRawEmConfig(): array
     {
+        trigger_error('Use getYamlConfiguration() instead.', E_USER_DEPRECATED);
+
         return $this->getYamlConfiguration();
     }
 
@@ -104,8 +139,22 @@ class YamlConfiguration implements SingletonInterface
         if (!file_exists($this->fileName)) {
             GeneralUtility::mkdir_deep($this->configPath);
         }
+
         $yamlFileContents = Yaml::dump($configuration, 99, 2);
         GeneralUtility::writeFile($this->fileName, $yamlFileContents);
+    }
+
+    public function reloadConfigurations()
+    {
+        $this->configurationArray = $this->getYamlConfiguration();
+        $extensionConfiguration = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic'];
+        $settings = array_replace_recursive($this->configurationArray, $extensionConfiguration);
+
+        foreach ($settings as $key => $value) {
+            if (property_exists(__CLASS__, $key)) {
+                $this->$key = $value;
+            }
+        }
     }
 
     public function getAuthorize(): int
@@ -151,5 +200,33 @@ class YamlConfiguration implements SingletonInterface
     public function getConfigurationArray(): array
     {
         return $this->configurationArray;
+    }
+
+    public function getAuthorizeMode(): string
+    {
+        return $this->authorizeMode;
+    }
+
+    public function getRefreshToken(): string
+    {
+        return $this->refreshToken;
+    }
+
+    public function getExpires(): int
+    {
+        return (int)$this->expires;
+    }
+
+    public function isSameCredentials(array $configuration): bool
+    {
+        return $this->authorizeMode === $configuration['authorizeMode']
+            && $this->secretKey === $configuration['secretKey']
+            && $this->publicKey === $configuration['publicKey']
+            && $this->baseUrl === $configuration['baseUrl'];
+    }
+
+    public function isOAuth1(): bool
+    {
+        return $this->authorizeMode === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE;
     }
 }

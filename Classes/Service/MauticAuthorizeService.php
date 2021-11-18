@@ -76,7 +76,7 @@ class MauticAuthorizeService
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
         $title = $this->translate('authorization.withMautic');
         $target = '';
-        if ($this->extensionConfiguration['authorizeMode'] !== EmConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+        if ($this->extensionConfiguration['authorizeMode'] !== YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
             //open authorizaion in new tab to avoid x-frame sameorigin issue in typo3 backend
             $target = 'target="_blank"';
         }
@@ -171,7 +171,7 @@ class MauticAuthorizeService
                 if ($this->authorization->accessTokenUpdated()) {
                     $accessTokenData = $this->authorization->getAccessTokenData();
                     $this->extensionConfiguration['accessToken'] = $accessTokenData['access_token'];
-                    if ($this->extensionConfiguration['authorizeMode'] === EmConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+                    if ($this->extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
                         $this->extensionConfiguration['accessTokenSecret'] = $accessTokenData['access_token_secret'];
                     } else {
                         $this->extensionConfiguration['refreshToken'] = $accessTokenData['refresh_token'];
@@ -181,7 +181,7 @@ class MauticAuthorizeService
 
                 $this->segmentRepository->initializeSegments();
 
-                GeneralUtility::makeInstance(EmConfiguration::class)->save($this->extensionConfiguration);
+                GeneralUtility::makeInstance(YamlConfiguration::class)->save($this->extensionConfiguration);
                 HttpUtility::redirect($_SERVER['REQUEST_URI']);
             }
         } catch (\Exception $exception) {
@@ -259,7 +259,7 @@ class MauticAuthorizeService
 
     public function validateAccessToken(): bool
     {
-        if ($this->extensionConfiguration['authorizeMode'] === EmConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+        if ($this->extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
             if ($this->extensionConfiguration['accessToken'] !== ''
                 && $this->extensionConfiguration['accessTokenSecret'] !== ''
             ) {
@@ -287,7 +287,7 @@ class MauticAuthorizeService
     public function accessTokenToBeRefreshed(): bool
     {
         //Access token have no expire on OAuth 1
-        if ($this->extensionConfiguration['authorizeMode'] === EmConfiguration::OAUTH1_AUTHORIZATION_MODE) {
+        if ($this->extensionConfiguration['authorizeMode'] === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE) {
             return false;
         }
 
