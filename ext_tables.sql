@@ -49,3 +49,12 @@ CREATE TABLE tx_mautic_domain_model_tag (
     title varchar(255) DEFAULT '' NOT NULL,
     items int(11) DEFAULT '0' NOT NULL,
 );
+
+#
+# Table structure for table 'tx_typo3idp_domain_model_refreshtoken'
+#
+CREATE TABLE tx_mautic_domain_model_mauticoauthtoken (
+    expires int(11) DEFAULT 0 NOT NULL,
+    access_token varchar(255) DEFAULT '' NOT NULL,
+    refresh_token varchar(255) DEFAULT '' NOT NULL,
+);

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2021-11-18T13:07:00Z"
+		  product-name="mautic">
+		<header/>
+		<body>
+			<trans-unit id="tx_mautic_domain_model_mauticoauthtoken" xml:space="preserve">
+				<source>OAuth2 token</source>
+			</trans-unit>
+			<trans-unit id="tx_mautic_domain_model_mauticoauthtoken.accesstoken" xml:space="preserve">
+				<source>OAuth2 access token</source>
+			</trans-unit>
+			<trans-unit id="tx_mautic_domain_model_mauticoauthtoken.refreshtoken" xml:space="preserve">
+				<source>OAuth2 refresh token</source>
+			</trans-unit>
+			<trans-unit id="tx_mautic_domain_model_mauticoauthtoken.expires" xml:space="preserve">
+				<source>Expires</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -13,11 +13,15 @@ namespace Bitmotion\Mautic\Domain\Model\Dto;
  *
  ***/
 
+use Bitmotion\Mautic\Domain\Model\MauticOauthToken;
+use Bitmotion\Mautic\Domain\Repository\MauticOauthTokenRepository;
 use Symfony\Component\Yaml\Yaml;
 use TYPO3\CMS\Core\Configuration\Loader\YamlFileLoader;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 class YamlConfiguration implements SingletonInterface
 {
@@ -118,10 +122,29 @@ class YamlConfiguration implements SingletonInterface
         $loader = GeneralUtility::makeInstance(YamlFileLoader::class);
 
         try {
-            return $loader->load(GeneralUtility::fixWindowsFilePath($this->fileName), YamlFileLoader::PROCESS_IMPORTS);
+            $conf = $loader->load(GeneralUtility::fixWindowsFilePath($this->fileName), YamlFileLoader::PROCESS_IMPORTS);
         } catch (\Exception $exception) {
             return [];
         }
+
+        if (!$this->isOAuth1()) {
+            /** @var MauticOauthTokenRepository $mauticOauthTokenRepository */
+            $mauticOauthTokenRepository = GeneralUtility::makeInstance(ObjectManager::class)
+                ->get(MauticOauthTokenRepository::class);
+            /** @var MauticOauthToken $mauticOauthToken */
+            $mauticOauthToken = $mauticOauthTokenRepository->findAll()->getFirst();
+
+            if (!$mauticOauthToken) {
+                $this->createMauticOauthToken($conf, $mauticOauthTokenRepository);
+                return $conf;
+            }
+
+            $conf['accessToken'] = $mauticOauthToken->getAccessToken();
+            $conf['refreshToken'] = $mauticOauthToken->getRefreshToken();
+            $conf['expires'] = $mauticOauthToken->getExpires();
+        }
+
+        return $conf;
     }
 
     /**
@@ -142,6 +165,20 @@ class YamlConfiguration implements SingletonInterface
 
         $yamlFileContents = Yaml::dump($configuration, 99, 2);
         GeneralUtility::writeFile($this->fileName, $yamlFileContents);
+
+        if (!$this->isOAuth1()) {
+            /** @var MauticOauthTokenRepository $mauticOauthTokenRepository */
+            $mauticOauthTokenRepository = GeneralUtility::makeInstance(ObjectManager::class)
+                ->get(MauticOauthTokenRepository::class);
+            /** @var MauticOauthToken $mauticOauthToken */
+            $mauticOauthToken = $mauticOauthTokenRepository->findAll()->getFirst();
+
+            if (!$mauticOauthToken) {
+                $this->createMauticOauthToken($configuration, $mauticOauthTokenRepository);
+            } else {
+                $this->updateMauticOauthToken($configuration, $mauticOauthToken, $mauticOauthTokenRepository);
+            }
+        }
     }
 
     public function reloadConfigurations()
@@ -228,5 +265,29 @@ class YamlConfiguration implements SingletonInterface
     public function isOAuth1(): bool
     {
         return $this->authorizeMode === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE;
+    }
+
+    private function createMauticOauthToken(array $configuration, MauticOauthTokenRepository $mauticOauthTokenRepository): void
+    {
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $mauticOauthToken = (new MauticOauthToken())
+            ->setAccessToken($configuration['accessToken'])
+            ->setRefreshToken($configuration['refreshToken'])
+            ->setExpires((int) $configuration['expires']);
+        $mauticOauthTokenRepository->add($mauticOauthToken);
+        $objectManager->get(PersistenceManager::class)->persistAll();
+    }
+
+    private function updateMauticOauthToken(
+        array $configuration,
+        MauticOauthToken $mauticOauthToken,
+        MauticOauthTokenRepository $mauticOauthTokenRepository
+    ): void {
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $mauticOauthToken->setAccessToken($configuration['accessToken'])
+            ->setRefreshToken($configuration['refreshToken'])
+            ->setExpires((int) $configuration['expires']);
+        $mauticOauthTokenRepository->update($mauticOauthToken);
+        $objectManager->get(PersistenceManager::class)->persistAll();
     }
 }
