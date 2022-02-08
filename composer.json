@@ -41,7 +41,6 @@
         }
     },
     "replace": {
-        "toujou/mautic-typo3": "self.version",
         "typo3-ter/mautic": "self.version"
     },
     "suggest": {
@@ -51,7 +50,11 @@
     },
     "config": {
         "vendor-dir": "Build/vendor",
-        "bin-dir": "Build/bin"
+        "bin-dir": "Build/bin",
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
+        }
     },
     "scripts": {
         "package": "Build/scripts/package.sh"
