@@ -1,6 +1,6 @@
 {
     "name": "toujou/mautic-typo3",
-    "description": "Add-on TYPO3 extension that enhances the \"EXT:marketing_automation\" TYPO3 extension by connecting it to the Mautic Marketing Automation platform: Determine \"Persona\" from Mautic segments. Also provides additional services e.g. language synchronisation between Mautic and TYPO3.",
+    "description": "Fork of mautic/mautic-typo3 TYPO3 Extension",
     "keywords": [
         "TYPO3 CMS",
         "Marketing",
@@ -23,10 +23,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/mautic/mautic-typo3/issues",
-        "source": "https://github.com/mautic/mautic-typo3",
-        "email": "dev@Leuchtfeuer.com",
-        "docs": "https://docs.typo3.org/p/mautic/mautic-typo3/master/en-us/"
+        "issues": "https://github.com/toujou/mautic-typo3/issues",
+        "source": "https://github.com/toujou/mautic-typo3",
     },
     "require": {
         "typo3/cms-core": "^10.4.2",
