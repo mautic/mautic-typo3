@@ -24,7 +24,7 @@
     ],
     "support": {
         "issues": "https://github.com/toujou/mautic-typo3/issues",
-        "source": "https://github.com/toujou/mautic-typo3",
+        "source": "https://github.com/toujou/mautic-typo3"
     },
     "require": {
         "typo3/cms-core": "^10.4.2",
