@@ -4,6 +4,12 @@ The Mautic extension for TYPO3
 
 Welcome to the official Mautic extension for TYPO3!
 
+**Please use this Extension version 3.x for TYPO3 v9**
+ 
+**Please use this Extension version 4.x for TYPO3 v10**
+ 
+ Both support Mautic v2, v3 and v4.
+
 ## Features
 The Mautic TYPO3 extension has many features that allow you to integrate your marketing automation workflow in TYPO3.
 
@@ -49,7 +55,7 @@ composer package
 
 ## Contributing Partners
 * [Beech](https://beech.it)
-* [Bitmotion GmbH](https://bitmotion.de)
+* [Leuchtfeuer Digital Marketing](https://Leuchtfeuer.com)
 * [TYPO3 GmbH](https://typo3.com)
 
 ## Contributing
