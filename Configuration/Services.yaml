@@ -12,3 +12,6 @@ services:
       - name: event.listener
         identifier: synchronizeMauticData
         event: TYPO3\CMS\Backend\Controller\Event\AfterFormEnginePageInitializedEvent
+
+  Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration:
+    class: Bitmotion\Mautic\Domain\Model\Dto\EnvVarConfiguration
