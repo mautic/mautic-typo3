@@ -200,7 +200,7 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
         foreach ($this->customFieldValues as $alias => $properties) {
             foreach ($formElements as $formElement) {
                 if ($formElement['identifier'] === $alias) {
-                    $mauticField = $fieldRepository->getContactFieldByAlias($formElement['properties']['mauticTable']);
+                    $mauticField = $fieldRepository->getContactFieldByAlias($formElement['properties']['mauticTable'] ?? '');
 
                     if (is_array($mauticField) && isset($mauticField['properties'])) {
                         $existingProperties = $mauticField['properties']['list'];
