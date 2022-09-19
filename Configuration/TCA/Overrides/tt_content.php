@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 defined('TYPO3_MODE') || die();
 
 /***************
@@ -19,7 +20,7 @@ $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['mautic_form'] = 'tx_m
 /***************
  * Configure element type
  */
-if (!is_array($GLOBALS['TCA']['tt_content']['types']['mautic_form'])) {
+if (!is_array($GLOBALS['TCA']['tt_content']['types']['mautic_form'] ?? null)) {
     $GLOBALS['TCA']['tt_content']['types']['mautic_form'] = [];
 }
 $GLOBALS['TCA']['tt_content']['types']['mautic_form'] = array_replace_recursive(

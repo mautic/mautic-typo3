@@ -68,7 +68,7 @@ class MauticSubscriber implements SubscriberInterface, SingletonInterface
     {
         if ($this->languageNeedsUpdate) {
             $languageId = GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('language', 'id');
-            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId((int)$GLOBALS['TSFE']->id);
+            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId((int)$typoScriptFrontendController->id);
             $isoCode = $site->getLanguageById($languageId)->getTwoLetterIsoCode();
 
             $this->contactRepository->editContact(

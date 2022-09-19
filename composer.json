@@ -29,8 +29,8 @@
         "docs": "https://docs.typo3.org/p/mautic/mautic-typo3/master/en-us/"
     },
     "require": {
-        "typo3/cms-core": "^10.4.2",
-        "typo3/cms-extbase": "^10.4.2",
+        "typo3/cms-core": "^10.4.2 || ^11.5",
+        "typo3/cms-extbase": "^10.4.2 || ^11.5",
         "leuchtfeuer/marketing-automation": "^1.2.3",
         "mautic/api-library": "^2.15"
     },
