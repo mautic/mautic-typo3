@@ -23,6 +23,7 @@ use Bitmotion\Mautic\Transformation\FormField\AbstractFormFieldTransformation;
 use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationPrototype;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Form\Mvc\Configuration\Exception\ParseErrorException;
@@ -65,7 +66,15 @@ class MauticFormHook implements LoggerAwareInterface
     public function __construct(FormPersistenceManagerInterface $formPersistenceManager = null)
     {
         if ($formPersistenceManager === null) {
-            $formPersistenceManager = GeneralUtility::makeInstance(FormPersistenceManagerInterface::class);
+            // @todo: remove if v10 is not supported anymore
+            if (class_exists(Typo3Version::class) && (new Typo3Version())->getMajorVersion() >= 11) {
+                $formPersistenceManager = GeneralUtility::makeInstance(FormPersistenceManagerInterface::class);
+            } else {
+                $formPersistenceManager = GeneralUtility::makeInstance(FormPersistenceManager::class);
+                $formPersistenceManager->initializeObject();
+                $formPersistenceManager->injectResourceFactory(GeneralUtility::makeInstance(ResourceFactory::class));
+                $formPersistenceManager->injectYamlSource(GeneralUtility::makeInstance(YamlSource::class));
+            }
         }
 
         $this->formPersistenceManager = $formPersistenceManager;
