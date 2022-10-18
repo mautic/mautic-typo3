@@ -65,10 +65,7 @@ class MauticFormHook implements LoggerAwareInterface
     public function __construct(FormPersistenceManagerInterface $formPersistenceManager = null)
     {
         if ($formPersistenceManager === null) {
-            $formPersistenceManager = GeneralUtility::makeInstance(FormPersistenceManager::class);
-            $formPersistenceManager->initializeObject();
-            $formPersistenceManager->injectResourceFactory(GeneralUtility::makeInstance(ResourceFactory::class));
-            $formPersistenceManager->injectYamlSource(GeneralUtility::makeInstance(YamlSource::class));
+            $formPersistenceManager = GeneralUtility::makeInstance(FormPersistenceManagerInterface::class);
         }
 
         $this->formPersistenceManager = $formPersistenceManager;
