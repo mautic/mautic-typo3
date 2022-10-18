@@ -115,6 +115,7 @@ class YamlConfiguration implements SingletonInterface
 
     protected function getYamlConfiguration(): array
     {
+        if (!file_exists($this->fileName)) return [];
         $loader = GeneralUtility::makeInstance(YamlFileLoader::class);
 
         try {
