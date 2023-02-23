@@ -23,7 +23,6 @@ use Bitmotion\Mautic\Transformation\FormField\AbstractFormFieldTransformation;
 use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationPrototype;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Form\Mvc\Configuration\Exception\ParseErrorException;
