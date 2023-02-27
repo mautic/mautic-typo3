@@ -7,6 +7,9 @@ services:
   Bitmotion\Mautic\:
     resource: '../Classes/*'
 
+  Bitmotion\Mautic\Hooks\MauticFormHook:
+    public: true
+
   Bitmotion\Mautic\EventListener\SynchronizeMauticData:
     tags:
       - name: event.listener

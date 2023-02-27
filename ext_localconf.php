@@ -89,8 +89,8 @@ call_user_func(function () {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'Bitmotion.mautic',
         'Form',
-        ['Frontend' => 'form'],
-        ['Frontend' => 'form'],
+        [\Bitmotion\Mautic\Controller\FrontendController::class => 'form'],
+        [\Bitmotion\Mautic\Controller\FrontendController::class => 'form'],
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
