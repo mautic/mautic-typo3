@@ -136,8 +136,8 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
         }
 
         foreach ($response['form']['fields'] as $mauticField) {
-            foreach ((array)$this->formDefinition['renderables'] as $formPageKey => $formPage) {
-                foreach ((array)$formPage['renderables'] as $formElementKey => $formElement) {
+            foreach ((array)($this->formDefinition['renderables'] ?? []) as $formPageKey => $formPage) {
+                foreach ((array)($formPage['renderables'] ?? []) as $formElementKey => $formElement) {
                     if ($formElement['type'] === 'Fieldset' || $formElement['type'] === 'GridRow') {
                         foreach ((array)$formElement['renderables'] as $containerElementKey => $containerElement) {
                             if ($containerElement['type'] === 'Fieldset' || $containerElement['type'] === 'GridRow') {
