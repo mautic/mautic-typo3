@@ -27,7 +27,7 @@ class MauticTagHook
         if ($page['tx_mautic_tags'] > 0) {
             $tags = $this->getTagsToAssign($page);
             if (!empty($tags)) {
-                $contactId = (int)$_COOKIE['mtc_id'];
+                $contactId = (int)($_COOKIE['mtc_id'] ?? 0);
 
                 if ($contactId > 0) {
                     $contactRepository = GeneralUtility::makeInstance(ContactRepository::class);
