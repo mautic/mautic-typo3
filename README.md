@@ -4,6 +4,12 @@ The Mautic extension for TYPO3
 
 Welcome to the official Mautic extension for TYPO3!
 
+**Please use this Extension version 3.x for TYPO3 v9**
+ 
+**Please use this Extension version 4.x for TYPO3 v10**
+ 
+Both support Mautic v2, v3 and v4.
+
 ## Features
 The Mautic TYPO3 extension has many features that allow you to integrate your marketing automation workflow in TYPO3.
 
@@ -12,6 +18,22 @@ Ever wanted to serve different content to different users based on their Mautic 
 
 ### Form Synchronization
 With the Mautic extension for TYPO3 you can create your forms in the TYPO3 backend, and have all data collected in Mautic too! You no longer need to maintain two forms, the extension will automatically sync all forms you have marked as 'Mautic forms' with Mautic. You can then easily post form results to Mautic, while your form will always stay up-to-date with your TYPO3 edits.
+
+### TYPO3 Form Customization
+ In case you got own elements or similiar customization within the EXT:form component you should be aware of the possibly necessary adaptions you have to do.
+ A custom element needs a transformation and field property depending of the element content and what you want to do with it.
+ In case of an e.g. LinkedCheckbox element providing an GDPR checkbox along with a linked text you might not want the data to be transferred into mautic.
+ In this case you can do the following:
+
+ 
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['LinkedCheckbox'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
+
+
+ If you actually want to transfer the data into mautic you need to choose a fitting Transformation class along with extending the inheritance of the custom element to use the mautic mixin. This provides the possibility to choose a property for the element in the form module.
+
+ The side effect of not handling those custom elements could be that the form data is not transferred into mautic correctly.
+ This is only the case on initial setup and first submitting of the form with such an non configured element.
+ Once the form is submitted those custom elements are getting ignored.
 
 ### Mautic Form Actions
 Create contacts or modify the points of a contact straight from a TYPO3 Form.
@@ -23,7 +45,7 @@ If you wish to use Mautic forms directly, you can now add them with the Mautic F
 Integrate the Mautic tracking script into your frontend with one click of a button!
 
 ### OAuth support
-All requests made by this extension are secured using OAuth1a. You can easily configure your API tokens in the extension manager of TYPO3.
+All requests made by this extension are secured using OAuth (with Mautic only supping OAuth2 in recent versions). You can easily configure your API tokens in the extension manager of TYPO3.
 
 ### Tags ###
 Set tags for users when they are visiting a page!
@@ -49,7 +71,7 @@ composer package
 
 ## Contributing Partners
 * [Beech](https://beech.it)
-* [Bitmotion GmbH](https://bitmotion.de)
+* [Leuchtfeuer Digital Marketing](https://Leuchtfeuer.com)
 * [TYPO3 GmbH](https://typo3.com)
 
 ## Contributing

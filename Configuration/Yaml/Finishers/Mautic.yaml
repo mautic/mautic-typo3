@@ -7,7 +7,7 @@ TYPO3:
             MauticFinisher:
               implementationClassName: Bitmotion\Mautic\Domain\Finishers\MauticFinisher
               formEditor:
-                iconIdentifier: 't3-form-icon-finisher'
+                iconIdentifier: 'form-finisher'
                 predefinedDefaults:
                   options:
                     mauticId: ''

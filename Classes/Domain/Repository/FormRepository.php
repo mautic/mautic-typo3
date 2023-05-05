@@ -50,7 +50,7 @@ class FormRepository extends AbstractRepository
 
     public function getAllForms(): array
     {
-        return $this->formsApi->getList('', 0, 999)['forms'] ?: [];
+        return ($this->formsApi->getList('', 0, 999)['forms'] ?? []) ?: [];
     }
 
     public function createForm(array $parameters): array
