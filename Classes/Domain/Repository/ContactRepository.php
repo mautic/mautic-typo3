@@ -63,4 +63,14 @@ class ContactRepository extends AbstractRepository
             $this->contactsApi->subtractPoints($id, abs($modifier), $data);
         }
     }
+
+    public function addDnc(int $id, string $channel = 'email', int $reason = Contacts::MANUAL, $channelId = null, $comments = 'via API')
+    {
+        $this->contactsApi->addDnc($id, $channel, $reason, $channelId, $comments);
+    }
+
+    public function removeDnc(int $id, string $channel = 'email')
+    {
+        $this->contactsApi->removeDnc($id, $channel);
+    }
 }
