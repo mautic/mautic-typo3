@@ -13,7 +13,7 @@
     "authors": [
         {
             "name": "Florian Wessels",
-            "email": "f.wessels@Leuchtfeuer.com",
+            "email": "mautic@Leuchtfeuer.com",
             "role": "Developer",
             "homepage": "https://www.Leuchtfeuer.com"
         },
@@ -31,7 +31,7 @@
     "require": {
         "typo3/cms-core": "^10.4.2 || ^11.5",
         "typo3/cms-extbase": "^10.4.2 || ^11.5",
-        "leuchtfeuer/marketing-automation": "^1.2.3",
+        "leuchtfeuer/marketing-automation": "^1.3",
         "mautic/api-library": "^2.15"
     },
     "autoload": {
