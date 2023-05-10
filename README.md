@@ -60,7 +60,7 @@ The Mautic API https://developer.mautic.org/#rest-api is made available (see "Co
 First, install the extensions *marketing_automation*  and *mautic* in your TYPO3.
 
 Afterwards, establish the API connection:
-* go to "API Credentials" in Mautic and create a new "OAuth2" credential set (give your TYPO3 website's domain as "redirect URI")
+* Go to "API Credentials" in Mautic and create a new "OAuth2" credential set (give your TYPO3 website's domain as "redirect URI")
 * write down public and secret key
 * go to the "API Connection" backend module in TYPO3, select "OAuth2", and enter the keys from above
 * Now hit "Authorize with Mautic"
