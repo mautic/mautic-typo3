@@ -2,19 +2,19 @@ The Mautic extension for TYPO3
 ===========
 ![Mautic](https://i.imgur.com/dfbouP1.png "Mautic Open Source Marketing Automation together with the CMS power of TYPO3")
 
-Welcome to the official Mautic extension for TYPO3!
+Welcome to the official Mautic extension for TYPO3.
 
-**Please use this Extension version 3.x for TYPO3 v9**
+* **Please use this Extension version 3.x for TYPO3 v9**
+* **Please use this Extension version 4.x for TYPO3 v10 and above**
  
-**Please use this Extension version 4.x for TYPO3 v10**
- 
-Both support Mautic v2, v3 and v4.
+Both currently support Mautic v4.
 
 ## Features
 The Mautic TYPO3 extension has many features that allow you to integrate your marketing automation workflow in TYPO3.
 
 ### Dynamic Content Blocks
-Ever wanted to serve different content to different users based on their Mautic segments? With this extension you will be able to set aside content in your TYPO3 website for specific Mautic segments. This way, you will be able to decide what content to serve to which people!
+Ever wanted to serve different content to different users based on their Mautic segments? With this extension you will be able to set aside content in your TYPO3 website for specific Mautic segments. This way, you will be able to decide what content to serve to which people.
+In good TYPO3 fashion, this can apply not only to content elements but also to entire pages or even data sets, templates, ...
 
 ### Form Synchronization
 With the Mautic extension for TYPO3 you can create your forms in the TYPO3 backend, and have all data collected in Mautic too! You no longer need to maintain two forms, the extension will automatically sync all forms you have marked as 'Mautic forms' with Mautic. You can then easily post form results to Mautic, while your form will always stay up-to-date with your TYPO3 edits.
@@ -53,12 +53,18 @@ Set tags for users when they are visiting a page!
 ### Assets ###
 Link to Mautic assets directly in TYPO3 using file relations or the TYPO3 link wizard!
 
+### API ###
+The Mautic API https://developer.mautic.org/#rest-api is made available (see "ContactRepository")
+
 ## Installation
-You can run the following command using Composer to install the extension:
-```
-composer require mautic/mautic-typo3
-```
-Then you must go into the backend of Mautic and create a pair of OAuth1a tokens. You can read how to correctly configure the API [here](https://www.mautic.org/blog/developer/how-to-use-the-mautic-rest-api/) under section "3. How to authorize your Mautic API application". After correctly configuring the API and creating a pair of OAuth1a tokens, you can enter them alongside of your Mautic URL in the extension configuration. As soon as these are saved, a button should pop up. This button will allow you to complete the OAuth authentication process and will retrieve the needed tokens. Once that is done, you are all set!
+First, install the extensions *marketing_automation*  and *mautic* in your TYPO3.
+
+Afterwards, establish the API connection:
+* Go to "API Credentials" in Mautic and create a new "OAuth2" credential set (give your TYPO3 website's domain as "redirect URI")
+* write down public and secret key
+* go to the "API Connection" backend module in TYPO3, select "OAuth2", and enter the keys from above
+* Now hit "Authorize with Mautic"
+* A Mautic login windows comes up. Log in, and click "Accept"
 
 ## Documentation
 Documentation and a getting started guide can be found [here](https://docs.typo3.org/p/mautic/mautic-typo3/master/en-us/).
