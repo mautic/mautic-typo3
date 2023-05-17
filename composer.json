@@ -9,23 +9,19 @@
     ],
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
-    "homepage": "https://www.Leuchtfeuer.com",
+    "homepage": "https://www.leuchtfeuer.com",
     "authors": [
         {
-            "name": "Florian Wessels",
-            "email": "mautic@Leuchtfeuer.com",
+            "name": "Leuchtfeuer",
+            "email": "dev@leuchtfeuer.com",
             "role": "Developer",
-            "homepage": "https://www.Leuchtfeuer.com"
-        },
-        {
-            "name": "Jurian Jansen",
-            "role": "Developer"
+            "homepage": "https://www.leuchtfeuer.com"
         }
     ],
     "support": {
         "issues": "https://github.com/mautic/mautic-typo3/issues",
         "source": "https://github.com/mautic/mautic-typo3",
-        "email": "dev@Leuchtfeuer.com",
+        "email": "dev@leuchtfeuer.com",
         "docs": "https://docs.typo3.org/p/mautic/mautic-typo3/master/en-us/"
     },
     "require": {

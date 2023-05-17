@@ -6,7 +6,7 @@ Welcome to the official Mautic extension for TYPO3.
 
 * **Please use this Extension version 3.x for TYPO3 v9**
 * **Please use this Extension version 4.x for TYPO3 v10 and above**
- 
+
 Both currently support Mautic v4.
 
 ## Features
@@ -25,7 +25,7 @@ With the Mautic extension for TYPO3 you can create your forms in the TYPO3 backe
  In case of an e.g. LinkedCheckbox element providing an GDPR checkbox along with a linked text you might not want the data to be transferred into mautic.
  In this case you can do the following:
 
- 
+
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['LinkedCheckbox'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
 
 
@@ -77,7 +77,7 @@ composer package
 
 ## Contributing Partners
 * [Beech](https://beech.it)
-* [Leuchtfeuer Digital Marketing](https://Leuchtfeuer.com)
+* [Leuchtfeuer Digital Marketing](https://leuchtfeuer.com)
 * [TYPO3 GmbH](https://typo3.com)
 
 ## Contributing
