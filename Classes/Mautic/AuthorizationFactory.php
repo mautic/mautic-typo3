@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 namespace Bitmotion\Mautic\Mautic;
 
 /***
@@ -21,7 +22,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AuthorizationFactory implements SingletonInterface
 {
-
     public const VERSION = 'OAuth1a';
 
     protected static $oAuth;

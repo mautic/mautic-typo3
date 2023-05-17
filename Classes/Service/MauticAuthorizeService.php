@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 namespace Bitmotion\Mautic\Service;
 
 /***
@@ -128,7 +129,7 @@ class MauticAuthorizeService
             );
         }
 
-        if (0 === strpos($this->extensionConfiguration['baseUrl'], 'http:')) {
+        if (strpos($this->extensionConfiguration['baseUrl'], 'http:') === 0) {
             $this->showInsecureConnectionInformation();
 
             return false;
@@ -160,7 +161,6 @@ class MauticAuthorizeService
                 case 404:
                     $message = 'Sometimes it is necessary to clear the Mautic cache.';
                     break;
-
             }
 
             $message = sprintf(
@@ -207,7 +207,7 @@ class MauticAuthorizeService
             $this->messages[md5($message . $title . $severity)] = [
                 'message' => $message,
                 'title' => $title,
-                'severity' => $severity
+                'severity' => $severity,
             ];
         }
     }

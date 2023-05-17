@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 namespace Bitmotion\Mautic\Domain\Finishers;
 
 /***
@@ -38,7 +39,7 @@ class MauticPointsFinisher extends AbstractFinisher
     {
         $pointsModifier = (int)($this->parseOption('mauticPointsModifier') ?? 0);
 
-        if (0 === $this->mauticId || 0 === $pointsModifier) {
+        if ($this->mauticId === 0 || $pointsModifier === 0) {
             return;
         }
 
