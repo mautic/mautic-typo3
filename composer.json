@@ -12,7 +12,7 @@
     "homepage": "https://www.Leuchtfeuer.com",
     "authors": [
         {
-            "name": "Florian Wessels",
+            "name": "Leuchtfeuer Digital Marketing",
             "email": "mautic@Leuchtfeuer.com",
             "role": "Developer",
             "homepage": "https://www.Leuchtfeuer.com"
@@ -25,7 +25,7 @@
     "support": {
         "issues": "https://github.com/mautic/mautic-typo3/issues",
         "source": "https://github.com/mautic/mautic-typo3",
-        "email": "dev@Leuchtfeuer.com",
+        "email": "mautic@Leuchtfeuer.com",
         "docs": "https://docs.typo3.org/p/mautic/mautic-typo3/master/en-us/"
     },
     "require": {
@@ -40,7 +40,6 @@
         }
     },
     "replace": {
-        "mautic/mautic-typo3": "self.version",
         "typo3-ter/mautic": "self.version"
     },
     "suggest": {
