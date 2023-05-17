@@ -1,4 +1,5 @@
 <?php
+
 defined('TYPO3_MODE') || die;
 
 call_user_func(
@@ -31,7 +32,7 @@ call_user_func(
             'api',
             'bottom',
             [
-                $controllerName ?? \Bitmotion\Mautic\Controller\BackendController::class => 'show, save'
+                $controllerName ?? \Bitmotion\Mautic\Controller\BackendController::class => 'show, save',
             ],
             [
                 'access' => 'admin',
@@ -39,4 +40,6 @@ call_user_func(
                 'labels' => 'LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf',
             ]
         );
-}, 'mautic');
+    },
+    'mautic'
+);

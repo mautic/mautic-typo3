@@ -9,7 +9,7 @@ $EM_CONF['mautic'] = [
     'createDirs' => '',
     'author' => 'Florian Wessels, Jurian Jansen',
     'author_company' => 'Leuchtfeuer Digital Marketing',
-    'author_email' => 'dev@Leuchtfeuer.com',
+    'author_email' => 'dev@leuchtfeuer.com',
     'clearCacheOnLoad' => 0,
     'version' => '4.3.0',
     'constraints' => [
@@ -20,8 +20,7 @@ $EM_CONF['mautic'] = [
         'conflicts' => [],
         'suggests' => [
             'static_info_tables' => '6.7.0',
-            'form' => '10.4.0'
+            'form' => '10.4.0',
         ],
     ],
 ];
-

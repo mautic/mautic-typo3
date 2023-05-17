@@ -9,17 +9,13 @@
     ],
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
-    "homepage": "https://www.Leuchtfeuer.com",
+    "homepage": "https://www.leuchtfeuer.com",
     "authors": [
         {
             "name": "Leuchtfeuer Digital Marketing",
             "email": "mautic@Leuchtfeuer.com",
             "role": "Developer",
-            "homepage": "https://www.Leuchtfeuer.com"
-        },
-        {
-            "name": "Jurian Jansen",
-            "role": "Developer"
+            "homepage": "https://www.leuchtfeuer.com"
         }
     ],
     "support": {
