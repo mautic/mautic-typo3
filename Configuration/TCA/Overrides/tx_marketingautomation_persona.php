@@ -19,7 +19,6 @@ $tempColumns = [
             ],
             'size' => 10,
             'autoSizeMax' => 30,
-            'enableMultiSelectFilterTextfield' => true,
             'fieldControl' => [
                 'updateSegmentsControl' => [
                     'renderType' => 'updateSegmentsControl',

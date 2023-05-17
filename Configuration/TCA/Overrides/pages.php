@@ -10,7 +10,6 @@ $temporaryColumns = [
         'config' => [
             'type' => 'select',
             'renderType' => 'selectMultipleSideBySide',
-            'enableMultiSelectFilterTextfield' => true,
             'foreign_table' => 'tx_mautic_domain_model_tag',
             'foreign_table_where' => 'ORDER BY title',
             'MM' => 'tx_mautic_page_tag_mm',
