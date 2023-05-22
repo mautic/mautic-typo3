@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 defined('TYPO3_MODE') || die();
 
 return [
@@ -20,9 +21,7 @@ return [
             'ignoreRootLevelRestriction' => true,
         ],
     ],
-    'interface' => [
-        'showRecordFieldList' => 'title',
-    ],
+    'interface' => [],
     'types' => [
         '1' => [
             'showitem' => '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,'

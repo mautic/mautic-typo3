@@ -1,4 +1,5 @@
 <?php
+
 defined('TYPO3_MODE') || die;
 
 call_user_func(function () {
@@ -22,9 +23,9 @@ call_user_func(function () {
         '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:mautic/Configuration/PageTS/Mod/Wizards/NewContentElement.tsconfig">'
     );
 
-    ###################
-    #      HOOKS      #
-    ###################
+    //##################
+    //      HOOKS      #
+    //##################
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['settingLanguage_postProcess']['mautic'] =
         \Bitmotion\Mautic\Slot\MauticSubscriber::class . '->setPreferredLocale';
 
@@ -43,9 +44,9 @@ call_user_func(function () {
             \Bitmotion\Mautic\Hooks\MauticTagHook::class . '->setTags';
     }
 
-    ###################
-    #       FORM      #
-    ###################
+    //##################
+    //       FORM      #
+    //##################
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'][\Bitmotion\Mautic\Form\FormDataProvider\MauticFormDataProvider::class] = [
         'depends' => [
             \TYPO3\CMS\Backend\Form\FormDataProvider\DatabaseRowDefaultValues::class,
@@ -67,9 +68,9 @@ call_user_func(function () {
         'class' => \Bitmotion\Mautic\FormEngine\FieldControl\UpdateTagsControl::class,
     ];
 
-    ##################
-    #   FAL DRIVER   #
-    ##################
+    //#################
+    //   FAL DRIVER   #
+    //#################
     $driverRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\Driver\DriverRegistry::class);
     $driverRegistry->registerDriverClass(
         \Bitmotion\Mautic\Driver\AssetDriver::class,
@@ -78,14 +79,14 @@ call_user_func(function () {
         'FILE:EXT:mautic/Configuration/FlexForm/AssetDriver.xml'
     );
 
-    ##################
-    #   EXTRACTOR    #
-    ##################
+    //#################
+    //   EXTRACTOR    #
+    //#################
     \TYPO3\CMS\Core\Resource\Index\ExtractorRegistry::getInstance()->registerExtractionService(\Bitmotion\Mautic\Index\Extractor::class);
 
-    ###################
-    #      PLUGIN     #
-    ###################
+    //##################
+    //      PLUGIN     #
+    //##################
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'Bitmotion.mautic',
         'Form',
@@ -94,10 +95,9 @@ call_user_func(function () {
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
-
-    ###################
-    #      ICONS      #
-    ###################
+    //##################
+    //      ICONS      #
+    //##################
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
     $icons = [
         'tx_mautic-mautic-icon' => 'EXT:mautic/Resources/Public/Icons/Extension.svg',
@@ -111,30 +111,27 @@ call_user_func(function () {
         );
     }
 
-
-    ###################
-    #     EXTCONF     #
-    ###################
+    //##################
+    //     EXTCONF     #
+    //##################
     if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic'])) {
         $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic'] = [
             'transformation' => [
                 'form' => [],
                 'formField' => [],
-            ]
+            ],
         ];
     }
 
-
-    #######################
-    # FORM TRANSFORMATION #
-    #######################
+    //######################
+    // FORM TRANSFORMATION #
+    //######################
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['form']['mautic_finisher_campaign_prototype'] = \Bitmotion\Mautic\Transformation\Form\CampaignFormTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['form']['mautic_finisher_standalone_prototype'] = \Bitmotion\Mautic\Transformation\Form\StandaloneFormTransformation::class;
 
-
-    ########################
-    # FIELD TRANSFORMATION #
-    ########################
+    //#######################
+    // FIELD TRANSFORMATION #
+    //#######################
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['AdvancedPassword'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Checkbox'] = \Bitmotion\Mautic\Transformation\FormField\CheckboxTransformation::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['ContentElement'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
@@ -163,10 +160,9 @@ call_user_func(function () {
     // Register custom field transformation classes
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['CountryList'] = \Bitmotion\Mautic\Transformation\FormField\CountryListTransformation::class;
 
-
-    ###################
-    #     LOGGING     #
-    ###################
+    //##################
+    //     LOGGING     #
+    //##################
     // Turn logging off by default
     $GLOBALS['TYPO3_CONF_VARS']['LOG']['Bitmotion']['Mautic'] = [
         'writerConfiguration' => [
@@ -181,11 +177,10 @@ call_user_func(function () {
             'writerConfiguration' => [
                 \TYPO3\CMS\Core\Log\LogLevel::DEBUG => [
                     \TYPO3\CMS\Core\Log\Writer\FileWriter::class => [
-                        'logFileInfix' => 'mautic'
+                        'logFileInfix' => 'mautic',
                     ],
                 ],
             ],
         ];
     }
-
 });

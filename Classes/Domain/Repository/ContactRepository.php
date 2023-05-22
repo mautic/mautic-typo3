@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 namespace Bitmotion\Mautic\Domain\Repository;
 
 /***
@@ -9,7 +10,7 @@ namespace Bitmotion\Mautic\Domain\Repository;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2020 Florian Wessels <f.wessels@Leuchtfeuer.com>, Leuchtfeuer Digital Marketing
+ *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
  *
  ***/
 
@@ -62,5 +63,15 @@ class ContactRepository extends AbstractRepository
         } else {
             $this->contactsApi->subtractPoints($id, abs($modifier), $data);
         }
+    }
+
+    public function addDnc(int $id, string $channel = 'email', int $reason = Contacts::MANUAL, $channelId = null, $comments = 'via API')
+    {
+        $this->contactsApi->addDnc($id, $channel, $reason, $channelId, $comments);
+    }
+
+    public function removeDnc(int $id, string $channel = 'email')
+    {
+        $this->contactsApi->removeDnc($id, $channel);
     }
 }

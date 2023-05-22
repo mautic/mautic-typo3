@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 namespace Bitmotion\Mautic\Transformation\Form;
 
 /***
@@ -9,7 +10,7 @@ namespace Bitmotion\Mautic\Transformation\Form;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2020 Florian Wessels <f.wessels@Leuchtfeuer.com>, Leuchtfeuer Digital Marketing
+ *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
  *
  ***/
 
@@ -19,9 +20,9 @@ namespace Bitmotion\Mautic\Transformation\Form;
  *   "dateAdded": "2018-10-08T12:52:28+00:00",
  *   "dateModified": "2018-10-08T13:19:42+00:00",
  *   "createdBy": 6,
- *   "createdByUser": "Florian Wessels",
+ *   "createdByUser": "Joe Doe",
  *   "modifiedBy": 6,
- *   "modifiedByUser": "Florian Wessels",
+ *   "modifiedByUser": "Joe Doe",
  *   "id": 49,
  *   "name": "Kampagnenform",
  *   "alias": "kampagnen",

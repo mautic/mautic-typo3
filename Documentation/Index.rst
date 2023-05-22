@@ -22,7 +22,7 @@ Mautic
    Florian Wessels, Jurian Janssen
 
 :Email:
-   dev@Leuchtfeuer.com
+   dev@leuchtfeuer.com
 
 :License:
    This extension documentation is published under the
