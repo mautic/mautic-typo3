@@ -61,6 +61,22 @@ class AuthorizationFactory implements SingletonInterface
             $settings['accessToken'] ?? '',
             $extensionConfiguration->getAuthorizeMode()
         );
+        
+        /** @var MauticAuthorizeService $authorizeService */
+        $authorizeService = GeneralUtility::makeInstance(
+            MauticAuthorizeService::class,
+            self::$oAuth,
+            false
+        );
+
+        if ($authorizeService->validateCredentials() === true) {
+            if (!$authorizeService->validateAccessToken()) {
+                if ($authorizeService->accessTokenToBeRefreshed()) {
+                    $authorizeService->refreshAccessToken();
+                    $extensionConfiguration->reloadConfigurations();
+                }
+            }
+        }
 
         return self::$oAuth;
     }
