@@ -9,6 +9,8 @@ Welcome to the official Mautic extension for TYPO3.
 
 Both currently support Mautic v4.
 
+TYPO3 on **PHP8 is NOT supported** with Mautic4 (because the Mautic project does not provide PHP8 support for the Mautic4 API library). This will only change with Mautic5 (or enough people are willing to support a custom solution - please get in touch!)
+
 ## Features
 The Mautic TYPO3 extension has many features that allow you to integrate your marketing automation workflow in TYPO3.
 
