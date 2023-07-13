@@ -11,6 +11,20 @@ We currently support Mautic v4.
 * **For TYPO3 v10 and v11 on PHP7, please use extension release 4.3.x**
 * For TYPO3 v9, please use extension release 3.x
 
+## ⚠️ IMPORTANT
+> To install this extension on PHP 8 systems, you MUST add the following repository URL to your root `composer.json`:
+```json
+"repositories": [
+  {
+    "url": "https://github.com/Leuchtfeuer/api-library.git",
+    "type": "git"
+  }
+]
+ ```
+> Than install the extension by running `composer require mautic/mautic-typo3`.
+> The reason is that we have to use a forked version of `mautic/api-library` which is PHP 8 compatible, until an official
+> library version for PHP 8 is released (It should come with the release of Mautic 5).
+
 ## Features
 The Mautic TYPO3 extension has many features that allow you to integrate your marketing automation workflow in TYPO3.
 
@@ -87,3 +101,4 @@ You can contribute by making a pull request to the master branch of this reposit
 
 ## Questions or Suggestions?
 You can always open an issue in this repository if you find a bug or have a feature request. Next to that you can also come visit us on Slack ([Mautic](https://www.mautic.org/slack) or [TYPO3](https://typo3.org/article/how-to-use-slack-in-the-typo3-community/)> in the channel `#typo3-mautic`.
+
