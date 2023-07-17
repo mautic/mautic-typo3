@@ -16,7 +16,7 @@ return [
             'default' => 'mimetypes-x-tx_marketingautomation_persona',
         ],
         'hideTable' => true,
-        'rootLevel' => true,
+        'rootLevel' => 1,
         'security' => [
             'ignoreRootLevelRestriction' => true,
         ],
