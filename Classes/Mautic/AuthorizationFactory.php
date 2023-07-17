@@ -16,6 +16,7 @@ namespace Bitmotion\Mautic\Mautic;
 
 use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Bitmotion\Mautic\Middleware\AuthorizeMiddleware;
+use Bitmotion\Mautic\Service\MauticAuthorizeService;
 use Mautic\Auth\ApiAuth;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -61,6 +62,22 @@ class AuthorizationFactory implements SingletonInterface
             $settings['accessToken'] ?? '',
             $extensionConfiguration->getAuthorizeMode()
         );
+        
+        /** @var MauticAuthorizeService $authorizeService */
+        $authorizeService = GeneralUtility::makeInstance(
+            MauticAuthorizeService::class,
+            self::$oAuth,
+            false
+        );
+
+        if ($authorizeService->validateCredentials() === true) {
+            if (!$authorizeService->validateAccessToken()) {
+                if ($authorizeService->accessTokenToBeRefreshed()) {
+                    $authorizeService->refreshAccessToken();
+                    $extensionConfiguration->reloadConfigurations();
+                }
+            }
+        }
 
         return self::$oAuth;
     }
