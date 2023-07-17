@@ -87,7 +87,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
 
     public function initialize(): void
     {
-        $this->baseUrl = GeneralUtility::makeInstance(YamlConfiguration::class)->getBaseUrl() . '/assets';
+        $this->baseUrl = GeneralUtility::makeInstance(YamlConfiguration::class)->getBaseUrl();
     }
 
     public function getPublicUrl($identifier): string
@@ -95,7 +95,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         if (!isset($this->publicUrls[$identifier])) {
             $uriParts = GeneralUtility::trimExplode('/', ltrim($identifier, '/'), true);
             $uriParts = array_map('rawurlencode', $uriParts);
-            $this->publicUrls[$identifier] = rtrim($this->baseUrl, '/assets') . '/' . implode('/', $uriParts);
+            $this->publicUrls[$identifier] = $this->baseUrl . '/' . implode('/', $uriParts);
         }
 
         return $this->publicUrls[$identifier];
