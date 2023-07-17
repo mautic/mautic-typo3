@@ -56,6 +56,20 @@ class TagRepository extends AbstractRepository
         }
     }
 
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Driver\Exception
+     */
+    public function findTagByTitle(string $title): array
+    {
+        $queryBuilder = $this->getQueryBuilder();
+        $result = $queryBuilder->select('*')
+            ->from('tx_mautic_domain_model_tag')
+            ->where($queryBuilder->expr()->eq('title', $queryBuilder->createNamedParameter($title, \PDO::PARAM_STR)))
+            ->execute();
+        return $result->fetchAssociative();
+    }
+
     protected function updateTag(array $tag, int $time)
     {
         $queryBuilder = $this->getQueryBuilder();
