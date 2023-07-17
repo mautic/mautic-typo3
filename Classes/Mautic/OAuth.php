@@ -66,7 +66,7 @@ class OAuth implements AuthInterface
     }
 
     /**
-     * Make a request to server using the supported auth method
+     * Make a request to server
      *
      * @param string $url
      * @param string $method
@@ -75,10 +75,6 @@ class OAuth implements AuthInterface
      */
     public function makeRequest($url, array $parameters = [], $method = 'GET', array $settings = [])
     {
-        if ($this->authorizationMode !== YamlConfiguration::OAUTH1_AUTHORIZATION_MODE && $method !== 'GET') {
-            $settings['headers']['Authorization'] = sprintf('Authorization: Bearer %s', $this->accesToken);
-        }
-
         return $this->authorization->makeRequest($url, $parameters, $method, $settings);
     }
 }
