@@ -1,15 +1,15 @@
-The Mautic extension for TYPO3
+The Mautic Extension for TYPO3
 ===========
 ![Mautic](https://i.imgur.com/dfbouP1.png "Mautic Open Source Marketing Automation together with the CMS power of TYPO3")
 
 Welcome to the official Mautic extension for TYPO3.
 
-* **Please use this Extension version 3.x for TYPO3 v9**
-* **Please use this Extension version 4.x for TYPO3 v10 and above**
+## Supported Versions
+We currently support Mautic v4.
 
-Both currently support Mautic v4.
-
-TYPO3 on **PHP8 is NOT supported** with Mautic4 (because the Mautic project does not provide PHP8 support for the Mautic4 API library). This will only change with Mautic5 (or enough people are willing to support a custom solution - please get in touch!)
+* **For TYPO3 v11 and above on PHP8, please use extension release 4.4.x**
+* **For TYPO3 v10 and v11 on PHP7, please use extension release 4.3.x**
+* For TYPO3 v9, please use extension release 3.x
 
 ## Features
 The Mautic TYPO3 extension has many features that allow you to integrate your marketing automation workflow in TYPO3.
