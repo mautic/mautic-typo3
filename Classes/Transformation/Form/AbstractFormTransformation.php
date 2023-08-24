@@ -203,38 +203,52 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
                 if ($formElement['identifier'] === $alias) {
                     $mauticField = $fieldRepository->getContactFieldByAlias($formElement['properties']['mauticTable']);
 
-                    if (is_array($mauticField) && isset($mauticField['properties'])) {
-                        $existingProperties = $mauticField['properties']['list'];
-                        $newProperties = [];
+                    if (isset($mauticField['properties'])) {
+                        // we must distinguish the custom-field types here, and perform required updates only for certain types!
+                        // otherwise errors can appear e.g. accessing non-existing array-keys which has the effect, that
+                        // mauticId and mauticAlias attributes getting lost while saving the form-config (see https://github.com/mautic/mautic-typo3/issues/85)
+                        switch ($mauticField['type']) {
+                            case 'boolean':
+                                // nothing to do here, as we're handling only 0 and 1 values
+                                break;
 
-                        foreach ($properties as $propertyKey => $property) {
-                            foreach ($existingProperties as $existingKey => $existingProperty) {
-                                if ($existingProperty['value'] == $property['value']) {
-                                    $newProperties[] = [
-                                        'label' => $property['label'],
-                                        'value' => $property['value'],
-                                    ];
-                                    unset($existingProperties[$existingKey]);
-                                    unset($properties[$propertyKey]);
+                            case 'select':
+                                $existingProperties = $mauticField['properties']['list'];
+                                $newProperties = [];
+
+                                foreach ($properties as $propertyKey => $property) {
+                                    foreach ($existingProperties as $existingKey => $existingProperty) {
+                                        if ($existingProperty['value'] == $property['value']) {
+                                            $newProperties[] = [
+                                                'label' => $property['label'],
+                                                'value' => $property['value'],
+                                            ];
+                                            unset($existingProperties[$existingKey]);
+                                            unset($properties[$propertyKey]);
+                                        }
+                                    }
                                 }
-                            }
-                        }
 
-                        if (!empty($properties)) {
-                            $response = $fieldRepository->editContactField(
-                                $mauticField['id'],
-                                [
-                                    'properties' => [
-                                        'list' => array_merge($existingProperties, $properties, $newProperties),
-                                    ],
-                                ]
-                            );
+                                if (!empty($properties)) {
+                                    $response = $fieldRepository->editContactField(
+                                        $mauticField['id'],
+                                        [
+                                            'properties' => [
+                                                'list' => array_merge($existingProperties, $properties, $newProperties),
+                                            ],
+                                        ]
+                                    );
 
-                            if (isset($response['errors']) && is_array($response['errors'])) {
-                                foreach ($response['errors'] as $error) {
-                                    $this->logger->critical($error['code'] . ':' . $error['message']);
+                                    if (isset($response['errors']) && is_array($response['errors'])) {
+                                        foreach ($response['errors'] as $error) {
+                                            $this->logger->critical($error['code'] . ':' . $error['message']);
+                                        }
+                                    }
                                 }
-                            }
+                                break;
+
+                            default:
+                                // todo: probably nothing
                         }
                     }
                     break;
