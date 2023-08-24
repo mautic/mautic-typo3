@@ -70,6 +70,12 @@ added to the form. The demo form should already have this added.
    .. figure:: 009.png
       :class: with-shadow
 
+   .. warning::
+   **IMPORTANT:** If you want to have multiple finisher for your form, keep in mind that the order matters! Make sure to add the Mautic
+   finisher's first, and TYPO3 finisher like "Redirect to a page" or other 3rd party finishers after it! For example, if
+   by mistake the "Redirect to a page" is placed before the "Send to Mautic Form" finisher, the API call to Mautic never
+   happens and no data are submitted.
+
 With this set, all data submitted to the form will automatically be saved in Mautic.
 
 Now let's make sure Mautic knows what kind of data is submitted in the form fields. For instance, if you have a field
