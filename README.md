@@ -71,6 +71,15 @@ Afterwards, establish the API connection:
 ## Documentation
 Documentation and a getting started guide can be found [here](https://docs.typo3.org/p/mautic/mautic-typo3/master/en-us/).
 
+## Known Issues
+### TYPO3 Form Builder
+Want to map to a field (e.g. "contact email") but can't find it?
+
+Currently, only 30 Mautic custom fields are offered in TYPO3's field mapping.
+
+-> You can use Mautic's field sorting as a workaround, thus control which fields are offered.
+
+
 ## Packaging for use in the Extension Manager
 Clone the repository and run the following in the extension root directory:
 ```
