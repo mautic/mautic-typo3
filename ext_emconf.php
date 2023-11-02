@@ -7,7 +7,6 @@ $EM_CONF['mautic'] = [
     'state' => 'stable',
     'uploadfolder' => 0,
     'createDirs' => '',
-    'author' => 'Florian Wessels, Jurian Jansen',
     'author_company' => 'Leuchtfeuer Digital Marketing',
     'author_email' => 'dev@leuchtfeuer.com',
     'clearCacheOnLoad' => 0,
