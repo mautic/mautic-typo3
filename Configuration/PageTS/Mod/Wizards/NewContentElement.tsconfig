@@ -1,7 +1,7 @@
 ################
 #### Mautic ####
 ################
-mod.wizards.newContentElement.wizardItems.forms {
+mod.wizards.newContentElement.wizardItems.toujou_forms {
     show := addToList(mautic_form)
     elements {
         mautic_form {
