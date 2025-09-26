@@ -1,6 +1,5 @@
 {
   "name": "toujou/mautic-typo3",
-  "description": "Fork of mautic/mautic-typo3 TYPO3 Extension",
   "keywords": [
     "TYPO3 CMS",
     "Marketing",
@@ -22,30 +21,27 @@
       "role": "Developer"
     }
   ],
-  "support": {
-    "issues": "https://github.com/toujou/mautic-typo3/issues",
-    "source": "https://github.com/toujou/mautic-typo3"
-  },
   "require": {
-    "typo3/cms-core": "^11.5 || ^12.4",
-    "typo3/cms-form": "^11.5 || ^12.4",
-    "typo3/cms-extbase": "^11.5 || ^12.4",
-    "typo3/cms-fluid": "^11.5 || ^12.4",
+    "typo3/cms-core": "^12.4 || ^13.4",
+    "typo3/cms-form": "^12.4 || ^13.4",
+    "typo3/cms-extbase": "^12.4 || ^13.4",
+    "typo3/cms-fluid": "^12.4 || ^13.4",
     "mautic/api-library": "dev-main",
     "php-http/multipart-stream-builder": "^1.1.2"
+  },
+  "suggest": {
+    "sjbr/static-info-tables": "Extended language configuration for preferred locale for Mautic contacts",
+    "typo3/cms-form": "TYPO3 form framework for building Mautic forms in TYPO3",
+    "ext-intl": "For sorting arrays"
   },
   "autoload": {
     "psr-4": {
       "Bitmotion\\Mautic\\": "Classes/"
     }
   },
+  "description": "Fork of mautic/mautic-typo3 TYPO3 Extension",
   "replace": {
     "typo3-ter/mautic": "self.version"
-  },
-  "suggest": {
-    "sjbr/static-info-tables": "Extended language configuration for preferred locale for Mautic contacts",
-    "typo3/cms-form": "TYPO3 form framework for building Mautic forms in TYPO3",
-    "ext-intl": "For sorting arrays"
   },
   "config": {
     "vendor-dir": "Build/vendor",
@@ -72,13 +68,6 @@
     {
       "type": "composer",
       "url": "https://toujou-repo.kodzutsumi-senta.toujou.systems"
-    },
-    {
-      "type": "composer",
-      "url": "https://repo.kodzutsumi-senta.toujou.systems"
-    },
-    {
-      "packagist": false
     }
   ]
 }
