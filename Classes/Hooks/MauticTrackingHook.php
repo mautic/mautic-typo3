@@ -24,7 +24,7 @@ class MauticTrackingHook
      */
     protected $mauticTrackingService;
 
-    public function __construct(MauticTrackingService $mauticTrackingService = null)
+    public function __construct(?MauticTrackingService $mauticTrackingService = null)
     {
         $this->mauticTrackingService = $mauticTrackingService ?: GeneralUtility::makeInstance(MauticTrackingService::class);
     }

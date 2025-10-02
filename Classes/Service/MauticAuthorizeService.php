@@ -45,7 +45,7 @@ class MauticAuthorizeService
 
     protected $languageService;
 
-    public function __construct(OAuth $authorization = null, $createFlashMessages = true)
+    public function __construct(?OAuth $authorization = null, $createFlashMessages = true)
     {
         if (session_id() === '') {
             session_start();
