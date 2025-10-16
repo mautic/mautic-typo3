@@ -10,7 +10,7 @@ abstract class AbstractControl extends AbstractNode
 
     protected $action;
 
-    public function render()
+    public function render(): array
     {
         return [
             'iconIdentifier' => 'actions-refresh',
