@@ -38,7 +38,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
     public const DRIVER_TYPE = 'mautic';
     public const ROOT_LEVEL_FOLDER = '/';
 
-    protected $capabilities;
+    protected \TYPO3\CMS\Core\Resource\Capabilities $capabilities;
 
     protected $baseUrl;
 
@@ -73,7 +73,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         }
     }
 
-    public function mergeConfigurationCapabilities($capabilities): int
+    public function mergeConfigurationCapabilities($capabilities): \TYPO3\CMS\Core\Resource\Capabilities
     {
         $this->capabilities &= $capabilities;
 
@@ -227,12 +227,12 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return true;
     }
 
-    public function deleteFile($fileIdentifier)
+    public function deleteFile($fileIdentifier): bool
     {
         return $this->removeFileByIdentifier($fileIdentifier);
     }
 
-    public function deleteFolder($folderIdentifier, $deleteRecursively = false)
+    public function deleteFolder($folderIdentifier, $deleteRecursively = false): bool
     {
         return true;
     }
@@ -393,11 +393,11 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return count($this->getFoldersInFolder($folderIdentifier, 0, 0, $recursive, $folderNameFilterCallbacks));
     }
 
-    public function dumpFileContents($identifier): string
+    public function dumpFileContents($identifier): void
     {
         $this->logger->debug('dumpFileContents');
 
-        return '';
+        return;
     }
 
     public function getPermissions($identifier): array
@@ -624,5 +624,10 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         }
 
         return $temporaryPath;
+    }
+
+    public function sanitizeFileName(string $fileName, string $charset = ''): string
+    {
+        // TODO: Implement sanitizeFileName() method.
     }
 }
