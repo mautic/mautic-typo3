@@ -54,7 +54,7 @@ with this extension.
 ### Tracking Script Integration
 Integrate the Mautic tracking script into your frontend with one click of a button!
 
-### OAuth support
+### OAuth 2.0 support
 All requests made by this extension are secured using OAuth (with Mautic only supping OAuth2 in recent versions). You 
 can easily configure your API tokens in the extension manager of TYPO3.
 
@@ -88,6 +88,14 @@ Currently, only 30 Mautic custom fields are offered in TYPO3's field mapping.
 
 -> You can use Mautic's field sorting as a workaround, thus control which fields are offered.
 
+### Form Framework: Currently limited support
+* Make sure to use Predefined Form from Prototype "Mautic Form"
+* Recommended: Use template "Simple Contact Form"
+* Mautic field mappings are currently not possible through the TYPO3 UI, only for the pre-defined fields in template "Simple Contact Form"
+* "Mautic Property Type" currently not working
+* Mautic-side changes in form are NOT sync'd back to TYPO3
+* TYPO3-side changes (fields, field properties, form type, ...) after creation are NOT sync'd to Mautic
+* A form is created in Mautic even if no finisher "Send to Mautic form" is selected (only "Create Contact")
 
 ## Packaging for use in the Extension Manager
 Clone the repository and run the following in the extension root directory:
