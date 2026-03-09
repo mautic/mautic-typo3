@@ -64,11 +64,8 @@ call_user_func(function (): void {
         '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:mautic/Configuration/PageTS/Mod/Wizards/NewContentElement.tsconfig">'
     );
 
-    // TODO
-    //if (TYPO3_MODE === 'FE') {
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-postTransform']['mautic_tag'] =
-            MauticTagHook::class . '->setTags';
-    //}
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['configArrayPostProc']['mautic_tag'] =
+        MauticTagHook::class . '->setTags';
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['configArrayPostProc']['mautic'] =
        MauticTrackingHook::class . '->addTrackingCode';

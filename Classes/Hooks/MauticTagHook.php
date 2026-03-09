@@ -15,40 +15,26 @@ namespace Leuchtfeuer\Mautic\Hooks;
 
 use Leuchtfeuer\Mautic\Domain\Repository\ContactRepository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Domain\Repository\PageRepository;
-use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class MauticTagHook
 {
-    public function setTags(array $params, PageRenderer $pageRenderer): void
+    public function setTags(array $params, TypoScriptFrontendController $frontendController): void
     {
         // Get page record from TYPO3 request or fallback to TSFE
-        $page = null;
-
-        if (isset($GLOBALS['TYPO3_REQUEST'])) {
-            $request = $GLOBALS['TYPO3_REQUEST'];
-            /** @var TypoScriptFrontendController $frontendController */
-            $frontendController = $request->getAttribute('frontend.controller');
-            if ($frontendController !== null) {
-                /** @var PageArguments $pageArguments */
-                $pageArguments = $frontendController->getPageArguments();
-                $page = GeneralUtility::makeInstance(PageRepository::class)->getPage($pageArguments->getPageId());
-            }
-        }
+        $page = $frontendController?->page ?? null;
 
         // Early return if no page found
         if ($page === null) {
             return;
         }
         if ($page['tx_mautic_tags'] > 0) {
-            $tags = $this->getTagsToAssign($page);
-            if ($tags !== []) {
-                $contactId = (int)($_COOKIE['mtc_id'] ?? 0);
+            $contactId = (int)($_COOKIE['mtc_id'] ?? 0);
 
-                if ($contactId > 0) {
+            if ($contactId > 0) {
+                $tags = $this->getTagsToAssign($page);
+                if ($tags !== []) {
                     $contactRepository = GeneralUtility::makeInstance(ContactRepository::class);
                     $contactRepository->editContact($contactId, ['tags' => $tags]);
                 }
@@ -60,18 +46,17 @@ class MauticTagHook
     {
         $pageUid = $page['_PAGES_OVERLAY_UID'] ?? $page['uid'];
 
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_mautic_page_tag_mm');
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_mautic_domain_model_tag');
         $result = $queryBuilder
-            ->select('uid_foreign')
-            ->from('tx_mautic_page_tag_mm')->where($queryBuilder->expr()->eq('uid_local', $pageUid))->executeQuery();
+            ->select('tag.uid', 'tag.title')
+            ->from('tx_mautic_domain_model_tag', 'tag')
+            ->join('tag', 'tx_mautic_page_tag_mm', 'mm', $queryBuilder->expr()->eq('mm.uid_foreign', $queryBuilder->quoteIdentifier('tag.uid')))
+            ->where($queryBuilder->expr()->eq('mm.uid_local', $pageUid))
+            ->executeQuery();
 
         $tags = [];
-
-        while ($tag = $result->fetchOne()) {
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_mautic_domain_model_tag');
-            $tags[$tag] = $queryBuilder
-                ->select('title')
-                ->from('tx_mautic_domain_model_tag')->where($queryBuilder->expr()->eq('uid', $tag))->executeQuery()->fetchOne();
+        while ($row = $result->fetchAssociative()) {
+            $tags[$row['uid']] = $row['title'];
         }
 
         return $tags;
