@@ -97,6 +97,10 @@ Currently, only 30 Mautic custom fields are offered in TYPO3's field mapping.
 * TYPO3-side changes (fields, field properties, form type, ...) after creation are NOT sync'd to Mautic
 * A form is created in Mautic even if no finisher "Send to Mautic form" is selected (only "Create Contact")
 
+### Tags
+If a visitor lands directly on a page with a Mautic tag, it may happen that the tracking cookie has not yet been set. 
+In this case, the visitor's page tag will not be saved either.
+
 ## Packaging for use in the Extension Manager
 Clone the repository and run the following in the extension root directory:
 ```
