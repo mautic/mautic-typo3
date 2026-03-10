@@ -82,20 +82,16 @@ Documentation and a getting started guide can be found [here](https://docs.typo3
 
 ## Known Issues
 ### TYPO3 Form Builder
-Want to map to a field (e.g. "contact email") but can't find it?
-
-Currently, only 30 Mautic custom fields are offered in TYPO3's field mapping.
-
--> You can use Mautic's field sorting as a workaround, thus control which fields are offered.
+* "Mautic Property Type" currently not working: Mautic field mappings are currently not possible through the TYPO3 UI, 
+only for the pre-defined fields in template "Simple Contact Form"
 
 ### Form Framework: Currently limited support
 * Make sure to use Predefined Form from Prototype "Mautic Form"
 * Recommended: Use template "Simple Contact Form"
-* Mautic field mappings are currently not possible through the TYPO3 UI, only for the pre-defined fields in template "Simple Contact Form"
-* "Mautic Property Type" currently not working
-* Mautic-side changes in form are NOT sync'd back to TYPO3
-* TYPO3-side changes (fields, field properties, form type, ...) after creation are NOT sync'd to Mautic
-* A form is created in Mautic even if no finisher "Send to Mautic form" is selected (only "Create Contact")
+* Mautic-side changes in form are NOT sync'd back to TYPO3 
+* TYPO3-side changes (fields, field properties, form type, ...) after creation are NOT sync'd to Mautic 
+* Make sure to use finisher "Create Mautic Contact"
+* Use "Send to Mautic form" only if you wish to send to a different form ID
 
 ### Tags
 If a visitor lands directly on a page with a Mautic tag, it may happen that the tracking cookie has not yet been set. 
