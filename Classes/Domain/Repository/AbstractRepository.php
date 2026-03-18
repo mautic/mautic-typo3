@@ -1,20 +1,20 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Domain\Repository;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Mautic\AuthorizationFactory;
+namespace Leuchtfeuer\Mautic\Domain\Repository;
+
+use Leuchtfeuer\Mautic\Mautic\AuthorizationFactory;
+use Leuchtfeuer\Mautic\Mautic\OAuth;
 use Mautic\Api\Api;
 use Mautic\Exception\ContextNotFoundException;
 use Mautic\MauticApi;
@@ -26,13 +26,13 @@ abstract class AbstractRepository implements LoggerAwareInterface, SingletonInte
 {
     use LoggerAwareTrait;
 
-    protected $authorization;
+    protected OAuth $authorization;
 
-    protected $mauticApi;
+    protected MauticApi $mauticApi;
 
     public function __construct(AuthorizationFactory $authorizationFactory)
     {
-        $this->authorization = $this->authorization ?? $authorizationFactory::createAuthorizationFromExtensionConfiguration();
+        $this->authorization ??= $authorizationFactory::createAuthorizationFromExtensionConfiguration();
         $this->mauticApi = new MauticApi();
         $this->injectApis();
     }
@@ -44,6 +44,7 @@ abstract class AbstractRepository implements LoggerAwareInterface, SingletonInte
      */
     protected function getApi(string $apiContext): Api
     {
+        // @extensionScannerIgnoreLine
         return $this->mauticApi->newApi($apiContext, $this->authorization, $this->authorization->getBaseUrl());
     }
 }

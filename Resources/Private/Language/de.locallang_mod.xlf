@@ -13,7 +13,7 @@
                 <target>Secret Key from Mautic API Credentials</target>
             </trans-unit>
             <trans-unit id="authorization.authorize">
-                <target>Provide OAuth1 API Credentials from Mautic</target>
+                <target>Provide OAuth2 API Credentials from Mautic</target>
             </trans-unit>
             <trans-unit id="authorization.accessToken">
                 <target>Access token</target>

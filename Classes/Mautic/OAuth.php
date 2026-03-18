@@ -1,47 +1,36 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Mautic;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
+namespace Leuchtfeuer\Mautic\Mautic;
+
 use Mautic\Auth\AuthInterface;
 
+/**
+ * @method bool validateAccessToken()
+ * @method bool accessTokenUpdated()
+ * @method array getAccessTokenData()
+ */
 class OAuth implements AuthInterface
 {
-    /**
-     * @var AuthInterface
-     */
-    protected $authorization;
+    protected string $baseUrl;
 
-    /**
-     * @var string
-     */
-    protected $baseUrl;
-
-    protected $accesToken = '';
-
-    protected $authorizationMode = '';
-
-    public function __construct(AuthInterface $authorization, string $baseUrl, string $accesToken = '', string $authorizationMode = '')
+    public function __construct(protected AuthInterface $authorization, string $baseUrl, protected string $accesToken = '', protected string $authorizationMode = '')
     {
-        $this->authorization = $authorization;
+        // @extensionScannerIgnoreLine
         $this->baseUrl = rtrim($baseUrl, '/');
-        $this->accesToken = $accesToken;
-        $this->authorizationMode = $authorizationMode;
     }
 
-    public function __call($method, $arguments)
+    public function __call(mixed $method, array $arguments): mixed
     {
         if (!is_callable([$this->authorization, $method])) {
             throw new \BadMethodCallException(sprintf('Method "%s" does not exist!', $method), 1530044605);
@@ -52,6 +41,7 @@ class OAuth implements AuthInterface
 
     public function getBaseUrl(): string
     {
+        // @extensionScannerIgnoreLine
         return $this->baseUrl;
     }
 
@@ -60,7 +50,8 @@ class OAuth implements AuthInterface
      *
      * @return bool
      */
-    public function isAuthorized()
+    #[\Override]
+    public function isAuthorized(): bool
     {
         return $this->authorization->isAuthorized();
     }
@@ -73,6 +64,7 @@ class OAuth implements AuthInterface
      *
      * @return array
      */
+    #[\Override]
     public function makeRequest($url, array $parameters = [], $method = 'GET', array $settings = [])
     {
         return $this->authorization->makeRequest($url, $parameters, $method, $settings);

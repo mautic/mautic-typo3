@@ -1,18 +1,17 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Domain\Model\Dto;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
+
+namespace Leuchtfeuer\Mautic\Domain\Model\Dto;
 
 use Symfony\Component\Yaml\Yaml;
 use TYPO3\CMS\Core\Configuration\Loader\YamlFileLoader;
@@ -59,25 +58,16 @@ class YamlConfiguration implements SingletonInterface
      */
     protected $tracking = false;
 
-    /**
-     * @var array
-     */
-    protected $configurationArray = [];
+    protected array $configurationArray;
 
     /**
      * @var string
      */
     protected $configFileName = 'config.yaml';
 
-    /**
-     * @var string
-     */
-    protected $configPath;
+    protected string $configPath;
 
-    /**
-     * @var string
-     */
-    protected $fileName;
+    protected string $fileName;
 
     /**
      * @var string
@@ -108,7 +98,7 @@ class YamlConfiguration implements SingletonInterface
         $settings = array_replace_recursive($this->configurationArray, $extensionConfiguration);
 
         foreach ($settings as $key => $value) {
-            if (property_exists(__CLASS__, $key)) {
+            if (property_exists(self::class, $key)) {
                 $this->$key = $value;
             }
         }
@@ -120,7 +110,7 @@ class YamlConfiguration implements SingletonInterface
 
         try {
             return $loader->load(GeneralUtility::fixWindowsFilePath($this->fileName), YamlFileLoader::PROCESS_IMPORTS);
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             return [];
         }
     }
@@ -135,7 +125,7 @@ class YamlConfiguration implements SingletonInterface
         return $this->getYamlConfiguration();
     }
 
-    public function save(array $configuration = [])
+    public function save(array $configuration = []): void
     {
         if (!file_exists($this->fileName)) {
             GeneralUtility::mkdir_deep($this->configPath);
@@ -145,14 +135,14 @@ class YamlConfiguration implements SingletonInterface
         GeneralUtility::writeFile($this->fileName, $yamlFileContents);
     }
 
-    public function reloadConfigurations()
+    public function reloadConfigurations(): void
     {
         $this->configurationArray = $this->getYamlConfiguration();
         $extensionConfiguration = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic'];
         $settings = array_replace_recursive($this->configurationArray, $extensionConfiguration);
 
         foreach ($settings as $key => $value) {
-            if (property_exists(__CLASS__, $key)) {
+            if (property_exists(self::class, $key)) {
                 $this->$key = $value;
             }
         }
@@ -165,6 +155,7 @@ class YamlConfiguration implements SingletonInterface
 
     public function getBaseUrl(): string
     {
+        // @extensionScannerIgnoreLine
         return (string)$this->baseUrl;
     }
 
@@ -220,14 +211,13 @@ class YamlConfiguration implements SingletonInterface
 
     public function isSameCredentials(array $configuration): bool
     {
-        return $this->authorizeMode === $configuration['authorizeMode']
-            && $this->secretKey === $configuration['secretKey']
-            && $this->publicKey === $configuration['publicKey']
-            && $this->baseUrl === $configuration['baseUrl'];
+        // extensionScannerIgnoreLine won't work if every && is on its own line
+        // @extensionScannerIgnoreLine
+        return $this->authorizeMode === $configuration['authorizeMode'] && $this->secretKey === $configuration['secretKey'] && $this->publicKey === $configuration['publicKey'] && $this->baseUrl === $configuration['baseUrl'];
     }
 
     public function isOAuth1(): bool
     {
-        return $this->getAuthorizeMode() === YamlConfiguration::OAUTH1_AUTHORIZATION_MODE;
+        return $this->getAuthorizeMode() === self::OAUTH1_AUTHORIZATION_MODE;
     }
 }

@@ -30,7 +30,7 @@ Changed
 =======
 
 * License file was moved from `LICENSE` to `LICENSE.txt`
-* Author company was changed from "Bitmotion" to "Leuchtfeuer Digital Marketing"
+* Author company was changed from "Leuchtfeuer" to "Leuchtfeuer Digital Marketing"
 * Signal slots were migrated to PSR-14 events
 * Use PSR-11 compliant symfony component for object initialization instead of :php:`ObjectManager` class
 * Yaml configuration for EXT:form was moved to new file and configuration structure

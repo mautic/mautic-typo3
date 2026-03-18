@@ -1,21 +1,20 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Driver;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
-use Bitmotion\Mautic\Domain\Repository\AssetRepository;
+namespace Leuchtfeuer\Mautic\Driver;
+
+use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
+use Leuchtfeuer\Mautic\Domain\Repository\AssetRepository;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Core\Environment;
@@ -34,31 +33,31 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
 {
     use LoggerAwareTrait;
 
-    const DRIVER_SHORT_NAME = 'mautic';
-    const DRIVER_NAME = 'Mautic';
-    const DRIVER_TYPE = 'mautic';
-    const ROOT_LEVEL_FOLDER = '/';
+    public const DRIVER_SHORT_NAME = 'mautic';
+    public const DRIVER_NAME = 'Mautic';
+    public const DRIVER_TYPE = 'mautic';
+    public const ROOT_LEVEL_FOLDER = '/';
 
     protected $capabilities;
 
-    protected $baseUrl;
+    protected string $baseUrl;
 
-    protected $assets = [];
+    protected array $assets = [];
 
-    protected $assetsToDelete = [];
+    protected array $assetsToDelete = [];
 
-    protected $cleanUp = true;
+    protected bool $cleanUp = true;
 
-    protected $assetsLoaded = false;
+    protected bool $assetsLoaded = false;
 
-    protected $temporaryPaths = [];
+    protected array $temporaryPaths = [];
 
-    protected $publicUrls = [];
+    protected array $publicUrls = [];
 
     /**
      * @var AssetRepository
      */
-    protected $assetRepository;
+    protected AssetRepository $assetRepository;
 
     public function __construct(array $configuration = [])
     {
@@ -74,6 +73,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         }
     }
 
+    #[\Override]
     public function mergeConfigurationCapabilities($capabilities): int
     {
         $this->capabilities &= $capabilities;
@@ -81,36 +81,42 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return $this->capabilities;
     }
 
-    public function processConfiguration(): void
-    {
-    }
+    #[\Override]
+    public function processConfiguration(): void {}
 
+    #[\Override]
     public function initialize(): void
     {
+        // @extensionScannerIgnoreLine
         $this->baseUrl = GeneralUtility::makeInstance(YamlConfiguration::class)->getBaseUrl();
     }
 
+    #[\Override]
     public function getPublicUrl($identifier): string
     {
         if (!isset($this->publicUrls[$identifier])) {
             $uriParts = GeneralUtility::trimExplode('/', ltrim($identifier, '/'), true);
             $uriParts = array_map('rawurlencode', $uriParts);
+            // @extensionScannerIgnoreLine
             $this->publicUrls[$identifier] = $this->baseUrl . '/' . implode('/', $uriParts);
         }
 
         return $this->publicUrls[$identifier];
     }
 
+    #[\Override]
     public function hash($fileIdentifier, $hashAlgorithm): string
     {
         return $this->hashIdentifier($fileIdentifier);
     }
 
+    #[\Override]
     public function getDefaultFolder(): string
     {
         return self::ROOT_LEVEL_FOLDER;
     }
 
+    #[\Override]
     public function getRootLevelFolder(): string
     {
         return self::ROOT_LEVEL_FOLDER;
@@ -119,24 +125,26 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
     /**
      * @throws FileDoesNotExistException
      */
+    #[\Override]
     public function getFileInfoByIdentifier($fileIdentifier, array $propertiesToExtract = []): array
     {
         $fileInfo = $this->getAssetData($fileIdentifier);
 
-        if ($fileInfo === null) {
+        if (empty($fileInfo)) {
             throw new FileDoesNotExistException('File does not exist', 1555571365);
         }
 
-        if (count($propertiesToExtract) > 0) {
+        if ($propertiesToExtract !== []) {
             $fileInfo = array_intersect_key($fileInfo, array_flip($propertiesToExtract));
         }
 
         return $fileInfo;
     }
 
+    #[\Override]
     public function fileExists($identifier): bool
     {
-        if (substr($identifier, -1) === '/' || $identifier === '') {
+        if (str_ends_with($identifier, '/') || $identifier === '') {
             return false;
         }
 
@@ -145,28 +153,32 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return $this->objectExists($identifier);
     }
 
+    #[\Override]
     public function folderExists($identifier): bool
     {
         if ($identifier === self::ROOT_LEVEL_FOLDER) {
             return true;
         }
-        if (substr($identifier, -1) !== '/') {
+        if (!str_ends_with($identifier, '/')) {
             $identifier .= '/';
         }
 
         return $this->objectExists($identifier);
     }
 
+    #[\Override]
     public function fileExistsInFolder($fileName, $folderIdentifier): bool
     {
         return $this->objectExists($folderIdentifier . $fileName);
     }
 
+    #[\Override]
     public function folderExistsInFolder($folderName, $folderIdentifier): bool
     {
         return $this->objectExists($folderIdentifier . $folderName . '/');
     }
 
+    #[\Override]
     public function getFolderInFolder($folderName, $folderIdentifier): string
     {
         $identifier = $folderIdentifier . '/' . $folderName . '/';
@@ -175,6 +187,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return $identifier;
     }
 
+    #[\Override]
     public function addFile($localFilePath, $targetFolderIdentifier, $newFileName = '', $removeOriginal = true): string
     {
         $newFileName = $this->sanitizeFileName($newFileName !== '' ? $newFileName : PathUtility::basename($localFilePath));
@@ -192,7 +205,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         $targetIdentifier = '/asset/' . $newFileName;
         $asset = $this->getAssetRepository()->upload($targetPath, $newFileName);
 
-        if (!empty($asset)) {
+        if ($asset !== []) {
             $assetData = $this->getAssetDataFromResponse($asset);
             $this->assets[$targetIdentifier] = $assetData;
         }
@@ -204,6 +217,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return $targetIdentifier;
     }
 
+    #[\Override]
     public function moveFileWithinStorage($fileIdentifier, $targetFolderIdentifier, $newFileName): string
     {
         // TODO: Implement later
@@ -212,6 +226,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return '';
     }
 
+    #[\Override]
     public function copyFileWithinStorage($fileIdentifier, $targetFolderIdentifier, $fileName): string
     {
         // TODO: Implement later
@@ -220,6 +235,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return '';
     }
 
+    #[\Override]
     public function replaceFile($fileIdentifier, $localFilePath): bool
     {
         // TODO: Implement later
@@ -228,16 +244,19 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return true;
     }
 
+    #[\Override]
     public function deleteFile($fileIdentifier)
     {
         return $this->removeFileByIdentifier($fileIdentifier);
     }
 
+    #[\Override]
     public function deleteFolder($folderIdentifier, $deleteRecursively = false)
     {
         return true;
     }
 
+    #[\Override]
     public function getFileForLocalProcessing($fileIdentifier, $writable = true): string
     {
         $this->normalizeIdentifier($fileIdentifier);
@@ -248,13 +267,14 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
 
         $asset = $this->getAssetData($fileIdentifier);
 
-        if (empty($asset)) {
+        if ($asset === []) {
             $asset = $this->getAsset($fileIdentifier);
         }
 
         return $this->processFile($fileIdentifier, $asset);
     }
 
+    #[\Override]
     public function createFile($fileName, $parentFolderIdentifier): string
     {
         // TODO: Implement later
@@ -263,11 +283,13 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return '';
     }
 
+    #[\Override]
     public function createFolder($newFolderName, $parentFolderIdentifier = '', $recursive = false): string
     {
         return '';
     }
 
+    #[\Override]
     public function getFileContents($fileIdentifier): string
     {
         // TODO: Implement later
@@ -276,6 +298,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return '';
     }
 
+    #[\Override]
     public function setFileContents($fileIdentifier, $contents): int
     {
         // TODO: Implement later
@@ -284,6 +307,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return 0;
     }
 
+    #[\Override]
     public function renameFile($fileIdentifier, $newName): string
     {
         // TODO: Implement later
@@ -292,6 +316,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return '';
     }
 
+    #[\Override]
     public function renameFolder($folderIdentifier, $newName): array
     {
         // TODO: Implement later
@@ -300,6 +325,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return [];
     }
 
+    #[\Override]
     public function moveFolderWithinStorage($sourceFolderIdentifier, $targetFolderIdentifier, $newFolderName): array
     {
         // TODO: Implement later
@@ -308,6 +334,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return [];
     }
 
+    #[\Override]
     public function copyFolderWithinStorage($sourceFolderIdentifier, $targetFolderIdentifier, $newFolderName): bool
     {
         // TODO: Implement later
@@ -316,6 +343,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return true;
     }
 
+    #[\Override]
     public function isFolderEmpty($folderIdentifier): bool
     {
         return $this->countFilesInFolder($folderIdentifier) > 0;
@@ -325,6 +353,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
      * @throws InvalidPathException
      * @see LocalDriver
      */
+    #[\Override]
     public function isWithin($folderIdentifier, $identifier): bool
     {
         $folderIdentifier = $this->canonicalizeAndCheckFileIdentifier($folderIdentifier);
@@ -340,20 +369,22 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
             $folderIdentifier .= '/';
         }
 
-        return GeneralUtility::isFirstPartOfStr($entryIdentifier, $folderIdentifier);
+        return \str_starts_with($entryIdentifier, $folderIdentifier);
     }
 
+    #[\Override]
     public function getFolderInfoByIdentifier($folderIdentifier): array
     {
         $this->normalizeIdentifier($folderIdentifier);
 
         return [
             'identifier' => $folderIdentifier,
-            'name' => basename(rtrim($folderIdentifier, '/')),
+            'name' => basename(rtrim((string)$folderIdentifier, '/')),
             'storage' => $this->storageUid,
         ];
     }
 
+    #[\Override]
     public function getFileInFolder($fileName, $folderIdentifier): string
     {
         $folderIdentifier = $folderIdentifier . '/' . $fileName;
@@ -362,6 +393,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return $folderIdentifier;
     }
 
+    #[\Override]
     public function getFilesInFolder($folderIdentifier, $start = 0, $numberOfItems = 0, $recursive = false, array $filenameFilterCallbacks = [], $sort = '', $sortRev = false): array
     {
         if (($sort !== '' && $sort !== 'file') || $sortRev === true || $this->assetsLoaded === false) {
@@ -379,21 +411,25 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return array_keys($this->assets);
     }
 
+    #[\Override]
     public function countFilesInFolder($folderIdentifier, $recursive = false, array $filenameFilterCallbacks = []): int
     {
         return count($this->getFilesInFolder($folderIdentifier, 0, 0, false, $filenameFilterCallbacks));
     }
 
+    #[\Override]
     public function getFoldersInFolder($folderIdentifier, $start = 0, $numberOfItems = 0, $recursive = false, array $folderNameFilterCallbacks = [], $sort = '', $sortRev = false): array
     {
         return [];
     }
 
+    #[\Override]
     public function countFoldersInFolder($folderIdentifier, $recursive = false, array $folderNameFilterCallbacks = []): int
     {
         return count($this->getFoldersInFolder($folderIdentifier, 0, 0, $recursive, $folderNameFilterCallbacks));
     }
 
+    #[\Override]
     public function dumpFileContents($identifier): string
     {
         $this->logger->debug('dumpFileContents');
@@ -401,17 +437,18 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return '';
     }
 
+    #[\Override]
     public function getPermissions($identifier): array
     {
         $read = true;
         $write = false;
 
-        if ($this->objectExists($identifier) && $identifier || self::ROOT_LEVEL_FOLDER) {
+        if (($this->objectExists($identifier) && $identifier) || $identifier === self::ROOT_LEVEL_FOLDER) {
             // TODO: Support editing files later
             $write = false;
         }
 
-        if ($this->shouldDelete($identifier) === true) {
+        if ($this->shouldDelete($identifier)) {
             $write = true;
         }
 
@@ -421,13 +458,13 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         ];
     }
 
-    protected function rebuildAssetCache(array $assets)
+    protected function rebuildAssetCache(array $assets): void
     {
         $this->assets = [];
         $this->buildAssetCache($assets);
     }
 
-    protected function buildAssetCache(array $assets)
+    protected function buildAssetCache(array $assets): void
     {
         foreach ($assets as $asset) {
             $data = $this->getAssetDataFromResponse($asset);
@@ -439,7 +476,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
 
     protected function objectExists(string $identifier): bool
     {
-        return !empty($identifier === self::ROOT_LEVEL_FOLDER || $this->getAssetData($identifier));
+        return $identifier === self::ROOT_LEVEL_FOLDER || $this->getAssetData($identifier);
     }
 
     protected function shouldDelete(string $identifier): bool
@@ -456,7 +493,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         if (!isset($this->assets[$identifier])) {
             if ($this->assetsLoaded === false) {
                 $asset = $this->getAsset($identifier);
-                if (!empty($asset)) {
+                if ($asset !== []) {
                     $this->assets[$identifier] = $asset;
 
                     return $asset;
@@ -465,7 +502,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
 
             // Find file in database (should only happen when mautic asset was deleted).
             $file = $this->getFileByIdentifier($identifier);
-            if (!empty($file)) {
+            if ($file !== []) {
                 $this->assetsToDelete[$identifier] = $file;
                 $this->assets[$identifier] = $file;
             }
@@ -480,7 +517,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         $assets = $this->getAssetRepository()->list($identifier, 0, 1);
         $asset = [];
 
-        if (!empty($assets)) {
+        if ($assets !== []) {
             $asset = array_shift($assets);
         }
 
@@ -491,8 +528,8 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
     {
         try {
             $dateAdded = new \DateTime((string)$asset['dateAdded']);
-            $dateModified = ((string)$asset['dateModified'] !== null) ? new \DateTime((string)$asset['dateModified']) : $dateAdded;
-        } catch (\Exception $exception) {
+            $dateModified = ($asset['dateModified'] !== null) ? new \DateTime((string)$asset['dateModified']) : $dateAdded;
+        } catch (\Exception) {
             $dateAdded = new \DateTime();
             $dateModified = new \DateTime();
         }
@@ -513,7 +550,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         return $item;
     }
 
-    protected function normalizeIdentifier(string &$identifier)
+    protected function normalizeIdentifier(string &$identifier): void
     {
         $identifier = str_replace('//', '/', $identifier);
         if ($identifier !== '/') {
@@ -523,31 +560,16 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
 
     protected function getOrder(string $sorting): string
     {
-        switch ($sorting) {
-            case 'file':
-                $order = 'alias';
-                break;
-
-            case 'fileext':
-                $order = 'extension';
-                break;
-
-            case 'tstamp':
-                $order = 'dateModified';
-                break;
-
-            case 'size':
-                $order = 'size';
-                break;
-
-            default:
-                $order = 'alias';
-        }
-
-        return $order;
+        return match ($sorting) {
+            'file' => 'alias',
+            'fileext' => 'extension',
+            'tstamp' => 'dateModified',
+            'size' => 'size',
+            default => 'alias',
+        };
     }
 
-    protected function removeObsoleteFiles()
+    protected function removeObsoleteFiles(): void
     {
         $files = $this->getFilesFromDatabase();
 
@@ -567,10 +589,7 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
 
         return $queryBuilder
             ->select('*')
-            ->from('sys_file')
-            ->where($queryBuilder->expr()->eq('storage', $this->storageUid))
-            ->execute()
-            ->fetchAll();
+            ->from('sys_file')->where($queryBuilder->expr()->eq('storage', $this->storageUid))->executeQuery()->fetchAllAssociative();
     }
 
     protected function getFileByIdentifier(string $identifier): array
@@ -580,27 +599,22 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         $file = $queryBuilder
             ->select('*')
             ->from('sys_file')
-            ->where($queryBuilder->expr()->eq('storage', $this->storageUid))
-            ->andWhere($queryBuilder->expr()->eq('identifier', $queryBuilder->createNamedParameter('/' . $identifier)))
-            ->execute()
-            ->fetch();
+            ->where($queryBuilder->expr()->eq('storage', $this->storageUid))->andWhere($queryBuilder->expr()->eq('identifier', $queryBuilder->createNamedParameter('/' . $identifier)))->executeQuery()->fetchAssociative();
 
         return ($file === false) ? [] : $file;
     }
 
-    protected function removeFileByIdentifier(string $identifier)
+    protected function removeFileByIdentifier(string $identifier): bool
     {
         $this->normalizeIdentifier($identifier);
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_file');
 
         return (bool)$queryBuilder
             ->delete('sys_file')
-            ->where($queryBuilder->expr()->eq('storage', $this->storageUid))
-            ->andWhere($queryBuilder->expr()->eq('identifier', $queryBuilder->createNamedParameter('/' . $identifier)))
-            ->execute();
+            ->where($queryBuilder->expr()->eq('storage', $this->storageUid))->andWhere($queryBuilder->expr()->eq('identifier', $queryBuilder->createNamedParameter('/' . $identifier)))->executeStatement();
     }
 
-    protected function removeFileFromDatabase(int $uid)
+    protected function removeFileFromDatabase(int $uid): void
     {
         $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
         $file = $fileRepository->findByIdentifier($uid);

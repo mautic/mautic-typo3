@@ -4,13 +4,13 @@ services:
     autoconfigure: true
     public: false
 
-  Bitmotion\Mautic\:
+  Leuchtfeuer\Mautic\:
     resource: '../Classes/*'
 
-  Bitmotion\Mautic\Hooks\MauticFormHook:
+  Leuchtfeuer\Mautic\Hooks\MauticFormHook:
     public: true
 
-  Bitmotion\Mautic\EventListener\SynchronizeMauticData:
+  Leuchtfeuer\Mautic\EventListener\SynchronizeMauticData:
     tags:
       - name: event.listener
         identifier: synchronizeMauticData

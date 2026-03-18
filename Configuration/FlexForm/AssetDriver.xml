@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <T3DataStructure>
-	<ROOT>
-		<type>array</type>
-		<el>
-			<!-- Maybe we can support categories here later on -->
-		</el>
-	</ROOT>
-</T3DataStructure>
+    <ROOT>
+        <type>array</type>
+        <el>
+            <!-- Maybe we can support categories here later on -->
+            </el>
+        </ROOT>
+    </T3DataStructure>

@@ -1,7 +1,9 @@
 <?php
 
 declare(strict_types=1);
-defined('TYPO3_MODE') || die();
+
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+defined('TYPO3') || die();
 
 $temporaryColumns = [
     'tx_mautic_tags' => [
@@ -33,8 +35,8 @@ $temporaryColumns = [
     ],
 ];
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages', $temporaryColumns);
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+ExtensionManagementUtility::addTCAcolumns('pages', $temporaryColumns);
+ExtensionManagementUtility::addToAllTCAtypes(
     'pages',
     '--div--;LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:mautic,tx_mautic_tags'
 );

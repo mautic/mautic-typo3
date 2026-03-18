@@ -1,7 +1,9 @@
 <?php
 
 declare(strict_types=1);
-defined('TYPO3_MODE') || die();
+
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+defined('TYPO3') || die();
 
 $tempColumns = [
     'tx_marketingautomation_segments' => [
@@ -22,6 +24,7 @@ $tempColumns = [
             'fieldControl' => [
                 'updateSegmentsControl' => [
                     'renderType' => 'updateSegmentsControl',
+                    'title' => 'Synchronize Segments',
                 ],
                 'editPopup' => [
                     'disabled' => true,
@@ -37,8 +40,8 @@ $tempColumns = [
     ],
 ];
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tx_marketingautomation_persona', $tempColumns);
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+ExtensionManagementUtility::addTCAcolumns('tx_marketingautomation_persona', $tempColumns);
+ExtensionManagementUtility::addToAllTCAtypes(
     'tx_marketingautomation_persona',
     '--div--;LLL:EXT:mautic/Resources/Private/Language/locallang_tca.xlf:mautic,tx_marketingautomation_segments',
     '',

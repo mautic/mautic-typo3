@@ -1,45 +1,40 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Transformation\FormField;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Exception\TransformationException;
-use Bitmotion\Mautic\Transformation\AbstractTransformation;
+namespace Leuchtfeuer\Mautic\Transformation\FormField;
+
+use Leuchtfeuer\Mautic\Exception\TransformationException;
+use Leuchtfeuer\Mautic\Transformation\AbstractTransformation;
 
 abstract class AbstractFormFieldTransformation extends AbstractTransformation implements FormFieldTransformationInterface
 {
-    protected $type = '';
+    protected string $type = '';
 
-    protected $fieldDefinition = [];
+    protected array $fieldData = [];
 
-    protected $fieldData = [];
-
-    public function __construct(array $fieldDefinition = [])
-    {
-        $this->fieldDefinition = $fieldDefinition;
-    }
+    public function __construct(protected array $fieldDefinition = []) {}
 
     public function getFieldDefinition(): array
     {
         return $this->fieldDefinition;
     }
 
-    public function setFieldDefinition(array $fieldDefinition)
+    public function setFieldDefinition(array $fieldDefinition): void
     {
         $this->fieldDefinition = $fieldDefinition;
     }
 
+    #[\Override]
     public function getFieldData(): array
     {
         return $this->fieldData;
@@ -48,7 +43,8 @@ abstract class AbstractFormFieldTransformation extends AbstractTransformation im
     /**
      * @throws TransformationException
      */
-    public function transform()
+    #[\Override]
+    public function transform(): void
     {
         if ($this->type === '') {
             throw new TransformationException(
@@ -61,7 +57,7 @@ abstract class AbstractFormFieldTransformation extends AbstractTransformation im
         }
 
         $fieldData = [
-            'label' => (!empty($this->fieldDefinition['label']) ? $this->fieldDefinition['label'] : $this->fieldDefinition['identifier']),
+            'label' => (empty($this->fieldDefinition['label']) ? $this->fieldDefinition['identifier'] : $this->fieldDefinition['label']),
             'alias' => str_replace('-', '_', $this->fieldDefinition['identifier']),
             'type' => $this->type,
         ];

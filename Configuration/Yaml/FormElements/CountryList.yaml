@@ -7,7 +7,7 @@ TYPO3:
             CountryList:
               __inheritances:
                 10: 'TYPO3.CMS.Form.mixins.formElementMixins.mautic.FormElementMixin'
-              implementationClassName: Bitmotion\Mautic\Domain\Model\FormElement\CountryListFormElement
+              implementationClassName: Leuchtfeuer\Mautic\Domain\Model\FormElement\CountryListFormElement
               formEditor:
                 label: 'Country List'
                 group: mautic

@@ -5,6 +5,6 @@ TYPO3:
         mautic:
           finishersDefinition:
             MauticContactFinisher:
-              implementationClassName: Bitmotion\Mautic\Domain\Finishers\MauticContactFinisher
+              implementationClassName: Leuchtfeuer\Mautic\Domain\Finishers\MauticContactFinisher
               formEditor:
                 iconIdentifier: 'form-finisher'

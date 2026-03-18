@@ -1,18 +1,17 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Domain\Repository;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
+
+namespace Leuchtfeuer\Mautic\Domain\Repository;
 
 use Doctrine\DBAL\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -38,10 +37,7 @@ class PersonaRepository
                     $queryBuilder->createNamedParameter($segments, Connection::PARAM_INT_ARRAY)
                 )
             )
-            ->orderBy('persona.sorting')
-            ->setMaxResults(1)
-            ->execute()
-            ->fetchAll();
+            ->orderBy('persona.sorting')->setMaxResults(1)->executeQuery()->fetchAllAssociative();
 
         return $persona[0] ?? [];
     }

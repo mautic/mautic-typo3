@@ -1,20 +1,19 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Transformation\FormField;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationPrototype;
+namespace Leuchtfeuer\Mautic\Transformation\FormField;
+
+use Leuchtfeuer\Mautic\Transformation\FormField\Prototype\ListTransformationPrototype;
 
 /**
  * {
@@ -50,11 +49,11 @@ use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationProtot
  */
 class MultiCheckboxTransformation extends ListTransformationPrototype
 {
-    protected $type = 'checkboxgrp';
+    protected string $type = 'checkboxgrp';
 
-    protected $listIdentifier = 'optionlist';
+    protected string $listIdentifier = 'optionlist';
 
-    protected $multiple = 0;
+    protected int $multiple = 0;
 
-    protected $updateCustomFieldsProperties = true;
+    protected bool $updateCustomFieldsProperties = true;
 }

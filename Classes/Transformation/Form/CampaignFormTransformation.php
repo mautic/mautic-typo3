@@ -1,18 +1,17 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Transformation\Form;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
+
+namespace Leuchtfeuer\Mautic\Transformation\Form;
 
 /**
  * {
@@ -43,5 +42,5 @@ namespace Bitmotion\Mautic\Transformation\Form;
  */
 class CampaignFormTransformation extends AbstractFormTransformation
 {
-    protected $formType = 'campaign';
+    protected string $formType = 'campaign';
 }

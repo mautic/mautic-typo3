@@ -1,6 +1,16 @@
-<h1><f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:module.title"/></h1>
+<style>
+	.mautic-backend-module {
+		height: calc(100vh - 20px);
+		overflow-y: auto;
+		overflow-x: hidden;
+		padding-right: 15px;
+	}
+</style>
 
-<div role="tabpanel">
+<div class="mautic-backend-module">
+	<h1><f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:module.title"/></h1>
+
+	<div role="tabpanel">
 	<ul class="nav nav-tabs" role="tablist">
 		<li role="presentation" class="nav-item active">
 			<a class="nav-link text-capitalize active" href="#category-mautic-authorization" aria-controls="category-mautic-authorization" role="tab" data-toggle="tab" data-bs-toggle="tab" aria-expanded="true">
@@ -22,6 +32,7 @@
 			<f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:module.save"/>
 		</f:form.button>
 	</f:form>
+	</div>
 </div>
 
 <f:section name="tabpanel-authorization">

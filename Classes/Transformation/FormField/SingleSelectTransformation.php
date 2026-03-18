@@ -1,20 +1,19 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Transformation\FormField;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationPrototype;
+namespace Leuchtfeuer\Mautic\Transformation\FormField;
+
+use Leuchtfeuer\Mautic\Transformation\FormField\Prototype\ListTransformationPrototype;
 
 /**
  * {
@@ -51,9 +50,9 @@ use Bitmotion\Mautic\Transformation\FormField\Prototype\ListTransformationProtot
  */
 class SingleSelectTransformation extends ListTransformationPrototype
 {
-    protected $type = 'select';
+    protected string $type = 'select';
 
-    protected $listIdentifier = 'list';
+    protected string $listIdentifier = 'list';
 
-    protected $multiple = 0;
+    protected int $multiple = 0;
 }

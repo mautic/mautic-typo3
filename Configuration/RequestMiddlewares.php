@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+use Leuchtfeuer\Mautic\Middleware\AuthorizeMiddleware;
+
 return [
     'frontend' => [
-        'bitmotion/mautic/authorize' => [
-            'target' => \Bitmotion\Mautic\Middleware\AuthorizeMiddleware::class,
+        'Leuchtfeuer/mautic/authorize' => [
+            'target' => AuthorizeMiddleware::class,
             'after' => [
                 'typo3/cms-frontend/backend-user-authentication',
             ],

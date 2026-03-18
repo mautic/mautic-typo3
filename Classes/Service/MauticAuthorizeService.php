@@ -1,24 +1,23 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Service;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Controller\BackendController;
-use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
-use Bitmotion\Mautic\Mautic\AuthorizationFactory;
-use Bitmotion\Mautic\Mautic\OAuth;
-use Bitmotion\Mautic\Middleware\AuthorizeMiddleware;
+namespace Leuchtfeuer\Mautic\Service;
+
+use Leuchtfeuer\Mautic\Controller\BackendController;
+use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
+use Leuchtfeuer\Mautic\Mautic\AuthorizationFactory;
+use Leuchtfeuer\Mautic\Mautic\OAuth;
+use Leuchtfeuer\Mautic\Middleware\AuthorizeMiddleware;
 use Mautic\MauticApi;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
@@ -26,26 +25,22 @@ use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class MauticAuthorizeService
 {
-    /**
-     * @var OAuth
-     */
-    protected $authorization;
+    protected OAuth $authorization;
 
-    protected $extensionConfiguration = [];
+    protected array $extensionConfiguration = [];
 
-    protected $createFlashMessages = true;
+    protected string $minimumMauticVersion = '2.14.2';
 
-    protected $minimumMauticVersion = '2.14.2';
+    protected array $messages = [];
 
-    protected $messages = [];
+    protected LanguageService $languageService;
 
-    protected $languageService;
-
-    public function __construct(OAuth $authorization = null, $createFlashMessages = true)
+    public function __construct(OAuth $authorization = null, protected bool $createFlashMessages = true)
     {
         if (session_id() === '') {
             session_start();
@@ -53,7 +48,6 @@ class MauticAuthorizeService
 
         $this->extensionConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class)->getConfigurationArray();
         $this->authorization = $authorization ?? AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
-        $this->createFlashMessages = $createFlashMessages;
         $this->languageService = $GLOBALS['LANG'] ?? GeneralUtility::makeInstance(LanguageServiceFactory::class)->create('default');
     }
 
@@ -94,6 +88,8 @@ class MauticAuthorizeService
     public function checkConnection(): bool
     {
         // Perform a dummy request for retrieving HTTP headers and getting Mautic Version
+
+        // @extensionScannerIgnoreLine
         $contactsApi = (new MauticApi())->newApi('contacts', $this->authorization, $this->authorization->getBaseUrl());
         $contacts = $contactsApi->getList('', 0, 1);
 
@@ -116,20 +112,17 @@ class MauticAuthorizeService
         }
 
         unset($_SESSION['oauth']);
-        if (empty($_SESSION)) {
+        if ($_SESSION === []) {
             $sessionName = session_name();
             $sessionCookie = session_get_cookie_params();
             setcookie(
                 $sessionName,
                 '',
-                $sessionCookie['lifetime'],
-                $sessionCookie['path'],
-                $sessionCookie['domain'],
-                $sessionCookie['secure']
+                ['expires' => $sessionCookie['lifetime'], 'path' => $sessionCookie['path'], 'domain' => $sessionCookie['domain'], 'secure' => $sessionCookie['secure']]
             );
         }
 
-        if (strpos($this->extensionConfiguration['baseUrl'], 'http:') === 0) {
+        if (str_starts_with((string)$this->extensionConfiguration['baseUrl'], 'http:')) {
             $this->showInsecureConnectionInformation();
 
             return false;
@@ -169,7 +162,7 @@ class MauticAuthorizeService
                 $message ?? ''
             );
 
-            $this->createMessage($message, $title, FlashMessage::ERROR, true);
+            $this->createMessage($message, $title, ContextualFeedbackSeverity::ERROR, true);
 
             return true;
         }
@@ -177,7 +170,7 @@ class MauticAuthorizeService
         return false;
     }
 
-    protected function showCredentialsInformation()
+    protected function showCredentialsInformation(): void
     {
         $missingInformation = [];
         if (empty($this->extensionConfiguration['baseUrl'])) {
@@ -199,12 +192,12 @@ class MauticAuthorizeService
         );
     }
 
-    protected function createMessage(string $message, string $title, int $severity, bool $storeInSession = true): void
+    protected function createMessage(string $message, string $title, ContextualFeedbackSeverity $severity, bool $storeInSession = true): void
     {
         if ($this->createFlashMessages) {
             $this->addFlashMessage(new FlashMessage($message, $title, $severity, $storeInSession));
         } else {
-            $this->messages[md5($message . $title . $severity)] = [
+            $this->messages[md5($message . $title . $severity->getCssClass())] = [
                 'message' => $message,
                 'title' => $title,
                 'severity' => $severity,
@@ -216,13 +209,14 @@ class MauticAuthorizeService
     {
         $title = $title ?: $this->translate('authorization.error.title');
         $message = $this->translate('authorization.error.message.' . $message) ?: $message ?: $this->translate('authorization.error.message');
-        $this->createMessage($message, $title, FlashMessage::ERROR, true);
+        $this->createMessage($message, $title, ContextualFeedbackSeverity::ERROR, true);
     }
 
     protected function addFlashMessage(FlashMessage $message): void
     {
         $messageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $messageQueue = $messageService->getMessageQueueByIdentifier(BackendController::FLASH_MESSAGE_QUEUE);
+        // @extensionScannerIgnoreLine
         $messageQueue->addMessage($message);
     }
 
@@ -230,14 +224,14 @@ class MauticAuthorizeService
     {
         $title = $title ?: $this->translate('authorization.warning.title');
         $message = $message ?: $this->translate('authorization.warning.message');
-        $this->createMessage($message, $title, FlashMessage::WARNING, true);
+        $this->createMessage($message, $title, ContextualFeedbackSeverity::WARNING, true);
     }
 
     protected function showSuccessMessage(?string $title = null, ?string $message = null): void
     {
         $title = $title ?: $this->translate('authorization.success.title');
         $message = $message ?: $this->translate('authorization.success.message');
-        $this->createMessage($message, $title, FlashMessage::OK, true);
+        $this->createMessage($message, $title, ContextualFeedbackSeverity::OK, true);
     }
 
     protected function showIncorrectVersionInformation(string $version): void
@@ -262,7 +256,7 @@ class MauticAuthorizeService
     protected function translate(string $key): string
     {
         if (!$this->languageService instanceof LanguageService) {
-            $this->languageService = LanguageService::createFromUserPreferences($GLOBALS['BE_USER']);
+            $this->languageService = GeneralUtility::makeInstance(LanguageServiceFactory::class)->createFromUserPreferences($GLOBALS['BE_USER']);
         }
         return $this->languageService->sL('LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:' . $key);
     }
@@ -296,7 +290,7 @@ class MauticAuthorizeService
         return $this->extensionConfiguration['expires'] < time();
     }
 
-    public function refreshAccessToken()
+    public function refreshAccessToken(): bool
     {
         try {
             if ($this->authorization->validateAccessToken() && $this->authorization->accessTokenUpdated()) {
@@ -312,7 +306,7 @@ class MauticAuthorizeService
                 GeneralUtility::makeInstance(YamlConfiguration::class)->save($this->extensionConfiguration);
             }
         } catch (\Exception $exception) {
-            $this->addErrorMessage((string)$exception->getCode(), (string)$exception->getMessage());
+            $this->addErrorMessage((string)$exception->getCode(), $exception->getMessage());
 
             return false;
         }

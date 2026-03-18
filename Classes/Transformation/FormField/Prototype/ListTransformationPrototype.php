@@ -1,46 +1,46 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Transformation\FormField\Prototype;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Exception\TransformationException;
-use Bitmotion\Mautic\Transformation\FormField\AbstractFormFieldTransformation;
+namespace Leuchtfeuer\Mautic\Transformation\FormField\Prototype;
+
+use Leuchtfeuer\Mautic\Exception\TransformationException;
+use Leuchtfeuer\Mautic\Transformation\FormField\AbstractFormFieldTransformation;
 
 class ListTransformationPrototype extends AbstractFormFieldTransformation
 {
-    protected $listIdentifier = 'list';
+    protected string $listIdentifier = 'list';
 
-    protected $multiple = 0;
+    protected int $multiple = 0;
 
-    protected $syncList = 0;
+    protected int $syncList = 0;
 
-    protected $customFieldProperties = [];
+    protected array $customFieldProperties = [];
 
-    protected $customFieldValues = [];
+    protected array $customFieldValues = [];
 
-    protected $updateCustomFieldsProperties = true;
+    protected bool $updateCustomFieldsProperties = true;
 
     /**
      * @throws TransformationException
      */
-    public function transform()
+    #[\Override]
+    public function transform(): void
     {
         parent::transform();
 
         $properties = [];
 
-        if (isset($properties['leadField'])) {
+        if (isset($this->fieldData['leadField'])) {
             $this->syncList = 1;
             $properties['syncList'] = $this->syncList;
         }

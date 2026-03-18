@@ -1,22 +1,23 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Domain\Repository;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Doctrine\DBAL\DBALException;
+namespace Leuchtfeuer\Mautic\Domain\Repository;
+
+use Doctrine\DBAL\Exception;
 use Mautic\Api\Segments;
 use Mautic\Exception\ContextNotFoundException;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -30,9 +31,12 @@ class SegmentRepository extends AbstractRepository
     /**
      * @throws ContextNotFoundException
      */
+    #[\Override]
     protected function injectApis(): void
     {
-        $this->segmentsApi = $this->getApi('segments');
+        /** @var Segments $segmentsApi */
+        $segmentsApi = $this->getApi('segments');
+        $this->segmentsApi = $segmentsApi;
     }
 
     public function findAll(): array
@@ -43,9 +47,9 @@ class SegmentRepository extends AbstractRepository
     }
 
     /**
-     * @throws DBALException
+     * @throws Exception
      */
-    public function initializeSegments()
+    public function initializeSegments(): void
     {
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable('tx_marketingautomation_segment');
@@ -57,25 +61,21 @@ class SegmentRepository extends AbstractRepository
         $this->synchronizeSegments();
     }
 
-    public function synchronizeSegments()
+    public function synchronizeSegments(): void
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('tx_marketingautomation_segment');
         $queryBuilder->getRestrictions()->removeAll();
 
-        $result = $queryBuilder->select('*')
-            ->from('tx_marketingautomation_segment')
-            ->execute();
+        $result = $queryBuilder->select('*')->from('tx_marketingautomation_segment')->executeQuery();
 
         $availableSegments = [];
-        while ($row = $result->fetch()) {
+        while ($row = $result->fetchAssociative()) {
             $availableSegments[$row['uid']] = $row;
         }
-        $result->closeCursor();
+        $result->free();
 
-        $queryBuilder->update('tx_marketingautomation_segment')
-            ->set('deleted', 1)
-            ->execute();
+        $queryBuilder->update('tx_marketingautomation_segment')->set('deleted', 1)->executeStatement();
 
         $segments = $this->findAll();
         foreach ($segments as $segment) {
@@ -84,23 +84,19 @@ class SegmentRepository extends AbstractRepository
             if (!empty($segment['dateModified'])) {
                 $dateModified = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $segment['dateModified']);
             } else {
-                $dateModified = \DateTime::createFromFormat('U', (string)$GLOBALS['EXEC_TIME']);
+                $dateModified = \DateTime::createFromFormat('U', (string)GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('date', 'timestamp'));
             }
 
             if (!isset($availableSegments[$segment['id']])) {
                 $insertQueryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
                     ->getQueryBuilderForTable('tx_marketingautomation_segment');
-                $insertQueryBuilder->insert('tx_marketingautomation_segment')
-                    ->values(
-                        [
-                            'uid' => (int)$segment['id'],
-                            'crdate' => $dateAdded->getTimestamp(),
-                            'tstamp' => $dateModified->getTimestamp(),
-                            'deleted' => (int)!$segment['isPublished'],
-                            'title' => $segment['name'],
-                        ]
-                    )
-                    ->execute();
+                $insertQueryBuilder->insert('tx_marketingautomation_segment')->values([
+                    'uid' => (int)$segment['id'],
+                    'crdate' => $dateAdded->getTimestamp(),
+                    'tstamp' => $dateModified->getTimestamp(),
+                    'deleted' => (int)!$segment['isPublished'],
+                    'title' => $segment['name'],
+                ])->executeStatement();
             } else {
                 $updateQueryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
                     ->getQueryBuilderForTable('tx_marketingautomation_segment');
@@ -108,14 +104,12 @@ class SegmentRepository extends AbstractRepository
                     ->where(
                         $updateQueryBuilder->expr()->eq(
                             'uid',
-                            $updateQueryBuilder->createNamedParameter($segment['id'], \PDO::PARAM_INT)
+                            $updateQueryBuilder->createNamedParameter($segment['id'], Connection::PARAM_INT)
                         )
                     )
                     ->set('crdate', $dateAdded->getTimestamp())
                     ->set('tstamp', $dateModified->getTimestamp())
-                    ->set('deleted', (int)!$segment['isPublished'])
-                    ->set('title', $segment['name'])
-                    ->execute();
+                    ->set('deleted', (int)!$segment['isPublished'])->set('title', $segment['name'])->executeStatement();
             }
         }
     }

@@ -1,18 +1,17 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Domain\Repository;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
+
+namespace Leuchtfeuer\Mautic\Domain\Repository;
 
 use Mautic\Api\CompanyFields;
 use Mautic\Api\ContactFields;
@@ -23,20 +22,25 @@ class FieldRepository extends AbstractRepository
     /**
      * @var ContactFields
      */
-    protected $contactFieldsApi;
+    protected ContactFields $contactFieldsApi;
 
     /**
      * @var CompanyFields
      */
-    protected $companyFieldsApi;
+    protected CompanyFields $companyFieldsApi;
 
     /**
      * @throws ContextNotFoundException
      */
+    #[\Override]
     protected function injectApis(): void
     {
-        $this->contactFieldsApi = $this->getApi('contactFields');
-        $this->companyFieldsApi = $this->getApi('companyFields');
+        /** @var ContactFields $contactFieldsApi */
+        $contactFieldsApi = $this->getApi('contactFields');
+        $this->contactFieldsApi = $contactFieldsApi;
+        /** @var CompanyFields $companyFieldsApi */
+        $companyFieldsApi = $this->getApi('companyFields');
+        $this->companyFieldsApi = $companyFieldsApi;
     }
 
     public function editContactField(int $id, array $params): array

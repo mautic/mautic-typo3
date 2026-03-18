@@ -1,22 +1,21 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Mautic;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
-use Bitmotion\Mautic\Middleware\AuthorizeMiddleware;
-use Bitmotion\Mautic\Service\MauticAuthorizeService;
+namespace Leuchtfeuer\Mautic\Mautic;
+
+use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
+use Leuchtfeuer\Mautic\Middleware\AuthorizeMiddleware;
+use Leuchtfeuer\Mautic\Service\MauticAuthorizeService;
 use Mautic\Auth\ApiAuth;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -25,7 +24,7 @@ class AuthorizationFactory implements SingletonInterface
 {
     public const VERSION = 'OAuth1a';
 
-    protected static $oAuth;
+    protected static ?OAuth $oAuth = null;
 
     public static function createAuthorizationFromExtensionConfiguration(?string $state = null): OAuth
     {
@@ -35,6 +34,7 @@ class AuthorizationFactory implements SingletonInterface
 
         /** @var YamlConfiguration $extensionConfiguration */
         $extensionConfiguration = GeneralUtility::makeInstance(YamlConfiguration::class);
+        // @extensionScannerIgnoreLine
         $baseUrl = $extensionConfiguration->getBaseUrl();
 
         $settings = [
@@ -62,7 +62,7 @@ class AuthorizationFactory implements SingletonInterface
             $settings['accessToken'] ?? '',
             $extensionConfiguration->getAuthorizeMode()
         );
-        
+
         /** @var MauticAuthorizeService $authorizeService */
         $authorizeService = GeneralUtility::makeInstance(
             MauticAuthorizeService::class,
@@ -70,13 +70,9 @@ class AuthorizationFactory implements SingletonInterface
             false
         );
 
-        if ($authorizeService->validateCredentials() === true) {
-            if (!$authorizeService->validateAccessToken()) {
-                if ($authorizeService->accessTokenToBeRefreshed()) {
-                    $authorizeService->refreshAccessToken();
-                    $extensionConfiguration->reloadConfigurations();
-                }
-            }
+        if ($authorizeService->validateCredentials() === true && !$authorizeService->validateAccessToken() && $authorizeService->accessTokenToBeRefreshed()) {
+            $authorizeService->refreshAccessToken();
+            $extensionConfiguration->reloadConfigurations();
         }
 
         return self::$oAuth;

@@ -1,0 +1,79 @@
+.. include:: ../../Includes.txt
+
+===========================
+Version 12.0.0 - 2025-12-01
+===========================
+
+This release is a feature release. It includes compatibility with TYPO3 v12.
+
+Download
+========
+
+Download this version from the `TYPO3 extension repository <https://extensions.typo3.org/extension/mautic/>`__ or from
+`GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v12.0.0>`__.
+
+Announcement
+============
+To simplify version handling, extensions will in future be given the same major version as the corresponding TYPO3 version.
+
+Added
+=====
+
+* Add compatibility with TYPO3 v12
+
+Removed
+=======
+
+* Drop compatibility with TYPO3 before v12
+
+
+All Changes
+===========
+
+This is a list of all changes in this release::
+
+   2025-12-01 Merge pull request #5 from Leuchtfeuer/feature/TER-322 (Commit 6e54462 by Marcus Balasch)
+   2025-11-28 [TASK] Use named arguments for addJsFooterInlineCode in MauticTrackingHook [TER-322] (Commit e061039 by Marcus Balasch)
+   2025-11-28 [TASK] Replace YamlConfiguration instantiation with GeneralUtility in TCEmainHook [TER-322] (Commit f51c136 by Marcus Balasch)
+   2025-11-28 [TASK] Sanitize tracking script override to remove unwanted tags [TER-322] (Commit 54851db by Marcus Balasch)
+   2025-11-24 Merge pull request #4 from Leuchtfeuer/feature/TER-322 (Commit b3a25a3 by Marcus Balasch)
+   2025-11-24 [TASK] Readd MauticTrackingHook for injecting tracking code [TER-354] [TER-322] (Commit 9338945 by Marcus Balasch)
+   2025-11-24 [TASK] Update wording [TER-353] [TER-322] (Commit 4cb12a3 by Marcus Balasch)
+   2025-11-24 [TASK] Refactor MauticTagHook to use PageRepository for fetching page records [TER-355] [TER-322] (Commit b1bc6fc by Marcus Balasch)
+   2025-11-19 Merge pull request #3 from Leuchtfeuer/feature/TER-322 (Commit aa47030 by Marcus Balasch)
+   2025-11-19 [TASK] Adjust MauticFormDataProvider for proper key-value pairing [TER-322][TER-349] (Commit 370608b by Marcus Balasch)
+   2025-11-18 [TASK] Migrate TypoScript setup to TYPO3 v12 standards [TER-322][TER-349] (Commit 6b71bfe by Oliver Heins)
+   2025-11-18 [TASK] Refactor FormEngine controls to use JS modules and code style fixes [TER-322][TER-348] (Commit 5f69240 by Oliver Heins)
+   2025-11-06 [TASK] Req marketing-automation v2.0. [typo3-v12] (Commit 64119c6 by kauschmann)
+   2025-11-03 [TASK] AuthorizeMiddleware Access Token. Changed if condition sequence and Removed ['mautic'] part from _SESSION. [TER-322] (Commit 1fef6a4 by kauschmann)
+   2025-10-29 [TASK] Rector changes + Backend Modul scrollable. [TER-322] (Commit 874f807 by kauschmann)
+   2025-10-28 [TASK] Rector changes. [TER-322] (Commit 5389000 by kauschmann)
+   2025-10-28 [TASK] phpstan lvl6 for Classes [TER-322] (Commit 96acbb7 by kauschmann)
+   2025-10-28 [TASK] Solved ExtensionScanner Deprecations. [TER-322] (Commit 2271985 by kauschmann)
+   2025-10-21 [TASK] Added extensionScannerIgnore for false positives. [TER-322] (Commit a7f2c1e by kauschmann)
+   2025-10-21 [TASK] Removed Hooks inside the localconf [TER-322] (Commit 6bfa9ab by kauschmann)
+   2025-10-21 [TASK] Renamed Bitmotion to Leuchtfeueer. [TER-322] (Commit 622f7b7 by kauschmann)
+   2025-10-21 [TASK] Created EventListener for old Hooks. [TER-322] (Commit 5a036a6 by kauschmann)
+   2025-10-21 [TASK] Init for Typo3 v12 [TER-322] (Commit b972fd1 by kauschmann)
+   2025-04-03 [TASK] changes bei rector [TER-283] [TER-163] (Commit 551b6b8 by Marcus Balasch)
+   2025-03-28 [TASK] raise mautic-api version [TER-283] [TER-163] (Commit e0a7e74 by Marcus Balasch)
+   2025-03-28 [TASK] Simply make ViewHelper executable again [TER-283] [TER-163] (Commit 501cf18 by Marcus Balasch)
+   2025-03-28 [TASK] new registration of backend modules [TER-283] [TER-163] (Commit 0806e62 by Marcus Balasch)
+   2025-03-28 [TASK] use severity enum [TER-283] [TER-163] (Commit 25dce3a by Marcus Balasch)
+   2025-03-28 [TASK] further changes by rector [TER-283] [TER-163] (Commit a7fc694 by Marcus Balasch)
+   2025-03-28 [TASK] further changes by rector [TER-283] [TER-163] (Commit d06488b by Marcus Balasch)
+   2025-03-28 [TASK] further changes by rector [TER-283] [TER-163] (Commit 87f0ab0 by Marcus Balasch)
+   2025-03-28 [CODE] code style fix [TER-283] [TER-163] (Commit eff7d1b by Marcus Balasch)
+   2025-03-28 [TASK] changes by rector and fractor [TER-283] [TER-163] (Commit baf463c by Marcus Balasch)
+   2025-03-28 [TASK] changes by rector and fractor [TER-283] [TER-163] (Commit b838d14 by Marcus Balasch)
+   2025-03-26 [TASK] raise ext_emconf.php requirements [TER-283] [TER-163] (Commit 773532c by Marcus Balasch)
+   2025-03-26 [TASK] raise composer requirements [TER-283] [TER-163] (Commit 1c7fd52 by Marcus Balasch)
+
+Contributors
+============
+Following people have contributed to this release:
+
+* Marcus Balasch
+* Markus Kauschmann
+
+Thank you very much for your support. The next beer is on us! 🍻

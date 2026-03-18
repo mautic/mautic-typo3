@@ -1,18 +1,17 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Domain\Repository;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
+
+namespace Leuchtfeuer\Mautic\Domain\Repository;
 
 use Mautic\Api\Contacts;
 use Mautic\Exception\ContextNotFoundException;
@@ -22,14 +21,17 @@ class ContactRepository extends AbstractRepository
     /**
      * @var Contacts
      */
-    protected $contactsApi;
+    protected Contacts $contactsApi;
 
     /**
      * @throws ContextNotFoundException
      */
+    #[\Override]
     protected function injectApis(): void
     {
-        $this->contactsApi = $this->getApi('contacts');
+        /** @var Contacts $contactsApi */
+        $contactsApi = $this->getApi('contacts');
+        $this->contactsApi = $contactsApi;
     }
 
     public function findContactSegments(int $id): array
@@ -56,7 +58,7 @@ class ContactRepository extends AbstractRepository
         return $contact['contact'] ?? [];
     }
 
-    public function modifyContactPoints(int $id, int $modifier, array $data = [])
+    public function modifyContactPoints(int $id, int $modifier, array $data = []): void
     {
         if ($modifier > 0) {
             $this->contactsApi->addPoints($id, $modifier, $data);
@@ -65,12 +67,12 @@ class ContactRepository extends AbstractRepository
         }
     }
 
-    public function addDnc(int $id, string $channel = 'email', int $reason = Contacts::MANUAL, $channelId = null, $comments = 'via API')
+    public function addDnc(int $id, string $channel = 'email', int $reason = Contacts::MANUAL, int $channelId = null, string $comments = 'via API'): void
     {
         $this->contactsApi->addDnc($id, $channel, $reason, $channelId, $comments);
     }
 
-    public function removeDnc(int $id, string $channel = 'email')
+    public function removeDnc(int $id, string $channel = 'email'): void
     {
         $this->contactsApi->removeDnc($id, $channel);
     }

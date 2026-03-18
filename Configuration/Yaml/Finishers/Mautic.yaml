@@ -5,7 +5,7 @@ TYPO3:
         mautic:
           finishersDefinition:
             MauticFinisher:
-              implementationClassName: Bitmotion\Mautic\Domain\Finishers\MauticFinisher
+              implementationClassName: Leuchtfeuer\Mautic\Domain\Finishers\MauticFinisher
               formEditor:
                 iconIdentifier: 'form-finisher'
                 predefinedDefaults:

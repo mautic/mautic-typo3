@@ -1,18 +1,17 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Domain\Repository;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
+
+namespace Leuchtfeuer\Mautic\Domain\Repository;
 
 use Mautic\Api\Companies;
 use Mautic\Exception\ContextNotFoundException;
@@ -27,17 +26,20 @@ class CompanyRepository extends AbstractRepository
     /**
      * @throws ContextNotFoundException
      */
+    #[\Override]
     protected function injectApis(): void
     {
-        $this->companiesApi = $this->getApi('companies');
+        /** @var Companies $companiesApi */
+        $companiesApi = $this->getApi('companies');
+        $this->companiesApi = $companiesApi;
     }
 
-    public function createCompany(array $parameters)
+    public function createCompany(array $parameters): mixed
     {
         return $this->companiesApi->create($parameters);
     }
 
-    public function editCompany(int $id, array $parameters)
+    public function editCompany(int $id, array $parameters): mixed
     {
         return $this->companiesApi->edit($id, $parameters, false);
     }

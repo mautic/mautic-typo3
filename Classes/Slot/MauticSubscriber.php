@@ -1,23 +1,22 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Slot;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\MarketingAutomation\Dispatcher\SubscriberInterface;
-use Bitmotion\MarketingAutomation\Persona\Persona;
-use Bitmotion\Mautic\Domain\Repository\ContactRepository;
-use Bitmotion\Mautic\Domain\Repository\PersonaRepository;
+namespace Leuchtfeuer\Mautic\Slot;
+
+use Leuchtfeuer\MarketingAutomation\Dispatcher\SubscriberInterface;
+use Leuchtfeuer\MarketingAutomation\Persona\Persona;
+use Leuchtfeuer\Mautic\Domain\Repository\ContactRepository;
+use Leuchtfeuer\Mautic\Domain\Repository\PersonaRepository;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Site\SiteFinder;
@@ -26,38 +25,31 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class MauticSubscriber implements SubscriberInterface, SingletonInterface
 {
-    protected $mauticId;
+    protected int $mauticId;
 
-    protected $contactRepository;
+    protected bool $languageNeedsUpdate = false;
 
-    protected $personaRepository;
-
-    protected $languageNeedsUpdate = false;
-
-    public function __construct(ContactRepository $contactRepository, PersonaRepository $personaRepository)
+    public function __construct(protected ContactRepository $contactRepository, protected PersonaRepository $personaRepository)
     {
-        $this->contactRepository = $contactRepository;
-        $this->personaRepository = $personaRepository;
-
         $this->mauticId = (int)($_COOKIE['mtc_id'] ?? 0);
     }
 
+    #[\Override]
     public function needsUpdate(Persona $currentPersona, Persona $newPersona): bool
     {
-        $isValidMauticId = !empty($this->mauticId);
-        $isEmptyPersonaId = empty($currentPersona->getId());
+        $isValidMauticId = $this->mauticId !== 0;
+        $isEmptyPersonaId = $currentPersona->getId() === 0;
         $this->languageNeedsUpdate = $isValidMauticId && $currentPersona->getLanguage() !== $newPersona->getLanguage();
 
         return $isValidMauticId && ($isEmptyPersonaId || $this->languageNeedsUpdate);
     }
 
+    #[\Override]
     public function update(Persona $persona): Persona
     {
         $segments = $this->contactRepository->findContactSegments($this->mauticId);
         $segmentIds = array_map(
-            function ($segment) {
-                return (int)$segment['id'];
-            },
+            fn($segment): int => (int)$segment['id'],
             $segments
         );
         $personaId = $this->personaRepository->findBySegments($segmentIds)['uid'] ?? 0;
@@ -65,12 +57,13 @@ class MauticSubscriber implements SubscriberInterface, SingletonInterface
         return $persona->withId($personaId);
     }
 
-    public function setPreferredLocale($_, TypoScriptFrontendController $typoScriptFrontendController)
+    public function setPreferredLocale(mixed $_, TypoScriptFrontendController $typoScriptFrontendController): void
     {
         if ($this->languageNeedsUpdate) {
             $languageId = GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('language', 'id');
-            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId((int)$typoScriptFrontendController->id);
-            $isoCode = $site->getLanguageById($languageId)->getTwoLetterIsoCode();
+            // @extensionScannerIgnoreLine
+            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($typoScriptFrontendController->id);
+            $isoCode = $site->getLanguageById($languageId)->getLocale()->getLanguageCode();
 
             $this->contactRepository->editContact(
                 $this->mauticId,

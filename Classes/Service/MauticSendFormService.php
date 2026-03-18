@@ -1,23 +1,22 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Service;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
+namespace Leuchtfeuer\Mautic\Service;
+
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Cookie\SetCookie;
+use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -56,9 +55,7 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
             return 500;
         }
 
-        $statusCode = $result->getStatusCode();
-
-        return (int)$statusCode;
+        return $result->getStatusCode();
     }
 
     private function makeHeaders(): array
@@ -105,14 +102,14 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
         foreach ($ipHolders as $key) {
             if (!empty($_SERVER[$key])) {
                 $ip = $_SERVER[$key];
-                if (strpos($ip, ',') !== false) {
+                if (str_contains((string)$ip, ',')) {
                     // Multiple IPs are present so use the last IP which should be
                     // the most reliable IP that last connected to the proxy
-                    $ips = explode(',', $ip);
+                    $ips = explode(',', (string)$ip);
                     $ips = array_map('trim', $ips);
                     $ip = end($ips);
                 }
-                $ip = trim($ip);
+                $ip = trim((string)$ip);
                 break;
             }
         }
@@ -131,7 +128,7 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
         return $cookies;
     }
 
-    private function addCookies(CookieJar $cookies, string $cookieName)
+    private function addCookies(CookieJar $cookies, string $cookieName): void
     {
         if (\array_key_exists($cookieName, $_COOKIE)) {
             $cookies->setCookie(new SetCookie([
@@ -142,7 +139,7 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
         }
     }
 
-    private function makeMultipart(array &$multipart, string $path, array $data)
+    private function makeMultipart(array &$multipart, string $path, array $data): void
     {
         foreach ($data as $key => $value) {
             $tempPath = $path . '[' . $key . ']';

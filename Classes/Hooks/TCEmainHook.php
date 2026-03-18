@@ -1,21 +1,20 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Hooks;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Domain\Model\Dto\YamlConfiguration;
-use Bitmotion\Mautic\Domain\Repository\TagRepository;
+namespace Leuchtfeuer\Mautic\Hooks;
+
+use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
+use Leuchtfeuer\Mautic\Domain\Repository\TagRepository;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -28,7 +27,8 @@ class TCEmainHook
     {
         if ($status === 'new' && $table === 'tx_mautic_domain_model_tag' && !empty($fields['title'])) {
             // Dirty way to create tags in Mautic
-            $config = new YamlConfiguration();
+            $config = GeneralUtility::makeInstance(YamlConfiguration::class);
+            // @extensionScannerIgnoreLine
             $url = sprintf('%s/mtracking.gif?tags=%s', $config->getBaseUrl(), $fields['title']);
             GeneralUtility::getUrl($url);
 

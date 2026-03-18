@@ -1,45 +1,44 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Domain\Finishers;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Domain\Repository\FormRepository;
+namespace Leuchtfeuer\Mautic\Domain\Finishers;
+
+use Leuchtfeuer\Mautic\Domain\Repository\FormRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher;
 use TYPO3\CMS\Form\Domain\Model\FormElements\GenericFormElement;
 
 class MauticFinisher extends AbstractFinisher
 {
-    protected $formRepository;
+    protected object $formRepository;
 
-    public function __construct(string $finisherIdentifier = '')
+    public function __construct()
     {
-        parent::__construct($finisherIdentifier);
-
         $this->formRepository = GeneralUtility::makeInstance(FormRepository::class);
     }
 
     /**
      * Post the form result to a Mautic form
      */
-    protected function executeInternal()
+    #[\Override]
+    protected function executeInternal(): ?string
     {
         $formDefinition = $this->finisherContext->getFormRuntime()->getFormDefinition()->getRenderingOptions();
         $mauticId = (int)$this->parseOption('mauticId') ?: (int)($formDefinition['mauticId'] ?? 0);
         $formValues = $this->transformFormStructure($this->finisherContext->getFormValues());
 
         $this->formRepository->submitForm((int)$mauticId, $formValues);
+        return null;
     }
 
     /**

@@ -1,104 +1,134 @@
 <?php
 
-defined('TYPO3_MODE') || die;
+use Leuchtfeuer\Mautic\Hooks\MauticTrackingHook;
+use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Leuchtfeuer\MarketingAutomation\Dispatcher\Dispatcher;
+use Leuchtfeuer\Mautic\Slot\MauticSubscriber;
+use Leuchtfeuer\Mautic\Hooks\MauticTagHook;
+use Leuchtfeuer\Mautic\Hooks\TCEmainHook;
+use Leuchtfeuer\Mautic\Form\FormDataProvider\MauticFormDataProvider;
+use TYPO3\CMS\Backend\Form\FormDataProvider\DatabaseRowDefaultValues;
+use TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectItems;
+use Leuchtfeuer\Mautic\FormEngine\FieldControl\UpdateSegmentsControl;
+use Leuchtfeuer\Mautic\FormEngine\FieldControl\UpdateTagsControl;
+use TYPO3\CMS\Core\Resource\Driver\DriverRegistry;
+use Leuchtfeuer\Mautic\Driver\AssetDriver;
+use TYPO3\CMS\Core\Resource\Index\ExtractorRegistry;
+use Leuchtfeuer\Mautic\Index\Extractor;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+use Leuchtfeuer\Mautic\Controller\FrontendController;
+use TYPO3\CMS\Core\Imaging\IconRegistry;
+use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
+use Leuchtfeuer\Mautic\Transformation\Form\CampaignFormTransformation;
+use Leuchtfeuer\Mautic\Transformation\Form\StandaloneFormTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\IgnoreTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\CheckboxTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\DatetimeTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\EmailTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\HiddenTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\MultiCheckboxTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\MultiSelectTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\NumberTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\RadioButtonTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\SingleSelectTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\TelephoneTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\TextTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\TextareaTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\UrlTransformation;
+use Leuchtfeuer\Mautic\Transformation\FormField\CountryListTransformation;
+use TYPO3\CMS\Core\Log\LogLevel;
+use TYPO3\CMS\Core\Log\Writer\NullWriter;
+use TYPO3\CMS\Core\Log\Writer\FileWriter;
+defined('TYPO3') || die;
 
-call_user_func(function () {
-    if (\TYPO3\CMS\Core\Core\Environment::isComposerMode() === false) {
-        $filePath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mautic') . 'Libraries/vendor/autoload.php';
+call_user_func(function (): void {
+    if (Environment::isComposerMode() === false) {
+        $filePath = ExtensionManagementUtility::extPath('mautic') . 'Libraries/vendor/autoload.php';
         if (@file_exists($filePath)) {
             require_once $filePath;
         } else {
-            throw new \Exception(sprintf('File %s does not exist. Dependencies could not be loaded.', $filePath));
+            throw new \Exception(sprintf('File %s does not exist. Dependencies could not be loaded.', $filePath), 7049493518);
         }
     }
 
-    if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('marketing_automation') === false) {
-        throw new \Exception('Required extension is not loaded: EXT:marketing_automation.');
+    if (ExtensionManagementUtility::isLoaded('marketing_automation') === false) {
+        throw new \Exception('Required extension is not loaded: EXT:marketing_automation.', 7616907311);
     }
 
-    $marketingDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Bitmotion\MarketingAutomation\Dispatcher\Dispatcher::class);
-    $marketingDispatcher->addSubscriber(\Bitmotion\Mautic\Slot\MauticSubscriber::class);
+    $marketingDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
+    $marketingDispatcher->addSubscriber(MauticSubscriber::class);
 
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+    ExtensionManagementUtility::addPageTSConfig(
         '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:mautic/Configuration/PageTS/Mod/Wizards/NewContentElement.tsconfig">'
     );
 
-    //##################
-    //      HOOKS      #
-    //##################
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['settingLanguage_postProcess']['mautic'] =
-        \Bitmotion\Mautic\Slot\MauticSubscriber::class . '->setPreferredLocale';
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['configArrayPostProc']['mautic_tag'] =
+        MauticTagHook::class . '->setTags';
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['configArrayPostProc']['mautic'] =
-        \Bitmotion\Mautic\Hooks\MauticTrackingHook::class . '->addTrackingCode';
+       MauticTrackingHook::class . '->addTrackingCode';
 
-    // Register for hook to show preview of tt_content element of CType="mautic_form" in page module
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem']['mautic_form'] =
-        \Bitmotion\Mautic\Hooks\PageLayoutView\MauticFormPreviewRenderer::class;
-
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['mautic'] =
-        \Bitmotion\Mautic\Hooks\TCEmainHook::class;
-
-    if (TYPO3_MODE === 'FE') {
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-postTransform']['mautic_tag'] =
-            \Bitmotion\Mautic\Hooks\MauticTagHook::class . '->setTags';
-    }
+    // Register DataHandler hook for tag creation
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] =
+        TCEmainHook::class;
 
     //##################
     //       FORM      #
     //##################
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'][\Bitmotion\Mautic\Form\FormDataProvider\MauticFormDataProvider::class] = [
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'][MauticFormDataProvider::class] = [
         'depends' => [
-            \TYPO3\CMS\Backend\Form\FormDataProvider\DatabaseRowDefaultValues::class,
+            DatabaseRowDefaultValues::class,
         ],
         'before' => [
-            \TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectItems::class,
+            TcaSelectItems::class,
         ],
     ];
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1530047235] = [
         'nodeName' => 'updateSegmentsControl',
         'priority' => 30,
-        'class' => \Bitmotion\Mautic\FormEngine\FieldControl\UpdateSegmentsControl::class,
+        'class' => UpdateSegmentsControl::class,
     ];
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1551778913] = [
         'nodeName' => 'updateTagsControl',
         'priority' => 30,
-        'class' => \Bitmotion\Mautic\FormEngine\FieldControl\UpdateTagsControl::class,
+        'class' => UpdateTagsControl::class,
     ];
 
     //#################
     //   FAL DRIVER   #
     //#################
-    $driverRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\Driver\DriverRegistry::class);
+    $driverRegistry = GeneralUtility::makeInstance(DriverRegistry::class);
     $driverRegistry->registerDriverClass(
-        \Bitmotion\Mautic\Driver\AssetDriver::class,
-        \Bitmotion\Mautic\Driver\AssetDriver::DRIVER_SHORT_NAME,
-        \Bitmotion\Mautic\Driver\AssetDriver::DRIVER_NAME,
+        AssetDriver::class,
+        AssetDriver::DRIVER_SHORT_NAME,
+        AssetDriver::DRIVER_NAME,
         'FILE:EXT:mautic/Configuration/FlexForm/AssetDriver.xml'
     );
 
     //#################
     //   EXTRACTOR    #
     //#################
-    \TYPO3\CMS\Core\Resource\Index\ExtractorRegistry::getInstance()->registerExtractionService(\Bitmotion\Mautic\Index\Extractor::class);
+    GeneralUtility::makeInstance(ExtractorRegistry::class)->registerExtractionService(Extractor::class);
 
     //##################
     //      PLUGIN     #
     //##################
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'Bitmotion.mautic',
+    ExtensionUtility::configurePlugin(
+        'Mautic',
         'Form',
-        [\Bitmotion\Mautic\Controller\FrontendController::class => 'form'],
-        [\Bitmotion\Mautic\Controller\FrontendController::class => 'form'],
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+        [FrontendController::class => 'form'],
+        [FrontendController::class => 'form'],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     //##################
     //      ICONS      #
     //##################
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+    $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
     $icons = [
         'tx_mautic-mautic-icon' => 'EXT:mautic/Resources/Public/Icons/Extension.svg',
     ];
@@ -106,10 +136,27 @@ call_user_func(function () {
     foreach ($icons as $identifier => $source) {
         $iconRegistry->registerIcon(
             $identifier,
-            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+            SvgIconProvider::class,
             ['source' => $source]
         );
     }
+
+    //######################
+    //##    TYPOSCRIPT    ##
+    //######################
+
+    ExtensionManagementUtility::addTypoScript(
+        'mautic',
+        'constants',
+        "@import 'EXT:mautic/Configuration/TypoScript/constants.typoscript'",
+    );
+
+    ExtensionManagementUtility::addTypoScript(
+        'mautic',
+        'setup',
+        "@import 'EXT:mautic/Configuration/TypoScript/setup.typoscript'",
+    );
+
 
     //##################
     //     EXTCONF     #
@@ -126,57 +173,87 @@ call_user_func(function () {
     //######################
     // FORM TRANSFORMATION #
     //######################
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['form']['mautic_finisher_campaign_prototype'] = \Bitmotion\Mautic\Transformation\Form\CampaignFormTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['form']['mautic_finisher_standalone_prototype'] = \Bitmotion\Mautic\Transformation\Form\StandaloneFormTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['form']['mautic_finisher_campaign_prototype'] = CampaignFormTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['form']['mautic_finisher_standalone_prototype'] = StandaloneFormTransformation::class;
 
     //#######################
     // FIELD TRANSFORMATION #
     //#######################
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['AdvancedPassword'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Checkbox'] = \Bitmotion\Mautic\Transformation\FormField\CheckboxTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['ContentElement'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Date'] = \Bitmotion\Mautic\Transformation\FormField\DatetimeTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['DatePicker'] = \Bitmotion\Mautic\Transformation\FormField\DatetimeTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Email'] = \Bitmotion\Mautic\Transformation\FormField\EmailTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['GridRow'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Fieldset'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['FileUpload'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Hidden'] = \Bitmotion\Mautic\Transformation\FormField\HiddenTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['ImageUpload'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['MultiCheckbox'] = \Bitmotion\Mautic\Transformation\FormField\MultiCheckboxTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['MultiSelect'] = \Bitmotion\Mautic\Transformation\FormField\MultiSelectTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Number'] = \Bitmotion\Mautic\Transformation\FormField\NumberTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Page'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Password'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['RadioButton'] = \Bitmotion\Mautic\Transformation\FormField\RadioButtonTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['SingleSelect'] = \Bitmotion\Mautic\Transformation\FormField\SingleSelectTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['StaticText'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['SummaryPage'] = \Bitmotion\Mautic\Transformation\FormField\IgnoreTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Telephone'] = \Bitmotion\Mautic\Transformation\FormField\TelephoneTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Text'] = \Bitmotion\Mautic\Transformation\FormField\TextTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Textarea'] = \Bitmotion\Mautic\Transformation\FormField\TextareaTransformation::class;
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Url'] = \Bitmotion\Mautic\Transformation\FormField\UrlTransformation::class;
+    /**
+     * // @extensionScannerIgnoreLine if for the ['transformation']
+     */
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['AdvancedPassword'] = IgnoreTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Checkbox'] = CheckboxTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['ContentElement'] = IgnoreTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Date'] = DatetimeTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['DatePicker'] = DatetimeTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Email'] = EmailTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['GridRow'] = IgnoreTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Fieldset'] = IgnoreTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['FileUpload'] = IgnoreTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Hidden'] = HiddenTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['ImageUpload'] = IgnoreTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['MultiCheckbox'] = MultiCheckboxTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['MultiSelect'] = MultiSelectTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Number'] = NumberTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Page'] = IgnoreTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Password'] = IgnoreTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['RadioButton'] = RadioButtonTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['SingleSelect'] = SingleSelectTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['StaticText'] = IgnoreTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['SummaryPage'] = IgnoreTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Telephone'] = TelephoneTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Text'] = TextTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Textarea'] = TextareaTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['Url'] = UrlTransformation::class;
 
     // Register custom field transformation classes
-    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['CountryList'] = \Bitmotion\Mautic\Transformation\FormField\CountryListTransformation::class;
+    // @extensionScannerIgnoreLine
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['transformation']['formField']['CountryList'] = CountryListTransformation::class;
 
     //##################
     //     LOGGING     #
     //##################
     // Turn logging off by default
-    $GLOBALS['TYPO3_CONF_VARS']['LOG']['Bitmotion']['Mautic'] = [
+    $GLOBALS['TYPO3_CONF_VARS']['LOG']['Leuchtfeuer']['Mautic'] = [
         'writerConfiguration' => [
-            \TYPO3\CMS\Core\Log\LogLevel::DEBUG => [
-                \TYPO3\CMS\Core\Log\Writer\NullWriter::class => [],
+            LogLevel::DEBUG => [
+                NullWriter::class => [],
             ],
         ],
     ];
 
-    if (\TYPO3\CMS\Core\Core\Environment::getContext()->isDevelopment()) {
-        $GLOBALS['TYPO3_CONF_VARS']['LOG']['Bitmotion']['Mautic'] = [
+    if (Environment::getContext()->isDevelopment()) {
+        $GLOBALS['TYPO3_CONF_VARS']['LOG']['Leuchtfeuer']['Mautic'] = [
             'writerConfiguration' => [
-                \TYPO3\CMS\Core\Log\LogLevel::DEBUG => [
-                    \TYPO3\CMS\Core\Log\Writer\FileWriter::class => [
+                LogLevel::DEBUG => [
+                    FileWriter::class => [
                         'logFileInfix' => 'mautic',
                     ],
                 ],

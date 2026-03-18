@@ -1,20 +1,19 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Domain\Repository;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Service\MauticSendFormService;
+namespace Leuchtfeuer\Mautic\Domain\Repository;
+
+use Leuchtfeuer\Mautic\Service\MauticSendFormService;
 use Mautic\Api\Forms;
 use Mautic\Exception\ContextNotFoundException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -24,14 +23,17 @@ class FormRepository extends AbstractRepository
     /**
      * @var Forms
      */
-    protected $formsApi;
+    protected Forms $formsApi;
 
     /**
      * @throws ContextNotFoundException
      */
+    #[\Override]
     protected function injectApis(): void
     {
-        $this->formsApi = $this->getApi('forms');
+        /** @var Forms $formsApi */
+        $formsApi = $this->getApi('forms');
+        $this->formsApi = $formsApi;
     }
 
     public function getForm(int $identifier): array
@@ -72,10 +74,11 @@ class FormRepository extends AbstractRepository
         return $this->formsApi->delete($id) ?: [];
     }
 
-    public function submitForm(int $id, array $data)
+    public function submitForm(int $id, array $data): void
     {
         $data['formId'] = $id;
-        $url = rtrim(trim($this->authorization->getBaseUrl()), '/') . '/form/submit?formId=' . $id;
+        // @extensionScannerIgnoreLine
+        $url = rtrim(trim((string)$this->authorization->getBaseUrl()), '/') . '/form/submit?formId=' . $id;
 
         $mauticSendFormService = GeneralUtility::makeInstance(MauticSendFormService::class);
         $code = $mauticSendFormService->submitForm($url, $data);
@@ -93,6 +96,6 @@ class FormRepository extends AbstractRepository
 
     public function formExists(int $id): bool
     {
-        return !empty($this->getForm($id));
+        return $this->getForm($id) !== [];
     }
 }

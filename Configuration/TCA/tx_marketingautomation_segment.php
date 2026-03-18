@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-defined('TYPO3_MODE') || die();
+defined('TYPO3') || die();
 
 return [
     'ctrl' => [
@@ -9,7 +9,6 @@ return [
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
         'searchFields' => 'title',
         'typeicon_classes' => [
@@ -21,7 +20,6 @@ return [
             'ignoreRootLevelRestriction' => true,
         ],
     ],
-    'interface' => [],
     'types' => [
         '1' => [
             'showitem' => '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,'
@@ -37,7 +35,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'width' => 200,
-                'eval' => 'trim,required',
+                'eval' => 'trim',
+                'required' => true,
             ],
         ],
         'items' => [

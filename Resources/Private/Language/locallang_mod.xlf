@@ -13,7 +13,7 @@
                 <source>Secret Key from Mautic API Credentials</source>
             </trans-unit>
             <trans-unit id="authorization.authorize">
-                <source>Provide OAuth1 API Credentials from Mautic</source>
+                <source>Provide OAuth2 API Credentials from Mautic</source>
             </trans-unit>
             <trans-unit id="authorization.accessToken">
                 <source>Access token</source>
@@ -103,7 +103,7 @@
                 <source>Configure Extension Mautic</source>
             </trans-unit>
             <trans-unit id="module.features">
-                <source>Enable features</source>
+                <source>Connect to your Mautic</source>
             </trans-unit>
             <trans-unit id="module.save">
                 <source>Save Configuration</source>

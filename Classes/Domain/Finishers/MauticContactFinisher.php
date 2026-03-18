@@ -1,20 +1,19 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Domain\Finishers;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Domain\Repository\ContactRepository;
+namespace Leuchtfeuer\Mautic\Domain\Finishers;
+
+use Leuchtfeuer\Mautic\Domain\Repository\ContactRepository;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -25,19 +24,18 @@ class MauticContactFinisher extends AbstractFinisher implements LoggerAwareInter
 {
     use LoggerAwareTrait;
 
-    protected $contactRepository;
+    protected object $contactRepository;
 
-    public function __construct(string $finisherIdentifier = '')
+    public function __construct()
     {
-        parent::__construct($finisherIdentifier);
-
         $this->contactRepository = GeneralUtility::makeInstance(ContactRepository::class);
     }
 
     /**
      * Creates a contact in Mautic if enough data is present from the collected form results
      */
-    protected function executeInternal()
+    #[\Override]
+    protected function executeInternal(): ?string
     {
         $formDefinition = $this->finisherContext->getFormRuntime()->getFormDefinition();
         $mauticFields = [];
@@ -53,8 +51,8 @@ class MauticContactFinisher extends AbstractFinisher implements LoggerAwareInter
             }
         }
 
-        if (\count($mauticFields) === 0) {
-            return;
+        if ($mauticFields === []) {
+            return null;
         }
 
         $contact = [];
@@ -75,5 +73,6 @@ class MauticContactFinisher extends AbstractFinisher implements LoggerAwareInter
                 $this->logger->critical(sprintf('%s: %s', (string)$error['code'], $error['message']));
             }
         }
+        return null;
     }
 }

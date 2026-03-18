@@ -1,15 +1,24 @@
 <?php
 
-namespace Bitmotion\Mautic\EventListener;
+/*
+ * This file is part of the "Mautic" extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Domain\Repository\SegmentRepository;
-use Bitmotion\Mautic\Domain\Repository\TagRepository;
+namespace Leuchtfeuer\Mautic\EventListener;
+
+use Leuchtfeuer\Mautic\Domain\Repository\SegmentRepository;
+use Leuchtfeuer\Mautic\Domain\Repository\TagRepository;
 use TYPO3\CMS\Backend\Controller\Event\AfterFormEnginePageInitializedEvent;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class SynchronizeMauticData
 {
-    public function __invoke(AfterFormEnginePageInitializedEvent $event)
+    public function __invoke(AfterFormEnginePageInitializedEvent $event): void
     {
         $body = $event->getRequest()->getParsedBody();
 

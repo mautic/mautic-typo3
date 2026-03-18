@@ -1,47 +1,42 @@
 <?php
 
 declare(strict_types=1);
-namespace Bitmotion\Mautic\Transformation\Form;
 
-/***
- *
+/*
  * This file is part of the "Mautic" extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2023 Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
- *
- ***/
+ * (c) Leuchtfeuer Digital Marketing <dev@leuchtfeuer.com>
+ */
 
-use Bitmotion\Mautic\Domain\Repository\FieldRepository;
-use Bitmotion\Mautic\Domain\Repository\FormRepository;
-use Bitmotion\Mautic\Transformation\AbstractTransformation;
+namespace Leuchtfeuer\Mautic\Transformation\Form;
+
+use Leuchtfeuer\Mautic\Domain\Repository\FieldRepository;
+use Leuchtfeuer\Mautic\Domain\Repository\FormRepository;
+use Leuchtfeuer\Mautic\Transformation\AbstractTransformation;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 abstract class AbstractFormTransformation extends AbstractTransformation implements SingletonInterface
 {
-    protected $formType = '';
+    protected string $formType = '';
 
-    protected $formDefinition = [];
+    protected array $formData = [];
 
-    protected $formData = [];
+    protected array $formElements = [];
 
-    protected $formElements = [];
+    protected bool $isFormDefinitionUpdated = false;
 
-    protected $isFormDefinitionUpdated = false;
+    protected bool $shouldUpdateCustomFields = false;
 
-    protected $shouldUpdateCustomFields = false;
+    protected array $customFieldValues = [];
 
-    protected $customFieldValues = [];
+    public function __construct(protected array $formDefinition = []) {}
 
-    public function __construct(array $formDefinition = [])
-    {
-        $this->formDefinition = $formDefinition;
-    }
-
-    public function transform()
+    #[\Override]
+    public function transform(): void
     {
         $this->formData = [
             'alias' => $this->formDefinition['identifier'],
@@ -64,7 +59,7 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
         return $this->formDefinition;
     }
 
-    public function setFormDefinition(array $formDefinition)
+    public function setFormDefinition(array $formDefinition): void
     {
         $this->formDefinition = $formDefinition;
     }
@@ -74,14 +69,14 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
         return $this->shouldUpdateCustomFields;
     }
 
-    public function removeMauticFormId()
+    public function removeMauticFormId(): void
     {
         unset($this->formDefinition['renderingOptions']['mauticId']);
     }
 
-    public function addField(array $fieldDefinition)
+    public function addField(array $fieldDefinition): void
     {
-        if (!empty($fieldDefinition)) {
+        if ($fieldDefinition !== []) {
             if (!isset($this->formData['fields'])) {
                 $this->formData['fields'] = [];
             }
@@ -107,7 +102,7 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
         return $this->formDefinition;
     }
 
-    protected function enrichFormData()
+    protected function enrichFormData(): void
     {
         if (isset($this->formDefinition['renderingOptions']['mauticId']) && !empty($this->formDefinition['renderingOptions']['mauticId'])) {
             $mauticId = (int)$this->formDefinition['renderingOptions']['mauticId'];
@@ -123,13 +118,13 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
         }
     }
 
-    public function addCustomFieldValues(array $values)
+    public function addCustomFieldValues(array $values): void
     {
         $this->shouldUpdateCustomFields = true;
         $this->customFieldValues = array_merge($this->customFieldValues, $values);
     }
 
-    protected function updateFormDefinition(array $response)
+    protected function updateFormDefinition(array $response): void
     {
         // In case Mautic is not reachable, prevent warnings
         if (!\is_array($response['form']['fields'])) {
@@ -148,11 +143,9 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
                                         $this->formDefinition['renderables'][$formPageKey]['renderables'][$formElementKey]['renderables'][$containerElementKey]['renderables'][$containerElementInnerKey]['properties']['mauticAlias'] = str_replace('-', '_', $containerElementInner['identifier']);
                                     }
                                 }
-                            } else {
-                                if ($mauticField['alias'] === str_replace('-', '_', $containerElement['identifier'])) {
-                                    $this->formDefinition['renderables'][$formPageKey]['renderables'][$formElementKey]['renderables'][$containerElementKey]['properties']['mauticId'] = $mauticField['id'];
-                                    $this->formDefinition['renderables'][$formPageKey]['renderables'][$formElementKey]['renderables'][$containerElementKey]['properties']['mauticAlias'] = str_replace('-', '_', $containerElement['identifier']);
-                                }
+                            } elseif ($mauticField['alias'] === str_replace('-', '_', $containerElement['identifier'])) {
+                                $this->formDefinition['renderables'][$formPageKey]['renderables'][$formElementKey]['renderables'][$containerElementKey]['properties']['mauticId'] = $mauticField['id'];
+                                $this->formDefinition['renderables'][$formPageKey]['renderables'][$formElementKey]['renderables'][$containerElementKey]['properties']['mauticAlias'] = str_replace('-', '_', $containerElement['identifier']);
                             }
                         }
                     }
@@ -193,7 +186,7 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
         return $this->formElements;
     }
 
-    protected function updateCustomFields()
+    protected function updateCustomFields(): void
     {
         $formElements = $this->resolveFormElements($this->formDefinition['renderables']);
         $fieldRepository = GeneralUtility::makeInstance(FieldRepository::class);
