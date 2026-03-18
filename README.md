@@ -5,7 +5,7 @@ The Mautic Extension for TYPO3
 Welcome to the official Mautic extension for TYPO3.
 
 ## Supported Versions
-We currently support Mautic v4 or greater.
+We currently support Mautic v4 and higher.
 
 * **For TYPO3 v12 please use extension release 12.0.x** 
 * **For TYPO3 v11 and above on PHP8, please use extension release 4.4.x**
@@ -64,6 +64,9 @@ Set tags for users when they are visiting a page!
 ### Assets ###
 Link to Mautic assets directly in TYPO3 using file relations or the TYPO3 link wizard!
 
+### Language sync ###
+(currently in flux)
+
 ### API ###
 The Mautic API https://developer.mautic.org/#rest-api is made available (see "ContactRepository")
 
@@ -80,7 +83,7 @@ Afterwards, establish the API connection:
 ## Documentation
 Documentation and a getting started guide can be found [here](https://docs.typo3.org/p/mautic/mautic-typo3/master/en-us/).
 
-## Known Issues
+## Known Issues & Ideas for the Future 
 ### TYPO3 Form Builder
 * "Mautic Property Type" currently not working: Mautic field mappings are currently not possible through the TYPO3 UI, 
 only for the pre-defined fields in template "Simple Contact Form"
@@ -92,10 +95,13 @@ only for the pre-defined fields in template "Simple Contact Form"
 * TYPO3-side changes (fields, field properties, form type, ...) after creation are NOT sync'd to Mautic 
 * Make sure to use finisher "Create Mautic Contact"
 * Use "Send to Mautic form" only if you wish to send to a different form ID
+* Idea: Move "updating" of forms (normally by the form's Javascriupt snippets) to TYPO3 so that we can always deliver static HTML (which works even in restricted environments)
 
 ### Tags
-If a visitor lands directly on a page with a Mautic tag, it may happen that the tracking cookie has not yet been set. 
-In this case, the visitor's page tag will not be saved either.
+On the very first page visit, setting tags can not work reliably. (We are considering using mpixel in addition to API for that reason...)
+
+### Language Sync, Assets 
+On the very first page visit, setting tags can not work reliably. (We are considering using mpixel in addition to API for that reason...)
 
 ## Packaging for use in the Extension Manager
 Clone the repository and run the following in the extension root directory:
@@ -104,9 +110,9 @@ composer package
 ```
 
 ## Contributing Partners
-* [Beech](https://beech.it)
 * [Leuchtfeuer Digital Marketing](https://leuchtfeuer.com)
 * [TYPO3 GmbH](https://typo3.com)
+* [Beech](https://beech.it)
 
 ## Contributing
 You can contribute by making a pull request to the master branch of this repository.
