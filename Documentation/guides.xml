@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- See  https://docs.typo3.org/permalink/h2document:guides-xml for documentation on this file-->
+<guides
+    xmlns="https://www.phpdoc.org/guides"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.phpdoc.org/guides vendor/phpdocumentor/guides-cli/resources/schema/guides.xsd"
+    input-format="rst"
+    >
+    <project
+        title="mautic/mautic-typo3"
+        copyright="since 2018 by the authors"
+    />
+    <extension
+        class="\T3Docs\Typo3DocsTheme\DependencyInjection\Typo3DocsThemeExtension"
+        edit-on-github="mautic/mautic-typo3"
+        edit-on-github-branch="main"
+        interlink-shortcode="mautic/mautic-typo3"
+        project-home="https://github.com/mautic/mautic-typo3"
+        project-issues="https://github.com/mautic/mautic-typo3/issues"
+        project-repository="https://github.com/mautic/mautic-typo3"
+        typo3-core-preferred="12.4"
+    />
+</guides>
