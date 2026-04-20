@@ -230,9 +230,12 @@ class MauticFormHook implements LoggerAwareInterface
      */
     protected function transformFormElements(): void
     {
+        $fieldDefinitions = $this->formTransformation->getFields();
+        $this->formTransformation->setFields([]);
         foreach ($this->formTransformation->getFormElements() as $formElement) {
             $fieldTransformation = $this->getFieldTransformation($formElement);
             $fieldTransformation->transform();
+            $fieldTransformation->enrichFieldData($fieldDefinitions);
             $this->formTransformation->addField($fieldTransformation->getFieldData());
             if ($fieldTransformation instanceof ListTransformationPrototype && $fieldTransformation->hasCustomFieldValues()) {
                 $this->formTransformation->addCustomFieldValues($fieldTransformation->getCustomFieldValues());
