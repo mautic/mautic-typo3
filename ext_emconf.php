@@ -10,6 +10,7 @@ $EM_CONF['mautic'] = [
     'version' => '12.0.0',
     'constraints' => [
         'depends' => [
+            'php' => '8.1.0-8.4.99',
             'typo3' => '12.4.0-12.4.99',
             'marketing_automation' => '2.0.0-2.9.99',
         ],
