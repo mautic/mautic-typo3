@@ -1,0 +1,41 @@
+.. include:: ../../Includes.txt
+
+===========================
+Version 13.0.1 - 2026-09-07
+===========================
+
+This is a maintenance release.
+
+Download
+========
+
+Download this version from the `TYPO3 extension repository <https://extensions.typo3.org/extension/mautic/>`__ or from
+`GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v13.0.1>`__.
+
+Added
+=====
+
+* Add release script for the TYPO3 Extension Repository
+
+Changed
+=======
+
+* Raise ``mautic/api-library`` to 4.0, which communicates with Mautic via a PSR-18 HTTP client
+
+All Changes
+===========
+
+This is a list of all changes in this release::
+
+    2026-08-24 Merge pull request #7 from Leuchtfeuer/feature/TER-326 (Commit c76477f by bmheins)
+    2026-08-20 [TASK] Guard the declared PHP floor against the platform override [TER-326] (Commit 5d60631 by Oliver Heins)
+    2026-08-20 [TASK] Standardize release process and fix bundled dependencies [TER-326] (Commit 6f6817e by Oliver Heins)
+
+Contributors
+============
+Following people have contributed to this release:
+
+* Marcus Balasch
+* Oliver Heins
+
+Thank you very much for your support. The next beer is on us! 🍻
