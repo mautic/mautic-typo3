@@ -4,30 +4,41 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d6a8f593fad07b4f188f23ea2cf69ba",
+    "content-hash": "6464686ad36d8e07793a9937768e120d",
     "packages": [
         {
             "name": "mautic/api-library",
-            "version": "2.15.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mautic/api-library.git",
-                "reference": "6ff1dfa1da912ca1fc78cbcab3a8c395a22d5e14"
+                "reference": "3c8e071e2107e1c88203809dcb800ce093f638a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mautic/api-library/zipball/6ff1dfa1da912ca1fc78cbcab3a8c395a22d5e14",
-                "reference": "6ff1dfa1da912ca1fc78cbcab3a8c395a22d5e14",
+                "url": "https://api.github.com/repos/mautic/api-library/zipball/3c8e071e2107e1c88203809dcb800ce093f638a9",
+                "reference": "3c8e071e2107e1c88203809dcb800ce093f638a9",
                 "shasum": ""
             },
             "require": {
-                "ext-curl": "*",
-                "php": ">=5.3.7",
-                "psr/log": "~1.0"
+                "ext-json": "*",
+                "guzzlehttp/psr7": "^2.4",
+                "php": ">=8.2",
+                "php-http/discovery": "^1.15",
+                "psr/http-client": "^1.0",
+                "psr/http-client-implementation": "^1.0",
+                "psr/log": "~1.0 || ~2.0 || ~3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.8|~5.0",
-                "raveren/kint": "~0.9"
+                "friendsofphp/php-cs-fixer": "^3.93",
+                "guzzlehttp/guzzle": "^7.5",
+                "kint-php/kint": "^4.1",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "~9.6.33",
+                "rector/rector": "^2.3"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "A popular HTTP client that implements psr/http-client-implementation."
             },
             "type": "library",
             "autoload": {
@@ -40,35 +51,62 @@
                 "MIT"
             ],
             "description": "Mautic API Connector Library",
-            "time": "2018-12-19T14:55:48+00:00"
+            "support": {
+                "issues": "https://github.com/mautic/api-library/issues",
+                "source": "https://github.com/mautic/api-library/tree/4.0.0"
+            },
+            "time": "2026-04-14T06:50:21+00:00"
         },
         {
-            "name": "psr/log",
-            "version": "1.1.0",
+            "name": "php-http/discovery",
+            "version": "1.20.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/php-fig/log.git",
-                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd"
+                "url": "https://github.com/php-http/discovery.git",
+                "reference": "82fe4c73ef3363caed49ff8dd1539ba06044910d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
-                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/82fe4c73ef3363caed49ff8dd1539ba06044910d",
+                "reference": "82fe4c73ef3363caed49ff8dd1539ba06044910d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "composer-plugin-api": "^1.0|^2.0",
+                "php": "^7.1 || ^8.0"
             },
-            "type": "library",
+            "conflict": {
+                "nyholm/psr7": "<1.0",
+                "zendframework/zend-diactoros": "*"
+            },
+            "provide": {
+                "php-http/async-client-implementation": "*",
+                "php-http/client-implementation": "*",
+                "psr/http-client-implementation": "*",
+                "psr/http-factory-implementation": "*",
+                "psr/http-message-implementation": "*"
+            },
+            "require-dev": {
+                "composer/composer": "^1.0.2|^2.0",
+                "graham-campbell/phpspec-skip-example-extension": "^5.0",
+                "php-http/httplug": "^1.0 || ^2.0",
+                "php-http/message-factory": "^1.0",
+                "phpspec/phpspec": "^5.1 || ^6.1 || ^7.3",
+                "sebastian/comparator": "^3.0.5 || ^4.0.8",
+                "symfony/phpunit-bridge": "^6.4.4 || ^7.0.1"
+            },
+            "type": "composer-plugin",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
+                "class": "Http\\Discovery\\Composer\\Plugin",
+                "plugin-optional": true
             },
             "autoload": {
                 "psr-4": {
-                    "Psr\\Log\\": "Psr/Log/"
-                }
+                    "Http\\Discovery\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "src/Composer/Plugin.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -76,29 +114,39 @@
             ],
             "authors": [
                 {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com"
                 }
             ],
-            "description": "Common interface for logging libraries",
-            "homepage": "https://github.com/php-fig/log",
+            "description": "Finds and installs PSR-7, PSR-17, PSR-18 and HTTPlug implementations",
+            "homepage": "http://php-http.org",
             "keywords": [
-                "log",
-                "psr",
-                "psr-3"
+                "adapter",
+                "client",
+                "discovery",
+                "factory",
+                "http",
+                "message",
+                "psr17",
+                "psr7"
             ],
-            "time": "2018-11-20T15:27:04+00:00"
+            "support": {
+                "issues": "https://github.com/php-http/discovery/issues",
+                "source": "https://github.com/php-http/discovery/tree/1.20.0"
+            },
+            "time": "2024-10-02T11:20:13+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
+    "platform": {},
+    "platform-dev": {},
     "platform-overrides": {
-        "php": "7.2.0"
-    }
+        "php": "8.2.0"
+    },
+    "plugin-api-version": "2.9.0"
 }

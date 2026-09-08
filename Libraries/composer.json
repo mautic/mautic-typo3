@@ -1,11 +1,30 @@
 {
+    "description": "Runtime dependencies bundled for TYPO3 Classic Mode installations (TER package). Composer-based installations resolve these from the root composer.json instead. Only packages NOT already shipped by TYPO3 Core belong here - everything the Core provides is listed under 'replace' to keep it out of Libraries/vendor and avoid a duplicate autoloader registration.",
+    "license": "GPL-2.0-or-later",
     "config": {
         "platform": {
-            "php": "7.2.0"
+            "php": "8.2.0"
         },
-        "classmap-authoritative": true
+        "classmap-authoritative": true,
+        "allow-plugins": {
+            "php-http/discovery": false
+        }
     },
     "require": {
-        "mautic/api-library": "^2.15.0"
+        "mautic/api-library": "^4.0"
+    },
+    "replace": {
+        "guzzlehttp/psr7": "*",
+        "leuchtfeuer/marketing-automation": "*",
+        "psr/http-client": "*",
+        "psr/http-factory": "*",
+        "psr/http-message": "*",
+        "psr/log": "*",
+        "ralouphie/getallheaders": "*",
+        "symfony/deprecation-contracts": "*",
+        "symfony/polyfill-php80": "*"
+    },
+    "provide": {
+        "psr/http-client-implementation": "1.0"
     }
 }
