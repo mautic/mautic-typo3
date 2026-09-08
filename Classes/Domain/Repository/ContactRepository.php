@@ -49,6 +49,11 @@ class ContactRepository extends AbstractRepository
         return $this->contactsApi->edit($id, $data, false);
     }
 
+    public function deleteContact(int $id): array
+    {
+        return $this->contactsApi->delete($id);
+    }
+
     public function getContact(int $id): array
     {
         $contact = $this->contactsApi->get($id);
