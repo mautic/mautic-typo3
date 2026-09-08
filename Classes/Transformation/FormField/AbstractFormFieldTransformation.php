@@ -96,4 +96,20 @@ abstract class AbstractFormFieldTransformation extends AbstractTransformation im
 
         $this->fieldData = $fieldData;
     }
+
+    public function enrichFieldData(array $fieldDefinitions): void
+    {
+        if (empty($this->fieldData['id'])) {
+            return;
+        }
+
+        $fieldDefinitions = array_filter($fieldDefinitions, function ($fieldDefinition) {return $fieldDefinition['id'] ?? null === $this->fieldData['id'];});
+        $fieldDefinition = array_shift($fieldDefinitions);
+
+        if (empty($fieldDefinition)) {
+            return;
+        }
+
+        $this->fieldData = array_replace($fieldDefinition, $this->fieldData);
+    }
 }

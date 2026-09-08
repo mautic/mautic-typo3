@@ -85,6 +85,16 @@ abstract class AbstractFormTransformation extends AbstractTransformation impleme
         }
     }
 
+    public function getFields(): array
+    {
+        return $this->formData['fields'] ?? [];
+    }
+
+    public function setFields(array $fieldDefinitions): void
+    {
+        $this->formData['fields'] = $fieldDefinitions;
+    }
+
     public function getUpdatedFormDefinition(array $response): array
     {
         if ($this->isFormDefinitionUpdated === false) {
