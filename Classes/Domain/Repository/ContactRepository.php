@@ -64,7 +64,7 @@ class ContactRepository extends AbstractRepository
         }
     }
 
-    public function addDnc(int $id, string $channel = 'email', int $reason = Contacts::MANUAL, int $channelId = null, string $comments = 'via API'): void
+    public function addDnc(int $id, string $channel = 'email', int $reason = Contacts::MANUAL, ?int $channelId = null, string $comments = 'via API'): void
     {
         $this->contactsApi->addDnc($id, $channel, $reason, $channelId, $comments);
     }

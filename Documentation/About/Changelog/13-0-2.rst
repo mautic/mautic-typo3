@@ -1,0 +1,46 @@
+.. include:: ../../Includes.txt
+
+===========================
+Version 13.0.2 - 2026-10-15
+===========================
+
+This is a maintenance release.
+
+Download
+========
+
+Download this version from the `TYPO3 extension repository <https://extensions.typo3.org/extension/mautic/>`__ or from
+`GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v13.0.2>`__.
+
+Announcement
+============
+
+Without the TYPO3 form framework (``EXT:form``) installed, the extension throws an exception and the system
+does not work properly. As a temporary workaround, ``typo3/cms-form`` is now a required dependency. It will
+become optional again once this bug has been fixed.
+
+Changed
+=======
+
+* Add TYPO3 Forms (``typo3/cms-form``) as a required dependency for the time being, see announcement above
+
+Fixed
+=====
+
+* Ensure compatibility with PHP 8.5
+
+All Changes
+===========
+
+This is a list of all changes in this release::
+
+    2026-10-15 [TASK] Add TYPO3 Forms as a dependency (Commit 01715df by Marcus Balasch)
+    2026-10-15 [BUGFIX] Ensure compatibility with PHP 8.5 (Commit ad0b251 by Marcus Balasch)
+
+Contributors
+============
+Following people have contributed to this release:
+
+* Marcus Balasch
+
+Thank you very much for your support. The next beer is on us! 🍻
