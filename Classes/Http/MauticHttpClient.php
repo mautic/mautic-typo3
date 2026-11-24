@@ -43,7 +43,7 @@ final class MauticHttpClient implements ClientInterface, LoggerAwareInterface
     {
         return $this->request((string)$request->getUri(), $request->getMethod(), [
             'headers' => $request->getHeaders(),
-            'body' => (string)$request->getBody(),
+            'body' => $request->getBody(),
             'http_errors' => false,
             'allow_redirects' => false,
         ]);

@@ -109,7 +109,7 @@ final class MauticHttpClientTest extends UnitTestCase
         $this->requestFactory->expects(self::once())->method('request')
             ->with(self::URI, 'POST', [
                 'headers' => $request->getHeaders(),
-                'body' => 'x',
+                'body' => $request->getBody(),
                 'http_errors' => false,
                 'allow_redirects' => false,
                 'timeout' => 5,
@@ -118,6 +118,20 @@ final class MauticHttpClientTest extends UnitTestCase
             ->willReturn($response);
 
         self::assertSame($response, $this->subject->sendRequest($request));
+    }
+
+    #[Test]
+    public function sendRequestForwardsBodyAsStreamWithoutBuffering(): void
+    {
+        $this->configuration->method('getTimeout')->willReturn(5);
+        $request = new Request('POST', self::URI, [], 'file content');
+        $this->requestFactory->expects(self::once())->method('request')
+            ->with(self::URI, 'POST', self::callback(
+                static fn(array $options): bool => $options['body'] === $request->getBody()
+            ))
+            ->willReturn(new Response(201));
+
+        $this->subject->sendRequest($request);
     }
 
     #[Test]
