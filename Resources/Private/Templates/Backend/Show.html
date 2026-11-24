@@ -1,3 +1,4 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers" data-namespace-typo3-fluid="true">
 <style>
 	.mautic-backend-module {
 		height: calc(100vh - 20px);
@@ -97,7 +98,7 @@
 	<div role="tabpanel" class="tab-pane" id="category-mautic-misc">
 		<div class="form-section">
 			<h2 class="h4 form-section-headline">
-				<f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:module.features"/>
+				<f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:misc.headline"/>
 			</h2>
 
 			<f:render section="form-element-text" arguments="{key: 'timeout', type: 'misc', dataType: 'int', hint: '{f:translate(key: \'LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:misc.timeout.description\')}'}" />

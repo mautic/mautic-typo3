@@ -41,6 +41,9 @@
                 <source>Override default Mautic tracking script (without script tags)</source>
             </trans-unit>
 
+            <trans-unit id="misc.headline">
+                <source>Miscellaneous settings</source>
+            </trans-unit>
             <trans-unit id="misc.timeout">
                 <source>Timeout for requests to Mautic (seconds)</source>
             </trans-unit>

@@ -53,6 +53,10 @@
                 <target>Standard Mautic Tracking-Script überschrieben (Eingabe ohne script tags)</target>
             </trans-unit>
 
+            <trans-unit id="misc.headline">
+                <source>Miscellaneous settings</source>
+                <target>Sonstige Einstellungen</target>
+            </trans-unit>
             <trans-unit id="misc.timeout">
                 <source>Timeout for requests to Mautic (seconds)</source>
                 <target>Timeout für Anfragen an Mautic (Sekunden)</target>
