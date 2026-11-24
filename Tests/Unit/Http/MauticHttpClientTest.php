@@ -135,7 +135,7 @@ final class MauticHttpClientTest extends UnitTestCase
     }
 
     #[Test]
-    public function connectExceptionMarksMauticUnreachableAndIsRethrown(): void
+    public function connectExceptionIsLoggedOnceAndRethrown(): void
     {
         $this->configuration->method('getTimeout')->willReturn(5);
         $this->requestFactory->method('request')->willThrowException($this->createConnectException());
@@ -143,13 +143,8 @@ final class MauticHttpClientTest extends UnitTestCase
         $logger->expects(self::once())->method('warning');
         $this->subject->setLogger($logger);
 
-        try {
-            $this->subject->request(self::URI);
-            self::fail('ConnectException expected');
-        } catch (ConnectException) {
-        }
-
-        self::assertTrue($this->subject->isMauticUnreachable());
+        $this->expectException(ConnectException::class);
+        $this->subject->request(self::URI);
     }
 
     #[Test]
@@ -186,16 +181,16 @@ final class MauticHttpClientTest extends UnitTestCase
     {
         $this->configuration->method('getTimeout')->willReturn(5);
         $request = new Request('GET', self::URI);
-        $this->requestFactory->method('request')
+        $this->requestFactory->expects(self::exactly(2))->method('request')
             ->willThrowException(RequestException::create($request, new Response($status)));
 
-        try {
-            $this->subject->request(self::URI);
-            self::fail('RequestException expected');
-        } catch (RequestException) {
+        for ($attempt = 1; $attempt <= 2; $attempt++) {
+            try {
+                $this->subject->request(self::URI);
+                self::fail('RequestException expected');
+            } catch (RequestException) {
+            }
         }
-
-        self::assertFalse($this->subject->isMauticUnreachable());
     }
 
     private function createConnectException(): ConnectException

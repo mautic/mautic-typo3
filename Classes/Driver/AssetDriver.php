@@ -629,10 +629,6 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         try {
             $content = (string)GeneralUtility::makeInstance(MauticHttpClient::class)->request($asset['downloadUrl'])->getBody();
         } catch (\Exception $exception) {
-            $this->logger?->warning('Downloading Mautic asset {identifier} failed: {message}', [
-                'identifier' => $fileIdentifier,
-                'message' => $exception->getMessage(),
-            ]);
             throw new \RuntimeException('Downloading file ' . $fileIdentifier . ' failed.', 1555571766, $exception);
         }
         GeneralUtility::writeFile($temporaryPath, $content);

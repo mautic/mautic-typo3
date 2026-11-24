@@ -76,12 +76,12 @@ final class AssetDriverTest extends UnitTestCase
     }
 
     #[Test]
-    public function failedDownloadIsLoggedAndThrowsRuntimeExceptionWithCause(): void
+    public function failedDownloadThrowsRuntimeExceptionWithCauseWithoutLoggingTwice(): void
     {
         $connectException = new ConnectException('Connection timed out', new Request('GET', self::DOWNLOAD_URL));
         $this->requestFactory->method('request')->willThrowException($connectException);
         $logger = $this->createMock(LoggerInterface::class);
-        $logger->expects(self::once())->method('warning');
+        $logger->expects(self::never())->method('warning');
         $this->subject->setLogger($logger);
 
         try {

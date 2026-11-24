@@ -81,13 +81,13 @@ class CountryListFormElement extends GenericFormElement implements LoggerAwareIn
             // @extensionScannerIgnoreLine
             $countryJson = (string)GeneralUtility::makeInstance(MauticHttpClient::class)->request($this->baseUrl . $this->countryFile)->getBody();
         } catch (\Exception $exception) {
-            $this->logger?->warning('Loading the country list from Mautic failed: {message}', ['message' => $exception->getMessage()]);
+            $this->logger->warning('Loading the country list from Mautic failed: {message}', ['message' => $exception->getMessage()]);
             return [];
         }
 
         $countries = json_decode($countryJson, true);
         if (!is_array($countries)) {
-            $this->logger?->warning('Mautic returned an invalid country list');
+            $this->logger->warning('Mautic returned an invalid country list');
             return [];
         }
 

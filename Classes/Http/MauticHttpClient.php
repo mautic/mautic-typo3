@@ -69,16 +69,11 @@ final class MauticHttpClient implements ClientInterface, LoggerAwareInterface
             return $this->requestFactory->request($uri, $method, $options);
         } catch (ConnectException $exception) {
             $this->mauticUnreachable = true;
-            $this->logger?->warning('Mautic at {host} is unreachable: {message}', [
+            $this->logger->warning('Mautic at {host} is unreachable: {message}', [
                 'host' => $exception->getRequest()->getUri()->getHost(),
                 'message' => $exception->getMessage(),
             ]);
             throw $exception;
         }
-    }
-
-    public function isMauticUnreachable(): bool
-    {
-        return $this->mauticUnreachable;
     }
 }

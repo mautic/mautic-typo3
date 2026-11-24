@@ -306,7 +306,7 @@ class MauticAuthorizeService implements LoggerAwareInterface
                 GeneralUtility::makeInstance(YamlConfiguration::class)->save($this->extensionConfiguration);
             }
         } catch (\Exception $exception) {
-            $this->logger?->warning('Refreshing the Mautic access token failed: {code} {message}', [
+            $this->logger->warning('Refreshing the Mautic access token failed: {code} {message}', [
                 'code' => $exception->getCode(),
                 'message' => $exception->getMessage(),
             ]);
