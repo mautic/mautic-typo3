@@ -79,6 +79,13 @@ class YamlConfiguration implements SingletonInterface
     protected $expires = 0;
 
     /**
+     * @var int
+     */
+    protected $timeout = self::DEFAULT_TIMEOUT;
+
+    public const DEFAULT_TIMEOUT = 5;
+
+    /**
      * @var list<string>
      */
     private const TOKEN_KEYS = ['accessToken', 'refreshToken', 'expires'];
@@ -229,6 +236,20 @@ class YamlConfiguration implements SingletonInterface
     public function getExpires(): int
     {
         return (int)$this->expires;
+    }
+
+    public function getTimeout(): int
+    {
+        return self::normalizeTimeout($this->timeout);
+    }
+
+    public static function normalizeTimeout(mixed $timeout): int
+    {
+        if ($timeout === null || $timeout === '') {
+            return self::DEFAULT_TIMEOUT;
+        }
+
+        return max(0, (int)$timeout);
     }
 
     public function isSameCredentials(array $configuration): bool
