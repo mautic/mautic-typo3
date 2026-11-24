@@ -74,6 +74,18 @@ The configuration is split into two locations:
       secretKey: '...'
       tracking: '1'
       trackingScriptOverride: ''
+      timeout: 5
+
+   ``timeout`` limits every request to Mautic to the given number of seconds (default ``5``; an empty value in the
+   backend module is saved as ``5``). If Mautic does not answer in time, the page is delivered without Mautic content
+   and all further requests to Mautic within the same page request fail immediately. The value can be changed in the
+   "misc" tab of the backend module.
+
+   ``0`` sets no timeout of its own. The TYPO3 HTTP settings ``$GLOBALS['TYPO3_CONF_VARS']['HTTP']['connect_timeout']``
+   (default ``10``) and ``$GLOBALS['TYPO3_CONF_VARS']['HTTP']['timeout']`` (default ``0``, no limit) apply instead.
+   Their current values are shown in the backend module :guilabel:`System > Configuration` (requires
+   ``typo3/cms-lowlevel``) under ``TYPO3_CONF_VARS`` > ``HTTP``; they can be changed in
+   :guilabel:`Admin Tools > Settings > Configure Installation-Wide Options`.
 
 *  The OAuth2 tokens (``accessToken``, ``refreshToken`` and ``expires``) are stored in the TYPO3 registry within the
    namespace ``tx_mautic_oauth``. They are written and refreshed by the extension itself, must not be edited manually
@@ -95,6 +107,7 @@ your configuration files, which takes precedence over the values from the config
    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['secretKey'] = '...';
    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['tracking'] = '1';
    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['trackingScriptOverride'] = '';
+   $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mautic']['timeout'] = 5;
 
 .. note::
 

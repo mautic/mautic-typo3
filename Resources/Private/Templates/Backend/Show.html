@@ -22,11 +22,17 @@
 				tracking
 			</a>
 		</li>
+		<li role="presentation" class="nav-item">
+			<a class="nav-link text-capitalize" href="#category-mautic-misc" aria-controls="category-mautic-misc" role="tab" data-toggle="tab" data-bs-toggle="tab" aria-expanded="false">
+				misc
+			</a>
+		</li>
 	</ul>
 	<f:form action="save" name="configurationform" object="{configuration}" objectName="configuration" class="t3js-extensionConfiguration-form extensionConfiguration-form">
 		<div class="tab-content">
 			<f:render section="tabpanel-authorization" arguments="{authorizeButton: authorizeButton, expiresInfo: expiresInfo}"/>
 			<f:render section="tabpanel-tracking" />
+			<f:render section="tabpanel-misc" />
 		</div>
 		<f:form.button type="submit" class="btn btn-default" name="save">
 			<f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:module.save"/>
@@ -83,6 +89,18 @@
 
 			<f:render section="form-element-bool" arguments="{key: 'tracking', type: 'tracking'}" />
 			<f:render section="form-element-textarea" arguments="{key: 'trackingScriptOverride', type: 'tracking'}" />
+		</div>
+	</div>
+</f:section>
+
+<f:section name="tabpanel-misc">
+	<div role="tabpanel" class="tab-pane" id="category-mautic-misc">
+		<div class="form-section">
+			<h2 class="h4 form-section-headline">
+				<f:translate key="LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:module.features"/>
+			</h2>
+
+			<f:render section="form-element-text" arguments="{key: 'timeout', type: 'misc', dataType: 'int', hint: '{f:translate(key: \'LLL:EXT:mautic/Resources/Private/Language/locallang_mod.xlf:misc.timeout.description\')}'}" />
 		</div>
 	</div>
 </f:section>
