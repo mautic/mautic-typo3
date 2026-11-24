@@ -22,14 +22,13 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Http\RequestFactory;
-use TYPO3\CMS\Core\SingletonInterface;
 
 /**
  * Sends every request to Mautic with the configured timeout. After the first
  * network failure Mautic is considered unreachable for the rest of the
  * current PHP request, so a page waits for the timeout at most once.
  */
-final class MauticHttpClient implements ClientInterface, SingletonInterface, LoggerAwareInterface
+final class MauticHttpClient implements ClientInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 

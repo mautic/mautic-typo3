@@ -48,7 +48,7 @@ final class TCEmainHookTest extends UnitTestCase
         $this->requestFactory = $this->createMock(RequestFactory::class);
         $client = new MauticHttpClient($this->requestFactory, $configuration);
         $client->setLogger(new NullLogger());
-        GeneralUtility::setSingletonInstance(MauticHttpClient::class, $client);
+        GeneralUtility::addInstance(MauticHttpClient::class, $client);
         $this->tagRepository = $this->createMock(TagRepository::class);
         $this->tagRepository->method('findTagByTitle')->willReturn([]);
         GeneralUtility::setSingletonInstance(TagRepository::class, $this->tagRepository);

@@ -44,7 +44,7 @@ final class CountryListFormElementTest extends UnitTestCase
         $this->requestFactory = $this->createMock(RequestFactory::class);
         $client = new MauticHttpClient($this->requestFactory, $configuration);
         $client->setLogger(new NullLogger());
-        GeneralUtility::setSingletonInstance(MauticHttpClient::class, $client);
+        GeneralUtility::addInstance(MauticHttpClient::class, $client);
     }
 
     #[Test]

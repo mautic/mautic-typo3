@@ -26,6 +26,8 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
+    public function __construct(private readonly MauticHttpClient $client) {}
+
     public function submitForm(string $url, array $data): int
     {
         $multipart = [];
@@ -43,7 +45,7 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
 
         $result = null;
         try {
-            $result = GeneralUtility::makeInstance(MauticHttpClient::class)->request($url, 'POST', [
+            $result = $this->client->request($url, 'POST', [
                 'cookies' => $cookies,
                 'headers' => $headers,
                 'multipart' => $multipart,
