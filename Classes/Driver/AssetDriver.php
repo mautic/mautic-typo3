@@ -15,6 +15,7 @@ namespace Leuchtfeuer\Mautic\Driver;
 
 use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Leuchtfeuer\Mautic\Domain\Repository\AssetRepository;
+use Leuchtfeuer\Mautic\Http\MauticHttpClient;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Core\Environment;
@@ -625,9 +626,14 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
     protected function processFile(string $fileIdentifier, array $asset): string
     {
         $temporaryPath = $this->getTemporaryPathForFile($fileIdentifier . '.' . $asset['extension']);
-        $content = GeneralUtility::getUrl($asset['downloadUrl']);
-        if ($content === false) {
-            throw new \RuntimeException('Downloading file ' . $fileIdentifier . ' failed.', 1555571766);
+        try {
+            $content = (string)GeneralUtility::makeInstance(MauticHttpClient::class)->request($asset['downloadUrl'])->getBody();
+        } catch (\Exception $exception) {
+            $this->logger?->warning('Downloading Mautic asset {identifier} failed: {message}', [
+                'identifier' => $fileIdentifier,
+                'message' => $exception->getMessage(),
+            ]);
+            throw new \RuntimeException('Downloading file ' . $fileIdentifier . ' failed.', 1555571766, $exception);
         }
         GeneralUtility::writeFile($temporaryPath, $content);
 
