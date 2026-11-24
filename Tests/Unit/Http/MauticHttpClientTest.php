@@ -14,10 +14,12 @@ declare(strict_types=1);
 namespace Leuchtfeuer\Mautic\Tests\Unit\Http;
 
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Leuchtfeuer\Mautic\Http\MauticHttpClient;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
@@ -152,13 +154,32 @@ final class MauticHttpClientTest extends UnitTestCase
         $this->subject->request(self::URI);
     }
 
+    /**
+     * @return array<string, array{int}>
+     */
+    public static function httpErrorStatusDataProvider(): array
+    {
+        return [
+            'unauthorized' => [401],
+            'not found' => [404],
+            'server error' => [500],
+        ];
+    }
+
     #[Test]
-    public function httpErrorStatusDoesNotMarkMauticUnreachable(): void
+    #[DataProvider('httpErrorStatusDataProvider')]
+    public function httpErrorStatusDoesNotMarkMauticUnreachable(int $status): void
     {
         $this->configuration->method('getTimeout')->willReturn(5);
-        $this->requestFactory->method('request')->willReturn(new Response(500));
+        $request = new Request('GET', self::URI);
+        $this->requestFactory->method('request')
+            ->willThrowException(RequestException::create($request, new Response($status)));
 
-        $this->subject->request(self::URI);
+        try {
+            $this->subject->request(self::URI);
+            self::fail('RequestException expected');
+        } catch (RequestException) {
+        }
 
         self::assertFalse($this->subject->isMauticUnreachable());
     }

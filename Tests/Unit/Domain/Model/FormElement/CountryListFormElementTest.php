@@ -19,6 +19,7 @@ use GuzzleHttp\Psr7\Response;
 use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Leuchtfeuer\Mautic\Domain\Model\FormElement\CountryListFormElement;
 use Leuchtfeuer\Mautic\Http\MauticHttpClient;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\NullLogger;
@@ -65,10 +66,23 @@ final class CountryListFormElementTest extends UnitTestCase
         self::assertSame([], $this->getCountryOptions());
     }
 
-    #[Test]
-    public function invalidJsonYieldsEmptyCountryList(): void
+    /**
+     * @return array<string, array{string}>
+     */
+    public static function invalidCountryListDataProvider(): array
     {
-        $this->requestFactory->method('request')->willReturn(new Response(200, [], '<html>'));
+        return [
+            'empty body' => [''],
+            'html instead of json' => ['<html>'],
+            'json without list' => ['"Germany"'],
+        ];
+    }
+
+    #[Test]
+    #[DataProvider('invalidCountryListDataProvider')]
+    public function invalidCountryListYieldsEmptyCountryList(string $body): void
+    {
+        $this->requestFactory->method('request')->willReturn(new Response(200, [], $body));
 
         self::assertSame([], $this->getCountryOptions());
     }
