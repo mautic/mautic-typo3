@@ -13,6 +13,9 @@ services:
   Leuchtfeuer\Mautic\UserFunctions\Tracking:
     public: true
 
+  Leuchtfeuer\Mautic\Http\MauticHttpClient:
+    public: true
+
   Leuchtfeuer\Mautic\EventListener\SynchronizeMauticData:
     tags:
       - name: event.listener
