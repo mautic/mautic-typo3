@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Leuchtfeuer\Mautic\Driver;
 
+use GuzzleHttp\Exception\ConnectException;
 use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Leuchtfeuer\Mautic\Domain\Repository\AssetRepository;
 use Leuchtfeuer\Mautic\Http\MauticHttpClient;
@@ -629,6 +630,12 @@ class AssetDriver extends AbstractHierarchicalFilesystemDriver implements Logger
         try {
             $content = (string)GeneralUtility::makeInstance(MauticHttpClient::class)->request($asset['downloadUrl'])->getBody();
         } catch (\Exception $exception) {
+            if (!$exception instanceof ConnectException) {
+                $this->logger->warning('Downloading Mautic asset {identifier} failed: {message}', [
+                    'identifier' => $fileIdentifier,
+                    'message' => $exception->getMessage(),
+                ]);
+            }
             throw new \RuntimeException('Downloading file ' . $fileIdentifier . ' failed.', 1555571766, $exception);
         }
         GeneralUtility::writeFile($temporaryPath, $content);

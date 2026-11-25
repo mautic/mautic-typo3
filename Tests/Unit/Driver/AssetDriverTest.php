@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Leuchtfeuer\Mautic\Tests\Unit\Driver;
 
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
@@ -73,6 +74,24 @@ final class AssetDriverTest extends UnitTestCase
         $path = $this->subject->getFileForLocalProcessing('/flyer.pdf');
 
         self::assertStringEqualsFile($path, 'pdf content');
+    }
+
+    #[Test]
+    public function httpErrorIsLoggedAndThrowsRuntimeExceptionWithCause(): void
+    {
+        $requestException = RequestException::create(new Request('GET', self::DOWNLOAD_URL), new Response(404));
+        $this->requestFactory->method('request')->willThrowException($requestException);
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::once())->method('warning');
+        $this->subject->setLogger($logger);
+
+        try {
+            $this->subject->getFileForLocalProcessing('/flyer.pdf');
+            self::fail('RuntimeException expected');
+        } catch (\RuntimeException $exception) {
+            self::assertSame(1555571766, $exception->getCode());
+            self::assertSame($requestException, $exception->getPrevious());
+        }
     }
 
     #[Test]

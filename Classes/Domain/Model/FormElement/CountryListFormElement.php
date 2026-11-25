@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Leuchtfeuer\Mautic\Domain\Model\FormElement;
 
 use Doctrine\DBAL\ArrayParameterType;
+use GuzzleHttp\Exception\ConnectException;
 use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Leuchtfeuer\Mautic\Http\MauticHttpClient;
 use Psr\Log\LoggerAwareInterface;
@@ -81,7 +82,9 @@ class CountryListFormElement extends GenericFormElement implements LoggerAwareIn
             // @extensionScannerIgnoreLine
             $countryJson = (string)GeneralUtility::makeInstance(MauticHttpClient::class)->request($this->baseUrl . $this->countryFile)->getBody();
         } catch (\Exception $exception) {
-            $this->logger->warning('Loading the country list from Mautic failed: {message}', ['message' => $exception->getMessage()]);
+            if (!$exception instanceof ConnectException) {
+                $this->logger->warning('Loading the country list from Mautic failed: {message}', ['message' => $exception->getMessage()]);
+            }
             return [];
         }
 

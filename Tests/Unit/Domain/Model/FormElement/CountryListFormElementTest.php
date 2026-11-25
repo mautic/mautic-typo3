@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Leuchtfeuer\Mautic\Tests\Unit\Domain\Model\FormElement;
 
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
@@ -22,6 +23,7 @@ use Leuchtfeuer\Mautic\Http\MauticHttpClient;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -58,12 +60,25 @@ final class CountryListFormElementTest extends UnitTestCase
     }
 
     #[Test]
-    public function unreachableMauticYieldsEmptyCountryList(): void
+    public function unreachableMauticYieldsEmptyCountryListWithoutLoggingTwice(): void
     {
         $this->requestFactory->method('request')
             ->willThrowException(new ConnectException('Connection timed out', new Request('GET', self::COUNTRY_URL)));
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::never())->method('warning');
 
-        self::assertSame([], $this->getCountryOptions());
+        self::assertSame([], $this->getCountryOptions($logger));
+    }
+
+    #[Test]
+    public function httpErrorIsLoggedAndYieldsEmptyCountryList(): void
+    {
+        $this->requestFactory->method('request')
+            ->willThrowException(RequestException::create(new Request('GET', self::COUNTRY_URL), new Response(404)));
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::once())->method('warning');
+
+        self::assertSame([], $this->getCountryOptions($logger));
     }
 
     /**
@@ -90,10 +105,10 @@ final class CountryListFormElementTest extends UnitTestCase
     /**
      * @return array<string, string>
      */
-    private function getCountryOptions(): array
+    private function getCountryOptions(?LoggerInterface $logger = null): array
     {
         $subject = new CountryListFormElement('country', 'CountryList');
-        $subject->setLogger(new NullLogger());
+        $subject->setLogger($logger ?? new NullLogger());
         $subject->setOptions([]);
 
         return $subject->getProperties()['options'];
