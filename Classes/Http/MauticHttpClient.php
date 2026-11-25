@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Leuchtfeuer\Mautic\Http;
 
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Psr\Http\Client\ClientInterface;
@@ -51,7 +52,7 @@ final class MauticHttpClient implements ClientInterface, LoggerAwareInterface
 
     /**
      * @param array<string, mixed> $options Guzzle request options
-     * @throws ConnectException
+     * @throws GuzzleException
      */
     public function request(string $uri, string $method = 'GET', array $options = []): ResponseInterface
     {

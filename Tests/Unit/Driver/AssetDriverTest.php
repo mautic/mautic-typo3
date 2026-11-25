@@ -55,10 +55,16 @@ final class AssetDriverTest extends UnitTestCase
         ]);
         GeneralUtility::setSingletonInstance(AssetRepository::class, $assetRepository);
 
-        $this->subject = new class () extends AssetDriver {
+        $temporaryFile = sys_get_temp_dir() . '/' . uniqid('mautic-asset-test-', true);
+        $this->subject = new class ($temporaryFile) extends AssetDriver {
+            public function __construct(private readonly string $temporaryFile)
+            {
+                parent::__construct();
+            }
+
             protected function getTemporaryPathForFile(string $fileIdentifier): string
             {
-                return (string)tempnam(sys_get_temp_dir(), 'mautic-asset-test-');
+                return $this->temporaryFile;
             }
         };
         $this->subject->setLogger(new NullLogger());

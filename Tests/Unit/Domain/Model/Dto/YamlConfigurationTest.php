@@ -15,6 +15,7 @@ namespace Leuchtfeuer\Mautic\Tests\Unit\Domain\Model\Dto;
 
 use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Leuchtfeuer\Mautic\Service\TokenStorage;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
@@ -73,6 +74,25 @@ final class YamlConfigurationTest extends UnitTestCase
     public function normalizeTimeoutKeepsZeroFromForm(): void
     {
         self::assertSame(0, YamlConfiguration::normalizeTimeout('0'));
+    }
+
+    /**
+     * @return array<string, array{mixed}>
+     */
+    public static function nonNumericTimeoutDataProvider(): array
+    {
+        return [
+            'text' => ['abc'],
+            'number with unit' => ['7s'],
+            'decimal' => ['2.5'],
+        ];
+    }
+
+    #[Test]
+    #[DataProvider('nonNumericTimeoutDataProvider')]
+    public function nonNumericTimeoutFallsBackToDefault(mixed $timeout): void
+    {
+        self::assertSame(5, YamlConfiguration::normalizeTimeout($timeout));
     }
 
     /**

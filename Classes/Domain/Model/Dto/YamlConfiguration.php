@@ -19,9 +19,12 @@ use TYPO3\CMS\Core\Configuration\Loader\YamlFileLoader;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 
 class YamlConfiguration implements SingletonInterface
 {
+    public const DEFAULT_TIMEOUT = 5;
+
     /**
      * @var int
      */
@@ -82,8 +85,6 @@ class YamlConfiguration implements SingletonInterface
      * @var int
      */
     protected $timeout = self::DEFAULT_TIMEOUT;
-
-    public const DEFAULT_TIMEOUT = 5;
 
     /**
      * @var list<string>
@@ -245,7 +246,7 @@ class YamlConfiguration implements SingletonInterface
 
     public static function normalizeTimeout(mixed $timeout): int
     {
-        if ($timeout === null || $timeout === '') {
+        if (!MathUtility::canBeInterpretedAsInteger($timeout)) {
             return self::DEFAULT_TIMEOUT;
         }
 
