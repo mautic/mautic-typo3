@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Leuchtfeuer\Mautic\Mautic;
 
 use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
+use Leuchtfeuer\Mautic\Http\MauticHttpClient;
 use Leuchtfeuer\Mautic\Middleware\AuthorizeMiddleware;
 use Leuchtfeuer\Mautic\Service\MauticAuthorizeService;
 use Mautic\Auth\ApiAuth;
@@ -49,7 +50,7 @@ class AuthorizationFactory implements SingletonInterface
         }
 
         self::$oAuth = new OAuth(
-            (new ApiAuth())->newAuth($settings),
+            (new ApiAuth(GeneralUtility::makeInstance(MauticHttpClient::class)))->newAuth($settings),
             $baseUrl,
             $settings['accessToken'] ?? ''
         );

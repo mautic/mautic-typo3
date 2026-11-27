@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace Leuchtfeuer\Mautic\Domain\Model\FormElement;
 
 use Doctrine\DBAL\ArrayParameterType;
-use Leuchtfeuer\Mautic\Mautic\AuthorizationFactory;
+use GuzzleHttp\Exception\ConnectException;
+use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
+use Leuchtfeuer\Mautic\Http\MauticHttpClient;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -39,9 +41,8 @@ class CountryListFormElement extends GenericFormElement implements LoggerAwareIn
     ) {
         parent::__construct($identifier, $type);
 
-        $authorization = AuthorizationFactory::createAuthorizationFromExtensionConfiguration();
         // @extensionScannerIgnoreLine
-        $this->baseUrl = $authorization->getBaseUrl();
+        $this->baseUrl = rtrim(GeneralUtility::makeInstance(YamlConfiguration::class)->getBaseUrl(), '/');
 
         if ($locale === '') {
             // Try to get locale from the request (TYPO3 v12 way)
@@ -77,19 +78,21 @@ class CountryListFormElement extends GenericFormElement implements LoggerAwareIn
 
     protected function getCountries(): array
     {
-        // @extensionScannerIgnoreLine
-        $countryJson = @file_get_contents($this->baseUrl . $this->countryFile);
-
-        // cURL errors return errorCode 0, so we can not check for "if ($report['error'] !== 0) { ... }"
-        // TODO: Datei lokal laden
-        //Currently disabled until the $report variable is used
-        /**
-        if ($report['message'] !== '') {
-            $this->logger->critical($report['message']);
+        try {
+            // @extensionScannerIgnoreLine
+            $countryJson = (string)GeneralUtility::makeInstance(MauticHttpClient::class)->request($this->baseUrl . $this->countryFile)->getBody();
+        } catch (\Exception $exception) {
+            if (!$exception instanceof ConnectException) {
+                $this->logger->warning('Loading the country list from Mautic failed: {message}', ['message' => $exception->getMessage()]);
+            }
             return [];
         }
-         */
+
         $countries = json_decode($countryJson, true);
+        if (!is_array($countries)) {
+            $this->logger->warning('Mautic returned an invalid country list');
+            return [];
+        }
 
         return array_combine($countries, $countries);
     }

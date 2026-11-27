@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Leuchtfeuer\Mautic\Service;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Cookie\SetCookie;
 use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
+use Leuchtfeuer\Mautic\Http\MauticHttpClient;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -26,9 +26,10 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
+    public function __construct(private readonly MauticHttpClient $client) {}
+
     public function submitForm(string $url, array $data): int
     {
-        $client = new Client();
         $multipart = [];
 
         $headers = $this->makeHeaders();
@@ -44,7 +45,7 @@ class MauticSendFormService implements SingletonInterface, LoggerAwareInterface
 
         $result = null;
         try {
-            $result = $client->post($url, [
+            $result = $this->client->request($url, 'POST', [
                 'cookies' => $cookies,
                 'headers' => $headers,
                 'multipart' => $multipart,

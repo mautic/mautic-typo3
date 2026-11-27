@@ -136,6 +136,8 @@ class BackendController extends ActionController
             $configuration['accessToken'] = '';
         }
 
+        $configuration['timeout'] = YamlConfiguration::normalizeTimeout($configuration['timeout'] ?? null);
+
         $emConfiguration->save($configuration);
         return $this->redirect('show');
     }

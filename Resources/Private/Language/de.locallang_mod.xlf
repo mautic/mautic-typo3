@@ -53,6 +53,19 @@
                 <target>Standard Mautic Tracking-Script überschrieben (Eingabe ohne script tags)</target>
             </trans-unit>
 
+            <trans-unit id="misc.headline">
+                <source>Miscellaneous settings</source>
+                <target>Sonstige Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="misc.timeout">
+                <source>Timeout for requests to Mautic (seconds)</source>
+                <target>Timeout für Anfragen an Mautic (Sekunden)</target>
+            </trans-unit>
+            <trans-unit id="misc.timeout.description">
+                <source>If Mautic does not answer within this time, the page is delivered without Mautic content. 0 sets no timeout of its own; the TYPO3 HTTP settings apply instead (default: 10 seconds to connect, no limit for the response), see System &gt; Configuration, TYPO3_CONF_VARS &gt; HTTP.</source>
+                <target>Antwortet Mautic nicht innerhalb dieser Zeit, wird die Seite ohne Mautic-Inhalte ausgeliefert. Bei 0 gilt kein eigener Timeout, sondern die HTTP-Einstellungen von TYPO3 (Standard: 10 Sekunden für den Verbindungsaufbau, kein Limit für die Antwort), siehe System &gt; Configuration, TYPO3_CONF_VARS &gt; HTTP.</target>
+            </trans-unit>
+
             <trans-unit id="authorization.missingInformation.title">
                 <source>Required information missing</source>
                 <target>Notwendige Informationen fehlen</target>
