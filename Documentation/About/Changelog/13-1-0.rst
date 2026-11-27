@@ -1,0 +1,58 @@
+.. include:: ../../Includes.txt
+
+===========================
+Version 13.1.0 - 2026-11-27
+===========================
+
+This is a feature release.
+
+Download
+========
+
+Download this version from the `TYPO3 extension repository <https://extensions.typo3.org/extension/mautic/>`__ or from
+`GitHub <https://github.com/mautic/mautic-typo3/releases/tag/v13.1.0>`__.
+
+Added
+=====
+
+* New option ``timeout`` limits every request to Mautic to the given number of seconds (default ``5``). It can be set
+  in the new "misc" tab of the backend module, see :ref:`Installation <installation>` for details
+
+Changed
+=======
+
+* An unreachable Mautic instance no longer blocks the rendering of uncached pages: once a request has timed out, all
+  further requests to Mautic within the same page request fail immediately and the page is delivered without Mautic
+  content
+* Each failed request to Mautic is logged exactly once
+
+Fixed
+=====
+
+* Request bodies are forwarded to Mautic as a stream, so large asset uploads are no longer held in memory completely
+
+All Changes
+===========
+
+This is a list of all changes in this release::
+
+    2026-11-27 Merge pull request #9 from Leuchtfeuer/feature/TER-532 (Commit b837f01 by Sebastian Afeldt)
+    2026-11-25 [TASK] Fall back to default for invalid timeout values and tidy up [TER-532] (Commit 784570d by Sebastian Afeldt)
+    2026-11-25 [TASK] Log each Mautic failure once and create authorize service via makeInstance [TER-532] (Commit c58a844 by Sebastian Afeldt)
+    2026-11-24 [TASK] Remove defensive leftovers from Mautic client changes [TER-532] (Commit 77d7779 by Sebastian Afeldt)
+    2026-11-24 [BUGFIX] Forward request body to Mautic as stream [TER-532] (Commit 3f8c404 by Sebastian Afeldt)
+    2026-11-24 [TASK] Add own headline for misc tab [TER-532] (Commit 879e369 by Sebastian Afeldt)
+    2026-11-24 [TASK] Cover error paths of Mautic client, country list and asset driver [TER-532] (Commit f622d04 by Sebastian Afeldt)
+    2026-11-24 [TASK] Inject Mautic HTTP client and drop SingletonInterface [TER-532] (Commit e8583e5 by Sebastian Afeldt)
+    2026-11-24 [FEATURE] Add misc tab with timeout setting to backend module [TER-532] (Commit b1c57f9 by Sebastian Afeldt)
+    2026-11-24 [FEATURE] Route all Mautic requests through timeout-aware client [TER-532] (Commit 3a4e8b5 by Sebastian Afeldt)
+    2026-11-24 [FEATURE] Add Mautic HTTP client with timeout and per-request outage detection [TER-532] (Commit 84d2365 by Sebastian Afeldt)
+    2026-11-24 [FEATURE] Add configurable timeout option for Mautic requests [TER-532] (Commit ed43092 by Sebastian Afeldt)
+
+Contributors
+============
+Following people have contributed to this release:
+
+* Sebastian Afeldt
+
+Thank you very much for your support. The next beer is on us! 🍻
