@@ -41,6 +41,16 @@
                 <source>Override default Mautic tracking script (without script tags)</source>
             </trans-unit>
 
+            <trans-unit id="misc.headline">
+                <source>Miscellaneous settings</source>
+            </trans-unit>
+            <trans-unit id="misc.timeout">
+                <source>Timeout for requests to Mautic (seconds)</source>
+            </trans-unit>
+            <trans-unit id="misc.timeout.description">
+                <source>If Mautic does not answer within this time, the page is delivered without Mautic content. 0 sets no timeout of its own; the TYPO3 HTTP settings apply instead (default: 10 seconds to connect, no limit for the response), see System &gt; Configuration, TYPO3_CONF_VARS &gt; HTTP.</source>
+            </trans-unit>
+
             <trans-unit id="authorization.missingInformation.title">
                 <source>Required information missing</source>
             </trans-unit>

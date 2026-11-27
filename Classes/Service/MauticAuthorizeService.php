@@ -19,6 +19,8 @@ use Leuchtfeuer\Mautic\Mautic\AuthorizationFactory;
 use Leuchtfeuer\Mautic\Mautic\OAuth;
 use Leuchtfeuer\Mautic\Middleware\AuthorizeMiddleware;
 use Mautic\MauticApi;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
@@ -27,8 +29,10 @@ use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class MauticAuthorizeService
+class MauticAuthorizeService implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     protected OAuth $authorization;
 
     protected array $extensionConfiguration = [];
@@ -302,6 +306,10 @@ class MauticAuthorizeService
                 GeneralUtility::makeInstance(YamlConfiguration::class)->save($this->extensionConfiguration);
             }
         } catch (\Exception $exception) {
+            $this->logger->warning('Refreshing the Mautic access token failed: {code} {message}', [
+                'code' => $exception->getCode(),
+                'message' => $exception->getMessage(),
+            ]);
             $this->addErrorMessage((string)$exception->getCode(), $exception->getMessage());
 
             return false;

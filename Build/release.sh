@@ -37,7 +37,7 @@ if [ "$DIR" == "$(git rev-parse --show-toplevel 2>/dev/null)" ]; then
   git tag "$NEW_RELEASE"
 
   echo "Archive repository..."
-  zip -r "../mautic_${1}.zip" ./* -x Build/\* Documentation/\* Libraries/composer.\* README.md
+  zip -r "../mautic_${1}.zip" ./* -x Build/\* Documentation/\* Libraries/composer.\* README.md Tests/\*
   echo "Done."
 
   echo "Remove composer dependencies..."

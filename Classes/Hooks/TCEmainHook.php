@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace Leuchtfeuer\Mautic\Hooks;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Leuchtfeuer\Mautic\Domain\Model\Dto\YamlConfiguration;
 use Leuchtfeuer\Mautic\Domain\Repository\TagRepository;
+use Leuchtfeuer\Mautic\Http\MauticHttpClient;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -30,7 +32,10 @@ class TCEmainHook
             $config = GeneralUtility::makeInstance(YamlConfiguration::class);
             // @extensionScannerIgnoreLine
             $url = sprintf('%s/mtracking.gif?tags=%s', $config->getBaseUrl(), $fields['title']);
-            GeneralUtility::getUrl($url);
+            try {
+                GeneralUtility::makeInstance(MauticHttpClient::class)->request($url);
+            } catch (GuzzleException) {
+            }
 
             // Synchronize tags to receive proper ids
             $tagRepository = GeneralUtility::makeInstance(TagRepository::class);

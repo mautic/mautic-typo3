@@ -19,9 +19,12 @@ use TYPO3\CMS\Core\Configuration\Loader\YamlFileLoader;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 
 class YamlConfiguration implements SingletonInterface
 {
+    public const DEFAULT_TIMEOUT = 5;
+
     /**
      * @var int
      */
@@ -77,6 +80,11 @@ class YamlConfiguration implements SingletonInterface
      * @var int
      */
     protected $expires = 0;
+
+    /**
+     * @var int
+     */
+    protected $timeout = self::DEFAULT_TIMEOUT;
 
     /**
      * @var list<string>
@@ -229,6 +237,20 @@ class YamlConfiguration implements SingletonInterface
     public function getExpires(): int
     {
         return (int)$this->expires;
+    }
+
+    public function getTimeout(): int
+    {
+        return self::normalizeTimeout($this->timeout);
+    }
+
+    public static function normalizeTimeout(mixed $timeout): int
+    {
+        if (!MathUtility::canBeInterpretedAsInteger($timeout)) {
+            return self::DEFAULT_TIMEOUT;
+        }
+
+        return max(0, (int)$timeout);
     }
 
     public function isSameCredentials(array $configuration): bool
